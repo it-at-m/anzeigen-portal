@@ -11,11 +11,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>de.muenchen.refarch</groupId>
-    <artifactId>refarch-backend</artifactId>
+    <groupId>de.muenchen.anzeigen-portal</groupId>
+    <artifactId>backend</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>refarch_backend</name>
-    <description>This is the default starting project for a backend project based on the reference architecture of it@M</description>
+    <name>backend</name>
+    <description>This is a basic bulletin board based on the reference architecture of it@M</description>
 
     <properties>
         <!-- Compilation -->

@@ -1,4 +1,4 @@
-name: refarch-stack
+name: anzeigen-portal-services
 
 services:
   postgres:
