@@ -15,13 +15,13 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import de.muenchen.anzeigenportal.TestConstants.TheEntityDto;
 
 import java.net.URI;
 import java.util.UUID;
 
 import static de.muenchen.anzeigenportal.TestConstants.SPRING_TEST_PROFILE;
 import static de.muenchen.anzeigenportal.TestConstants.SPRING_NO_SECURITY_PROFILE;
-import static de.muenchen.anzeigenportal.TestConstants.TheEntityDto;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @Testcontainers

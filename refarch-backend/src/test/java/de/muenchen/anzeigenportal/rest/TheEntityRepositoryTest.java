@@ -1,6 +1,6 @@
-package de.muenchen.anzeigenPortal.rest;
+package de.muenchen.anzeigenportal.rest;
 
-import de.muenchen.anzeigenPortal.TestConstants;
+import de.muenchen.anzeigenportal.TestConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,15 +9,15 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.muenchen.anzeigenPortal.MicroServiceApplication;
-import de.muenchen.anzeigenPortal.domain.TheEntity;
+import de.muenchen.anzeigenportal.MicroServiceApplication;
+import de.muenchen.anzeigenportal.domain.TheEntity;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
-import static de.muenchen.anzeigenPortal.TestConstants.SPRING_TEST_PROFILE;
-import static de.muenchen.anzeigenPortal.TestConstants.SPRING_NO_SECURITY_PROFILE;
+import static de.muenchen.anzeigenportal.TestConstants.SPRING_TEST_PROFILE;
+import static de.muenchen.anzeigenportal.TestConstants.SPRING_NO_SECURITY_PROFILE;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

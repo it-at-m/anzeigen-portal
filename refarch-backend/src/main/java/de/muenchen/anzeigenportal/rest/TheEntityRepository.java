@@ -1,4 +1,4 @@
-package de.muenchen.anzeigenPortal.rest;
+package de.muenchen.anzeigenportal.rest;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.security.access.prepost.PreAuthorize;
-import de.muenchen.anzeigenPortal.domain.TheEntity;
+import de.muenchen.anzeigenportal.domain.TheEntity;
 
 /**
  * Provides a Repository for {@link TheEntity}. This Repository is exported as a REST resource.
@@ -23,9 +23,9 @@ import de.muenchen.anzeigenPortal.domain.TheEntity;
 @PreAuthorize(TheEntityRepository.HAS_AUTHORITY_READ)
 public interface TheEntityRepository extends CrudRepository<TheEntity, UUID> { //NOSONAR
 
-    String HAS_AUTHORITY_READ = "hasAuthority(T(de.muenchen.anzeigenPortal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())";
-    String HAS_AUTHORITY_WRITE = "hasAuthority(T(de.muenchen.anzeigenPortal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())";
-    String HAS_AUTHORITY_DELETE = "hasAuthority(T(de.muenchen.anzeigenPortal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())";
+    String HAS_AUTHORITY_READ = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())";
+    String HAS_AUTHORITY_WRITE = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())";
+    String HAS_AUTHORITY_DELETE = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())";
 
     /**
      * Name for the specific cache.

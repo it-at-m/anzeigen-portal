@@ -1,4 +1,4 @@
-package de.muenchen.anzeigenPortal.configuration.nfcconverter;
+package de.muenchen.anzeigenportal.configuration.nfcconverter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

@@ -1,4 +1,4 @@
-package de.muenchen.anzeigenPortal.configuration;
+package de.muenchen.anzeigenportal.configuration;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
