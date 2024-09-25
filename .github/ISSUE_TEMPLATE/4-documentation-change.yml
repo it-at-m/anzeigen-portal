@@ -19,10 +19,8 @@ body:
       multiple: true
       description: Affected documentation parts
       options:
-        - refarch-frontend
-        - refarch-backend
-        - refarch-eai
-        - refarch-webcomponent
+        - anzeigen-frontend
+        - anzeigen-backend
         - Other
     validations:
       required: true
