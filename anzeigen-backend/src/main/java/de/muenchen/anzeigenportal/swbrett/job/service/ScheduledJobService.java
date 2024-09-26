@@ -1,12 +1,12 @@
 package de.muenchen.anzeigenportal.swbrett.job.service;
 
+import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
+import de.muenchen.anzeigenportal.swbrett.ads.repository.AdRepository;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
+import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.Ad;
-import de.muenchen.intranet.sbrett.swbrett.ads.repository.AdRepository;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingName;
-import de.muenchen.intranet.sbrett.swbrett.settings.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
