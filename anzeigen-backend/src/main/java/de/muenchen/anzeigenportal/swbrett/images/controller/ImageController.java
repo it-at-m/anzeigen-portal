@@ -1,10 +1,10 @@
 package de.muenchen.anzeigenportal.swbrett.images.controller;
 
-import de.muenchen.intranet.sbrett.swbrett.images.model.SwbImageTO;
-import de.muenchen.intranet.sbrett.swbrett.images.service.ImageService;
 
 import java.util.Base64;
 
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
+import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

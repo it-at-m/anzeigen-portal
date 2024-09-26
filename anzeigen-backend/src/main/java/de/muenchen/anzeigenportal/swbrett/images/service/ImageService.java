@@ -1,11 +1,11 @@
 package de.muenchen.anzeigenportal.swbrett.images.service;
 
-import de.muenchen.intranet.sbrett.swbrett.images.model.SwbImage;
-import de.muenchen.intranet.sbrett.swbrett.images.model.SwbImageTO;
-import de.muenchen.intranet.sbrett.swbrett.images.repository.ImageRepository;
 
 import javax.imageio.ImageIO;
 
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
+import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
