@@ -1,7 +1,8 @@
 package de.muenchen.anzeigenportal.swbrett.settings.model;
 
 
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFile;
+
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
 
 import javax.persistence.*;
 

@@ -1,8 +1,8 @@
 package de.muenchen.anzeigenportal.swbrett.settings.service;
 
-import de.muenchen.intranet.sbrett.swbrett.files.service.FileMapper;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.Setting;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingTO;
+import de.muenchen.anzeigenportal.swbrett.files.service.FileMapper;
+import de.muenchen.anzeigenportal.swbrett.settings.model.Setting;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

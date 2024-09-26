@@ -1,8 +1,9 @@
 package de.muenchen.anzeigenportal.swbrett.settings.controller;
 
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingName;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingTO;
-import de.muenchen.intranet.sbrett.swbrett.settings.service.SettingService;
+
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
+import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

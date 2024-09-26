@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.settings.model;
 
 
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFileTO;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
 
 /**
  * Transferobject für Einstellungen

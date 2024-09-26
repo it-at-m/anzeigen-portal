@@ -1,9 +1,9 @@
 package de.muenchen.anzeigenportal.swbrett.settings.service;
 
-import de.muenchen.intranet.sbrett.swbrett.settings.model.Setting;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingName;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingTO;
-import de.muenchen.intranet.sbrett.swbrett.settings.repository.SettingRepository;
+import de.muenchen.anzeigenportal.swbrett.settings.model.Setting;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
+import de.muenchen.anzeigenportal.swbrett.settings.repository.SettingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
