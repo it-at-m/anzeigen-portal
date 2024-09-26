@@ -1,10 +1,10 @@
 package de.muenchen.anzeigenportal.swbrett.ads.controller;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdTO;
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdType;
-import de.muenchen.intranet.sbrett.swbrett.ads.service.AdService;
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUserTO;
-import de.muenchen.intranet.sbrett.swbrett.users.service.UserService;
+
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
+import de.muenchen.anzeigenportal.swbrett.ads.service.AdService;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;

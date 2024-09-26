@@ -1,5 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.ads.model;
 
+import jakarta.persistence.*;
+
 import javax.persistence.*;
 
 @Entity

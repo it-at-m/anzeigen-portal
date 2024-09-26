@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.ads.service;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdCategory;
-import de.muenchen.intranet.sbrett.swbrett.ads.repository.AdCategoryRepository;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
+import de.muenchen.anzeigenportal.swbrett.ads.repository.AdCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

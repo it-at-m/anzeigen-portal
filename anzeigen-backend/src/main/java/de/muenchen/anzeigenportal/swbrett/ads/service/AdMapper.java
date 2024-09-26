@@ -1,14 +1,14 @@
 package de.muenchen.anzeigenportal.swbrett.ads.service;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.Ad;
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdTO;
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFile;
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFileTO;
-import de.muenchen.intranet.sbrett.swbrett.files.service.FileMapper;
-import de.muenchen.intranet.sbrett.swbrett.images.model.SwbImage;
-import de.muenchen.intranet.sbrett.swbrett.images.model.SwbImageTO;
-import de.muenchen.intranet.sbrett.swbrett.images.service.ImageMapper;
-import de.muenchen.intranet.sbrett.swbrett.users.service.UserMapper;
+import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
+import de.muenchen.anzeigenportal.swbrett.files.service.FileMapper;
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
+import de.muenchen.anzeigenportal.swbrett.images.service.ImageMapper;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.ads.controller;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdCategory;
-import de.muenchen.intranet.sbrett.swbrett.ads.service.AdCategoryService;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
+import de.muenchen.anzeigenportal.swbrett.ads.service.AdCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

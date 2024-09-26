@@ -1,9 +1,11 @@
 package de.muenchen.anzeigenportal.swbrett.ads.repository;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.Ad;
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdTO;
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdType;
-import de.muenchen.intranet.sbrett.swbrett.ads.service.AdMapper;
+
+import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
+import de.muenchen.anzeigenportal.swbrett.ads.service.AdMapper;
+import jakarta.persistence.criteria.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;

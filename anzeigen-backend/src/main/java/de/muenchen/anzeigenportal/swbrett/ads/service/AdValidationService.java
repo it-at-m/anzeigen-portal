@@ -1,9 +1,9 @@
 package de.muenchen.anzeigenportal.swbrett.ads.service;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.Ad;
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFile;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingName;
-import de.muenchen.intranet.sbrett.swbrett.settings.service.SettingService;
+import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
+import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

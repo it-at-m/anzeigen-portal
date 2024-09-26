@@ -1,8 +1,11 @@
 package de.muenchen.anzeigenportal.swbrett.ads.model;
 
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFile;
-import de.muenchen.intranet.sbrett.swbrett.images.model.SwbImage;
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUser;
+
+
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
+import jakarta.persistence.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
