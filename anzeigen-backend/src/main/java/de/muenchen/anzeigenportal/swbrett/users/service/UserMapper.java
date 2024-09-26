@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.users.service;
 
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUser;
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUserTO;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import org.springframework.stereotype.Component;
 
 @Component

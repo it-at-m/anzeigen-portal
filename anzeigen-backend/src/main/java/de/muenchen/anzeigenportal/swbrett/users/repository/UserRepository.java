@@ -1,6 +1,6 @@
 package de.muenchen.anzeigenportal.swbrett.users.repository;
 
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUser;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

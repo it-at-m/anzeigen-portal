@@ -1,8 +1,8 @@
 package de.muenchen.anzeigenportal.swbrett.users.service;
 
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUser;
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUserTO;
-import de.muenchen.intranet.sbrett.swbrett.users.repository.UserRepository;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
+import de.muenchen.anzeigenportal.swbrett.users.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;

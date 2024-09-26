@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.users.controller;
 
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUserTO;
-import de.muenchen.intranet.sbrett.swbrett.users.service.UserService;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
