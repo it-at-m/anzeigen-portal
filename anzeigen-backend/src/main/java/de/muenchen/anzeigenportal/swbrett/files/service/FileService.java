@@ -1,8 +1,8 @@
 package de.muenchen.anzeigenportal.swbrett.files.service;
 
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFile;
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFileTO;
-import de.muenchen.intranet.sbrett.swbrett.files.repository.FileRepository;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
+import de.muenchen.anzeigenportal.swbrett.files.repository.FileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

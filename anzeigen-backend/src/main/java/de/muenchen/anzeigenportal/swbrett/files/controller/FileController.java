@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.files.controller;
 
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFileTO;
-import de.muenchen.intranet.sbrett.swbrett.files.service.FileService;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
+import de.muenchen.anzeigenportal.swbrett.files.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;

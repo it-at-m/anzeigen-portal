@@ -1,7 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.files.service;
 
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFile;
-import de.muenchen.intranet.sbrett.swbrett.files.model.SwbFileTO;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
+import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
