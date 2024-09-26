@@ -1,19 +1,14 @@
 package de.muenchen.anzeigenportal.swbrett.bootstrap;
 
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdCategory;
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdTO;
-import de.muenchen.intranet.sbrett.swbrett.ads.model.AdType;
-import de.muenchen.intranet.sbrett.swbrett.ads.repository.AdCategoryRepository;
-import de.muenchen.intranet.sbrett.swbrett.ads.repository.AdRepository;
-import de.muenchen.intranet.sbrett.swbrett.ads.service.AdCategoryService;
-import de.muenchen.intranet.sbrett.swbrett.ads.service.AdService;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingName;
-import de.muenchen.intranet.sbrett.swbrett.settings.model.SettingTO;
-import de.muenchen.intranet.sbrett.swbrett.settings.service.SettingService;
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUser;
-import de.muenchen.intranet.sbrett.swbrett.users.model.SwbUserTO;
-import de.muenchen.intranet.sbrett.swbrett.users.service.UserMapper;
-import de.muenchen.intranet.sbrett.swbrett.users.service.UserService;
+
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import net.bytebuddy.utility.RandomString;
 
 import org.slf4j.Logger;
