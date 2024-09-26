@@ -1,14 +1,21 @@
 package de.muenchen.anzeigenportal.swbrett.bootstrap;
 
-
+import de.muenchen.anzeigenportal.swbrett.ads.service.AdService;
+import de.muenchen.anzeigenportal.swbrett.ads.service.AdCategoryService;
+import de.muenchen.anzeigenportal.swbrett.ads.repository.AdCategoryRepository;
+import de.muenchen.anzeigenportal.swbrett.ads.repository.AdRepository;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
+import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserMapper;
+import jakarta.transaction.Transactional;
+import jakarta.validation.ValidationException;
 import net.bytebuddy.utility.RandomString;
 
 import org.slf4j.Logger;
@@ -17,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-import javax.transaction.Transactional;
-import javax.xml.bind.ValidationException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
