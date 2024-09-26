@@ -2,11 +2,11 @@ package de.muenchen.anzeigenportal.swbrett.ads.controller;
 
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
 import de.muenchen.anzeigenportal.swbrett.ads.service.AdCategoryService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController

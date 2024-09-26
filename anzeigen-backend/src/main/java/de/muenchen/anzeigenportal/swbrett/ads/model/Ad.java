@@ -7,7 +7,6 @@ import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -73,11 +72,11 @@ public class Ad {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "fk_ad_id")
-    private SwbImage imageOriginal;
+    private SwbImage imageOriginal; //TODO: was ist hier gewollt?
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="fk_ad_id")
-    private List<SwbFile> files = new ArrayList<>();
+    private List<SwbFile> files = new ArrayList<>(); //TODO: was ist hier gewollt?
 
     @Column(name = "views", nullable = false)
     private int views = 0;

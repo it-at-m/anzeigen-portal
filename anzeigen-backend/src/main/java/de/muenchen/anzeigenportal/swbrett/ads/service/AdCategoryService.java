@@ -46,7 +46,7 @@ public class AdCategoryService {
         AdCategory standardCat = repository.findByStandardTrue();
 
         if (category.isStandard()) {
-            // TODO throw error
+            // TODO throw error // TODO: yeah ... nothing is happening here thoo
         }
 
         adService.updateAllCategories(category, standardCat);

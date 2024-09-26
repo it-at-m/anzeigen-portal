@@ -2,8 +2,6 @@ package de.muenchen.anzeigenportal.swbrett.ads.model;
 
 import jakarta.persistence.*;
 
-import javax.persistence.*;
-
 @Entity
 @Table(name = "t_ad_category")
 public class AdCategory {

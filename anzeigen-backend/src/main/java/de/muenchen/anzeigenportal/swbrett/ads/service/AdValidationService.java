@@ -4,10 +4,10 @@ import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.xml.bind.ValidationException;
 
 @Service
 public class AdValidationService {

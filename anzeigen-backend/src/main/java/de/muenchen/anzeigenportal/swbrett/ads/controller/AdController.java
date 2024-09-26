@@ -4,15 +4,16 @@ package de.muenchen.anzeigenportal.swbrett.ads.controller;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
 import de.muenchen.anzeigenportal.swbrett.ads.service.AdService;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.ValidationException;
 import java.io.IOException;
 
 @RestController

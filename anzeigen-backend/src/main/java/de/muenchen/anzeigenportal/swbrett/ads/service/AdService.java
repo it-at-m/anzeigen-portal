@@ -12,6 +12,7 @@ import de.muenchen.anzeigenportal.swbrett.images.service.ImageResizeService;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,8 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.ValidationException;
+import jakarta.validation.ValidationException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

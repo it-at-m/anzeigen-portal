@@ -1,6 +1,6 @@
 package de.muenchen.anzeigenportal.swbrett.users.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 /**
  * POJO für Swbrett SwbUser.
