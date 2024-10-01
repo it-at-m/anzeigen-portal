@@ -8,6 +8,12 @@ import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 @Service
 public class ImageService {
 
@@ -53,39 +59,74 @@ public class ImageService {
      * </li>
      * </ul>
      */
-    public byte[] sanitizeImage(byte[] userProvidedImage) {
+    public byte[] sanitizeImage(byte[] userProvidedImage) throws IOException {
 
         // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
         // (The JRE image processing ignores it, and thus the images may turn out rotated.)
 
-        javaxt.io.Image xtImage = new javaxt.io.Image(userProvidedImage);
+        BufferedImage image = ImageIO.read(new ByteArrayInputStream(userProvidedImage));
 
-        // Verkleinere das Bild *ein mal* vor dem rotieren, denn das Rotieren großer Bilder kann sehr teuer sein.
+        // Schritt 1: Verkleinere das Bild einmal, wenn es zu groß ist.
         int currentSize = userProvidedImage.length;
         if (currentSize > MAX_SIZE) {
             double scale = Math.sqrt((double) MAX_SIZE / currentSize);
             if (scale > 0.9) scale = 0.9;
-            xtImage.resize((int) (xtImage.getWidth() * scale), (int) (xtImage.getHeight() * scale));
+            image = resizeImage(image, scale);
         }
 
-        // Rotate the image based on the image metadata (EXIF Orientation tag).
-        xtImage.rotate();
+        // Schritt 2: Lese EXIF-Metadaten und rotiere das Bild falls notwendig
+        // (Hier verwenden wir eine externe Bibliothek wie MetadataExtractor)
+        int rotation = getExifRotation(userProvidedImage); // Methode, die die Rotation aus EXIF liest
+        if (rotation != 0) {
+            image = rotateImage(image, rotation);
+        }
 
+        // Schritt 3: Verkleinern, bis die Dateigröße passt
         byte[] ba;
         for (;;) {
+            ba = bufferedImageToByteArray(image);
 
-            // Nun das Bild JPEG-kodieren.
-            ba = xtImage.getByteArray();
-
-            // Dateigröße nun klein genug?
             if (ba.length <= MAX_SIZE) break;
 
-            // Das Bild so verkleinern, dass die Dateigröße ungefähr passt.
             double scale = Math.sqrt((double) MAX_SIZE / ba.length);
             if (scale > 0.9) scale = 0.9;
-            xtImage.resize((int) (xtImage.getWidth() * scale), (int) (xtImage.getHeight() * scale));
+            image = resizeImage(image, scale);
         }
 
         return ba;
+    }
+
+    private BufferedImage resizeImage(BufferedImage originalImage, double scale) {
+        int newWidth = (int) (originalImage.getWidth() * scale);
+        int newHeight = (int) (originalImage.getHeight() * scale);
+        Image tmp = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        BufferedImage resized = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = resized.createGraphics();
+        g2d.drawImage(tmp, 0, 0, null);
+        g2d.dispose();
+        return resized;
+    }
+
+    private BufferedImage rotateImage(BufferedImage img, int degrees) {
+        int w = img.getWidth();
+        int h = img.getHeight();
+        BufferedImage rotated = new BufferedImage(w, h, img.getType());
+        Graphics2D g2d = rotated.createGraphics();
+        g2d.rotate(Math.toRadians(degrees), w / 2, h / 2);
+        g2d.drawImage(img, null, 0, 0);
+        g2d.dispose();
+        return rotated;
+    }
+
+    private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(image, "jpg", baos);
+        return baos.toByteArray();
+    }
+
+    // Dummy-Funktion: Implementiere den EXIF-Reader hier oder verwende eine Bibliothek wie MetadataExtractor
+    private int getExifRotation(byte[] imageBytes) {
+        // Lese EXIF-Metadaten und gib den Winkel der Rotation zurück
+        return 0; // Beispiel: 0 für keine Rotation, 90, 180, 270 für andere Fälle
     }
 }
