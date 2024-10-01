@@ -3,8 +3,8 @@ package de.muenchen.anzeigenportal.swbrett.settings.model;
 
 
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 
 /**
  * POJO für eine Einstellung im Adminbereich.

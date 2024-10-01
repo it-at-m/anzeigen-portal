@@ -4,11 +4,11 @@ package de.muenchen.anzeigenportal.swbrett.settings.controller;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 
