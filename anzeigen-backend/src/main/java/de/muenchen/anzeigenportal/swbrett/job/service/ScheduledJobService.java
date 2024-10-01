@@ -34,22 +34,22 @@ public class ScheduledJobService {
     @Scheduled(cron = EVERY_DAY_1_AM)
     public void deactivateExpiredAds() {
 
-    	LocalDate limit;
+        LocalDate limit;
 
-    	if (false) {
+        if (false) {
 
-    		// Nur zum Testen: *Alle* aktiven Anzeigen deaktivieren.
-    		limit = LocalDate.of(2099, 1, 1);
-    	} else {
-    		limit = LocalDate.now();
-    	}
+            // Nur zum Testen: *Alle* aktiven Anzeigen deaktivieren.
+            limit = LocalDate.of(2099, 1, 1);
+        } else {
+            limit = LocalDate.now();
+        }
 
         LOG.debug("Deactivate active ads that expired before " + limit);
 
-		List<Ad> expiredAds = adRepository.findByExpiryDateBeforeAndActive(limit, true);
+        List<Ad> expiredAds = adRepository.findByExpiryDateBeforeAndActive(limit, true);
 
         expiredAds.stream().forEach(ad -> {
-        	LOG.debug("Deactivating ad " + ad.getId() + " (expired " + ad.getExpiryDate() + ")");
+            LOG.debug("Deactivating ad " + ad.getId() + " (expired " + ad.getExpiryDate() + ")");
             ad.setActive(false);
             adRepository.save(ad);
         });
@@ -61,22 +61,22 @@ public class ScheduledJobService {
     @Scheduled(cron = EVERY_DAY_2_AM)
     public void deleteDeactivatedAdsAfterDateRange() {
 
-    	LocalDate limit;
-    	if (false) {
+        LocalDate limit;
+        if (false) {
 
-    		// Nur zum Testen: *Alle* inaktiven Anzeigen löschen.
-    		limit = LocalDate.of(2099, 1, 1);
-    	} else {
-    		Integer maxArchiveDateRange = settingService.getSetting(SettingName.MAX_ARCHIVE_DATE_RANGE).getNumberValue();
-    		limit = LocalDate.now().minusWeeks(maxArchiveDateRange);
-    	}
+            // Nur zum Testen: *Alle* inaktiven Anzeigen löschen.
+            limit = LocalDate.of(2099, 1, 1);
+        } else {
+            Integer maxArchiveDateRange = settingService.getSetting(SettingName.MAX_ARCHIVE_DATE_RANGE).getNumberValue();
+            limit = LocalDate.now().minusWeeks(maxArchiveDateRange);
+        }
 
         LOG.debug("Delete inactive ads that expired before " + limit);
 
         List<Ad> deactivatedAdsAfterDateRange = adRepository.findByExpiryDateBeforeAndActive(limit, false);
 
         deactivatedAdsAfterDateRange.stream().forEach(ad -> {
-        	LOG.debug("Deleting ad " + ad.getId() + " (expired " + ad.getExpiryDate() + ")");
+            LOG.debug("Deleting ad " + ad.getId() + " (expired " + ad.getExpiryDate() + ")");
             adRepository.delete(ad);
         });
     }

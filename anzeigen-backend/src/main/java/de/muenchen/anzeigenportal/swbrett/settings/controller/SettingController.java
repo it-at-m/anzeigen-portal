@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.settings.controller;
 
-
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
@@ -10,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/settings")

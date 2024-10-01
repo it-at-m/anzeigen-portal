@@ -1,7 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.ads.model;
 
-
-
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
@@ -42,8 +40,8 @@ public class Ad {
     private String title;
 
     /**
-     *  1000 Character für SwbUser Beschreibung und zusätzliche Zeichen für HTML, die
-     *  vom Rich Text Editor erzeugt werden.
+     * 1000 Character für SwbUser Beschreibung und zusätzliche Zeichen für HTML, die
+     * vom Rich Text Editor erzeugt werden.
      */
     @Column(name = "description", nullable = false, length = 2000)
     private String description;
@@ -75,7 +73,7 @@ public class Ad {
     private SwbImage imageOriginal; //TODO: was ist hier gewollt?
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name="fk_ad_id")
+    @JoinColumn(name = "fk_ad_id")
     private List<SwbFile> files = new ArrayList<>(); //TODO: was ist hier gewollt?
 
     @Column(name = "views", nullable = false)

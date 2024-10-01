@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,6 +23,7 @@ public class UserController {
 
     /**
      * Put Method to encrypt the email with https.
+     *
      * @param email
      * @return SwbUserTO with id, if user found. id = null if no user found
      */

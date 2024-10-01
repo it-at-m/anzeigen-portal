@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
 
-
 @Component
 public class ImageResizeService {
 
@@ -44,7 +43,7 @@ public class ImageResizeService {
         outputImage.getGraphics().drawImage(image, 0, 0, null);
 
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(outputImage, "jpg", bos );
+        ImageIO.write(outputImage, "jpg", bos);
         return bos.toByteArray();
     }
 }

@@ -2,10 +2,10 @@ package de.muenchen.anzeigenportal.swbrett.settings.model;
 
 public enum SettingName {
 
-	/**
+    /**
      * Tagesmeldung; wird oben auf der Hauptseite angezeigt. Kann HTML-Markup enthalten. (TEXT)
-	 */
-	MOTD,
+     */
+    MOTD,
 
     /**
      * Maximale Dateigröße des Fotos in MB (NUMBER)

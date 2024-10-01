@@ -15,7 +15,8 @@ public class AdCategory {
 
     /**
      * Es sollte immer genau eine Standard-Kategorie existieren.
-     * Wird eine Kategorie gelöscht, so werden alle Anzeigen der gelöschten Kategorie in die Standard-Kategorie verschoben.
+     * Wird eine Kategorie gelöscht, so werden alle Anzeigen der gelöschten Kategorie in die
+     * Standard-Kategorie verschoben.
      */
     @Column(name = "standard", nullable = false)
     private boolean standard = false;

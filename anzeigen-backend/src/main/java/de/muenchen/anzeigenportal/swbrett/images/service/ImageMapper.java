@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.images.service;
 
-
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import org.springframework.stereotype.Component;

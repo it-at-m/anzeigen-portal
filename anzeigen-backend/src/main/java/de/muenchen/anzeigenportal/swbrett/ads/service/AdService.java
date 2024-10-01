@@ -55,12 +55,14 @@ public class AdService {
     @Autowired
     private AdValidationService validationService;
 
-    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId, boolean isActive) {
+    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId,
+            boolean isActive) {
         if (sortBy == null) {
             sortBy = settingService.getSetting(SettingName.DEFAULT_SORTING).getTextValue();
         }
         if (order == null) {
-            order = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();;
+            order = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();
+            ;
         }
         if (page == null) {
             page = FIRST_PAGE;

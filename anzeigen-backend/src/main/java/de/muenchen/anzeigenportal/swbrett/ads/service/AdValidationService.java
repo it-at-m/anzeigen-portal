@@ -8,7 +8,6 @@ import jakarta.validation.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class AdValidationService {
 
@@ -32,7 +31,6 @@ public class AdValidationService {
             if (ad.getFiles().size() > (maxFilesLength)) {
                 throw new ValidationException("Validierung fehlgeschlagen: Maximal " + maxFilesLength + " Dateien erlaubt!");
             }
-
 
             for (SwbFile file : ad.getFiles()) {
                 Integer maxFileSizeBytes = maxFileSize * 1024 * 1024;

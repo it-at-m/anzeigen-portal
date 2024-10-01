@@ -19,7 +19,7 @@ public class UserMapper {
         }
 
         if (userTO.getDisplayName() != null) {
-        	user.setDisplayName(userTO.getDisplayName());
+            user.setDisplayName(userTO.getDisplayName());
         }
 
         return user;

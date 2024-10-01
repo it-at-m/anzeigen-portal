@@ -6,7 +6,7 @@ import jakarta.persistence.*;
  * POJO für Swbrett SwbUser.
  */
 @Entity
-@Table(name = "t_swb_user", uniqueConstraints=@UniqueConstraint(columnNames="lhm_object_id"))
+@Table(name = "t_swb_user", uniqueConstraints = @UniqueConstraint(columnNames = "lhm_object_id"))
 public class SwbUser {
 
     @Id
@@ -42,10 +42,10 @@ public class SwbUser {
     }
 
     public String getDisplayName() {
-    	return this.displayName;
+        return this.displayName;
     }
 
     public void setDisplayName(String displayName) {
-    	this.displayName = displayName;
+        this.displayName = displayName;
     }
 }

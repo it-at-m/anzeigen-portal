@@ -7,27 +7,26 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
 public interface AdRepositoryCustom {
 
     Page<AdTO> searchActiveAds(String userId,
-                               String searchTerm,
-                               Long categoryId,
-                               AdType type,
-                               String sortBy,
-                               String order,
-                               Pageable pageable,
-                               Long adId);
+            String searchTerm,
+            Long categoryId,
+            AdType type,
+            String sortBy,
+            String order,
+            Pageable pageable,
+            Long adId);
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
     Page<AdTO> searchDeactivatedAds(String userId,
-                               String searchTerm,
-                               Long categoryId,
-                               AdType type,
-                               String sortBy,
-                               String order,
-                               Pageable pageable,
-                               Long adId);
+            String searchTerm,
+            Long categoryId,
+            AdType type,
+            String sortBy,
+            String order,
+            Pageable pageable,
+            Long adId);
 
 }

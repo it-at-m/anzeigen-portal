@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.settings.model;
 
-
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
 
 /**

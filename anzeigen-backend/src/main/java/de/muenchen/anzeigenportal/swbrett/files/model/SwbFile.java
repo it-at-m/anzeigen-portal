@@ -5,7 +5,6 @@ import static jakarta.persistence.FetchType.LAZY;
 import java.sql.Blob;
 import java.sql.SQLException;
 
-
 import jakarta.persistence.*;
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
 
@@ -16,7 +15,7 @@ import org.hibernate.engine.jdbc.NonContextualLobCreator;
 @Table(name = "t_swb_file")
 public class SwbFile {
 
-	// ======================== FIELD/COLUMN DECLARATIONS
+    // ======================== FIELD/COLUMN DECLARATIONS
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,48 +27,70 @@ public class SwbFile {
     @Column(name = "size", nullable = false)
     private int size;
 
-	@Access(AccessType.PROPERTY) // <= F*** Hibernate 3.5+ requires this on property getters!
+    @Access(AccessType.PROPERTY) // <= F*** Hibernate 3.5+ requires this on property getters!
     @Column(name = "file", nullable = false)
     @Basic(fetch = LAZY) // <= Is ignored unless "hibernate-enhance-maven-plugin" is configured!
-    public Blob getFileBlob() { return this.fileBlob; } // TODO: fix the warning ... should be some byte array
+    public Blob getFileBlob() {
+        return this.fileBlob;
+    } // TODO: fix the warning ... should be some byte array
 
-    public void setFileBlob(Blob fileBlob) { this.fileBlob = fileBlob; }
+    public void setFileBlob(Blob fileBlob) {
+        this.fileBlob = fileBlob;
+    }
 
     private Blob fileBlob;
 
     // ======================== FIELD GETTERS AND SETTERS
 
-    public long getId() { return id; }
-    public void setId(long id) { this.id = id; }
+    public long getId() {
+        return id;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public int getSize() { return size; }
-    public void setSize(int size) { this.size = size; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
 
     public byte[] getFile() {
-    	Blob fb = this.getFileBlob();
-    	if (fb == null) return null;
-    	try {
-			return fb.getBytes(1, (int) fb.length());
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+        Blob fb = this.getFileBlob();
+        if (fb == null) return null;
+        try {
+            return fb.getBytes(1, (int) fb.length());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public long getFileLength() {
-    	Blob fb = this.getFileBlob();
-    	if (fb == null) return -1;
-    	try {
-			return fb.length();
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
+        Blob fb = this.getFileBlob();
+        if (fb == null) return -1;
+        try {
+            return fb.length();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
+
     public boolean hasFile() {
-    	return this.getFileBlob() != null;
+        return this.getFileBlob() != null;
     }
+
     public void setFile(byte[] file) {
-		this.setFileBlob(NonContextualLobCreator.INSTANCE.createBlob(file));
+        this.setFileBlob(NonContextualLobCreator.INSTANCE.createBlob(file));
     }
 }

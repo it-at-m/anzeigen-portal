@@ -1,16 +1,13 @@
 package de.muenchen.anzeigenportal.swbrett.settings.model;
 
-
-
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
 import jakarta.persistence.*;
-
 
 /**
  * POJO für eine Einstellung im Adminbereich.
  */
 @Entity
-@Table(name = "t_setting", uniqueConstraints=@UniqueConstraint(columnNames="setting_name"))
+@Table(name = "t_setting", uniqueConstraints = @UniqueConstraint(columnNames = "setting_name"))
 public class Setting {
 
     @Id
@@ -31,7 +28,7 @@ public class Setting {
     private Boolean flagValue;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="fk_ad_id", nullable = true) // <= Typeo; sollte wohl "t_swb_file_id" heißen
+    @JoinColumn(name = "fk_ad_id", nullable = true) // <= Typeo; sollte wohl "t_swb_file_id" heißen
     private SwbFile fileValue;
 
     public long getId() {

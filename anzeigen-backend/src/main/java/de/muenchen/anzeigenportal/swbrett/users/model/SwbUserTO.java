@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.users.model;
 
-
 /**
  * Transferobject für Swb User
  */
@@ -28,11 +27,11 @@ public class SwbUserTO {
     }
 
     public String getDisplayName() {
-    	return this.displayName;
+        return this.displayName;
     }
 
     public void setDisplayName(String displayName) {
-    	this.displayName = displayName;
+        this.displayName = displayName;
     }
 
     public String getLhmObjectId() {

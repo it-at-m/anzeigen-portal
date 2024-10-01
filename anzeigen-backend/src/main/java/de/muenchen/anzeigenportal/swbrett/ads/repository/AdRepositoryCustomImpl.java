@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.ads.repository;
 
-
 import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
@@ -31,17 +30,20 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     private AdMapper mapper;
 
     @Override
-    public Page<AdTO> searchActiveAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable, Long adId) {
+    public Page<AdTO> searchActiveAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable,
+            Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, true);
     }
 
     @Override
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
-    public Page<AdTO> searchDeactivatedAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable, Long adId) {
+    public Page<AdTO> searchDeactivatedAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable,
+            Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
-    public Page<AdTO> searchAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable, Long adId, boolean isActive) {
+    public Page<AdTO> searchAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable, Long adId,
+            boolean isActive) {
         CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Ad> query = builder.createQuery(Ad.class);
 
@@ -97,19 +99,18 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
 
         if ("price".contentEquals(sortBy)) {
 
-        	// Sonderbehandlung bei Sortierung nach Preis.
-        	Expression<Integer> se2 = root.get(sortBy);
-	        sortExpression = (
-	    		builder.selectCase()
-	    		.when(builder.equal(sortExpression, 0), -1)                         // 0:  Zu verschenken
-	    		.when(builder.greaterThan(se2, Integer.valueOf(0)), sortExpression) // >0: Festpreis
-	    		.when(builder.lessThan(se2, Integer.valueOf(0)), builder.neg(se2))  // <0: Verhandelbar
-			);
+            // Sonderbehandlung bei Sortierung nach Preis.
+            Expression<Integer> se2 = root.get(sortBy);
+            sortExpression = (builder.selectCase()
+                    .when(builder.equal(sortExpression, 0), -1) // 0:  Zu verschenken
+                    .when(builder.greaterThan(se2, Integer.valueOf(0)), sortExpression) // >0: Festpreis
+                    .when(builder.lessThan(se2, Integer.valueOf(0)), builder.neg(se2)) // <0: Verhandelbar
+            );
         }
 
         if (order.equals(ORDER_ASC)) {
             query.orderBy(builder.asc(sortExpression));
-        } else if(order.equals(ORDER_DESC)) {
+        } else if (order.equals(ORDER_DESC)) {
             query.orderBy(builder.desc(sortExpression));
         }
 
