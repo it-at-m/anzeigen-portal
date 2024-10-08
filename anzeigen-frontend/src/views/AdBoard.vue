@@ -1,23 +1,11 @@
 <template>
   <v-container>
-    <v-row class="text-center">
-      <v-col cols="12">
-        <v-img
-          src="@/assets/logo.png"
-          class="my-3"
-          height="200"
-        />
-      </v-col>
-
-      <v-col class="mb-4">
-        <h1 class="text-h3 font-weight-bold mb-3">
-          Willkommen beim refarch-frontend von it@M
-        </h1>
-        <p>
-          Das API-Gateway ist:
-          <span :class="status">{{ status }}</span>
-        </p>
-      </v-col>
+    <v-row>
+      <v-col cols="4"> <sheet>Spalte 1</sheet> </v-col>
+      <v-col cols="8">
+        <sheet>Spalte 2</sheet
+        ><v-btn @click="showMsges">showmsges</v-btn></v-col
+      >
     </v-row>
   </v-container>
 </template>
@@ -25,7 +13,9 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
+import { Levels } from "@/api/error";
 import HealthService from "@/api/HealthService";
+import Sheet from "@/components/common/Sheet.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
 
@@ -39,14 +29,10 @@ onMounted(() => {
       snackbarStore.showMessage(error);
     });
 });
+
+const showMsges = () => {
+  snackbarStore.showMessage({ message: "hallo", level: Levels.INFO });
+};
 </script>
 
-<style scoped>
-.UP {
-  color: limegreen;
-}
-
-.DOWN {
-  color: lightcoral;
-}
-</style>
+<style scoped></style>
