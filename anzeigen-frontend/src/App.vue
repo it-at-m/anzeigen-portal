@@ -1,5 +1,5 @@
 <template>
-  <v-app class="background">
+  <v-app>
     <the-snackbar />
     <v-app-bar color="primary">
       <v-row align="center">
@@ -114,8 +114,4 @@ async function search(): Promise<void> {
 }
 </script>
 
-<style>
-.background {
-  background-color: #e8e8e8 !important;
-}
-</style>
+<style></style>
