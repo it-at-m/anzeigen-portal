@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="background">
     <the-snackbar />
     <v-app-bar color="primary">
       <v-row align="center">
@@ -33,61 +33,50 @@
             @keyup.enter="search"
           />
         </v-col>
-        <v-col
-          cols="3"
-          class="d-flex align-center justify-end"
-        >
-          <app-switcher
-            v-if="appswitcherBaseUrl"
-            :base-url="appswitcherBaseUrl"
-            :tags="['global']"
+        <v-col>
+          <ad2-image-avatar
+            v-if="userStore.getUser !== null"
+            :username="userStore.getUser.username"
           />
-          <v-btn
-            variant="text"
-            icon
-          >
-            <ad2-image-avatar
-              v-if="userStore.getUser !== null"
-              :username="userStore.getUser.username"
-            />
-          </v-btn>
         </v-col>
       </v-row>
     </v-app-bar>
-    <v-navigation-drawer v-model="drawer">
-      <v-list>
-        <v-list-item :to="{ name: ROUTES_GETSTARTED }">
-          <v-list-item-title>Get started</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-main>
       <v-container fluid>
-        <router-view v-slot="{ Component }">
-          <v-fade-transition mode="out-in">
-            <component :is="Component" />
-          </v-fade-transition>
-        </router-view>
+        <v-row
+          align="center"
+          justify="center"
+        >
+          <v-col
+            cols="12"
+            lg="10"
+            xl="8"
+            xxl="7"
+          >
+            <router-view v-slot="{ Component }">
+              <v-fade-transition mode="out-in">
+                <component :is="Component" />
+              </v-fade-transition>
+            </router-view>
+          </v-col>
+        </v-row>
       </v-container>
     </v-main>
   </v-app>
 </template>
 
 <script setup lang="ts">
-import { AppSwitcher } from "@muenchen/appswitcher-vue";
 import { onMounted, ref } from "vue";
 
 import UserService from "@/api/UserService";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { APPSWITCHER_URL, ROUTES_GETSTARTED } from "@/Constants";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
 
 const drawer = ref(true);
 const query = ref<string>("");
-const appswitcherBaseUrl = APPSWITCHER_URL;
 
 const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
@@ -126,7 +115,7 @@ async function search(): Promise<void> {
 </script>
 
 <style>
-.main {
-  background-color: white;
+.background {
+  background-color: #e8e8e8 !important;
 }
 </style>
