@@ -16,8 +16,8 @@ on:
         description: Service-Name
         required: true
         options:
-          - refarch-backend # todo: muss angepasst werden. eigenen Ordner verwenden
-          - refarch-frontend # todo: muss angepasst werden. eigenen Ordner verwenden
+          - anzeigen-backend # todo: muss angepasst werden. eigenen Ordner verwenden
+          - anzeigen-frontend # todo: muss angepasst werden. eigenen Ordner verwenden
 
 jobs:
   release-maven:
