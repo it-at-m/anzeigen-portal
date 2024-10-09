@@ -1,5 +1,5 @@
 <template>
-  <sheet> Das ist in eine sheet und hoffentlich weiss </sheet>
+  <sheet> Hier ist eine Auswahl an Filtern </sheet>
 </template>
 
 <script setup lang="ts">

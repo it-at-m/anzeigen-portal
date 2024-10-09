@@ -1,21 +1,28 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col cols="4"> <sheet>Spalte 1</sheet> </v-col>
-      <v-col cols="8">
-        <sheet>Spalte 2</sheet
-        ><v-btn @click="showMsges">showmsges</v-btn></v-col
-      >
-    </v-row>
-  </v-container>
+  <ad-fab class="position-absolute bottom-0 right-0" />
+  <v-row>
+    <v-col
+      md="4"
+      cols="12"
+    >
+      <ad-search />
+    </v-col>
+    <v-col
+      md="8"
+      cols="12"
+    >
+      <ad-list />
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 
-import { Levels } from "@/api/error";
 import HealthService from "@/api/HealthService";
-import Sheet from "@/components/common/Sheet.vue";
+import AdList from "@/components/AdList.vue";
+import AdSearch from "@/components/AdSearch.vue";
+import AdFab from "@/components/common/AdFab.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
 
@@ -29,10 +36,6 @@ onMounted(() => {
       snackbarStore.showMessage(error);
     });
 });
-
-const showMsges = () => {
-  snackbarStore.showMessage({ message: "hallo", level: Levels.INFO });
-};
 </script>
 
 <style scoped></style>

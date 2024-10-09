@@ -1,5 +1,5 @@
 <template>
-  <sheet> hello world</sheet>
+  <sheet> Hier ist eine Liste aller Anzeigen</sheet>
 </template>
 
 <script setup lang="ts">
