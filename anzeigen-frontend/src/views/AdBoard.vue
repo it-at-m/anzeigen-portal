@@ -2,13 +2,13 @@
   <ad-fab class="position-absolute bottom-0 right-0" />
   <v-row>
     <v-col
-      md="4"
+      lg="4"
       cols="12"
     >
       <ad-search />
     </v-col>
     <v-col
-      md="8"
+      lg="8"
       cols="12"
     >
       <ad-list />
@@ -21,7 +21,7 @@ import { onMounted, ref } from "vue";
 
 import HealthService from "@/api/HealthService";
 import AdList from "@/components/AdList.vue";
-import AdSearch from "@/components/AdSearch.vue";
+import AdSearch from "@/components/AdNavBar.vue";
 import AdFab from "@/components/common/AdFab.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
