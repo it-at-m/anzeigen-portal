@@ -3,9 +3,9 @@
     <v-fab
       v-if="isMobile"
       extended
-      elevation="0"
+      variant="flat"
       icon="mdi-plus"
-      size="80"
+      size="64"
       color="accent"
       app
       location="bottom"
@@ -13,7 +13,7 @@
     <v-fab
       v-else
       extended
-      elevation="0"
+      variant="flat"
       prepend-icon="mdi-plus"
       text="Anzeige erstellen"
       color="accent"
@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { breakpointsVuetifyV3, useBreakpoints } from "@vueuse/core/index";
+import { breakpointsVuetifyV3, useBreakpoints } from "@vueuse/core";
 
 const breakpoints = useBreakpoints(breakpointsVuetifyV3);
 const isMobile = breakpoints.smallerOrEqual("md");

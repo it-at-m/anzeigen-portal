@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import Sheet from "@/components/common/Sheet.vue";
+import Sheet from "@/components/common/AdDisplaySheet.vue";
 </script>
 
 <style scoped></style>

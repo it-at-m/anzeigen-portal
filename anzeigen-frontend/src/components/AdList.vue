@@ -1,9 +1,14 @@
 <template>
-  <sheet> Hier ist eine Liste aller Anzeigen</sheet>
+  <v-expansion-panels>
+    <ad-card
+      v-for="i in 7"
+      :key="i"
+    />
+  </v-expansion-panels>
 </template>
 
 <script setup lang="ts">
-import Sheet from "@/components/common/Sheet.vue";
+import AdCard from "@/components/Ad/AdCard.vue";
 </script>
 
 <style scoped></style>
