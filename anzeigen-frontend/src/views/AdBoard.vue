@@ -5,7 +5,7 @@
       lg="4"
       cols="12"
     >
-      <ad-search />
+      Suche
     </v-col>
     <v-col
       lg="8"
@@ -21,7 +21,6 @@ import { onMounted, ref } from "vue";
 
 import HealthService from "@/api/HealthService";
 import AdList from "@/components/AdList.vue";
-import AdSearch from "@/components/AdNavBar.vue";
 import AdFab from "@/components/common/AdFab.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";

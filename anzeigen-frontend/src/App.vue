@@ -61,21 +61,16 @@
 
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
-import { onMounted, ref } from "vue";
+import { onMounted } from "vue";
 
 import UserService from "@/api/UserService";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
-import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
-import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
 
-const drawer = ref(true);
-const query = ref<string>("");
 useTitle("Anzeigen Portal");
 
-const snackbarStore = useSnackbarStore();
 const userStore = useUserStore();
 
 onMounted(() => {
@@ -96,18 +91,6 @@ function loadUser(): void {
         userStore.setUser(null);
       }
     });
-}
-
-/**
- * Navigates to the page with the search results and sends an event to trigger further searches.
- */
-
-async function search(): Promise<void> {
-  if (query.value !== "" && query.value !== null) {
-    snackbarStore.showMessage({
-      message: "Sie haben nach " + query.value + " gesucht. ;)",
-    });
-  }
 }
 </script>
 

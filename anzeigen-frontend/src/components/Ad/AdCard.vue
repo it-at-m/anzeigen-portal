@@ -76,10 +76,6 @@ import AdArtChip from "@/components/Ad/AdArtChip.vue";
 import AdCardText from "@/components/Ad/AdCardText.vue";
 
 const isOffer = ref(false);
-
-const clicked = () => {
-  isOffer.value = !isOffer.value;
-};
 </script>
 
 <style scoped></style>

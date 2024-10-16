@@ -30,7 +30,7 @@
         <v-row>
           <v-col class="py-0"> Direkter Link </v-col>
           <v-col class="py-0">
-            <IconText
+            <icon-text
               label="https://weissesbrett.muenchen.de/board/main/7430"
               href="https://weissesbrett.muenchen.de/board/main/7430"
             />

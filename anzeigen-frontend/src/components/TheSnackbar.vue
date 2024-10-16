@@ -44,6 +44,7 @@ const color = ref("info");
 
 const isError = computed(() => color.value === "error");
 
+// eslint-disable-next-line vue/return-in-computed-property
 const computedIcon = computed(() => {
   switch (color.value) {
     case Levels.INFO:

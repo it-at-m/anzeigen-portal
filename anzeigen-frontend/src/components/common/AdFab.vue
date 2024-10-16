@@ -24,7 +24,7 @@
 </template>
 
 <script setup lang="ts">
-import { breakpointsVuetifyV3, useBreakpoints } from "@vueuse/core/index";
+import { breakpointsVuetifyV3, useBreakpoints } from "@vueuse/core";
 
 const breakpoints = useBreakpoints(breakpointsVuetifyV3);
 const isMobile = breakpoints.smallerOrEqual("md");
