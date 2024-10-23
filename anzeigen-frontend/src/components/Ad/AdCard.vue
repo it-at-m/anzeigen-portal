@@ -19,7 +19,11 @@
             sm="9"
           >
             <v-container class="d-flex flex-column py-1 fill-height">
-              <v-row align="start">
+              <v-row
+                class="w-100"
+                align="start"
+                justify="space-between"
+              >
                 <v-col
                   cols="12"
                   sm="10"
@@ -32,7 +36,30 @@
                   cols="2"
                   sm="2"
                 >
-                  01.01.1970
+                  <v-speed-dial
+                    location="left center"
+                    transition="slide-x-reverse-transition"
+                  >
+                    <template v-slot:activator="{ props: activatorProps }">
+                      <v-btn
+                        variant="elevated"
+                        color="accent"
+                        icon="mdi-cog-outline"
+                        v-bind="activatorProps"
+                      ></v-btn>
+                    </template>
+
+                    <v-btn
+                      key="1"
+                      color="warning"
+                      icon="mdi-pencil"
+                    />
+                    <v-btn
+                      key="2"
+                      color="error"
+                      icon="mdi-trash-can-outline"
+                    />
+                  </v-speed-dial>
                 </v-col>
               </v-row>
               <v-row
