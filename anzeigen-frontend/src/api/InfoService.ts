@@ -1,4 +1,4 @@
-import FetchUtils from "@/api/FetchUtils";
+import FetchUtils from "@/api/fetch-utils";
 
 export interface Info {
   application: Application;
