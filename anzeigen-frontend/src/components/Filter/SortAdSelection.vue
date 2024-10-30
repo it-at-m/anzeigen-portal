@@ -1,5 +1,5 @@
 <template>
-  <card>
+  <ad-display-card>
     <template #title>Sortieren</template>
     <template #text>
       <v-select
@@ -8,42 +8,32 @@
         :items="selections"
         variant="outlined"
       />
-      <v-radio-group v-model="sortingOrder">
-        <v-radio
-          color="accent"
-          label="Aufsteigend"
-          value="asc"
-        />
-        <v-radio
-          color="accent"
-          label="Absteigend"
-          value="desc"
-        />
-      </v-radio-group>
     </template>
-  </card>
+  </ad-display-card>
 </template>
 
 <script setup lang="ts">
+import type { CriteriaValue, SortingOrder } from "@/types/SortingOrderCriteria";
+
 import { ref } from "vue";
 
-import Card from "@/components/common/Card.vue";
-
-type Order = "asc" | "desc";
-
-type Criteria = "titel" | "type" | "price" | "creationDate" | "expirationDate";
+import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 
 const selections = [
-  { title: "Titel (alphabetisch)", value: "title" },
-  { title: "Art (alphabetisch)", value: "type" },
-  { title: "Preis", value: "price" },
-  { title: "Erstellungsdatum", value: "creationDate" },
-  { title: "Ablaufdatum", value: "expirationDate" },
-];
+  { title: "Titel (alphabetisch)", value: { criteria: "titel", order: "asc" } },
+  { title: "Preis aufsteigend", value: { criteria: "price", order: "asc" } },
+  { title: "Preis absteigend", value: { criteria: "price", order: "desc" } },
+  {
+    title: "Erstellungsdatum aufsteigend",
+    value: { criteria: "creationDate", order: "asc" },
+  },
+  {
+    title: "Erstellungsdatum absteigend",
+    value: { criteria: "creationDate", order: "desc" },
+  },
+] as SortingOrder[];
 
-const sortingCriteria = ref<Criteria>("creationDate");
-
-const sortingOrder = ref<Order>("asc");
+const sortingCriteria = ref<CriteriaValue>({ criteria: "titel", order: "asc" });
 </script>
 
 <style scoped></style>
