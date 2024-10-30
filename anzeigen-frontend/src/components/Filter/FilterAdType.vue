@@ -1,5 +1,5 @@
 <template>
-  <card>
+  <ad-display-card>
     <template #title>Nach Art filtern</template>
     <template #text>
       <v-checkbox
@@ -17,13 +17,13 @@
         color="accent"
       />
     </template>
-  </card>
+  </ad-display-card>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from "vue";
 
-import Card from "@/components/common/Card.vue";
+import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 
 const isOffer = ref<boolean>(true);
 const isSeek = ref<boolean>(true);

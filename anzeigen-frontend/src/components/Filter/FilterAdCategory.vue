@@ -1,6 +1,6 @@
 <template>
-  <card>
-    <template #title>Nach Kategorie filtern</template>
+  <ad-display-card>
+    <template #title>Nach Kategorie stöbern</template>
     <template #text>
       <v-tabs
         v-model="selectedCategory"
@@ -30,13 +30,13 @@
         </v-tab>
       </v-tabs></template
     >
-  </card>
+  </ad-display-card>
 </template>
 
 <script setup lang="ts">
 import { ref } from "vue";
 
-import Card from "@/components/common/Card.vue";
+import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 
 const selectedCategory = ref();
 
