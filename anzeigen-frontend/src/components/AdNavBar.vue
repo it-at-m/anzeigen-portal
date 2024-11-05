@@ -6,6 +6,7 @@
     size="large"
     color="accent"
     flat
+    @click="triggerDialog"
   >
     Anzeige erstellen
   </v-btn>
@@ -18,12 +19,20 @@
 </template>
 
 <script setup lang="ts">
+import { useEventBus } from "@vueuse/core";
+
 import AccountCard from "@/components/common/AccountCard.vue";
-import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
+import { EV_EDIT_AD_DIALOG } from "@/Constants";
+
+const dialogBus = useEventBus<boolean>(EV_EDIT_AD_DIALOG);
+
+const triggerDialog = () => {
+  dialogBus.emit(true);
+};
 </script>
 
 <style scoped></style>

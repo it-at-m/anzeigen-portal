@@ -8,7 +8,6 @@
       <v-card-title>Anzeige erstellen oder bearbeiten</v-card-title>
       <v-card-text>
         <v-stepper>
-          <template #header> </template>
           <template #default="{ prev, next }">
             <v-stepper-header>
               <v-stepper-item
@@ -21,6 +20,7 @@
               />
               <v-stepper-item
                 title="Verkäufer Informationen"
+                subtitle="Optional"
                 value="3"
               />
             </v-stepper-header>
@@ -68,9 +68,10 @@
               </v-stepper-window-item>
             </v-stepper-window>
             <v-stepper-actions
-              @click:next="next"
               @click:prev="prev"
-            ></v-stepper-actions>
+              @click:next="next"
+            >
+            </v-stepper-actions>
           </template>
         </v-stepper>
       </v-card-text>
@@ -78,6 +79,7 @@
         <v-btn
           prepend-icon="mdi-window-close"
           variant="outlined"
+          @click="close"
           >Abbrechen</v-btn
         >
         <v-btn
@@ -99,12 +101,20 @@
 </template>
 
 <script setup lang="ts">
+import { useEventBus } from "@vueuse/core";
 import { ref } from "vue";
 import { VDateInput, VNumberInput } from "vuetify/labs/components";
 
 import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
+import { EV_EDIT_AD_DIALOG } from "@/Constants";
 
-const dialog = ref(true);
+const dialog = ref(false);
+
+const dialogBus = useEventBus<boolean>(EV_EDIT_AD_DIALOG);
+
+dialogBus.on((event: boolean) => (dialog.value = event));
+
+const close = () => (dialog.value = false);
 </script>
 
 <style scoped></style>
