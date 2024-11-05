@@ -21,25 +21,24 @@
 </template>
 
 <script setup lang="ts">
-import { useUrlSearchParams } from "@vueuse/core";
+import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { ROUTER_TYPE } from "@/Constants";
 
 const isOffer = ref<boolean>(true);
 const isSeek = ref<boolean>(true);
 
-const params = useUrlSearchParams(ROUTER_TYPE);
+const typeQuery = useRouteQuery("type");
 
 /**
  * Initializes checkbox selections based on the "type" URL parameter.
  * Sets either "Offer" or "Seek" as deselected if the URL specifies a type.
  */
 onMounted(() => {
-  if (params.type === "OFFER") {
+  if (typeQuery.value === "OFFER") {
     isSeek.value = false;
-  } else if (params.type === "SEEK") {
+  } else if (typeQuery.value === "SEEK") {
     isOffer.value = false;
   }
 });
@@ -58,9 +57,9 @@ watch([isOffer, isSeek], ([newIsOffer, newIsSeek], [oldIsOffer, oldIsSeek]) => {
 
   // Update URL parameter
   if (isOffer.value && isSeek.value) {
-    params.type = [];
+    typeQuery.value = [];
   } else {
-    params.type = isOffer.value ? "OFFER" : "SEEK";
+    typeQuery.value = isOffer.value ? "OFFER" : "SEEK";
   }
 });
 </script>
