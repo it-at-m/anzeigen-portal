@@ -44,6 +44,9 @@ onMounted(() => {
       order: orderQuery.value,
     } as CriteriaValue;
   }
+
+  orderQuery.value = sortingCriteria.value.order;
+  orderByQuery.value = sortingCriteria.value.criteria;
 });
 
 watch(sortingCriteria, (newSortingCriteria) => {
