@@ -5,7 +5,8 @@
       <v-select
         v-model="sortingCriteria"
         color="accent"
-        :items="selections"
+        hide-details
+        :items="sortingOrderSelections"
         variant="outlined"
       />
     </template>
@@ -13,27 +14,40 @@
 </template>
 
 <script setup lang="ts">
-import type { CriteriaValue, SortingOrder } from "@/types/SortingOrderCriteria";
+import type { CriteriaValue } from "@/types/SortingOrderCriteria";
 
-import { ref } from "vue";
+import { useRouteQuery } from "@vueuse/router";
+import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
+import {
+  sortingOrderSelections,
+  useIsValidOrderSelection,
+} from "@/composables/useGetSortingSelections";
 
-const selections = [
-  { title: "Titel (alphabetisch)", value: { criteria: "titel", order: "asc" } },
-  { title: "Preis aufsteigend", value: { criteria: "price", order: "asc" } },
-  { title: "Preis absteigend", value: { criteria: "price", order: "desc" } },
-  {
-    title: "Erstellungsdatum aufsteigend",
-    value: { criteria: "creationDate", order: "asc" },
-  },
-  {
-    title: "Erstellungsdatum absteigend",
-    value: { criteria: "creationDate", order: "desc" },
-  },
-] as SortingOrder[];
+const orderQuery = useRouteQuery("order");
+const orderByQuery = useRouteQuery("orderBy");
 
 const sortingCriteria = ref<CriteriaValue>({ criteria: "titel", order: "asc" });
-</script>
 
-<style scoped></style>
+onMounted(() => {
+  if (
+    orderQuery.value &&
+    orderByQuery.value &&
+    useIsValidOrderSelection({
+      criteria: orderByQuery.value.toString(),
+      order: orderQuery.value.toString(),
+    })
+  ) {
+    sortingCriteria.value = {
+      criteria: orderByQuery.value,
+      order: orderQuery.value,
+    } as CriteriaValue;
+  }
+});
+
+watch(sortingCriteria, (newSortingCriteria) => {
+  orderQuery.value = newSortingCriteria.order;
+  orderByQuery.value = newSortingCriteria.criteria;
+});
+</script>
