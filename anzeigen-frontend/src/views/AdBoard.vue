@@ -1,5 +1,4 @@
 <template>
-  <ad-fab class="position-absolute bottom-0 right-0" />
   <ad-dialog />
   <v-row>
     <v-col
