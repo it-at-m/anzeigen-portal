@@ -8,6 +8,7 @@
       >
         <v-tabs
           v-model="selectedCategory"
+          class="w-100"
           direction="vertical"
         >
           <v-tab
