@@ -31,6 +31,7 @@ export function useGetCategories() {
         { id: 13, name: "Lost and Found (Fundsachen)", standard: false },
         { id: 14, name: "Tausche Hilfe gegen Hilfe", standard: false },
       ];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       errorInternal.value = true;
     } finally {

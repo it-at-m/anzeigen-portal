@@ -67,6 +67,8 @@
 </template>
 
 <script setup lang="ts">
+import type { VInput } from "vuetify/components";
+
 import { computed, onMounted, ref, watch } from "vue";
 
 /**
@@ -85,6 +87,7 @@ import { computed, onMounted, ref, watch } from "vue";
  */
 
 const modelValue = defineModel<string | null>();
+type ValidationRules = InstanceType<typeof VInput>["$props"]["rules"];
 
 const {
   readonly = false,
@@ -107,7 +110,7 @@ const {
   persistentHint: boolean;
   hint: string;
   label: string;
-  rules: { (v: string): string | boolean }[];
+  rules: ValidationRules;
 }>();
 
 const day = ref<string | null>(null);

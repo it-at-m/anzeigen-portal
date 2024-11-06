@@ -129,6 +129,7 @@ export const useGetAds = () => {
           views: 54,
         },
       ];
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       errorInternal.value = true;
     } finally {

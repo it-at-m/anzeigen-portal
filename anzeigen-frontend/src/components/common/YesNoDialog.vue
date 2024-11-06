@@ -86,8 +86,8 @@ defineProps<{
 }>();
 
 const emits = defineEmits<{
-  (e: "no"): void;
-  (e: "yes"): void;
+  no: [];
+  yes: [];
 }>();
 
 function no(): void {
