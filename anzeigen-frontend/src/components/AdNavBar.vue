@@ -1,15 +1,11 @@
 <template>
   <account-card />
-  <v-btn
+  <ad-edit-button
     class="w-100 mb-4"
-    prepend-icon="mdi-plus"
     size="large"
-    color="accent"
     flat
     @click="triggerDialog"
-  >
-    Anzeige erstellen
-  </v-btn>
+  />
   <ad-display-sheet class="mb-4">
     <filter-ad-category />
     <filter-ad-type />
@@ -21,6 +17,7 @@
 <script setup lang="ts">
 import { useEventBus } from "@vueuse/core";
 
+import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
