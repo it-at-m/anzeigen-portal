@@ -2,13 +2,13 @@
   <ad-dialog />
   <v-row>
     <v-col
-      lg="4"
+      lg="3"
       cols="12"
     >
       <ad-nav-bar />
     </v-col>
     <v-col
-      lg="8"
+      lg="9"
       cols="12"
     >
       <ad-list />
@@ -23,7 +23,6 @@ import { checkHealth } from "@/api/health-client";
 import AdDialog from "@/components/Ad/Edit/AdDialog.vue";
 import AdList from "@/components/AdList.vue";
 import AdNavBar from "@/components/AdNavBar.vue";
-import AdFab from "@/components/common/AdFab.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import HealthState from "@/types/HealthState";
 
