@@ -13,8 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import Card from "@/components/common/Card.vue";
-
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const search = () => {};
 </script>
 

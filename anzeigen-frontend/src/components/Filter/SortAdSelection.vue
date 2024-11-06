@@ -1,49 +1,56 @@
 <template>
-  <card>
+  <ad-display-card>
     <template #title>Sortieren</template>
     <template #text>
       <v-select
         v-model="sortingCriteria"
         color="accent"
-        :items="selections"
+        hide-details
+        :items="sortingOrderSelections"
         variant="outlined"
       />
-      <v-radio-group v-model="sortingOrder">
-        <v-radio
-          color="accent"
-          label="Aufsteigend"
-          value="asc"
-        />
-        <v-radio
-          color="accent"
-          label="Absteigend"
-          value="desc"
-        />
-      </v-radio-group>
     </template>
-  </card>
+  </ad-display-card>
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import type { CriteriaValue } from "@/types/SortingOrderCriteria";
 
-import Card from "@/components/common/Card.vue";
+import { useRouteQuery } from "@vueuse/router";
+import { onMounted, ref, watch } from "vue";
 
-type Order = "asc" | "desc";
+import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
+import {
+  sortingOrderSelections,
+  useIsValidOrderSelection,
+} from "@/composables/useGetSortingSelections";
 
-type Criteria = "titel" | "type" | "price" | "creationDate" | "expirationDate";
+const orderQuery = useRouteQuery("order");
+const orderByQuery = useRouteQuery("orderBy");
 
-const selections = [
-  { title: "Titel (alphabetisch)", value: "title" },
-  { title: "Art (alphabetisch)", value: "type" },
-  { title: "Preis", value: "price" },
-  { title: "Erstellungsdatum", value: "creationDate" },
-  { title: "Ablaufdatum", value: "expirationDate" },
-];
+const sortingCriteria = ref<CriteriaValue>({ criteria: "titel", order: "asc" });
 
-const sortingCriteria = ref<Criteria>("creationDate");
+onMounted(() => {
+  if (
+    orderQuery.value &&
+    orderByQuery.value &&
+    useIsValidOrderSelection({
+      criteria: orderByQuery.value.toString(),
+      order: orderQuery.value.toString(),
+    })
+  ) {
+    sortingCriteria.value = {
+      criteria: orderByQuery.value,
+      order: orderQuery.value,
+    } as CriteriaValue;
+  }
 
-const sortingOrder = ref<Order>("asc");
+  orderQuery.value = sortingCriteria.value.order;
+  orderByQuery.value = sortingCriteria.value.criteria;
+});
+
+watch(sortingCriteria, (newSortingCriteria) => {
+  orderQuery.value = newSortingCriteria.order;
+  orderByQuery.value = newSortingCriteria.criteria;
+});
 </script>
-
-<style scoped></style>

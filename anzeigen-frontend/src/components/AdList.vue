@@ -3,6 +3,7 @@
     <ad-card
       v-for="i in 7"
       :key="i"
+      class="mb-4"
     />
   </v-expansion-panels>
 </template>

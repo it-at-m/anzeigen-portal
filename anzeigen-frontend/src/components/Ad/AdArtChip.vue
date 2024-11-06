@@ -1,11 +1,10 @@
 <template>
   <v-chip
-    variant="flat"
+    variant="tonal"
     color="accent"
     :prepend-icon="computedIcon"
-  >
-    {{ computedText }}</v-chip
-  >
+    :text="computedText"
+  />
 </template>
 
 <script setup lang="ts">
@@ -17,7 +16,7 @@ const { isOffer = false } = defineProps<{
 
 const computedText = computed(() => (isOffer ? "Biete" : "Suche"));
 const computedIcon = computed(() =>
-  isOffer ? "mdi-tag-outline" : "mdi-magnify"
+  isOffer ? "mdi-hand-extended-outline" : "mdi-binoculars"
 );
 </script>
 

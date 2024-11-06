@@ -1,5 +1,5 @@
 <template>
-  <v-avatar>
+  <v-avatar size="48">
     <img
       :src="avatarUrl"
       :alt="altText"
@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { DefaultLhmAvatarService } from "@/api/Ad2ImageAvatarService";
+import { DefaultLhmAvatarService } from "@/api/ad2image-avatar-client.ts";
 
 const {
   username,
