@@ -63,8 +63,9 @@
 import { useTitle } from "@vueuse/core";
 import { onMounted } from "vue";
 
-import UserService from "@/api/UserService";
+import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
+import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
@@ -81,7 +82,7 @@ onMounted(() => {
  * Loads UserInfo from the backend and sets it in the store.
  */
 function loadUser(): void {
-  UserService.getUser()
+  getUser()
     .then((user: User) => userStore.setUser(user))
     .catch(() => {
       // No user info received, so fallback
@@ -96,6 +97,6 @@ function loadUser(): void {
 
 <style>
 .ad-max-width {
-  max-width: 1400px;
+  max-width: 2000px !important;
 }
 </style>
