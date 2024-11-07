@@ -1,8 +1,13 @@
 package de.muenchen.anzeigenportal.swbrett.files.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Transferobject für Dateien.
  */
+@Setter
+@Getter
 public class SwbFileTO {
 
     private long id;
@@ -13,35 +18,4 @@ public class SwbFileTO {
 
     private String fileBase64;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
-    public String getFileBase64() {
-        return fileBase64;
-    }
-
-    public void setFileBase64(String fileBase64) {
-        this.fileBase64 = fileBase64;
-    }
 }

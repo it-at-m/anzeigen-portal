@@ -1,12 +1,17 @@
 package de.muenchen.anzeigenportal.swbrett.users.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * POJO für Swbrett SwbUser.
  */
+@Setter
+@Getter
 @Entity
 @Table(name = "t_swb_user", uniqueConstraints = @UniqueConstraint(columnNames = "lhm_object_id"))
+@SuppressWarnings("PMD.DataClass")
 public class SwbUser {
 
     @Id
@@ -25,27 +30,4 @@ public class SwbUser {
     @Column(name = "display_name", nullable = false)
     private String displayName;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getLhmObjectId() {
-        return this.lhmObjectId;
-    }
-
-    public void setLhmObjectId(String lhmObjectId) {
-        this.lhmObjectId = lhmObjectId;
-    }
-
-    public String getDisplayName() {
-        return this.displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
 }
