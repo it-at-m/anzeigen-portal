@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import javax.imageio.ImageIO;
 
 @Component
+@SuppressWarnings("PMD.UselessParentheses")
 public class ImageResizeService {
 
     private final static int MAX_SIZE = 500;

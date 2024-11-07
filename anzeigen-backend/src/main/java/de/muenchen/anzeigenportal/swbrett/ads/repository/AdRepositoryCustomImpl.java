@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-@SuppressWarnings("PMD.CouplingBetweenObjects")
+@SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.UselessParentheses"})
 @Repository
 public class AdRepositoryCustomImpl implements AdRepositoryCustom {
 
