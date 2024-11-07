@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 @Service
 public class AdService {
 
@@ -55,23 +56,26 @@ public class AdService {
     @Autowired
     private AdValidationService validationService;
 
-    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId,
-            boolean isActive) {
-        if (sortBy == null) {
-            sortBy = settingService.getSetting(SettingName.DEFAULT_SORTING).getTextValue();
+    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId, boolean isActive) {
+        String interrnalSortBy = sortBy;
+        String internalOrder = order;
+        Integer internalPage = page;
+
+        if (interrnalSortBy == null) {
+            interrnalSortBy = settingService.getSetting(SettingName.DEFAULT_SORTING).getTextValue();
         }
-        if (order == null) {
-            order = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();
+        if (internalOrder == null) {
+            internalOrder = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();
             ;
         }
-        if (page == null) {
-            page = FIRST_PAGE;
+        if (internalPage == null) {
+            internalPage = FIRST_PAGE;
         }
-        Pageable pageable = PageRequest.of(page, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
+        Pageable pageable = PageRequest.of(internalPage, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
         if (isActive) {
-            return repository.searchActiveAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId);
+            return repository.searchActiveAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
         } else {
-            return repository.searchDeactivatedAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId);
+            return repository.searchDeactivatedAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
         }
     }
 
