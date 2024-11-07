@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 @Component
 public class ImageResizeService {
 
-    final static int MAX_SIZE = 500;
+    private final static int MAX_SIZE = 500;
 
     public byte[] resizeImageToPreviewImage(byte[] originalImage) throws IOException {
 

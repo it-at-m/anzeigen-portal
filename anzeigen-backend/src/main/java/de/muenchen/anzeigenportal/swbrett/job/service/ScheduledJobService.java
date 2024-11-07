@@ -19,8 +19,8 @@ public class ScheduledJobService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ScheduledJobService.class);
 
-    final static String EVERY_DAY_1_AM = "0 0 1 * * *"; // second minute hour day-of-month month day-of-week
-    final static String EVERY_DAY_2_AM = "0 0 2 * * *";
+    private final static String EVERY_DAY_1_AM = "0 0 1 * * *"; // second minute hour day-of-month month day-of-week
+    private final static String EVERY_DAY_2_AM = "0 0 2 * * *";
 
     @Autowired
     private SettingService settingService;
