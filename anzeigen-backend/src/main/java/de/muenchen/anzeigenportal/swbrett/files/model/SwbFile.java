@@ -7,56 +7,37 @@ import java.sql.SQLException;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
 
 /**
  * POJO für Dateien (z.B. Bilder, PDFs), die in swbrett angelegt werden können.
  */
+@Setter
+@Getter
 @Entity
 @Table(name = "t_swb_file")
 public class SwbFile {
 
     // ======================== FIELD/COLUMN DECLARATIONS
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Getter
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Getter
     @Column(name = "size", nullable = false)
     private int size;
 
     @Access(AccessType.PROPERTY) // <= F*** Hibernate 3.5+ requires this on property getters!
     @Column(name = "file", nullable = false)
     @Basic(fetch = LAZY) // <= Is ignored unless "hibernate-enhance-maven-plugin" is configured!
-    public Blob getFileBlob() {
-        return this.fileBlob;
-    } // TODO: fix the warning ... should be some byte array
+    private Blob fileBlob; // TODO: fix the warning ... should be some byte array
 
-    public void setFileBlob(Blob fileBlob) {
-        this.fileBlob = fileBlob;
-    }
-
-    private Blob fileBlob;
 
     // ======================== FIELD GETTERS AND SETTERS
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
 
     public byte[] getFile() {
         Blob fb = this.getFileBlob();

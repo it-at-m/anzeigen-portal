@@ -13,13 +13,14 @@ import org.hibernate.engine.jdbc.NonContextualLobCreator;
 /**
  * POJO für Bilder, die für eine Anzeige hochgeladen werden können.
  */
+@Setter
+@Getter
 @Entity
 @Table(name = "t_swb_image")
 public class SwbImage {
 
     // ======================== FIELD/COLUMN DECLARATIONS
 
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -27,21 +28,10 @@ public class SwbImage {
     @Access(AccessType.PROPERTY) // <= F*** Hibernate 3.5+ requires this on property getters!
     @Column(name = "image", nullable = false)
     @Basic(fetch = LAZY) // <= Is ignored unless "hibernate-enhance-maven-plugin" is configured!
-    public Blob getImageBlob() {
-        return this.imageBlob;
-    } // TODO: fix the warning ... should be some byte array
+    private Blob imageBlob; // TODO: fix the warning ... should be some byte array
 
-    public void setImageBlob(Blob imageBlob) {
-        this.imageBlob = imageBlob;
-    }
-
-    private Blob imageBlob;
 
     // ======================== FIELD GETTERS AND SETTERS
-
-    public void setId(long id) {
-        this.id = id;
-    }
 
     public byte[] getImage() {
         Blob ib = this.getImageBlob();
