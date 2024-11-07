@@ -6,6 +6,8 @@ import java.sql.Blob;
 import java.sql.SQLException;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
 
 /**
@@ -17,6 +19,7 @@ public class SwbImage {
 
     // ======================== FIELD/COLUMN DECLARATIONS
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -36,17 +39,13 @@ public class SwbImage {
 
     // ======================== FIELD GETTERS AND SETTERS
 
-    public long getId() {
-        return id;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
 
     public byte[] getImage() {
         Blob ib = this.getImageBlob();
-        if (ib == null) return null;
+        if (ib == null) return new byte[0];
         try {
             return ib.getBytes(1, (int) ib.length());
         } catch (SQLException e) {

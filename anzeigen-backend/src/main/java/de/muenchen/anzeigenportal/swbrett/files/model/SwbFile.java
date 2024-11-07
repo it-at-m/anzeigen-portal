@@ -6,6 +6,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
 
 /**
@@ -17,13 +18,16 @@ public class SwbFile {
 
     // ======================== FIELD/COLUMN DECLARATIONS
 
+    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Getter
     @Column(name = "name", nullable = false)
     private String name;
 
+    @Getter
     @Column(name = "size", nullable = false)
     private int size;
 
@@ -42,24 +46,12 @@ public class SwbFile {
 
     // ======================== FIELD GETTERS AND SETTERS
 
-    public long getId() {
-        return id;
-    }
-
     public void setId(long id) {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
-    }
-
-    public int getSize() {
-        return size;
     }
 
     public void setSize(int size) {
@@ -68,7 +60,7 @@ public class SwbFile {
 
     public byte[] getFile() {
         Blob fb = this.getFileBlob();
-        if (fb == null) return null;
+        if (fb == null) return new byte[0];
         try {
             return fb.getBytes(1, (int) fb.length());
         } catch (SQLException e) {
