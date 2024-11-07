@@ -46,7 +46,7 @@ public class AdCategoryService {
         AdCategory standardCat = repository.findByStandardTrue();
 
         if (category.isStandard()) {
-            // TODO throw error // TODO: yeah ... nothing is happening here thoo
+            throw new IllegalArgumentException("This category is standard and cannot be deleted.");
         }
 
         adService.updateAllCategories(category, standardCat);
