@@ -32,7 +32,7 @@ import java.util.stream.Collectors;
 @Service
 public class AdService {
 
-    private final int FIRST_PAGE = 0;
+    private static final int FIRST_PAGE = 0;
 
     @Autowired
     private AdRepository repository;
