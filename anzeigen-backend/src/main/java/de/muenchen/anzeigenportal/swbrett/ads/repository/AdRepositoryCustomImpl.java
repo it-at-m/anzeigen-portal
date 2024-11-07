@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("PMD.CouplingBetweenObjects")
@@ -81,8 +82,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
             predicates.add(filterType);
         }
         if (searchTerm != null) {
-            final Predicate searchTitle = builder.like(builder.lower(pathTitle), "%" + searchTerm.toLowerCase() + "%");
-            final Predicate searchDescription = builder.like(builder.lower(pathDescription), "%" + searchTerm.toLowerCase() + "%");
+            final Predicate searchTitle = builder.like(builder.lower(pathTitle), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
+            final Predicate searchDescription = builder.like(builder.lower(pathDescription), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
             predicates.add(builder.or(searchTitle, searchDescription));
         }
         if (adId != null) {
