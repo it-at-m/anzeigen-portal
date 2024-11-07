@@ -7,6 +7,7 @@ import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ValidationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 
+@Slf4j
 @RestController
 @RequestMapping(value = { "/ads", "/swbreads" }) // swbreads as alias, because ad blockers block /ads (Attention! Stupid pun)
 public class AdController {
@@ -74,9 +76,10 @@ public class AdController {
         try {
             return service.createAd(adTO);
         } catch (IOException e) {
+            log.debug(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler bei der Komprimierung des Originalfotos.", e);
         } catch (ValidationException e) {
-            System.out.println(e); // TODO Logger
+            log.debug(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
@@ -87,9 +90,10 @@ public class AdController {
         try {
             return service.updateAd(id, adTO, request);
         } catch (IOException e) {
+            log.debug(e.getMessage());
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Fehler bei der Komprimierung des Originalfotos.", e);
         } catch (ValidationException e) {
-            System.out.println(e); // TODO Logger
+            log.debug(e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
