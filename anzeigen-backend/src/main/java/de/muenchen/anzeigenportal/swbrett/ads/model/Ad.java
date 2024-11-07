@@ -19,7 +19,7 @@ import java.util.List;
 @Getter
 @Entity
 @Table(name = "t_ad")
-@SuppressWarnings("PMD.DataClass")
+@SuppressWarnings({"PMD.DataClass","PMD.TooManyFields"})
 public class Ad {
 
     @Setter
