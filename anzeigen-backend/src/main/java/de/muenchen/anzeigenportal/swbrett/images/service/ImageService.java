@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+@Slf4j
 @Service
 public class ImageService {
 
@@ -134,6 +136,7 @@ public class ImageService {
 
     // Dummy-Funktion: Implementiere den EXIF-Reader hier oder verwende eine Bibliothek wie MetadataExtractor
     private int getExifRotation(byte[] imageBytes) {
+        log.debug(String.valueOf(imageBytes.length));
         // Lese EXIF-Metadaten und gib den Winkel der Rotation zurück
         return 0; // Beispiel: 0 für keine Rotation, 90, 180, 270 für andere Fälle
     }

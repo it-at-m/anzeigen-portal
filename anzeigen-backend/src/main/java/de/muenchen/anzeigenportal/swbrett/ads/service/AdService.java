@@ -66,7 +66,6 @@ public class AdService {
         }
         if (internalOrder == null) {
             internalOrder = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();
-            ;
         }
         if (internalPage == null) {
             internalPage = FIRST_PAGE;
