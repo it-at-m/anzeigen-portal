@@ -14,7 +14,7 @@ public class AdValidationService {
     @Autowired
     private SettingService settingService;
 
-    public void validate(Ad ad) throws ValidationException {
+    public void validate(Ad ad) {
 
         if (ad.getImageOriginal() != null && ad.getImageOriginal().hasImage()) {
             Integer maxImgSize = settingService.getSetting(SettingName.MAX_SWB_IMAGE_SIZE).getNumberValue();

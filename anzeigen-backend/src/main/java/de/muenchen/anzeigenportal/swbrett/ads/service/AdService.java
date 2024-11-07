@@ -90,7 +90,7 @@ public class AdService {
         repository.save(ad);
     }
 
-    public AdTO createAd(AdTO adTO) throws IOException, ValidationException {
+    public AdTO createAd(AdTO adTO) throws IOException {
         if (adTO.getCreationDateTime() == null) {
             adTO.setCreationDateTime(LocalDateTime.now());
         }
@@ -111,7 +111,7 @@ public class AdService {
         return mapper.toAdTO(savedAd);
     }
 
-    public AdTO updateAd(long id, AdTO updatedAdTO, HttpServletRequest request) throws IOException, ValidationException {
+    public AdTO updateAd(long id, AdTO updatedAdTO, HttpServletRequest request) throws IOException {
         Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);
 
