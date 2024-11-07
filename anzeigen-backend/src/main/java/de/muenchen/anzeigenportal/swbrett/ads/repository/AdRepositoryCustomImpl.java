@@ -47,50 +47,50 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
 
     public Page<AdTO> searchAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable, Long adId,
             boolean isActive) {
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Ad> query = builder.createQuery(Ad.class);
+        final CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Ad> query = builder.createQuery(Ad.class);
 
-        Root<Ad> root = query.from(Ad.class);
-        Path<Long> pathSwbUserId = root.get("swbUser").get("id");
-        Path<Long> pathCategoryId = root.get("adCategory").get("id");
-        Path<AdType> pathAdType = root.get("adType");
-        Path<Boolean> pathActive = root.get("active");
-        Path<String> pathTitle = root.get("title");
-        Path<String> pathDescription = root.get("description");
-        Path<Double> pathAdId = root.get("id");
+        final Root<Ad> root = query.from(Ad.class);
+        final Path<Long> pathSwbUserId = root.get("swbUser").get("id");
+        final Path<Long> pathCategoryId = root.get("adCategory").get("id");
+        final Path<AdType> pathAdType = root.get("adType");
+        final Path<Boolean> pathActive = root.get("active");
+        final Path<String> pathTitle = root.get("title");
+        final Path<String> pathDescription = root.get("description");
+        final Path<Double> pathAdId = root.get("id");
 
         /**
          * Search and Filter
          */
-        List<Predicate> predicates = new ArrayList<>();
+        final List<Predicate> predicates = new ArrayList<>();
 
         // active = false ist für den User wie gelöscht
-        Predicate filterActive = builder.equal(pathActive, isActive);
+        final Predicate filterActive = builder.equal(pathActive, isActive);
         predicates.add(filterActive);
 
         if (userId != null) {
-            Predicate filterUser = builder.equal(pathSwbUserId, userId);
+            final Predicate filterUser = builder.equal(pathSwbUserId, userId);
             predicates.add(filterUser);
         }
         if (categoryId != null) {
-            Predicate filterCategory = builder.equal(pathCategoryId, categoryId);
+            final Predicate filterCategory = builder.equal(pathCategoryId, categoryId);
             predicates.add(filterCategory);
         }
         if (type != null) {
-            Predicate filterType = builder.equal(pathAdType, type);
+            final Predicate filterType = builder.equal(pathAdType, type);
             predicates.add(filterType);
         }
         if (searchTerm != null) {
-            Predicate searchTitle = builder.like(builder.lower(pathTitle), "%" + searchTerm.toLowerCase() + "%");
-            Predicate searchDescription = builder.like(builder.lower(pathDescription), "%" + searchTerm.toLowerCase() + "%");
+            final Predicate searchTitle = builder.like(builder.lower(pathTitle), "%" + searchTerm.toLowerCase() + "%");
+            final Predicate searchDescription = builder.like(builder.lower(pathDescription), "%" + searchTerm.toLowerCase() + "%");
             predicates.add(builder.or(searchTitle, searchDescription));
         }
         if (adId != null) {
-            Predicate filterAdId = builder.equal(pathAdId, adId);
+            final Predicate filterAdId = builder.equal(pathAdId, adId);
             predicates.add(filterAdId);
         }
 
-        Predicate[] finalPredicates = predicates.toArray(new Predicate[predicates.size()]);
+        final Predicate[] finalPredicates = predicates.toArray(new Predicate[predicates.size()]);
 
         query.select(root);
         query.where(builder.and(finalPredicates));
@@ -103,7 +103,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         if (PRICE_STRING.equals(sortBy)) {
 
             // Sonderbehandlung bei Sortierung nach Preis.
-            Expression<Integer> se2 = root.get(sortBy);
+            final Expression<Integer> se2 = root.get(sortBy);
             sortExpression = (builder.selectCase()
                     .when(builder.equal(sortExpression, 0), -1) // 0:  Zu verschenken
                     .when(builder.greaterThan(se2, Integer.valueOf(0)), sortExpression) // >0: Festpreis
@@ -120,17 +120,17 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         /**
          * Pagination
          */
-        TypedQuery<Ad> adsQuery = entityManager.createQuery(query);
+        final TypedQuery<Ad> adsQuery = entityManager.createQuery(query);
         adsQuery.setFirstResult((int) pageable.getOffset());
         adsQuery.setMaxResults(pageable.getPageSize());
 
-        List<AdTO> resultList = adsQuery.getResultList().stream().map(mapper::toAdTO).collect(Collectors.toList());
+        final List<AdTO> resultList = adsQuery.getResultList().stream().map(mapper::toAdTO).collect(Collectors.toList());
 
-        CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+        final CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
         countQuery.where(builder.and(finalPredicates));
         countQuery.select(builder.count(countQuery.from(Ad.class)));
 
-        Long totalRows = entityManager.createQuery(countQuery).getSingleResult();
+        final Long totalRows = entityManager.createQuery(countQuery).getSingleResult();
 
         return new PageImpl<>(resultList, pageable, totalRows);
     }

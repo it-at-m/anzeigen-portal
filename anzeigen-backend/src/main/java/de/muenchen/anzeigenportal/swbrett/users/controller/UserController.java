@@ -30,7 +30,7 @@ public class UserController {
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
     public SwbUserTO findUser(@RequestBody String email) {
-        Optional<SwbUserTO> userTO = service.findUser(email);
+        final Optional<SwbUserTO> userTO = service.findUser(email);
         if (userTO.isPresent()) {
             return userTO.get();
         } else {

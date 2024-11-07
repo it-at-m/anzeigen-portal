@@ -69,7 +69,7 @@ public class AdController {
 
         // create user if doesn't exist
         if (adTO.getSwbUser().getId() == null) {
-            SwbUserTO newUser = userService.createUser(adTO.getSwbUser());
+            final SwbUserTO newUser = userService.createUser(adTO.getSwbUser());
             adTO.setSwbUser(newUser);
         }
 

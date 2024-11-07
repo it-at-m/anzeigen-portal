@@ -42,8 +42,8 @@ public class AdCategoryService {
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_DELETE_THEENTITY.name())")
     public void deleteAdCategory(long id) {
-        AdCategory category = repository.getOne(id);
-        AdCategory standardCat = repository.findByStandardTrue();
+        final AdCategory category = repository.getOne(id);
+        final AdCategory standardCat = repository.findByStandardTrue();
 
         if (category.isStandard()) {
             throw new IllegalArgumentException("This category is standard and cannot be deleted.");

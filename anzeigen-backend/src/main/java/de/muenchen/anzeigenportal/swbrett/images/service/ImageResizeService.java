@@ -24,7 +24,7 @@ public class ImageResizeService {
         // (The JRE image processing ignores it, and thus the images may turn out rotated.)
         // TODO: above comment still important?
 
-        Image image = Toolkit.getDefaultToolkit().createImage(originalImage);
+        final Image image = Toolkit.getDefaultToolkit().createImage(originalImage);
 
         // New size to fit inside a MAX_SIZExMAX_SIZE square:
         int newWidth = image.getWidth(null);
@@ -39,10 +39,10 @@ public class ImageResizeService {
 
         // Resize original image to desired preview image size.
         image.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
-        BufferedImage outputImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        final BufferedImage outputImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
         outputImage.getGraphics().drawImage(image, 0, 0, null);
 
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ImageIO.write(outputImage, "jpg", bos);
         return bos.toByteArray();
     }

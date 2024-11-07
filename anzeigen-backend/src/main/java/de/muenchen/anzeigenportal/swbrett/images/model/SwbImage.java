@@ -34,7 +34,7 @@ public class SwbImage {
     // ======================== FIELD GETTERS AND SETTERS
 
     public byte[] getImage() {
-        Blob ib = this.getImageBlob();
+        final Blob ib = this.getImageBlob();
         if (ib == null) {
             return new byte[0];
         }
@@ -46,7 +46,7 @@ public class SwbImage {
     }
 
     public long getImageLength() {
-        Blob ib = this.getImageBlob();
+        final Blob ib = this.getImageBlob();
         if (ib == null) {
             return -1;
         }

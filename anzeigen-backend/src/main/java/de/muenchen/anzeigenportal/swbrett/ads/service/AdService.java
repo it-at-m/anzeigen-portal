@@ -71,7 +71,7 @@ public class AdService {
         if (internalPage == null) {
             internalPage = FIRST_PAGE;
         }
-        Pageable pageable = PageRequest.of(internalPage, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
+        final Pageable pageable = PageRequest.of(internalPage, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
         if (isActive) {
             return repository.searchActiveAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
         } else {
@@ -80,12 +80,12 @@ public class AdService {
     }
 
     public AdTO getAd(long id) {
-        Ad ad = repository.getOne(id);
+        final Ad ad = repository.getOne(id);
         return mapper.toAdTO(ad);
     }
 
     public void incrementView(long id) {
-        Ad ad = repository.getOne(id);
+        final Ad ad = repository.getOne(id);
         ad.setViews(ad.getViews() + 1);
         repository.save(ad);
     }
@@ -95,64 +95,64 @@ public class AdService {
             adTO.setCreationDateTime(LocalDateTime.now());
         }
         if (adTO.getExpiryDate() == null) {
-            Integer setting = this.settingService.getSetting(SettingName.MAX_EXPIRY_DATE_RANGE).getNumberValue();
+            final Integer setting = this.settingService.getSetting(SettingName.MAX_EXPIRY_DATE_RANGE).getNumberValue();
             adTO.setExpiryDate(LocalDate.now().plusWeeks(setting));
         }
 
-        Ad ad = mapper.toAd(adTO);
+        final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);
 
         if (ad.getImageOriginal() != null) {
-            byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(ad.getImageOriginal().getImage());
+            final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(ad.getImageOriginal().getImage());
             ad.setImagePreview(imagePreview);
         }
 
-        Ad savedAd = repository.save(ad);
+        final Ad savedAd = repository.save(ad);
         return mapper.toAdTO(savedAd);
     }
 
     public AdTO updateAd(long id, AdTO updatedAdTO, HttpServletRequest request) throws IOException {
-        Ad updatedAd = mapper.toAd(updatedAdTO);
+        final Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);
 
         if (updatedAd.getImageOriginal() != null) {
             if (updatedAd.getImageOriginal().hasImage()) {
-                byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(updatedAd.getImageOriginal().getImage());
+                final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(updatedAd.getImageOriginal().getImage());
                 updatedAd.setImagePreview(imagePreview);
             } else {
-                SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
+                final SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
                 updatedAd.setImageOriginal(image);
             }
 
         }
 
-        List<SwbFile> updatedFiles = updatedAd.getFiles().stream()
+        final List<SwbFile> updatedFiles = updatedAd.getFiles().stream()
                 .map(swbFile -> swbFile.hasFile() ? swbFile : fileService.getFile(swbFile.getId()))
                 .collect(Collectors.toList());
 
         updatedAd.setFiles(updatedFiles);
 
-        Ad ad = repository.getOne(id);
+        final Ad ad = repository.getOne(id);
         updatedAd.setId(ad.getId());
 
         return mapper.toAdTO(repository.save(updatedAd));
     }
 
     public void deactivateAd(long id, HttpServletRequest request) {
-        Ad ad = repository.getOne(id);
+        final Ad ad = repository.getOne(id);
         ad.setActive(false);
         repository.save(ad);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_DELETE_THEENTITY.name())")
     public void deleteAd(long id, HttpServletRequest request) {
-        Ad ad = repository.getOne(id);
+        final Ad ad = repository.getOne(id);
         repository.delete(ad);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
     public void updateAllCategories(AdCategory oldCat, AdCategory newCat) {
-        List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
+        final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
         allAdsOfCategory.stream().forEach(ad -> {
             ad.setAdCategory(newCat);

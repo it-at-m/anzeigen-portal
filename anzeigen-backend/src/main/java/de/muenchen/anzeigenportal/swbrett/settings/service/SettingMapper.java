@@ -13,7 +13,7 @@ public class SettingMapper {
     private FileMapper fileMapper;
 
     public SettingTO toSettingTO(Setting setting) {
-        SettingTO settingTO = new SettingTO();
+        final SettingTO settingTO = new SettingTO();
         settingTO.setId(setting.getId());
         settingTO.setSettingName(setting.getSettingName());
 
@@ -34,7 +34,7 @@ public class SettingMapper {
     }
 
     public Setting toSetting(SettingTO settingTO) {
-        Setting setting = new Setting();
+        final Setting setting = new Setting();
         setting.setId(settingTO.getId());
         setting.setSettingName(settingTO.getSettingName());
 

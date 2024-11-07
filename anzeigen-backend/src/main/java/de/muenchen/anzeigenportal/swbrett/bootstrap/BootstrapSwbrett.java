@@ -71,8 +71,8 @@ public class BootstrapSwbrett implements CommandLineRunner {
         LOG.info("Bootstrapping...");
 
         this.bootstrapSettings();
-        List<SwbUserTO> users = this.bootstrapUsers();
-        List<AdCategory> adCategories = this.bootstrapAdCategories();
+        final List<SwbUserTO> users = this.bootstrapUsers();
+        final List<AdCategory> adCategories = this.bootstrapAdCategories();
         this.bootstrapAds(users.get(0), adCategories);
         // this.bootstrapRandomAds(users.get(2), adCategories.get(0), 51);
         // this.bootstrapRandomAds(users.get(2), adCategories.get(4), 233);
@@ -83,54 +83,54 @@ public class BootstrapSwbrett implements CommandLineRunner {
     private void bootstrapSettings() {
         LOG.info("  Bootstrap Settings...");
 
-        SettingTO motd = new SettingTO();
+        final SettingTO motd = new SettingTO();
         motd.setSettingName(SettingName.MOTD);
         settingService.createSetting(motd);
 
-        SettingTO maxImageSize = new SettingTO();
+        final SettingTO maxImageSize = new SettingTO();
         maxImageSize.setSettingName(SettingName.MAX_SWB_IMAGE_SIZE);
         maxImageSize.setNumberValue(3);
         settingService.createSetting(maxImageSize);
 
-        SettingTO maxFileSize = new SettingTO();
+        final SettingTO maxFileSize = new SettingTO();
         maxFileSize.setSettingName(SettingName.MAX_SWB_FILE_SIZE);
         maxFileSize.setNumberValue(3);
         settingService.createSetting(maxFileSize);
 
-        SettingTO maxFilesLength = new SettingTO();
+        final SettingTO maxFilesLength = new SettingTO();
         maxFilesLength.setSettingName(SettingName.MAX_SWB_FILES_LENGTH);
         maxFilesLength.setNumberValue(5);
         settingService.createSetting(maxFilesLength);
 
-        SettingTO maxExpiryRange = new SettingTO();
+        final SettingTO maxExpiryRange = new SettingTO();
         maxExpiryRange.setSettingName(SettingName.MAX_EXPIRY_DATE_RANGE);
         maxExpiryRange.setNumberValue(8);
         settingService.createSetting(maxExpiryRange);
 
-        SettingTO agb = new SettingTO();
+        final SettingTO agb = new SettingTO();
         agb.setSettingName(SettingName.AGB_FILE);
         settingService.createSetting(agb);
 
-        SettingTO datenschutzhinweise = new SettingTO();
+        final SettingTO datenschutzhinweise = new SettingTO();
         datenschutzhinweise.setSettingName(SettingName.DATENSCHUTZHINWEISE_FILE);
         settingService.createSetting(datenschutzhinweise);
 
-        SettingTO maxPageSize = new SettingTO();
+        final SettingTO maxPageSize = new SettingTO();
         maxPageSize.setSettingName(SettingName.MAX_PAGE_SIZE);
         maxPageSize.setNumberValue(20);
         settingService.createSetting(maxPageSize);
 
-        SettingTO defaultSorting = new SettingTO();
+        final SettingTO defaultSorting = new SettingTO();
         defaultSorting.setSettingName(SettingName.DEFAULT_SORTING);
         defaultSorting.setTextValue("creationDateTime");
         settingService.createSetting(defaultSorting);
 
-        SettingTO defaultOrdering = new SettingTO();
+        final SettingTO defaultOrdering = new SettingTO();
         defaultOrdering.setSettingName(SettingName.DEFAULT_ORDERING);
         defaultOrdering.setTextValue("desc");
         settingService.createSetting(defaultOrdering);
 
-        SettingTO maxArchiveRange = new SettingTO();
+        final SettingTO maxArchiveRange = new SettingTO();
         maxArchiveRange.setSettingName(SettingName.MAX_ARCHIVE_DATE_RANGE);
         maxArchiveRange.setNumberValue(8);
         settingService.createSetting(maxArchiveRange);
@@ -141,24 +141,24 @@ public class BootstrapSwbrett implements CommandLineRunner {
     private List<SwbUserTO> bootstrapUsers() {
         LOG.info("  Bootstrap Test Users...");
 
-        List<SwbUser> result = new ArrayList<>();
+        final List<SwbUser> result = new ArrayList<>();
 
         {
-            SwbUser u = new SwbUser();
+            final SwbUser u = new SwbUser();
             u.setLhmObjectId("112061642");
             u.setDisplayName("Bugs Bunny");
             result.add(userService.saveOrGet(u));
         }
 
         {
-            SwbUser u = new SwbUser();
+            final SwbUser u = new SwbUser();
             u.setLhmObjectId("112061643");
             u.setDisplayName("Mr. Admin");
             result.add(userService.saveOrGet(u));
         }
 
         {
-            SwbUser u = new SwbUser();
+            final SwbUser u = new SwbUser();
             u.setLhmObjectId("112061644");
             u.setDisplayName("Randall Random");
             result.add(userService.saveOrGet(u));
@@ -171,23 +171,23 @@ public class BootstrapSwbrett implements CommandLineRunner {
     private List<AdCategory> bootstrapAdCategories() {
         LOG.info("  Bootstrap AdCategories...");
 
-        AdCategory adCategory1 = new AdCategory();
+        final AdCategory adCategory1 = new AdCategory();
         adCategory1.setName("Gegenstände");
         adCategoryService.createAdCategory(adCategory1);
 
-        AdCategory adCategory2 = new AdCategory();
+        final AdCategory adCategory2 = new AdCategory();
         adCategory2.setName("Möbel");
         adCategoryService.createAdCategory(adCategory2);
 
-        AdCategory adCategory3 = new AdCategory();
+        final AdCategory adCategory3 = new AdCategory();
         adCategory3.setName("Wohnungen");
         adCategoryService.createAdCategory(adCategory3);
 
-        AdCategory adCategory4 = new AdCategory();
+        final AdCategory adCategory4 = new AdCategory();
         adCategory4.setName("Sport");
         adCategoryService.createAdCategory(adCategory4);
 
-        AdCategory adCategory5 = new AdCategory();
+        final AdCategory adCategory5 = new AdCategory();
         adCategory5.setName("Sonstiges");
         adCategory5.setStandard(true);
         adCategoryService.createAdCategory(adCategory5);
@@ -199,7 +199,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
     private void bootstrapAds(SwbUserTO user, List<AdCategory> adCategories) throws IOException {
         LOG.info("  Bootstrap Ads...");
 
-        AdTO ad1 = new AdTO();
+        final AdTO ad1 = new AdTO();
         ad1.setActive(true);
         ad1.setSwbUser(user);
         ad1.setAdCategory(adCategories.get(4));
@@ -215,7 +215,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad1.setEmail("frau@soundso.de");
         adService.createAd(ad1);
 
-        AdTO ad2 = new AdTO();
+        final AdTO ad2 = new AdTO();
         ad2.setActive(true);
         ad2.setSwbUser(user);
         ad2.setAdCategory(adCategories.get(4));
@@ -231,7 +231,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad2.setEmail("frau@diesdas.de");
         adService.createAd(ad2);
 
-        AdTO ad3 = new AdTO();
+        final AdTO ad3 = new AdTO();
         ad3.setActive(true);
         ad3.setSwbUser(user);
         ad3.setAdCategory(adCategories.get(2));
@@ -247,7 +247,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         //        ad_3.setEmail("frau@diesdas.de");
         adService.createAd(ad3);
 
-        AdTO ad4 = new AdTO();
+        final AdTO ad4 = new AdTO();
         ad4.setActive(true);
         ad4.setSwbUser(user);
         ad4.setAdCategory(adCategories.get(2));
@@ -263,7 +263,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         //        ad_4.setEmail("frau@diesdas.de");
         adService.createAd(ad4);
 
-        AdTO ad5 = new AdTO();
+        final AdTO ad5 = new AdTO();
         ad5.setActive(true);
         ad5.setSwbUser(user);
         ad5.setAdCategory(adCategories.get(2));
@@ -279,7 +279,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad5.setEmail("asdf.asdf@as.df");
         adService.createAd(ad5);
 
-        AdTO ad6 = new AdTO();
+        final AdTO ad6 = new AdTO();
         ad6.setActive(true);
         ad6.setSwbUser(user);
         ad6.setAdCategory(adCategories.get(2));
@@ -295,7 +295,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad6.setEmail("aaaa@dev.com");
         adService.createAd(ad6);
 
-        AdTO ad7 = new AdTO();
+        final AdTO ad7 = new AdTO();
         ad7.setActive(true);
         ad7.setSwbUser(user);
         ad7.setAdCategory(adCategories.get(0));
@@ -313,7 +313,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad7.setEmail("der.aus.dem@nord.en");
         adService.createAd(ad7);
 
-        AdTO ad8 = new AdTO();
+        final AdTO ad8 = new AdTO();
         ad8.setActive(true);
         ad8.setSwbUser(user);
         ad8.setAdCategory(adCategories.get(0));
@@ -333,7 +333,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad8.setEmail("a.schwarzenegger@muenchena.de");
         adService.createAd(ad8);
 
-        AdTO ad9 = new AdTO();
+        final AdTO ad9 = new AdTO();
         ad9.setActive(true);
         ad9.setSwbUser(user);
         ad9.setAdCategory(adCategories.get(0));
@@ -350,7 +350,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         ad9.setEmail("mbappe@psg.fr");
         adService.createAd(ad9);
 
-        AdTO ad10 = new AdTO();
+        final AdTO ad10 = new AdTO();
         ad10.setActive(true);
         ad10.setSwbUser(user);
         ad10.setAdCategory(adCategories.get(0));
@@ -378,13 +378,13 @@ public class BootstrapSwbrett implements CommandLineRunner {
         LOG.info("  Bootstrap Random Ads...");
 
         for (int i = 0; i < numberOfRandomAds; i++) {
-            AdTO randomAd = new AdTO();
+            final AdTO randomAd = new AdTO();
             randomAd.setSwbUser(user);
             randomAd.setAdCategory(adCategory);
             randomAd.setAdType(AdType.OFFER);
             randomAd.setTitle(RandomString.make(8));
             randomAd.setDescription(RandomString.make(200));
-            double randomPrice = (int) Math.round(new Random().nextDouble() * 10000) / 100.0;
+            final double randomPrice = (int) Math.round(new Random().nextDouble() * 10000) / 100.0;
             randomAd.setPrice(randomPrice);
             randomAd.setPhone("089 7654321");
             randomAd.setEmail("mr.random@swbrett.com");
@@ -397,7 +397,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
     }
 
     private LocalDateTime generateRandomDate() {
-        LocalDate today = LocalDate.now();
+        final LocalDate today = LocalDate.now();
         int year = today.getYear();
         int randomMonth = today.minusMonths(1).getMonthValue(); // not this month for better demo
 

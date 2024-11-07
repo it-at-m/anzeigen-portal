@@ -36,7 +36,7 @@ public class ImageService {
     private ImageMapper mapper;
 
     public SwbImageTO getImageTO(long id) {
-        SwbImage image = repository.getOne(id);
+        final SwbImage image = repository.getOne(id);
         return mapper.toSwbImageTO(image);
     }
 
@@ -68,7 +68,7 @@ public class ImageService {
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(userProvidedImage));
 
         // Schritt 1: Verkleinere das Bild einmal, wenn es zu groß ist.
-        int currentSize = userProvidedImage.length;
+        final int currentSize = userProvidedImage.length;
         if (currentSize > MAX_SIZE) {
             double scale = Math.sqrt((double) MAX_SIZE / currentSize);
             if (scale > IMAGE_SCALE) {
@@ -79,7 +79,7 @@ public class ImageService {
 
         // Schritt 2: Lese EXIF-Metadaten und rotiere das Bild falls notwendig
         // (Hier verwenden wir eine externe Bibliothek wie MetadataExtractor)
-        int rotation = getExifRotation(userProvidedImage); // Methode, die die Rotation aus EXIF liest
+        final int rotation = getExifRotation(userProvidedImage); // Methode, die die Rotation aus EXIF liest
         if (rotation != 0) {
             image = rotateImage(image, rotation);
         }
@@ -105,21 +105,21 @@ public class ImageService {
     }
 
     private BufferedImage resizeImage(BufferedImage originalImage, double scale) {
-        int newWidth = (int) (originalImage.getWidth() * scale);
-        int newHeight = (int) (originalImage.getHeight() * scale);
-        Image tmp = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        BufferedImage resized = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = resized.createGraphics();
+        final int newWidth = (int) (originalImage.getWidth() * scale);
+        final int newHeight = (int) (originalImage.getHeight() * scale);
+        final Image tmp = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
+        final BufferedImage resized = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
+        final Graphics2D g2d = resized.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
         return resized;
     }
 
     private BufferedImage rotateImage(BufferedImage img, int degrees) {
-        int w = img.getWidth();
-        int h = img.getHeight();
-        BufferedImage rotated = new BufferedImage(w, h, img.getType());
-        Graphics2D g2d = rotated.createGraphics();
+        final int w = img.getWidth();
+        final int h = img.getHeight();
+        final BufferedImage rotated = new BufferedImage(w, h, img.getType());
+        final Graphics2D g2d = rotated.createGraphics();
         g2d.rotate(Math.toRadians(degrees), w / 2, h / 2);
         g2d.drawImage(img, null, 0, 0);
         g2d.dispose();
@@ -127,7 +127,7 @@ public class ImageService {
     }
 
     private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(image, "jpg", baos);
         return baos.toByteArray();
     }

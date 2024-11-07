@@ -16,7 +16,7 @@ public class FileService {
     private FileMapper mapper;
 
     public SwbFileTO getFileTO(long id) {
-        SwbFile file = repository.getOne(id);
+        final SwbFile file = repository.getOne(id);
         return mapper.toSwbFileTO(file);
     }
 

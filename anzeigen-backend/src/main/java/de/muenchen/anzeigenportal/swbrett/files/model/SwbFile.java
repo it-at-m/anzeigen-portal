@@ -40,7 +40,7 @@ public class SwbFile {
     // ======================== FIELD GETTERS AND SETTERS
 
     public byte[] getFile() {
-        Blob fb = this.getFileBlob();
+        final Blob fb = this.getFileBlob();
         if (fb == null) {
             return new byte[0];
         }
@@ -52,7 +52,7 @@ public class SwbFile {
     }
 
     public long getFileLength() {
-        Blob fb = this.getFileBlob();
+        final Blob fb = this.getFileBlob();
         if (fb == null) {
             return -1;
         }
