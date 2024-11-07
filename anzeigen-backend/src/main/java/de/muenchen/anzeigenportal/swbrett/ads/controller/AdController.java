@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping(value = { "/ads", "/swbreads" }) // swbreads as alias, because ad blockers block /ads (Attention! Stupid pun)
+@RequestMapping( { "/ads", "/swbreads" }) // swbreads as alias, because ad blockers block /ads (Attention! Stupid pun)
 @SuppressWarnings("PMD.PreserveStackTrace")
 public class AdController {
 

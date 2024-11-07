@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/admin/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO getUser(@PathVariable(value = "userId") final long userId) {
+    public SwbUserTO getUser(@PathVariable("userId") final long userId) {
         return service.getUser(userId);
     }
 
