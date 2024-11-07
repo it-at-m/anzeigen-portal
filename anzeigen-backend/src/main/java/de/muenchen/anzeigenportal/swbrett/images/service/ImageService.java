@@ -27,6 +27,7 @@ public class ImageService {
      * @see #sanitizeImage(byte[])
      */
     private static final int MAX_SIZE = 1024 * 1024;
+    private static final double IMAGE_SCALE = 0.9;
 
     @Autowired
     private ImageRepository repository;
@@ -70,7 +71,7 @@ public class ImageService {
         int currentSize = userProvidedImage.length;
         if (currentSize > MAX_SIZE) {
             double scale = Math.sqrt((double) MAX_SIZE / currentSize);
-            if (scale > 0.9) scale = 0.9;
+            if (scale > IMAGE_SCALE) scale = IMAGE_SCALE;
             image = resizeImage(image, scale);
         }
 
@@ -89,7 +90,7 @@ public class ImageService {
             if (ba.length <= MAX_SIZE) break;
 
             double scale = Math.sqrt((double) MAX_SIZE / ba.length);
-            if (scale > 0.9) scale = 0.9;
+            if (scale > IMAGE_SCALE) scale = IMAGE_SCALE;
             image = resizeImage(image, scale);
         }
 

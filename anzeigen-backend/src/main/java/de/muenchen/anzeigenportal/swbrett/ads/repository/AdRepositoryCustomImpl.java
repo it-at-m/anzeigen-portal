@@ -23,6 +23,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     public static final String ORDER_ASC = "asc";
     public static final String ORDER_DESC = "desc";
 
+    public static final String PRICE_STRING = "price";
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -97,7 +99,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
          */
         Expression<Object> sortExpression = root.get(sortBy);
 
-        if ("price".contentEquals(sortBy)) {
+        if (sortBy.equals(PRICE_STRING)) {
 
             // Sonderbehandlung bei Sortierung nach Preis.
             Expression<Integer> se2 = root.get(sortBy);

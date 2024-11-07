@@ -401,7 +401,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         int year = today.getYear();
         int randomMonth = today.minusMonths(1).getMonthValue(); // not this month for better demo
 
-        if (randomMonth == 12) {
+        if (randomMonth == 12) { //NOPMD
             year = today.minusYears(1).getYear();
         }
 
