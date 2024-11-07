@@ -71,7 +71,9 @@ public class ImageService {
         int currentSize = userProvidedImage.length;
         if (currentSize > MAX_SIZE) {
             double scale = Math.sqrt((double) MAX_SIZE / currentSize);
-            if (scale > IMAGE_SCALE) scale = IMAGE_SCALE;
+            if (scale > IMAGE_SCALE) {
+                scale = IMAGE_SCALE;
+            }
             image = resizeImage(image, scale);
         }
 
@@ -83,14 +85,19 @@ public class ImageService {
         }
 
         // Schritt 3: Verkleinern, bis die Dateigröße passt
+        // TODO - while schleife hier besser
         byte[] ba;
         for (;;) {
             ba = bufferedImageToByteArray(image);
 
-            if (ba.length <= MAX_SIZE) break;
+            if (ba.length <= MAX_SIZE) {
+                break;
+            }
 
             double scale = Math.sqrt((double) MAX_SIZE / ba.length);
-            if (scale > IMAGE_SCALE) scale = IMAGE_SCALE;
+            if (scale > IMAGE_SCALE) {
+                scale = IMAGE_SCALE;
+            }
             image = resizeImage(image, scale);
         }
 

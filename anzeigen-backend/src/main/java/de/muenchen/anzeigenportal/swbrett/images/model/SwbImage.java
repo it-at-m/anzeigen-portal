@@ -45,7 +45,9 @@ public class SwbImage {
 
     public byte[] getImage() {
         Blob ib = this.getImageBlob();
-        if (ib == null) return new byte[0];
+        if (ib == null) {
+            return new byte[0];
+        }
         try {
             return ib.getBytes(1, (int) ib.length());
         } catch (SQLException e) {
@@ -55,7 +57,9 @@ public class SwbImage {
 
     public long getImageLength() {
         Blob ib = this.getImageBlob();
-        if (ib == null) return -1;
+        if (ib == null) {
+            return -1;
+        }
         try {
             return ib.length();
         } catch (SQLException e) {

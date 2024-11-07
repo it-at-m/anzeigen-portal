@@ -60,7 +60,9 @@ public class SwbFile {
 
     public byte[] getFile() {
         Blob fb = this.getFileBlob();
-        if (fb == null) return new byte[0];
+        if (fb == null) {
+            return new byte[0];
+        }
         try {
             return fb.getBytes(1, (int) fb.length());
         } catch (SQLException e) {
@@ -70,7 +72,9 @@ public class SwbFile {
 
     public long getFileLength() {
         Blob fb = this.getFileBlob();
-        if (fb == null) return -1;
+        if (fb == null) {
+            return -1;
+        }
         try {
             return fb.length();
         } catch (SQLException e) {
