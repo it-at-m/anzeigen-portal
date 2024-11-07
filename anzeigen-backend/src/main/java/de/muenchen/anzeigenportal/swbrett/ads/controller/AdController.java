@@ -40,7 +40,7 @@ public class AdController {
      */
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    @SuppressWarnings("PMD.UseObjectWithCaseConventions")
+    @SuppressWarnings({"PMD.UseObjectWithCaseConventions","PMD.UseObjectForClearerAPI"})
     public Page<AdTO> getAds(@RequestParam(value = "isActive", required = true) final boolean isActive,
             @RequestParam(value = "userId", required = false) final String userId,
             @RequestParam(value = "searchTerm", required = false) final String searchTerm,
