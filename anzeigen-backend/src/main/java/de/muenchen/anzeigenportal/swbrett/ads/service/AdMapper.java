@@ -94,7 +94,7 @@ public class AdMapper {
             adTO.setAdImg(swbImageTO);
         }
 
-        if (ad.getFiles().size() > 0) {
+        if (!ad.getFiles().isEmpty()) {
             final List<SwbFileTO> adFiles = ad.getFiles().stream()
                     .map(fileMapper::toSwbFileTOLight)
                     .collect(Collectors.toList());
