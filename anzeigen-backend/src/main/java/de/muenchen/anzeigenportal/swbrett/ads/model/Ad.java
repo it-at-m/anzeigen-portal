@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -188,7 +189,7 @@ public class Ad {
     }
 
     public void setImagePreview(byte[] imagePreview) {
-        this.imagePreview = imagePreview;
+        this.imagePreview = Arrays.copyOf(imagePreview, imagePreview.length);
     }
 
     public SwbImage getImageOriginal() {
