@@ -82,8 +82,8 @@ class NfcHelperTest {
         assertEquals(THIRD_NFC, nfcCookie.getPath());
     }
 
-    @SuppressWarnings("PMD.JUnitTestsShouldIncludeAssert")
     @Test
+    @SuppressWarnings("PMD.UnitTestShouldIncludeAssert")
     void nfcConverterCookieArray() {
         final Cookie[] nfdCookies = Collections.nCopies(3, createNfdCookie()).toArray(new Cookie[3]);
         final Cookie[] nfcCookies = NfcHelper.nfcConverter(nfdCookies);
