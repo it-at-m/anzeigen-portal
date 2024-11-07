@@ -36,13 +36,7 @@ public class ScheduledJobService {
 
         final LocalDate limit;
 
-        if (false) {
-
-            // Nur zum Testen: *Alle* aktiven Anzeigen deaktivieren.
-            limit = LocalDate.of(2099, 1, 1);
-        } else {
-            limit = LocalDate.now();
-        }
+        limit = LocalDate.now();
 
         LOG.debug("Deactivate active ads that expired before " + limit);
 
@@ -62,14 +56,8 @@ public class ScheduledJobService {
     public void deleteDeactivatedAdsAfterDateRange() {
 
         final LocalDate limit;
-        if (false) {
-
-            // Nur zum Testen: *Alle* inaktiven Anzeigen löschen.
-            limit = LocalDate.of(2099, 1, 1);
-        } else {
-            final Integer maxArchiveDateRange = settingService.getSetting(SettingName.MAX_ARCHIVE_DATE_RANGE).getNumberValue();
-            limit = LocalDate.now().minusWeeks(maxArchiveDateRange);
-        }
+        final Integer maxArchiveDateRange = settingService.getSetting(SettingName.MAX_ARCHIVE_DATE_RANGE).getNumberValue();
+        limit = LocalDate.now().minusWeeks(maxArchiveDateRange);
 
         LOG.debug("Delete inactive ads that expired before " + limit);
 
