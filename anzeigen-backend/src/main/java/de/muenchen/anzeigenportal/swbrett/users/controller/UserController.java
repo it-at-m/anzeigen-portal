@@ -17,7 +17,7 @@ public class UserController {
 
     @GetMapping("/admin/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO getUser(@PathVariable(value = "userId") long userId) {
+    public SwbUserTO getUser(@PathVariable(value = "userId") final long userId) {
         return service.getUser(userId);
     }
 
@@ -29,7 +29,7 @@ public class UserController {
      */
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO findUser(@RequestBody String email) {
+    public SwbUserTO findUser(@RequestBody final String email) {
         final Optional<SwbUserTO> userTO = service.findUser(email);
         if (userTO.isPresent()) {
             return userTO.get();
@@ -40,7 +40,7 @@ public class UserController {
 
     @PostMapping()
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO createUser(@RequestBody SwbUserTO userTO) {
+    public SwbUserTO createUser(@RequestBody final SwbUserTO userTO) {
         return service.createUser(userTO);
     }
 }

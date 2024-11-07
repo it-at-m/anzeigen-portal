@@ -14,13 +14,13 @@ public class AdValidationService {
     @Autowired
     private SettingService settingService;
 
-    public void validate(Ad ad) {
+    public void validate(final Ad ad) {
         validateImage(ad);
 
         validateFiles(ad);
     }
 
-    private void validateImage(Ad ad) {
+    private void validateImage(final Ad ad) {
         if (ad.getImageOriginal() != null && ad.getImageOriginal().hasImage()) {
             final int maxImgSizeBytes = getMaxImageSizeInBytes();
             if (ad.getImageOriginal().getImageLength() > maxImgSizeBytes) {
@@ -29,7 +29,7 @@ public class AdValidationService {
         }
     }
 
-    private void validateFiles(Ad ad) {
+    private void validateFiles(final Ad ad) {
         if (!ad.getFiles().isEmpty()) {
             final int maxFilesLength = getMaxFilesLength();
 
@@ -43,7 +43,7 @@ public class AdValidationService {
         }
     }
 
-    private void validateFile(SwbFile file) {
+    private void validateFile(final SwbFile file) {
         final int maxFileSizeBytes = getMaxFileSizeInBytes();
 
         if (file.hasFile() && file.getFileLength() > maxFileSizeBytes) {

@@ -18,7 +18,7 @@ public class ImageResizeService {
 
     private final static int MAX_SIZE = 500;
 
-    public byte[] resizeImageToPreviewImage(byte[] originalImage) throws IOException {
+    public byte[] resizeImageToPreviewImage(final byte[] originalImage) throws IOException {
 
         // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
         // (The JRE image processing ignores it, and thus the images may turn out rotated.)

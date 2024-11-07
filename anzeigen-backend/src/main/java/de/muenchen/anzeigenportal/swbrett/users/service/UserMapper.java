@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserMapper {
 
-    public SwbUser toSwbUser(SwbUserTO userTO) {
+    public SwbUser toSwbUser(final SwbUserTO userTO) {
         final SwbUser user = new SwbUser();
 
         if (userTO.getId() != null) {
@@ -25,7 +25,7 @@ public class UserMapper {
         return user;
     }
 
-    public SwbUserTO toSwbUserTOAnonym(SwbUser user) {
+    public SwbUserTO toSwbUserTOAnonym(final SwbUser user) {
         final SwbUserTO userTO = new SwbUserTO();
         userTO.setId(user.getId());
         // employeeMail nur für Admins!
@@ -33,7 +33,7 @@ public class UserMapper {
         return userTO;
     }
 
-    public SwbUserTO toSwbUserTO(SwbUser user) {
+    public SwbUserTO toSwbUserTO(final SwbUser user) {
         final SwbUserTO userTO = new SwbUserTO();
         userTO.setId(user.getId());
         userTO.setLhmObjectId(user.getLhmObjectId());

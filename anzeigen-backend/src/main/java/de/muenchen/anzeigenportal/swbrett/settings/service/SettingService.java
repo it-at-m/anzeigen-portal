@@ -25,19 +25,19 @@ public class SettingService {
         return all.stream().map(mapper::toSettingTO).collect(Collectors.toList());
     }
 
-    public SettingTO getSetting(SettingName name) {
+    public SettingTO getSetting(final SettingName name) {
         final Setting setting = repository.findBySettingName(name);
         return mapper.toSettingTO(setting);
     }
 
-    public SettingTO createSetting(SettingTO settingTO) {
+    public SettingTO createSetting(final SettingTO settingTO) {
         final Setting setting = mapper.toSetting(settingTO);
         final Setting savedSetting = repository.save(setting);
         return mapper.toSettingTO(savedSetting);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
-    public List<SettingTO> saveSettings(List<SettingTO> settingTOs) {
+    public List<SettingTO> saveSettings(final List<SettingTO> settingTOs) {
         final List<Setting> settings = settingTOs.stream().map(mapper::toSetting).collect(Collectors.toList());
         final List<Setting> savedSettings = repository.saveAll(settings);
         return savedSettings.stream().map(mapper::toSettingTO).collect(Collectors.toList());

@@ -196,7 +196,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         return adCategoryService.getAdCategories();
     }
 
-    private void bootstrapAds(SwbUserTO user, List<AdCategory> adCategories) throws IOException {
+    private void bootstrapAds(final SwbUserTO user, final List<AdCategory> adCategories) throws IOException {
         LOG.info("  Bootstrap Ads...");
 
         final AdTO ad1 = new AdTO();
@@ -374,7 +374,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         LOG.info("  ... " + adRepository.count() + " Ads erstellt");
     }
 
-    private void bootstrapRandomAds(SwbUserTO user, AdCategory adCategory, int numberOfRandomAds) throws IOException {
+    private void bootstrapRandomAds(final SwbUserTO user, final AdCategory adCategory, final int numberOfRandomAds) throws IOException {
         LOG.info("  Bootstrap Random Ads...");
 
         for (int i = 0; i < numberOfRandomAds; i++) {

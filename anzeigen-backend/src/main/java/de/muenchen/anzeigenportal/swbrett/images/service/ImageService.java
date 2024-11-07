@@ -35,12 +35,12 @@ public class ImageService {
     @Autowired
     private ImageMapper mapper;
 
-    public SwbImageTO getImageTO(long id) {
+    public SwbImageTO getImageTO(final long id) {
         final SwbImage image = repository.getOne(id);
         return mapper.toSwbImageTO(image);
     }
 
-    public SwbImage getImage(long id) {
+    public SwbImage getImage(final long id) {
         return repository.getOne(id);
     }
 
@@ -60,7 +60,7 @@ public class ImageService {
      * </li>
      * </ul>
      */
-    public byte[] sanitizeImage(byte[] userProvidedImage) throws IOException {
+    public byte[] sanitizeImage(final byte[] userProvidedImage) throws IOException {
 
         // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
         // (The JRE image processing ignores it, and thus the images may turn out rotated.)
@@ -104,7 +104,7 @@ public class ImageService {
         return ba;
     }
 
-    private BufferedImage resizeImage(BufferedImage originalImage, double scale) {
+    private BufferedImage resizeImage(final BufferedImage originalImage,final double scale) {
         final int newWidth = (int) (originalImage.getWidth() * scale);
         final int newHeight = (int) (originalImage.getHeight() * scale);
         final Image tmp = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
@@ -115,7 +115,7 @@ public class ImageService {
         return resized;
     }
 
-    private BufferedImage rotateImage(BufferedImage img, int degrees) {
+    private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
         final int w = img.getWidth();
         final int h = img.getHeight();
         final BufferedImage rotated = new BufferedImage(w, h, img.getType());
@@ -126,7 +126,7 @@ public class ImageService {
         return rotated;
     }
 
-    private byte[] bufferedImageToByteArray(BufferedImage image) throws IOException {
+    private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(image, "jpg", baos);
         return baos.toByteArray();

@@ -61,7 +61,7 @@ public class SwbImage {
         return this.getImageBlob() != null;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(final byte[] image) {
         this.setImageBlob(NonContextualLobCreator.INSTANCE.createBlob(image));
     }
 }

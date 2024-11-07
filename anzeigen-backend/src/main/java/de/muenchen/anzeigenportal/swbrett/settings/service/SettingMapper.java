@@ -12,7 +12,7 @@ public class SettingMapper {
     @Autowired
     private FileMapper fileMapper;
 
-    public SettingTO toSettingTO(Setting setting) {
+    public SettingTO toSettingTO(final Setting setting) {
         final SettingTO settingTO = new SettingTO();
         settingTO.setId(setting.getId());
         settingTO.setSettingName(setting.getSettingName());
@@ -33,7 +33,7 @@ public class SettingMapper {
         return settingTO;
     }
 
-    public Setting toSetting(SettingTO settingTO) {
+    public Setting toSetting(final SettingTO settingTO) {
         final Setting setting = new Setting();
         setting.setId(settingTO.getId());
         setting.setSettingName(settingTO.getSettingName());

@@ -21,16 +21,16 @@ public class AdCategoryService {
         return repository.findAll();
     }
 
-    public AdCategory getAdCategory(long id) {
+    public AdCategory getAdCategory(final long id) {
         return repository.getOne(id);
     }
 
-    public AdCategory createAdCategory(AdCategory adCategory) {
+    public AdCategory createAdCategory(final AdCategory adCategory) {
         return repository.save(adCategory);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
-    public AdCategory saveAdCategory(AdCategory adCategory) {
+    public AdCategory saveAdCategory(final AdCategory adCategory) {
         if (adCategory.isStandard()) {
             getAdCategories().stream().forEach(cat -> {
                 cat.setStandard(false);
@@ -41,7 +41,7 @@ public class AdCategoryService {
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_DELETE_THEENTITY.name())")
-    public void deleteAdCategory(long id) {
+    public void deleteAdCategory(final long id) {
         final AdCategory category = repository.getOne(id);
         final AdCategory standardCat = repository.findByStandardTrue();
 

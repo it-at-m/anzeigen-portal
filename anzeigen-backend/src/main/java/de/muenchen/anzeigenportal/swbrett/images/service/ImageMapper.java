@@ -12,14 +12,14 @@ public class ImageMapper {
     /**
      * TO ohne originale Bilddatei
      */
-    public SwbImageTO toSwbImageTOLight(SwbImage image) {
+    public SwbImageTO toSwbImageTOLight(final SwbImage image) {
         final SwbImageTO fileTO = new SwbImageTO();
         fileTO.setId(image.getId());
 
         return fileTO;
     }
 
-    public SwbImageTO toSwbImageTO(SwbImage image) {
+    public SwbImageTO toSwbImageTO(final SwbImage image) {
         final SwbImageTO fileTO = new SwbImageTO();
         fileTO.setId(image.getId());
         fileTO.setImageBase64(Base64.getEncoder().encodeToString(image.getImage()));
@@ -27,7 +27,7 @@ public class ImageMapper {
         return fileTO;
     }
 
-    public SwbImage toSwbImage(SwbImageTO imageTO) {
+    public SwbImage toSwbImage(final SwbImageTO imageTO) {
         final SwbImage file = new SwbImage();
         file.setId(imageTO.getId());
         if (imageTO.getImageBase64() != null) {

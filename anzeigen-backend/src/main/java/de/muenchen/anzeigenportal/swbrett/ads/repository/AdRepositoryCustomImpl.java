@@ -33,20 +33,20 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     private AdMapper mapper;
 
     @Override
-    public Page<AdTO> searchActiveAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable,
-            Long adId) {
+    public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Pageable pageable,
+                                      final Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, true);
     }
 
     @Override
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
-    public Page<AdTO> searchDeactivatedAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable,
-            Long adId) {
+    public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final  AdType type, final String sortBy, final String order, final Pageable pageable,
+                                           final Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
-    public Page<AdTO> searchAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Pageable pageable, Long adId,
-            boolean isActive) {
+    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Pageable pageable, final Long adId,
+                                final boolean isActive) {
         final CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Ad> query = builder.createQuery(Ad.class);
 

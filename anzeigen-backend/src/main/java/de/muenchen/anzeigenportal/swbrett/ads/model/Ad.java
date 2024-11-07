@@ -100,7 +100,7 @@ public class Ad {
     @Column(name = "views", nullable = false)
     private int views = 0;
 
-    public void setImagePreview(byte[] imagePreview) {
+    public void setImagePreview(final byte[] imagePreview) {
         this.imagePreview = Arrays.copyOf(imagePreview, imagePreview.length);
     }
 

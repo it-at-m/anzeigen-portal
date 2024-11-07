@@ -12,7 +12,7 @@ public class FileMapper {
     /**
      * TO ohne die Datei selbst
      */
-    public SwbFileTO toSwbFileTOLight(SwbFile file) {
+    public SwbFileTO toSwbFileTOLight(final SwbFile file) {
         final SwbFileTO fileTO = new SwbFileTO();
         fileTO.setId(file.getId());
         fileTO.setName(file.getName());
@@ -21,7 +21,7 @@ public class FileMapper {
         return fileTO;
     }
 
-    public SwbFileTO toSwbFileTO(SwbFile file) {
+    public SwbFileTO toSwbFileTO(final SwbFile file) {
         final SwbFileTO fileTO = new SwbFileTO();
         fileTO.setId(file.getId());
         fileTO.setName(file.getName());
@@ -31,7 +31,7 @@ public class FileMapper {
         return fileTO;
     }
 
-    public SwbFile toSwbFile(SwbFileTO fileTO) {
+    public SwbFile toSwbFile(final SwbFileTO fileTO) {
         final SwbFile file = new SwbFile();
         file.setId(fileTO.getId());
         file.setName(fileTO.getName());

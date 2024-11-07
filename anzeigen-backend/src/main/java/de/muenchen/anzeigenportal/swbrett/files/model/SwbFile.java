@@ -67,7 +67,7 @@ public class SwbFile {
         return this.getFileBlob() != null;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(final byte[] file) {
         this.setFileBlob(NonContextualLobCreator.INSTANCE.createBlob(file));
     }
 }

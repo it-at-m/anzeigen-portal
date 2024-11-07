@@ -25,13 +25,13 @@ public class SettingController {
 
     @GetMapping("/{settingName}")
     @ResponseStatus(HttpStatus.OK)
-    public SettingTO getSetting(@PathVariable(value = "settingName") SettingName settingName) {
+    public SettingTO getSetting(@PathVariable(value = "settingName") final SettingName settingName) {
         return service.getSetting(settingName);
     }
 
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public List<SettingTO> updateSettings(@RequestBody List<SettingTO> settings, HttpServletRequest request) {
+    public List<SettingTO> updateSettings(@RequestBody final List<SettingTO> settings, HttpServletRequest request) {
         return service.saveSettings(settings);
     }
 }

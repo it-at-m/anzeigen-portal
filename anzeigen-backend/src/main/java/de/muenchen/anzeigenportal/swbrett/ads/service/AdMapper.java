@@ -28,7 +28,7 @@ public class AdMapper {
     @Autowired
     private FileMapper fileMapper;
 
-    public Ad toAd(AdTO adTO) {
+    public Ad toAd(final AdTO adTO) {
         final Ad ad = new Ad();
         ad.setId(adTO.getId());
         ad.setSwbUser(userMapper.toSwbUser(adTO.getSwbUser()));
@@ -66,7 +66,7 @@ public class AdMapper {
         return ad;
     }
 
-    public AdTO toAdTO(Ad ad) {
+    public AdTO toAdTO(final Ad ad) {
         final AdTO adTO = new AdTO();
         adTO.setId(ad.getId());
         adTO.setSwbUser(userMapper.toSwbUserTOAnonym(ad.getSwbUser()));

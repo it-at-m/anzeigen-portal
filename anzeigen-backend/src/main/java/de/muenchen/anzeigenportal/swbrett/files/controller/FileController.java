@@ -15,7 +15,7 @@ public class FileController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SwbFileTO getFile(@PathVariable("id") long id) {
+    public SwbFileTO getFile(@PathVariable("id") final long id) {
         return service.getFileTO(id);
     }
 }

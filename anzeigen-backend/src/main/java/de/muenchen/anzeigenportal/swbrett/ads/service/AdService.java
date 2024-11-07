@@ -55,8 +55,8 @@ public class AdService {
     @Autowired
     private AdValidationService validationService;
 
-    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId,
-            boolean isActive) {
+    public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Integer page, final Long adId,
+                              final boolean isActive) {
         String interrnalSortBy = sortBy;
         String internalOrder = order;
         Integer internalPage = page;
@@ -79,18 +79,18 @@ public class AdService {
         }
     }
 
-    public AdTO getAd(long id) {
+    public AdTO getAd(final long id) {
         final Ad ad = repository.getOne(id);
         return mapper.toAdTO(ad);
     }
 
-    public void incrementView(long id) {
+    public void incrementView(final long id) {
         final Ad ad = repository.getOne(id);
         ad.setViews(ad.getViews() + 1);
         repository.save(ad);
     }
 
-    public AdTO createAd(AdTO adTO) throws IOException {
+    public AdTO createAd(final AdTO adTO) throws IOException {
         if (adTO.getCreationDateTime() == null) {
             adTO.setCreationDateTime(LocalDateTime.now());
         }
@@ -111,7 +111,7 @@ public class AdService {
         return mapper.toAdTO(savedAd);
     }
 
-    public AdTO updateAd(long id, AdTO updatedAdTO, HttpServletRequest request) throws IOException {
+    public AdTO updateAd(final long id, final AdTO updatedAdTO, HttpServletRequest request) throws IOException {
         final Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);
 
@@ -138,20 +138,20 @@ public class AdService {
         return mapper.toAdTO(repository.save(updatedAd));
     }
 
-    public void deactivateAd(long id, HttpServletRequest request) {
+    public void deactivateAd(final long id, HttpServletRequest request) {
         final Ad ad = repository.getOne(id);
         ad.setActive(false);
         repository.save(ad);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_DELETE_THEENTITY.name())")
-    public void deleteAd(long id, HttpServletRequest request) {
+    public void deleteAd(final long id, HttpServletRequest request) {
         final Ad ad = repository.getOne(id);
         repository.delete(ad);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
-    public void updateAllCategories(AdCategory oldCat, AdCategory newCat) {
+    public void updateAllCategories(final AdCategory oldCat, final AdCategory newCat) {
         final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
         allAdsOfCategory.stream().forEach(ad -> {
