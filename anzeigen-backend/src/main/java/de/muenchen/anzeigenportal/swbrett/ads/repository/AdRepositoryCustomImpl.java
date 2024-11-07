@@ -100,7 +100,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
          */
         Expression<Object> sortExpression = root.get(sortBy);
 
-        if (sortBy.equals(PRICE_STRING)) {
+        if (PRICE_STRING.equals(sortBy)) {
 
             // Sonderbehandlung bei Sortierung nach Preis.
             Expression<Integer> se2 = root.get(sortBy);
@@ -111,9 +111,9 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
             );
         }
 
-        if (order.equals(ORDER_ASC)) {
+        if (ORDER_ASC.equals(order)) {
             query.orderBy(builder.asc(sortExpression));
-        } else if (order.equals(ORDER_DESC)) {
+        } else if (ORDER_DESC.equals(order)) {
             query.orderBy(builder.desc(sortExpression));
         }
 
