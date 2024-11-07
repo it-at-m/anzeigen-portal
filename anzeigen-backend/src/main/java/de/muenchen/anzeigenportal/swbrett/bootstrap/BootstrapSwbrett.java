@@ -374,24 +374,4 @@ public class BootstrapSwbrett implements CommandLineRunner {
 
         LOG.info("  ... " + adRepository.count() + " Ads erstellt");
     }
-
-    private LocalDateTime generateRandomDate() {
-        final LocalDate today = LocalDate.now();
-        int year = today.getYear();
-        int randomMonth = today.minusMonths(1).getMonthValue(); // not this month for better demo
-
-        if (randomMonth == 12) { //NOPMD
-            year = today.minusYears(1).getYear();
-        }
-
-        randomMonth = new Random().nextInt(randomMonth) + 1;
-        int randomDay = today.getDayOfMonth();
-        if (randomMonth == LocalDate.now().getMonthValue()) {
-            randomDay = new Random().nextInt(randomDay) + 1;
-        } else {
-            randomDay = new Random().nextInt(28) + 1;
-        }
-
-        return LocalDateTime.of(LocalDate.of(year, randomMonth, randomDay), LocalTime.now());
-    }
 }

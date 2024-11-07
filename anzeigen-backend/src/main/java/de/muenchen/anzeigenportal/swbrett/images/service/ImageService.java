@@ -135,7 +135,7 @@ public class ImageService {
     }
 
     // Dummy-Funktion: Implementiere den EXIF-Reader hier oder verwende eine Bibliothek wie MetadataExtractor
-    private int getExifRotation(byte[] imageBytes) {
+    private int getExifRotation(final byte[] imageBytes) {
         log.debug(String.valueOf(imageBytes.length));
         // Lese EXIF-Metadaten und gib den Winkel der Rotation zurück
         return 0; // Beispiel: 0 für keine Rotation, 90, 180, 270 für andere Fälle
