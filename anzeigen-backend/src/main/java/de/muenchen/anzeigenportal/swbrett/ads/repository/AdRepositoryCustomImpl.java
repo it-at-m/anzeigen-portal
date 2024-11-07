@@ -106,8 +106,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
             final Expression<Integer> se2 = root.get(sortBy);
             sortExpression = (builder.selectCase()
                     .when(builder.equal(sortExpression, 0), -1) // 0:  Zu verschenken
-                    .when(builder.greaterThan(se2, Integer.valueOf(0)), sortExpression) // >0: Festpreis
-                    .when(builder.lessThan(se2, Integer.valueOf(0)), builder.neg(se2)) // <0: Verhandelbar
+                    .when(builder.greaterThan(se2, 0), sortExpression) // >0: Festpreis
+                    .when(builder.lessThan(se2, 0), builder.neg(se2)) // <0: Verhandelbar
             );
         }
 
