@@ -29,7 +29,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
 @Service
 public class AdService {
 
@@ -56,7 +55,8 @@ public class AdService {
     @Autowired
     private AdValidationService validationService;
 
-    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId, boolean isActive) {
+    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId,
+            boolean isActive) {
         String interrnalSortBy = sortBy;
         String internalOrder = order;
         Integer internalPage = page;
