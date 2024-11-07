@@ -196,6 +196,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         return adCategoryService.getAdCategories();
     }
 
+    @SuppressWarnings("PMD.NcssCount")
     private void bootstrapAds(final SwbUserTO user, final List<AdCategory> adCategories) throws IOException {
         LOG.info("  Bootstrap Ads...");
 
