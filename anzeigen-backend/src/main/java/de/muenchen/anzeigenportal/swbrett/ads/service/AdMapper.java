@@ -58,7 +58,7 @@ public class AdMapper {
 
         if (!adTO.getAdFiles().isEmpty()) {
             List<SwbFile> swbFiles = adTO.getAdFiles().stream()
-                    .map(swbFileTO -> fileMapper.toSwbFile(swbFileTO))
+                    .map(fileMapper::toSwbFile)
                     .collect(Collectors.toList());
             ad.setFiles(swbFiles);
         }
@@ -96,7 +96,7 @@ public class AdMapper {
 
         if (ad.getFiles().size() > 0) {
             List<SwbFileTO> adFiles = ad.getFiles().stream()
-                    .map(swbFile -> fileMapper.toSwbFileTOLight(swbFile))
+                    .map(fileMapper::toSwbFileTOLight)
                     .collect(Collectors.toList());
             adTO.setAdFiles(adFiles);
         }

@@ -124,7 +124,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         adsQuery.setFirstResult((int) pageable.getOffset());
         adsQuery.setMaxResults(pageable.getPageSize());
 
-        List<AdTO> resultList = adsQuery.getResultList().stream().map(ad -> mapper.toAdTO(ad)).collect(Collectors.toList());
+        List<AdTO> resultList = adsQuery.getResultList().stream().map(mapper::toAdTO).collect(Collectors.toList());
 
         CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
         countQuery.where(builder.and(finalPredicates));

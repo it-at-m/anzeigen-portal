@@ -165,7 +165,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         }
 
         LOG.info("  ... Users erstellt");
-        return result.stream().map(user -> userMapper.toSwbUserTO(user)).collect(Collectors.toList());
+        return result.stream().map(userMapper::toSwbUserTO).collect(Collectors.toList());
     }
 
     private List<AdCategory> bootstrapAdCategories() {

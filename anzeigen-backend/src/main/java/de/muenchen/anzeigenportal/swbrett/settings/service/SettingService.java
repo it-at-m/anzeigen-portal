@@ -22,7 +22,7 @@ public class SettingService {
 
     public List<SettingTO> getAllSettings() {
         List<Setting> all = repository.findAll();
-        return all.stream().map(setting -> mapper.toSettingTO(setting)).collect(Collectors.toList());
+        return all.stream().map(mapper::toSettingTO).collect(Collectors.toList());
     }
 
     public SettingTO getSetting(SettingName name) {
@@ -38,8 +38,8 @@ public class SettingService {
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
     public List<SettingTO> saveSettings(List<SettingTO> settingTOs) {
-        List<Setting> settings = settingTOs.stream().map(settingTO -> mapper.toSetting(settingTO)).collect(Collectors.toList());
+        List<Setting> settings = settingTOs.stream().map(mapper::toSetting).collect(Collectors.toList());
         List<Setting> savedSettings = repository.saveAll(settings);
-        return savedSettings.stream().map(setting -> mapper.toSettingTO(setting)).collect(Collectors.toList());
+        return savedSettings.stream().map(mapper::toSettingTO).collect(Collectors.toList());
     }
 }
