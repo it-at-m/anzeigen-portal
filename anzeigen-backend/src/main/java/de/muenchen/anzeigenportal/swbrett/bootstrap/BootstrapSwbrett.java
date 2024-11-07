@@ -375,28 +375,6 @@ public class BootstrapSwbrett implements CommandLineRunner {
         LOG.info("  ... " + adRepository.count() + " Ads erstellt");
     }
 
-    private void bootstrapRandomAds(final SwbUserTO user, final AdCategory adCategory, final int numberOfRandomAds) throws IOException {
-        LOG.info("  Bootstrap Random Ads...");
-
-        for (int i = 0; i < numberOfRandomAds; i++) {
-            final AdTO randomAd = new AdTO();
-            randomAd.setSwbUser(user);
-            randomAd.setAdCategory(adCategory);
-            randomAd.setAdType(AdType.OFFER);
-            randomAd.setTitle(RandomString.make(8));
-            randomAd.setDescription(RandomString.make(200));
-            final double randomPrice = (int) Math.round(new Random().nextDouble() * 10000) / 100.0;
-            randomAd.setPrice(randomPrice);
-            randomAd.setPhone("089 7654321");
-            randomAd.setEmail("mr.random@swbrett.com");
-            randomAd.setCreationDateTime(generateRandomDate());
-
-            adService.createAd(randomAd);
-        }
-
-        LOG.info("  ... " + adRepository.count() + " Ads erstellt");
-    }
-
     private LocalDateTime generateRandomDate() {
         final LocalDate today = LocalDate.now();
         int year = today.getYear();
