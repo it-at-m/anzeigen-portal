@@ -30,7 +30,6 @@ public class SwbImage {
     @Basic(fetch = LAZY) // <= Is ignored unless "hibernate-enhance-maven-plugin" is configured!
     private Blob imageBlob; // TODO: fix the warning ... should be some byte array
 
-
     // ======================== FIELD GETTERS AND SETTERS
 
     public byte[] getImage() {

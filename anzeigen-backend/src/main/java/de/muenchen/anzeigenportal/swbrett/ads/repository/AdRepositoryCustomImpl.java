@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
-@SuppressWarnings({"PMD.CouplingBetweenObjects", "PMD.UselessParentheses"})
+@SuppressWarnings({ "PMD.CouplingBetweenObjects", "PMD.UselessParentheses" })
 @Repository
 public class AdRepositoryCustomImpl implements AdRepositoryCustom {
 
@@ -34,23 +34,26 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     private AdMapper mapper;
 
     @Override
-    @SuppressWarnings({"PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI"})
-    public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Pageable pageable,
-                                      final Long adId) {
+    @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
+    public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
+            final String order, final Pageable pageable,
+            final Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, true);
     }
 
     @Override
-    @SuppressWarnings({"PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI"})
+    @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
-    public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final  AdType type, final String sortBy, final String order, final Pageable pageable,
-                                           final Long adId) {
+    public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
+            final String order, final Pageable pageable,
+            final Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
     @SuppressWarnings("PMD.UseObjectForClearerAPI")
-    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Pageable pageable, final Long adId,
-                                final boolean isActive) {
+    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
+            final Pageable pageable, final Long adId,
+            final boolean isActive) {
         final CriteriaBuilder builder = entityManager.getCriteriaBuilder();
         final CriteriaQuery<Ad> query = builder.createQuery(Ad.class);
 

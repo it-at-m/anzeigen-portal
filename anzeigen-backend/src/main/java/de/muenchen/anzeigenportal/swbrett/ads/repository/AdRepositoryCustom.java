@@ -8,7 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
 @Repository
-@SuppressWarnings({"PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI"})
+@SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
 public interface AdRepositoryCustom {
 
     Page<AdTO> searchActiveAds(String userId,

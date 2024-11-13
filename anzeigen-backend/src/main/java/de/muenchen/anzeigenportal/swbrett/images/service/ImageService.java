@@ -106,7 +106,7 @@ public class ImageService {
         return ba;
     }
 
-    private BufferedImage resizeImage(final BufferedImage originalImage,final double scale) {
+    private BufferedImage resizeImage(final BufferedImage originalImage, final double scale) {
         final int newWidth = (int) (originalImage.getWidth() * scale);
         final int newHeight = (int) (originalImage.getHeight() * scale);
         final Image tmp = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);

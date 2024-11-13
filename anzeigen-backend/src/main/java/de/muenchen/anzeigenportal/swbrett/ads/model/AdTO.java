@@ -16,7 +16,7 @@ import java.util.List;
  */
 @Setter
 @Getter
-@SuppressWarnings({"PMD.TooManyFields","PMD.ShortClassName"})
+@SuppressWarnings({ "PMD.TooManyFields", "PMD.ShortClassName" })
 public class AdTO {
 
     private long id;

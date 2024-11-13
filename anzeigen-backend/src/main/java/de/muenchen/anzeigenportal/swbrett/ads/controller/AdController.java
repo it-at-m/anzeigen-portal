@@ -18,7 +18,7 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping( { "/ads", "/swbreads" }) // swbreads as alias, because ad blockers block /ads (Attention! Stupid pun)
+@RequestMapping({ "/ads", "/swbreads" }) // swbreads as alias, because ad blockers block /ads (Attention! Stupid pun)
 @SuppressWarnings("PMD.PreserveStackTrace")
 public class AdController {
 
@@ -40,7 +40,7 @@ public class AdController {
      */
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    @SuppressWarnings({"PMD.UseObjectWithCaseConventions","PMD.UseObjectForClearerAPI"})
+    @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> getAds(@RequestParam(value = "isActive", required = true) final boolean isActive,
             @RequestParam(value = "userId", required = false) final String userId,
             @RequestParam(value = "searchTerm", required = false) final String searchTerm,

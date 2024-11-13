@@ -36,7 +36,6 @@ public class SwbFile {
     @Basic(fetch = LAZY) // <= Is ignored unless "hibernate-enhance-maven-plugin" is configured!
     private Blob fileBlob; // TODO: fix the warning ... should be some byte array
 
-
     // ======================== FIELD GETTERS AND SETTERS
 
     public byte[] getFile() {

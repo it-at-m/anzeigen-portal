@@ -52,9 +52,10 @@ public class AdService {
     @Autowired
     private AdValidationService validationService;
 
-    @SuppressWarnings({"PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI"})
-    public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Integer page, final Long adId,
-                              final boolean isActive) {
+    @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
+    public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
+            final Integer page, final Long adId,
+            final boolean isActive) {
         String interrnalSortBy = sortBy;
         String internalOrder = order;
         Integer internalPage = page;

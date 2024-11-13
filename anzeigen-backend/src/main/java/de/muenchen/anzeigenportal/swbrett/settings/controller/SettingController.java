@@ -25,7 +25,7 @@ public class SettingController {
 
     @GetMapping("/{settingName}")
     @ResponseStatus(HttpStatus.OK)
-    public SettingTO getSetting(@PathVariable( "settingName") final SettingName settingName) {
+    public SettingTO getSetting(@PathVariable("settingName") final SettingName settingName) {
         return service.getSetting(settingName);
     }
 
