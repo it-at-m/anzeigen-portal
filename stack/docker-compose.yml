@@ -89,7 +89,7 @@ services:
 
   init-keycloak:
     container_name: init-keycloak
-    image: klg71/keycloakmigration:0.2.69@sha256:66474865869f4dc11763e62e9722a62bd3351161d148547c3620f71e6809e95a
+    image: klg71/keycloakmigration:0.2.74@sha256:2a8f07499582f98d5b1dfa96b3308eec35ae9b78f5358573d157b0d30ec2190c
     depends_on:
       - keycloak
     environment:
