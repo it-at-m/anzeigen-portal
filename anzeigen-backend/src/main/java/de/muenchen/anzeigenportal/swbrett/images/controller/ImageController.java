@@ -19,7 +19,7 @@ public class ImageController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public SwbImageTO getImage(@PathVariable("id") long id) {
+    public SwbImageTO getImage(@PathVariable("id") final long id) {
         return this.service.getImageTO(id);
     }
 
@@ -28,7 +28,7 @@ public class ImageController {
      */
     @PostMapping("/sanitize")
     @ResponseStatus(HttpStatus.OK)
-    public String sanitizeImage(@RequestBody String imageBase64) {
+    public String sanitizeImage(@RequestBody final String imageBase64) {
 
         byte[] ba = Base64.getDecoder().decode(imageBase64);
 

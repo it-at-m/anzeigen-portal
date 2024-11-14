@@ -28,8 +28,8 @@ public class AdMapper {
     @Autowired
     private FileMapper fileMapper;
 
-    public Ad toAd(AdTO adTO) {
-        Ad ad = new Ad();
+    public Ad toAd(final AdTO adTO) {
+        final Ad ad = new Ad();
         ad.setId(adTO.getId());
         ad.setSwbUser(userMapper.toSwbUser(adTO.getSwbUser()));
         ad.setAdCategory(adTO.getAdCategory());
@@ -47,18 +47,18 @@ public class AdMapper {
 
         // map Base64 to byte[]
         if (adTO.getImagePreviewBase64() != null) {
-            String imagePreviewBase64 = adTO.getImagePreviewBase64();
+            final String imagePreviewBase64 = adTO.getImagePreviewBase64();
             ad.setImagePreview(Base64.getDecoder().decode(imagePreviewBase64));
         }
 
         if (adTO.getAdImg() != null) {
-            SwbImage swbImage = imageMapper.toSwbImage(adTO.getAdImg());
+            final SwbImage swbImage = imageMapper.toSwbImage(adTO.getAdImg());
             ad.setImageOriginal(swbImage);
         }
 
         if (!adTO.getAdFiles().isEmpty()) {
-            List<SwbFile> swbFiles = adTO.getAdFiles().stream()
-                    .map(swbFileTO -> fileMapper.toSwbFile(swbFileTO))
+            final List<SwbFile> swbFiles = adTO.getAdFiles().stream()
+                    .map(fileMapper::toSwbFile)
                     .collect(Collectors.toList());
             ad.setFiles(swbFiles);
         }
@@ -66,8 +66,8 @@ public class AdMapper {
         return ad;
     }
 
-    public AdTO toAdTO(Ad ad) {
-        AdTO adTO = new AdTO();
+    public AdTO toAdTO(final Ad ad) {
+        final AdTO adTO = new AdTO();
         adTO.setId(ad.getId());
         adTO.setSwbUser(userMapper.toSwbUserTOAnonym(ad.getSwbUser()));
         adTO.setAdCategory(ad.getAdCategory());
@@ -85,18 +85,18 @@ public class AdMapper {
 
         // map byte[] to Base64
         if (ad.getImagePreview() != null) {
-            byte[] imagePreview = ad.getImagePreview();
+            final byte[] imagePreview = ad.getImagePreview();
             adTO.setImagePreviewBase64(Base64.getEncoder().encodeToString(imagePreview));
         }
 
         if (ad.getImageOriginal() != null) {
-            SwbImageTO swbImageTO = imageMapper.toSwbImageTOLight(ad.getImageOriginal());
+            final SwbImageTO swbImageTO = imageMapper.toSwbImageTOLight(ad.getImageOriginal());
             adTO.setAdImg(swbImageTO);
         }
 
-        if (ad.getFiles().size() > 0) {
-            List<SwbFileTO> adFiles = ad.getFiles().stream()
-                    .map(swbFile -> fileMapper.toSwbFileTOLight(swbFile))
+        if (!ad.getFiles().isEmpty()) {
+            final List<SwbFileTO> adFiles = ad.getFiles().stream()
+                    .map(fileMapper::toSwbFileTOLight)
                     .collect(Collectors.toList());
             adTO.setAdFiles(adFiles);
         }

@@ -15,12 +15,12 @@ public class FileService {
     @Autowired
     private FileMapper mapper;
 
-    public SwbFileTO getFileTO(long id) {
-        SwbFile file = repository.getOne(id);
+    public SwbFileTO getFileTO(final long id) {
+        final SwbFile file = repository.getOne(id);
         return mapper.toSwbFileTO(file);
     }
 
-    public SwbFile getFile(long id) {
+    public SwbFile getFile(final long id) {
         return repository.getOne(id);
     }
 

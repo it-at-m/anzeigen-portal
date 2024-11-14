@@ -21,25 +21,25 @@ public class SettingService {
     private SettingMapper mapper;
 
     public List<SettingTO> getAllSettings() {
-        List<Setting> all = repository.findAll();
-        return all.stream().map(setting -> mapper.toSettingTO(setting)).collect(Collectors.toList());
+        final List<Setting> all = repository.findAll();
+        return all.stream().map(mapper::toSettingTO).collect(Collectors.toList());
     }
 
-    public SettingTO getSetting(SettingName name) {
-        Setting setting = repository.findBySettingName(name);
+    public SettingTO getSetting(final SettingName name) {
+        final Setting setting = repository.findBySettingName(name);
         return mapper.toSettingTO(setting);
     }
 
-    public SettingTO createSetting(SettingTO settingTO) {
-        Setting setting = mapper.toSetting(settingTO);
-        Setting savedSetting = repository.save(setting);
+    public SettingTO createSetting(final SettingTO settingTO) {
+        final Setting setting = mapper.toSetting(settingTO);
+        final Setting savedSetting = repository.save(setting);
         return mapper.toSettingTO(savedSetting);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
-    public List<SettingTO> saveSettings(List<SettingTO> settingTOs) {
-        List<Setting> settings = settingTOs.stream().map(settingTO -> mapper.toSetting(settingTO)).collect(Collectors.toList());
-        List<Setting> savedSettings = repository.saveAll(settings);
-        return savedSettings.stream().map(setting -> mapper.toSettingTO(setting)).collect(Collectors.toList());
+    public List<SettingTO> saveSettings(final List<SettingTO> settingTOs) {
+        final List<Setting> settings = settingTOs.stream().map(mapper::toSetting).collect(Collectors.toList());
+        final List<Setting> savedSettings = repository.saveAll(settings);
+        return savedSettings.stream().map(mapper::toSettingTO).collect(Collectors.toList());
     }
 }

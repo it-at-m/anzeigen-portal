@@ -5,14 +5,20 @@ import static jakarta.persistence.FetchType.LAZY;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.engine.jdbc.NonContextualLobCreator;
 
 /**
  * POJO für Dateien (z.B. Bilder, PDFs), die in swbrett angelegt werden können.
  */
+@Setter
+@Getter
 @Entity
 @Table(name = "t_swb_file")
+@SuppressFBWarnings("EI_EXPOSE_REP")
 public class SwbFile {
 
     // ======================== FIELD/COLUMN DECLARATIONS
@@ -30,45 +36,15 @@ public class SwbFile {
     @Access(AccessType.PROPERTY) // <= F*** Hibernate 3.5+ requires this on property getters!
     @Column(name = "file", nullable = false)
     @Basic(fetch = LAZY) // <= Is ignored unless "hibernate-enhance-maven-plugin" is configured!
-    public Blob getFileBlob() {
-        return this.fileBlob;
-    } // TODO: fix the warning ... should be some byte array
-
-    public void setFileBlob(Blob fileBlob) {
-        this.fileBlob = fileBlob;
-    }
-
-    private Blob fileBlob;
+    private Blob fileBlob; // TODO: fix the warning ... should be some byte array
 
     // ======================== FIELD GETTERS AND SETTERS
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
-    }
-
     public byte[] getFile() {
-        Blob fb = this.getFileBlob();
-        if (fb == null) return null;
+        final Blob fb = this.getFileBlob();
+        if (fb == null) {
+            return new byte[0];
+        }
         try {
             return fb.getBytes(1, (int) fb.length());
         } catch (SQLException e) {
@@ -77,8 +53,10 @@ public class SwbFile {
     }
 
     public long getFileLength() {
-        Blob fb = this.getFileBlob();
-        if (fb == null) return -1;
+        final Blob fb = this.getFileBlob();
+        if (fb == null) {
+            return -1;
+        }
         try {
             return fb.length();
         } catch (SQLException e) {
@@ -90,7 +68,7 @@ public class SwbFile {
         return this.getFileBlob() != null;
     }
 
-    public void setFile(byte[] file) {
+    public void setFile(final byte[] file) {
         this.setFileBlob(NonContextualLobCreator.INSTANCE.createBlob(file));
     }
 }

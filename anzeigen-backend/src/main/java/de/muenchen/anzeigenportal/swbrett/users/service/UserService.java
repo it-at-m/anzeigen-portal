@@ -18,20 +18,20 @@ public class UserService {
     @Autowired
     private UserMapper mapper;
 
-    public SwbUser saveOrGet(SwbUser user) {
-        Optional<SwbUser> existingUser = repository.findByLhmObjectId(user.getLhmObjectId());
+    public SwbUser saveOrGet(final SwbUser user) {
+        final Optional<SwbUser> existingUser = repository.findByLhmObjectId(user.getLhmObjectId());
 
         return existingUser.orElse(repository.save(user));
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
-    public SwbUserTO getUser(long id) {
-        SwbUser user = repository.getOne(id);
+    public SwbUserTO getUser(final long id) {
+        final SwbUser user = repository.getOne(id);
         return mapper.toSwbUserTO(user);
     }
 
-    public Optional<SwbUserTO> findUser(String lhmObjectId) {
-        Optional<SwbUser> user = repository.findByLhmObjectId(lhmObjectId);
+    public Optional<SwbUserTO> findUser(final String lhmObjectId) {
+        final Optional<SwbUser> user = repository.findByLhmObjectId(lhmObjectId);
 
         if (user.isPresent()) {
             return Optional.of(mapper.toSwbUserTO(user.get()));
@@ -40,8 +40,8 @@ public class UserService {
         }
     }
 
-    public SwbUserTO createUser(SwbUserTO userTO) {
-        SwbUser savedUser = repository.save(mapper.toSwbUser(userTO));
+    public SwbUserTO createUser(final SwbUserTO userTO) {
+        final SwbUser savedUser = repository.save(mapper.toSwbUser(userTO));
         return mapper.toSwbUserTO(savedUser);
     }
 }

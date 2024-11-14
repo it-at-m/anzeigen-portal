@@ -1,8 +1,13 @@
 package de.muenchen.anzeigenportal.swbrett.users.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 /**
  * Transferobject für Swb User
  */
+@Setter
+@Getter
 public class SwbUserTO {
 
     private Long id;
@@ -18,27 +23,4 @@ public class SwbUserTO {
      */
     private String displayName;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDisplayName() {
-        return this.displayName;
-    }
-
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-
-    public String getLhmObjectId() {
-        return this.lhmObjectId;
-    }
-
-    public void setLhmObjectId(String lhmObjectId) {
-        this.lhmObjectId = lhmObjectId;
-    }
 }

@@ -1,9 +1,14 @@
 package de.muenchen.anzeigenportal.swbrett.ads.model;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "t_ad_category")
+@SuppressWarnings("PMD.DataClass")
 public class AdCategory {
 
     @Id
@@ -21,27 +26,4 @@ public class AdCategory {
     @Column(name = "standard", nullable = false)
     private boolean standard = false;
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public boolean isStandard() {
-        return standard;
-    }
-
-    public void setStandard(boolean standard) {
-        this.standard = standard;
-    }
 }

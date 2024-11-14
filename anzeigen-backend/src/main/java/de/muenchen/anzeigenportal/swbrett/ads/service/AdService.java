@@ -17,12 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import jakarta.validation.ValidationException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,7 +29,7 @@ import java.util.stream.Collectors;
 @Service
 public class AdService {
 
-    private final int FIRST_PAGE = 0;
+    private static final int FIRST_PAGE = 0;
 
     @Autowired
     private AdRepository repository;
@@ -55,100 +52,105 @@ public class AdService {
     @Autowired
     private AdValidationService validationService;
 
-    public Page<AdTO> findAds(String userId, String searchTerm, Long categoryId, AdType type, String sortBy, String order, Integer page, Long adId,
-            boolean isActive) {
-        if (sortBy == null) {
-            sortBy = settingService.getSetting(SettingName.DEFAULT_SORTING).getTextValue();
+    @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
+    public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
+            final Integer page, final Long adId,
+            final boolean isActive) {
+        String interrnalSortBy = sortBy;
+        String internalOrder = order;
+        Integer internalPage = page;
+
+        if (interrnalSortBy == null) {
+            interrnalSortBy = settingService.getSetting(SettingName.DEFAULT_SORTING).getTextValue();
         }
-        if (order == null) {
-            order = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();
-            ;
+        if (internalOrder == null) {
+            internalOrder = settingService.getSetting(SettingName.DEFAULT_ORDERING).getTextValue();
         }
-        if (page == null) {
-            page = FIRST_PAGE;
+        if (internalPage == null) {
+            internalPage = FIRST_PAGE;
         }
-        Pageable pageable = PageRequest.of(page, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
+        final Pageable pageable = PageRequest.of(internalPage, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
         if (isActive) {
-            return repository.searchActiveAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId);
+            return repository.searchActiveAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
         } else {
-            return repository.searchDeactivatedAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId);
+            return repository.searchDeactivatedAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
         }
     }
 
-    public AdTO getAd(long id) {
-        Ad ad = repository.getOne(id);
+    public AdTO getAd(final long id) {
+        final Ad ad = repository.getOne(id);
         return mapper.toAdTO(ad);
     }
 
-    public void incrementView(long id) {
-        Ad ad = repository.getOne(id);
+    public void incrementView(final long id) {
+        final Ad ad = repository.getOne(id);
         ad.setViews(ad.getViews() + 1);
         repository.save(ad);
     }
 
-    public AdTO createAd(AdTO adTO) throws IOException, ValidationException {
+    public AdTO createAd(final AdTO adTO) throws IOException {
         if (adTO.getCreationDateTime() == null) {
             adTO.setCreationDateTime(LocalDateTime.now());
         }
         if (adTO.getExpiryDate() == null) {
-            Integer setting = this.settingService.getSetting(SettingName.MAX_EXPIRY_DATE_RANGE).getNumberValue();
+            final Integer setting = this.settingService.getSetting(SettingName.MAX_EXPIRY_DATE_RANGE).getNumberValue();
             adTO.setExpiryDate(LocalDate.now().plusWeeks(setting));
         }
 
-        Ad ad = mapper.toAd(adTO);
+        final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);
 
         if (ad.getImageOriginal() != null) {
-            byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(ad.getImageOriginal().getImage());
+            final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(ad.getImageOriginal().getImage());
             ad.setImagePreview(imagePreview);
         }
 
-        Ad savedAd = repository.save(ad);
+        final Ad savedAd = repository.save(ad);
         return mapper.toAdTO(savedAd);
     }
 
-    public AdTO updateAd(long id, AdTO updatedAdTO, HttpServletRequest request) throws IOException, ValidationException {
-        Ad updatedAd = mapper.toAd(updatedAdTO);
+    public AdTO updateAd(final long id, final AdTO updatedAdTO, HttpServletRequest request) throws IOException {
+        final Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);
 
         if (updatedAd.getImageOriginal() != null) {
             if (updatedAd.getImageOriginal().hasImage()) {
-                byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(updatedAd.getImageOriginal().getImage());
+                final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(updatedAd.getImageOriginal().getImage());
                 updatedAd.setImagePreview(imagePreview);
             } else {
-                SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
+                final SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
                 updatedAd.setImageOriginal(image);
             }
 
         }
 
-        List<SwbFile> updatedFiles = updatedAd.getFiles().stream()
+        final List<SwbFile> updatedFiles = updatedAd.getFiles().stream()
                 .map(swbFile -> swbFile.hasFile() ? swbFile : fileService.getFile(swbFile.getId()))
                 .collect(Collectors.toList());
 
         updatedAd.setFiles(updatedFiles);
 
-        Ad ad = repository.getOne(id);
+        final Ad ad = repository.getOne(id);
         updatedAd.setId(ad.getId());
 
         return mapper.toAdTO(repository.save(updatedAd));
     }
 
-    public void deactivateAd(long id, HttpServletRequest request) {
-        Ad ad = repository.getOne(id);
+    public void deactivateAd(final long id, HttpServletRequest request) {
+        final Ad ad = repository.getOne(id);
         ad.setActive(false);
         repository.save(ad);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_DELETE_THEENTITY.name())")
-    public void deleteAd(long id, HttpServletRequest request) {
-        Ad ad = repository.getOne(id);
+    public void deleteAd(final long id, HttpServletRequest request) {
+        final Ad ad = repository.getOne(id);
         repository.delete(ad);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
-    public void updateAllCategories(AdCategory oldCat, AdCategory newCat) {
-        List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
+    public void updateAllCategories(final AdCategory oldCat, final AdCategory newCat) {
+        final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
         allAdsOfCategory.stream().forEach(ad -> {
             ad.setAdCategory(newCat);

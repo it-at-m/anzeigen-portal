@@ -24,25 +24,25 @@ public class AdCategoryController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AdCategory getAdCategory(@PathVariable("id") long id) {
+    public AdCategory getAdCategory(@PathVariable("id") final long id) {
         return service.getAdCategory(id);
     }
 
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public AdCategory createAdCategory(@RequestBody AdCategory adCategory, HttpServletRequest request) {
+    public AdCategory createAdCategory(@RequestBody final AdCategory adCategory, HttpServletRequest request) {
         return service.saveAdCategory(adCategory);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public AdCategory updateAdCategory(@PathVariable("id") long id, @RequestBody AdCategory adCategory, HttpServletRequest request) {
+    public AdCategory updateAdCategory(@PathVariable("id") long id, @RequestBody final AdCategory adCategory, HttpServletRequest request) {
         return service.saveAdCategory(adCategory);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteAd(@PathVariable("id") long id, HttpServletRequest request) {
+    public void deleteAd(@PathVariable("id") final long id, HttpServletRequest request) {
         service.deleteAdCategory(id);
     }
 }
