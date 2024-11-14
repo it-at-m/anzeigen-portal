@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.ads.model;
 
-import de.muenchen.anzeigenportal.domain.BaseEntity;
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
@@ -13,7 +12,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
