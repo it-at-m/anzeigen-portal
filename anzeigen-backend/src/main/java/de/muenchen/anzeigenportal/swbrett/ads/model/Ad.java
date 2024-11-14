@@ -1,8 +1,10 @@
 package de.muenchen.anzeigenportal.swbrett.ads.model;
 
+import de.muenchen.anzeigenportal.domain.BaseEntity;
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFile;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -20,6 +23,7 @@ import java.util.List;
 @Entity
 @Table(name = "t_ad")
 @SuppressWarnings({ "PMD.DataClass", "PMD.TooManyFields", "PMD.ShortClassName" })
+@SuppressFBWarnings("EI_EXPOSE_REP")
 public class Ad {
 
     @Setter

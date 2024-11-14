@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import java.io.IOException;
 
 @Slf4j
 @Service
+@SuppressFBWarnings("EI_EXPOSE_REP")
 public class ImageService {
 
     /**
@@ -122,7 +124,7 @@ public class ImageService {
         final int h = img.getHeight();
         final BufferedImage rotated = new BufferedImage(w, h, img.getType());
         final Graphics2D g2d = rotated.createGraphics();
-        g2d.rotate(Math.toRadians(degrees), w / 2, h / 2);
+        g2d.rotate(Math.toRadians(degrees), (double) w / 2, (double) h / 2);
         g2d.drawImage(img, null, 0, 0);
         g2d.dispose();
         return rotated;

@@ -5,6 +5,7 @@ import static jakarta.persistence.FetchType.LAZY;
 import java.sql.Blob;
 import java.sql.SQLException;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -17,6 +18,7 @@ import org.hibernate.engine.jdbc.NonContextualLobCreator;
 @Getter
 @Entity
 @Table(name = "t_swb_file")
+@SuppressFBWarnings("EI_EXPOSE_REP")
 public class SwbFile {
 
     // ======================== FIELD/COLUMN DECLARATIONS

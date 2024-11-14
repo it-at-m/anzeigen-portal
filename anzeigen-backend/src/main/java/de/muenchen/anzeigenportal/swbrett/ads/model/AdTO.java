@@ -3,6 +3,7 @@ package de.muenchen.anzeigenportal.swbrett.ads.model;
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,7 @@ import java.util.List;
 @Setter
 @Getter
 @SuppressWarnings({ "PMD.TooManyFields", "PMD.ShortClassName" })
+@SuppressFBWarnings("EI_EXPOSE_REP")
 public class AdTO {
 
     private long id;

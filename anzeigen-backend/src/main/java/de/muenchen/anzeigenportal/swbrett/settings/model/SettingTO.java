@@ -1,6 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.settings.model;
 
 import de.muenchen.anzeigenportal.swbrett.files.model.SwbFileTO;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -9,6 +10,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@SuppressFBWarnings("EI_EXPOSE_REP")
 public class SettingTO {
 
     private long id;
