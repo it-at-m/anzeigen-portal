@@ -1,0 +1,12 @@
+.openapi-generator-ignore
+apis/DefaultApi.ts
+apis/index.ts
+index.ts
+models/AdCategory.ts
+models/AdTO.ts
+models/SettingTO.ts
+models/SwbFileTO.ts
+models/SwbImageTO.ts
+models/SwbUserTO.ts
+models/index.ts
+runtime.ts
