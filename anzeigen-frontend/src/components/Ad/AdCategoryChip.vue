@@ -8,7 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory } from "@/types/api/AdCategory";
+import type { AdCategory } from "@/api/swbrett";
 
 defineProps<{
   category: AdCategory;
