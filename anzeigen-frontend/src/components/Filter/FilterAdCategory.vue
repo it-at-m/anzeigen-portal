@@ -43,7 +43,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory } from "@/types/api/AdCategory";
+import type { AdCategory } from "@/api/swbrett";
 
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
@@ -80,13 +80,18 @@ onMounted(async () => {
     // search for matching category and set it
     selectedCategory.value =
       data.value.find(
-        (category) => category.id.toString() === categoryQuery.value
+        (category) =>
+          category.id && category.id.toString() === categoryQuery.value
       ) || selectedCategory.value;
   }
 });
 
 watch(selectedCategory, (newSelectedCategory) => {
-  if (newSelectedCategory === undefined || newSelectedCategory?.id === -1) {
+  if (
+    newSelectedCategory === undefined ||
+    !newSelectedCategory.id ||
+    newSelectedCategory?.id === -1
+  ) {
     categoryQuery.value = [];
   } else {
     categoryQuery.value = newSelectedCategory.id.toString();

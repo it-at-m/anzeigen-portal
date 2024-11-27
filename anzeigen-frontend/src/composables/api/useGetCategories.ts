@@ -1,8 +1,13 @@
-import type { AdCategory } from "@/types/api/AdCategory";
+import type { AdCategory } from "@/api/swbrett";
 
-import { readonly, ref } from "vue";
+import { inject, readonly, ref } from "vue";
+
+import { DEFAULT_API_KEY } from "@/composables/useApi";
 
 export function useGetCategories() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
   const loadingInternal = ref(false);
   const errorInternal = ref(false);
   const dataInternal = ref<AdCategory[]>();
@@ -14,9 +19,18 @@ export function useGetCategories() {
   const call = async () => {
     loadingInternal.value = true;
     errorInternal.value = false;
-    await new Promise((r) => setTimeout(r, 500)); // TODO: remove
-    try {
-      dataInternal.value = [
+
+    const result = api.getAllAdCategories();
+    result
+      .then((data) => {
+        dataInternal.value = data;
+      })
+      .catch(() => {
+        errorInternal.value = true;
+      })
+      .finally(() => (loadingInternal.value = false));
+
+    /*dataInternal.value = [
         { id: 5, name: "Sonstiges", standard: true },
         { id: 1, name: "Möbel, Ausstattung und Garten", standard: false },
         { id: 2, name: "Bücher, Filme und Musik", standard: false },
@@ -30,13 +44,7 @@ export function useGetCategories() {
         { id: 12, name: "Kleidung", standard: false },
         { id: 13, name: "Lost and Found (Fundsachen)", standard: false },
         { id: 14, name: "Tausche Hilfe gegen Hilfe", standard: false },
-      ];
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    } catch (e) {
-      errorInternal.value = true;
-    } finally {
-      loadingInternal.value = false;
-    }
+      ];*/
   };
 
   return {

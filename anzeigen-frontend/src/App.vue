@@ -67,8 +67,11 @@ import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbar from "@/components/TheSnackbar.vue";
+import { useApi } from "@/composables/useApi";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
+
+useApi();
 
 useTitle("Anzeigen Portal");
 
