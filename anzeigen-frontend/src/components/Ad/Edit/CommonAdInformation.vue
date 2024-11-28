@@ -2,7 +2,7 @@
   <v-text-field
     v-model="title"
     label="Titel"
-    class="w-md-50"
+    class="w-md-66 w-sm-75"
     :rules="[
       (value) => !!value || 'Bitte geben Sie einen Titel ein.',
       (value) =>
@@ -11,7 +11,7 @@
   />
   <v-select
     v-model="category"
-    class="w-md-50"
+    class="w-md-66 w-sm-75"
     placeholder="Kategorie"
     :loading="loading"
     :items="data"
@@ -43,7 +43,7 @@
   />
   <v-number-input
     label="Preis"
-    class="w-md-50"
+    class="w-md-66 w-sm-75"
     :min="0"
     :disabled="priceOption === 0"
     :model-value="displayedPrice"

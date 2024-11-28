@@ -1,7 +1,7 @@
 <template>
   <v-date-input
     v-model="expiryDate"
-    class="w-md-50"
+    class="w-md-66 w-sm-75"
     label="Ablaufdatum"
     :min="yesterdayDate"
   />
@@ -9,7 +9,7 @@
     ref="refPhoneNumber"
     v-model="phoneNumber"
     prepend-icon="mdi-phone-outline"
-    class="w-md-50"
+    class="w-md-66 w-sm-75"
     label="Telefonnummer"
     :rules="[minOneContactRule, rulePhoneNumber]"
   />
@@ -17,7 +17,7 @@
     ref="refEmail"
     v-model="email"
     prepend-icon="mdi-email-outline"
-    class="w-md-50"
+    class="w-md-66 w-sm-75"
     label="E-Mail Adresse"
     type="email"
     :rules="[minOneContactRule, ruleEmail]"
