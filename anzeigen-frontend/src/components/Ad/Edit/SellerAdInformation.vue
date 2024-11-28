@@ -8,6 +8,7 @@
   <v-text-field
     ref="refPhoneNumber"
     v-model="phoneNumber"
+    prepend-icon="mdi-phone-outline"
     class="w-md-50"
     label="Telefonnummer"
     :rules="[minOneContactRule, rulePhoneNumber]"
@@ -15,6 +16,7 @@
   <v-text-field
     ref="refEmail"
     v-model="email"
+    prepend-icon="mdi-email-outline"
     class="w-md-50"
     label="E-Mail Adresse"
     type="email"
