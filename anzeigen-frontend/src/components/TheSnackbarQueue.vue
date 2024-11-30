@@ -16,12 +16,11 @@
 <script setup lang="ts">
 import type { SnackbarMessage } from "@/types/SnackbarMessage";
 
-import { useEventBus } from "@vueuse/core";
 import { ref } from "vue";
 import { VSnackbarQueue } from "vuetify/labs/VSnackbarQueue";
 
 import { Levels } from "@/api/error";
-import { EV_SNACKBAR } from "@/Constants";
+import { snackbarBus } from "@/composables/useSnackbar";
 
 const queue = ref<SnackbarMessageInternal[]>([]);
 
@@ -31,8 +30,6 @@ interface SnackbarMessageInternal {
   color: string;
   icon: string;
 }
-
-const snackbarBus = useEventBus<SnackbarMessage>(EV_SNACKBAR);
 
 snackbarBus.on((message: SnackbarMessage) => {
   queue.value.push({
