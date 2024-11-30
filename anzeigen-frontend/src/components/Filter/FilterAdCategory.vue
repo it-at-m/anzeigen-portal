@@ -51,12 +51,14 @@ import { onMounted, ref, watch } from "vue";
 import { Levels } from "@/api/error";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetCategories } from "@/composables/api/useGetCategories";
-import { useSnackbarStore } from "@/stores/snackbar";
+import { useSnackbar } from "@/composables/useSnackbar";
+import { API_ERROR_MSG } from "@/Constants";
+
+const snackbar = useSnackbar();
 
 const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 
 const { call: getCategories, data, loading, error } = useGetCategories();
-const snackbarStore = useSnackbarStore();
 
 const categoryQuery = useRouteQuery("categoryId");
 
@@ -68,10 +70,9 @@ onMounted(async () => {
 
   // error catching
   if (error.value) {
-    // TODO: Does not work yet
-    snackbarStore.showMessage({
-      message: "Hilfe hier ist ein Fehler aufgetreten",
+    snackbar.sendMessage({
       level: Levels.ERROR,
+      message: API_ERROR_MSG,
     });
   }
 

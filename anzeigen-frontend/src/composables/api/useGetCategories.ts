@@ -16,19 +16,22 @@ export function useGetCategories() {
   const error = readonly(errorInternal);
   const data = readonly(dataInternal);
 
-  const call = async () => {
+  const call = () => {
     loadingInternal.value = true;
     errorInternal.value = false;
 
-    const result = api.getAllAdCategories();
-    result
+    return api
+      .getAllAdCategories()
       .then((data) => {
         dataInternal.value = data;
       })
       .catch(() => {
         errorInternal.value = true;
       })
-      .finally(() => (loadingInternal.value = false));
+      .finally(() => {
+        loadingInternal.value = false;
+        console.log("getCategory error value:", error.value);
+      });
 
     /*dataInternal.value = [
         { id: 5, name: "Sonstiges", standard: true },
