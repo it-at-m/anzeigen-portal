@@ -5,7 +5,7 @@ import { createVuetify } from "vuetify";
 import * as components from "vuetify/components";
 import * as directives from "vuetify/directives";
 
-import TheSnackbar from "@/components/TheSnackbar.vue";
+import TheSnackbarQueue from "../../src/components/TheSnackbarQueue.vue";
 
 const pinia = createPinia();
 
@@ -26,7 +26,7 @@ describe("TheSnackbar.vue", () => {
 
   it("renders props.message when passed", () => {
     const message = "Hello_World";
-    const wrapper = shallowMount(TheSnackbar, {
+    const wrapper = shallowMount(TheSnackbarQueue, {
       global: {
         plugins: [pinia, vuetify],
       },

@@ -23,17 +23,17 @@ import { checkHealth } from "@/api/health-client";
 import AdDialog from "@/components/Ad/Edit/AdDialog.vue";
 import AdList from "@/components/AdList.vue";
 import AdNavBar from "@/components/AdNavBar.vue";
-import { useSnackbarStore } from "@/stores/snackbar";
+import { useSnackbar } from "@/composables/useSnackbar";
 import HealthState from "@/types/HealthState";
 
-const snackbarStore = useSnackbarStore();
+const snackbar = useSnackbar();
 const status = ref("DOWN");
 
 onMounted(() => {
   checkHealth()
     .then((content: HealthState) => (status.value = content.status))
     .catch((error) => {
-      snackbarStore.showMessage(error);
+      snackbar.sendMessage(error);
     });
 });
 </script>
