@@ -4,6 +4,7 @@
     class="w-md-66 w-sm-75"
     label="Ablaufdatum"
     :min="yesterdayDate"
+    :disabled="disabled"
   />
   <v-text-field
     ref="refPhoneNumber"
@@ -12,6 +13,7 @@
     class="w-md-66 w-sm-75"
     label="Telefonnummer"
     :rules="[minOneContactRule, rulePhoneNumber]"
+    :disabled="disabled"
   />
   <v-text-field
     ref="refEmail"
@@ -21,8 +23,9 @@
     label="E-Mail Adresse"
     type="email"
     :rules="[minOneContactRule, ruleEmail]"
+    :disabled="disabled"
   />
-  <ad-agb-accept />
+  <ad-agb-accept :disabled="disabled" />
 </template>
 
 <script setup lang="ts">
@@ -36,6 +39,10 @@ const expiryDate = defineModel<Date>("expiryDate");
 const phoneNumber = defineModel<string>("phone", { default: "" });
 
 const email = defineModel<string>("email", { default: "" });
+
+defineProps<{
+  disabled?: boolean;
+}>();
 
 const refPhone = useTemplateRef("refPhoneNumber");
 const refEmail = useTemplateRef("refEmail");

@@ -3,6 +3,7 @@
     v-model="title"
     label="Titel"
     class="w-md-66 w-sm-75"
+    :disabled="disabled"
     :rules="[
       (value) => !!value || 'Bitte geben Sie einen Titel ein.',
       (value) =>
@@ -13,13 +14,15 @@
     v-model="category"
     class="w-md-66 w-sm-75"
     placeholder="Kategorie"
-    :loading="loading"
+    :loading="categoryLoading"
+    :disabled="disabled"
     :items="data"
     item-title="name"
     :rules="[(value) => !!value || 'Bitte wählen Sie eine Kategorie aus.']"
   />
   <v-radio-group
     v-model="adType"
+    :disabled="disabled"
     inline
   >
     <v-radio
@@ -35,6 +38,7 @@
     v-model="description"
     label="Beschreibung"
     max-rows="3"
+    :disabled="disabled"
     :rules="[
       (value) =>
         !!value ||
@@ -45,7 +49,7 @@
     label="Preis"
     class="w-md-66 w-sm-75"
     :min="0"
-    :disabled="priceOption === 0"
+    :disabled="priceOption === 0 || disabled"
     :model-value="displayedPrice"
     @update:model-value="updatedPrice"
   >
@@ -58,6 +62,7 @@
   </v-number-input>
   <v-radio-group
     v-model="priceOption"
+    :disabled="disabled"
     inline
   >
     <v-radio
@@ -84,7 +89,11 @@ import { VNumberInput } from "vuetify/labs/components";
 import { useGetCategories } from "@/composables/api/useGetCategories";
 import { AD_MAX_TITLE_LENGTH } from "@/Constants";
 
-const { call: getCategories, data, loading } = useGetCategories();
+const {
+  call: getCategories,
+  data,
+  loading: categoryLoading,
+} = useGetCategories();
 
 const title = defineModel<string>("title", { default: "" });
 
@@ -97,6 +106,10 @@ const adType = defineModel<AdTOAdTypeEnum>("adType", {
 const description = defineModel<string>("description", { default: "" });
 
 const price = defineModel<number>("price", { default: 1 });
+
+defineProps<{
+  disabled?: boolean;
+}>();
 
 const priceOption = ref<number>(Math.sign(price.value ?? 1));
 

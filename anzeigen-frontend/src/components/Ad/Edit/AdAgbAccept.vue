@@ -2,6 +2,7 @@
   <v-checkbox
     v-model="isChecked"
     color="accent"
+    :disabled="disabled"
   >
     <template #label>
       <p>
@@ -27,6 +28,13 @@ import SecInfo from "@/static/Datenschutzhinweise.pdf";
  * Value if checkbox is checked
  */
 const isChecked = defineModel<boolean>({ default: false });
+
+/**
+ * Disables the checkbox input
+ */
+defineProps<{
+  disabled?: boolean;
+}>();
 
 /**
  * Blob and objectUrl for AGB

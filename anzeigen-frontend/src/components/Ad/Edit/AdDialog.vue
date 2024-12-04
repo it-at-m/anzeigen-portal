@@ -4,13 +4,6 @@
     persistent
     max-width="900px"
   >
-    <v-overlay v-model="overlay">
-      <v-progress-circular
-        :size="50"
-        indeterminate
-        color="accent"
-      />
-    </v-overlay>
     <v-card>
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
@@ -32,21 +25,21 @@
           <ad-display-card>
             <template #subtitle> Allgemeine Informationen </template>
             <template #text>
-              <common-ad-information />
+              <common-ad-information :disabled="disabledInputs" />
             </template>
           </ad-display-card>
           <v-divider />
           <ad-display-card>
             <template #subtitle> Optionale Informationen </template>
             <template #text>
-              <optional-ad-information />
+              <optional-ad-information :disabled="disabledInputs" />
             </template>
           </ad-display-card>
           <v-divider />
           <ad-display-card>
             <template #subtitle> Verkäufer Informationen </template>
             <template #text>
-              <seller-ad-information />
+              <seller-ad-information :disabled="disabledInputs" />
             </template>
           </ad-display-card>
         </v-form>
@@ -89,7 +82,7 @@ const dialog = ref<boolean>(false);
 
 const adTo = ref<AdTO>();
 
-const overlay = ref(true);
+const disabledInputs = ref<boolean>(true);
 
 const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
 
