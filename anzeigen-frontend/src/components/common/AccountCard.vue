@@ -2,7 +2,7 @@
   <v-card
     flat
     class="mb-4"
-    title="Vorname Nachname"
+    :title="data?.email"
     subtitle="Hier gehts zu Ihren Anzeigen"
     link
   >
@@ -17,13 +17,17 @@ import { onMounted } from "vue";
 
 import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
+import { useUserInfo } from "@/composables/api/useUserApi";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
 
 const userStore = useUserStore();
 
-onMounted(() => {
-  loadUser();
+const { call, data } = useUserInfo();
+
+onMounted(async () => {
+  // loadUser();
+  await call().then((user: User) => userStore.setUser(user));
 });
 
 /**
