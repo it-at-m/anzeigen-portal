@@ -51,6 +51,7 @@ import { onMounted, ref, watch } from "vue";
 import { Levels } from "@/api/error";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetCategories } from "@/composables/api/useGetCategories";
+import { useCategoriesStore } from "@/stores/adcategory";
 import { useSnackbarStore } from "@/stores/snackbar";
 
 const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
@@ -62,9 +63,14 @@ const categoryQuery = useRouteQuery("categoryId");
 
 const selectedCategory = ref<AdCategory>(NO_CATEGORY);
 
+const categoriesStore = useCategoriesStore();
+
 onMounted(async () => {
   // initial api-call
-  await getCategories();
+
+  await getCategories().then(() =>
+    categoriesStore.setCategories(data.value as AdCategory[])
+  );
 
   // error catching
   if (error.value) {
@@ -76,10 +82,10 @@ onMounted(async () => {
   }
 
   // initial selection
-  if (categoryQuery.value && data.value !== undefined) {
+  if (categoryQuery.value && categoriesStore.categories !== undefined) {
     // search for matching category and set it
     selectedCategory.value =
-      data.value.find(
+      categoriesStore.categories.find(
         (category) =>
           category.id && category.id.toString() === categoryQuery.value
       ) || selectedCategory.value;
@@ -97,6 +103,25 @@ watch(selectedCategory, (newSelectedCategory) => {
     categoryQuery.value = newSelectedCategory.id.toString();
   }
 });
+
+/**
+ * Loads categories from the backend and save them to the store
+ */
+const loadCategories = async () => {
+  await getCategories();
+
+  console.log("Categories data", data.value);
+
+  if (error.value) {
+    snackbarStore.showMessage({
+      message: "Kategorien konnten nicht geladen werden.",
+      level: Levels.ERROR,
+    });
+  } else {
+    console.log("Setting categories into store");
+    categoriesStore.setCategories(data.value as AdCategory[]);
+  }
+};
 </script>
 
 <style scoped></style>
