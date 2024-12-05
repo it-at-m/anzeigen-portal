@@ -15,25 +15,42 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
 
+import { Levels } from "@/api/error";
 import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
-import { useUserInfo } from "@/composables/api/useUserApi";
+import { useFindUser, useUserInfo } from "@/composables/api/useUserApi";
+import { useSnackbar } from "@/composables/useSnackbar";
+import { API_ERROR_MSG } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 import User, { UserLocalDevelopment } from "@/types/User";
 
 const userStore = useUserStore();
 
-const { call, data } = useUserInfo();
+const snackbar = useSnackbar();
+
+const {
+  call: userInfoCall,
+  data: userInfoData,
+  error: userInfoError,
+} = useUserInfo();
 
 onMounted(async () => {
   // loadUser();
-  await call().then((user: User) => userStore.setUser(user));
+  await userInfoCall();
+
+  // error catching
+  if (userInfoError.value) {
+    snackbar.sendMessage({
+      level: Levels.ERROR,
+      message: API_ERROR_MSG,
+    });
+  }
 });
 
 /**
  * Loads UserInfo from the backend and sets it in the store.
  */
-function loadUser(): void {
+function loadUserOld(): void {
   getUser()
     .then((user: User) => userStore.setUser(user))
     .catch(() => {
