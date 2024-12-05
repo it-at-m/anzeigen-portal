@@ -19,22 +19,7 @@
       <v-stepper-window>
         <v-form>
           <v-stepper-window-item value="1">
-            <v-text-field label="Titel" />
-            <v-select />
-            <v-radio-group inline>
-              <v-radio label="Biete" />
-              <v-radio label="Suche" />
-            </v-radio-group>
-            <v-textarea label="Beschreibung" />
-            <v-number-input
-              label="Preis"
-              control-variant="split"
-            />
-            <v-radio-group inline>
-              <v-radio label="VHB" />
-              <v-radio label="Festpreis" />
-              <v-radio label="zu verschenken" />
-            </v-radio-group>
+            <common-ad-information />
           </v-stepper-window-item>
           <v-stepper-window-item value="2">
             <v-file-input label="Foto auswählen" />
@@ -74,9 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import { VDateInput, VNumberInput } from "vuetify/labs/components";
+import { VDateInput } from "vuetify/labs/components";
 
 import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
+import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
 </script>
 
 <style scoped></style>

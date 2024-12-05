@@ -1,3 +1,5 @@
+import type { SwbUserTO } from "@/api/swbrett";
+
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
@@ -9,13 +11,28 @@ export interface UserState {
 
 export const useUserStore = defineStore("user", () => {
   const user = ref<User | null>(null);
+  const userID = ref<number | null>();
 
   const getUser = computed((): User | null => {
     return user.value;
   });
 
+  const swbUserTo = computed(() => {
+    return {
+      lhmObjectId: user.value?.lhmObjectID,
+      displayName: user.value?.displayName,
+    } as SwbUserTO;
+  });
+
+  const lhmObjectId = computed(() => user.value?.lhmObjectID);
+
   function setUser(payload: User | null): void {
     user.value = payload;
   }
-  return { getUser, setUser };
+
+  function setUserId(payload: number) {
+    userID.value = payload;
+  }
+
+  return { getUser, setUser, swbUserTo, lhmObjectId, setUserId };
 });

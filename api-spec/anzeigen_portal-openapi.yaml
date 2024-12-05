@@ -697,3 +697,14 @@ components:
           type: "boolean"
         fileValue:
           $ref: "#/components/schemas/SwbFileTO"
+  securitySchemes:
+    spring_oauth:
+      type: oauth2
+      description: Oauth2 flow
+      flows:
+        password:
+          authorizationUrl: http://keycloak:8100/auth/realms/local_realm/protocol/openid-connect/auth
+          tokenUrl: http://keycloak:8100/auth/realms/local_realm/protocol/openid-connect/token
+          refreshUrl: http://keycloak:8100/auth/realms/local_realm/protocol/openid-connect/token
+          scopes:
+            lhm_extended: lhm_extended

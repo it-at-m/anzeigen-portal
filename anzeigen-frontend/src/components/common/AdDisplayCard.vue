@@ -3,6 +3,9 @@
     <v-card-title>
       <slot name="title" />
     </v-card-title>
+    <v-card-subtitle>
+      <slot name="subtitle" />
+    </v-card-subtitle>
     <v-card-text>
       <slot name="text" />
     </v-card-text>

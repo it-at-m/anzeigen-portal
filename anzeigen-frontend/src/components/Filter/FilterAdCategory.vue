@@ -24,7 +24,7 @@
             {{ NO_CATEGORY.name }}
           </v-tab>
           <v-tab
-            v-for="category in data"
+            v-for="category in categoriesStore.categories"
             :key="category.id"
             :value="category"
           >
@@ -53,19 +53,21 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetCategories } from "@/composables/api/useGetCategories";
 import { useSnackbar } from "@/composables/useSnackbar";
 import { API_ERROR_MSG } from "@/Constants";
-
-const snackbar = useSnackbar();
+import { useCategoriesStore } from "@/stores/adcategory";
 
 const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 
 const { call: getCategories, data, loading, error } = useGetCategories();
 
+const snackbar = useSnackbar();
+
 const categoryQuery = useRouteQuery("categoryId");
 
 const selectedCategory = ref<AdCategory>(NO_CATEGORY);
 
+const categoriesStore = useCategoriesStore();
+
 onMounted(async () => {
-  // initial api-call
   await getCategories();
 
   // error catching
@@ -76,11 +78,13 @@ onMounted(async () => {
     });
   }
 
+  categoriesStore.setCategories(data.value as AdCategory[]);
+
   // initial selection
-  if (categoryQuery.value && data.value !== undefined) {
+  if (categoryQuery.value && categoriesStore.categories.length !== 0) {
     // search for matching category and set it
     selectedCategory.value =
-      data.value.find(
+      categoriesStore.categories.find(
         (category) =>
           category.id && category.id.toString() === categoryQuery.value
       ) || selectedCategory.value;
