@@ -51,12 +51,15 @@ import { onMounted, ref, watch } from "vue";
 import { Levels } from "@/api/error";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetCategories } from "@/composables/api/useGetCategories";
-import { useSnackbarStore } from "@/stores/snackbar";
+import { useSnackbar } from "@/composables/useSnackbar";
+import { API_ERROR_MSG } from "@/Constants";
+import { useCategoriesStore } from "@/stores/adcategory";
 
 const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 
 const { call: getCategories, data, loading, error } = useGetCategories();
-const snackbarStore = useSnackbarStore();
+
+const snackbar = useSnackbar();
 
 const categoryQuery = useRouteQuery("categoryId");
 
