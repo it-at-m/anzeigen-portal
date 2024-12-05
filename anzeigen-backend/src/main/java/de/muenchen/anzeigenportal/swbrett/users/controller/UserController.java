@@ -24,18 +24,14 @@ public class UserController {
     /**
      * Put Method to encrypt the email with https.
      *
-     * @param email
+     * @param lhmObjectId
      * @return SwbUserTO with id, if user found. id = null if no user found
      */
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO findUser(@RequestBody final String email) {
-        final Optional<SwbUserTO> userTO = service.findUser(email);
-        if (userTO.isPresent()) {
-            return userTO.get();
-        } else {
-            return new SwbUserTO();
-        }
+    public SwbUserTO findUser(@RequestBody final String lhmObjectId) {
+        final Optional<SwbUserTO> userTO = service.findUser(lhmObjectId);
+        return userTO.orElseGet(SwbUserTO::new);
     }
 
     @PostMapping()
