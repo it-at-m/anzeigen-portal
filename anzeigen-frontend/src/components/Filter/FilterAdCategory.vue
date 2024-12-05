@@ -24,7 +24,7 @@
             {{ NO_CATEGORY.name }}
           </v-tab>
           <v-tab
-            v-for="category in data"
+            v-for="category in categoriesStore.categories"
             :key="category.id"
             :value="category"
           >
@@ -68,11 +68,7 @@ const selectedCategory = ref<AdCategory>(NO_CATEGORY);
 const categoriesStore = useCategoriesStore();
 
 onMounted(async () => {
-  // initial api-call
-
-  await getCategories().then(() =>
-    categoriesStore.setCategories(data.value as AdCategory[])
-  );
+  await getCategories();
 
   // error catching
   if (error.value) {
@@ -82,8 +78,10 @@ onMounted(async () => {
     });
   }
 
+  categoriesStore.setCategories(data.value as AdCategory[]);
+
   // initial selection
-  if (categoryQuery.value && categoriesStore.categories !== undefined) {
+  if (categoryQuery.value && categoriesStore.categories.length !== 0) {
     // search for matching category and set it
     selectedCategory.value =
       categoriesStore.categories.find(
@@ -104,25 +102,6 @@ watch(selectedCategory, (newSelectedCategory) => {
     categoryQuery.value = newSelectedCategory.id.toString();
   }
 });
-
-/**
- * Loads categories from the backend and save them to the store
- */
-const loadCategories = async () => {
-  await getCategories();
-
-  console.log("Categories data", data.value);
-
-  if (error.value) {
-    snackbarStore.showMessage({
-      message: "Kategorien konnten nicht geladen werden.",
-      level: Levels.ERROR,
-    });
-  } else {
-    console.log("Setting categories into store");
-    categoriesStore.setCategories(data.value as AdCategory[]);
-  }
-};
 </script>
 
 <style scoped></style>

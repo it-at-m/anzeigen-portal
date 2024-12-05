@@ -80,7 +80,7 @@ const loadUser = async () => {
   if (userInfoError.value) {
     snackbar.sendMessage({
       level: Levels.ERROR,
-      message: API_ERROR_MSG + "AdNavBar",
+      message: API_ERROR_MSG,
     });
     return;
   }

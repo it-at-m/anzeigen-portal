@@ -59,7 +59,7 @@
 </template>
 
 <script setup lang="ts">
-import { VDateInput, VNumberInput } from "vuetify/labs/components";
+import { VDateInput } from "vuetify/labs/components";
 
 import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
