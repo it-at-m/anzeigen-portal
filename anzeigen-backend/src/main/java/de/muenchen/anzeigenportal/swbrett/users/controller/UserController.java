@@ -2,12 +2,14 @@ package de.muenchen.anzeigenportal.swbrett.users.controller;
 
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+@Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -24,18 +26,17 @@ public class UserController {
     /**
      * Put Method to encrypt the email with https.
      *
-     * @param email
+     * @param lhmObjectId unique description in keycloak for every user
      * @return SwbUserTO with id, if user found. id = null if no user found
      */
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO findUser(@RequestBody final String email) {
-        final Optional<SwbUserTO> userTO = service.findUser(email);
-        if (userTO.isPresent()) {
-            return userTO.get();
-        } else {
-            return new SwbUserTO();
-        }
+    public SwbUserTO findUser(@RequestBody final String lhmObjectId) {
+        String sanitizedId = lhmObjectId.replace("\"", ""); // Entfernt Anführungszeichen
+        sanitizedId = sanitizedId.replaceAll("[\\r\\n]", ""); // Entfernt Zeilenumbrüche
+        final Optional<SwbUserTO> userTO = service.findUser(sanitizedId);
+        log.debug("CONTROLLER | findUser with lhmObjectID: {} was: {}", sanitizedId, userTO.isPresent());
+        return userTO.orElseGet(SwbUserTO::new);
     }
 
     @PostMapping()

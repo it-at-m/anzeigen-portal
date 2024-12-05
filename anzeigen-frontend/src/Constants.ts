@@ -11,6 +11,13 @@ export const ROUTER_TYPE = "hash";
  * EventBus Identifiers
  */
 export const EV_EDIT_AD_DIALOG = "eventbus-dialog";
+export const EV_SNACKBAR = "eventbus-snackbar";
+
+/**
+ * Messages
+ */
+export const API_ERROR_MSG =
+  "Ein Fehler ist aufgetreten. Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.";
 
 /**
  * Other constants

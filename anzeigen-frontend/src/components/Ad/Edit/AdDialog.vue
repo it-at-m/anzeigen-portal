@@ -71,7 +71,6 @@
 import type {
   AdCategory,
   AdTO,
-  CreateAdRequest,
   SwbFileTO,
   SwbImageTO,
   SwbUserTO,

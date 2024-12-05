@@ -121,7 +121,7 @@ export function defaultCatchHandler(
  * Builds the headers for the request.
  * @returns {Headers}
  */
-function getHeaders(): Headers {
+export function getHeaders(): Headers {
   const headers = new Headers({
     "Content-Type": "application/json",
   });
@@ -136,7 +136,7 @@ function getHeaders(): Headers {
  * Returns the XSRF-TOKEN.
  * @returns {string|string}
  */
-function getXSRFToken(): string {
+export function getXSRFToken(): string {
   const help = document.cookie.match(
     "(^|;)\\s*" + "XSRF-TOKEN" + "\\s*=\\s*([^;]+)"
   );
