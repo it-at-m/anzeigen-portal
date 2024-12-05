@@ -18,3 +18,8 @@ export const EV_SNACKBAR = "eventbus-snackbar";
  */
 export const API_ERROR_MSG =
   "Ein Fehler ist aufgetreten. Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.";
+
+/**
+ * Other constants
+ */
+export const AD_MAX_TITLE_LENGTH = 40;

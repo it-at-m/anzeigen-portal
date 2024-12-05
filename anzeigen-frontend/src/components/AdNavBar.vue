@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AdTO } from "@/api/swbrett";
+
 import { useEventBus } from "@vueuse/core";
 
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -25,10 +27,10 @@ import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
 import { EV_EDIT_AD_DIALOG } from "@/Constants";
 
-const dialogBus = useEventBus<boolean>(EV_EDIT_AD_DIALOG);
+const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
 
 const triggerDialog = () => {
-  dialogBus.emit(true);
+  dialogBus.emit(undefined);
 };
 </script>
 
