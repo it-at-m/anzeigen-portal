@@ -32,8 +32,7 @@ public class UserController {
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
     public SwbUserTO findUser(@RequestBody final String lhmObjectId) {
-        String sanitizedId = lhmObjectId.replace("\"", ""); // Entfernt Anführungszeichen
-        sanitizedId = sanitizedId.replaceAll("[\\r\\n]", ""); // Entfernt Zeilenumbrüche
+        String sanitizedId = lhmObjectId.replaceAll("[\\r\\n\"]", "");
         final Optional<SwbUserTO> userTO = service.findUser(sanitizedId);
         log.debug("CONTROLLER | findUser with lhmObjectID: {} was: {}", sanitizedId, userTO.isPresent());
         return userTO.orElseGet(SwbUserTO::new);
