@@ -89,6 +89,7 @@ import {
   useUpdateAd,
 } from "@/composables/api/useAdApi";
 import { useCreateUser } from "@/composables/api/useUserApi";
+import { useDialogEventBus } from "@/composables/useDialog";
 import { EV_EDIT_AD_DIALOG } from "@/Constants";
 
 const {
@@ -117,7 +118,7 @@ const adTo = ref<AdTO>();
 
 const disabledInputs = ref<boolean>(false);
 
-const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
+const dialogBus = useDialogEventBus();
 
 const form = ref<boolean>();
 
