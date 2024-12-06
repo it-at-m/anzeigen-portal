@@ -23,3 +23,4 @@ export const API_ERROR_MSG =
  * Other constants
  */
 export const AD_MAX_TITLE_LENGTH = 40;
+export const DATE_DISPLAY_FORMAT = "DD.MM.YYYY"; // use this in conjunction with useDateFormat
