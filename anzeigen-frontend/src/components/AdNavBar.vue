@@ -18,6 +18,7 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { useEventBus } from "@vueuse/core";
+import { logicOr } from "@vueuse/math";
 import { computed, onMounted } from "vue";
 
 import { Levels } from "@/api/error";
@@ -67,9 +68,8 @@ onMounted(async () => {
   await loadUser();
 });
 
-const loading = computed(
-  () =>
-    userInfoLoading.value || findUserLoading.value || createUserLoading.value
+const loading = computed(() =>
+  logicOr(userInfoLoading, findUserLoading, createUserLoading)
 );
 
 const currentUser = computed(() => findUserData.value || createUserData.value);
