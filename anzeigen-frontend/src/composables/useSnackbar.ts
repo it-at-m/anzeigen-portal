@@ -1,10 +1,8 @@
 import type { SnackbarMessage } from "@/types/SnackbarMessage";
 
-import { useEventBus } from "@vueuse/core";
+import { useSnackbarEventBus } from "@/composables/useEventBus";
 
-import { EV_SNACKBAR } from "@/Constants";
-
-export const snackbarBus = useEventBus<SnackbarMessage>(EV_SNACKBAR);
+export const snackbarBus = useSnackbarEventBus();
 
 export const useSnackbar = () => {
   const sendMessage = (message: SnackbarMessage) => {
