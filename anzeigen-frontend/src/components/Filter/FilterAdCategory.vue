@@ -46,6 +46,7 @@
 import type { AdCategory } from "@/api/swbrett";
 
 import { useRouteQuery } from "@vueuse/router";
+import { aw } from "vitest/dist/chunks/reporters.anwo7Y6a";
 import { onMounted, ref, watch } from "vue";
 
 import { Levels } from "@/api/error";
