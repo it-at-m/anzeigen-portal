@@ -76,7 +76,7 @@ import type {
   SwbUserTO,
 } from "@/api/swbrett";
 
-import { useEventBus } from "@vueuse/core";
+import { isDefined, useEventBus } from "@vueuse/core";
 import { computed, ref } from "vue";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
@@ -175,7 +175,7 @@ const createAd = () => {
 
 const close = () => (dialog.value = false);
 
-const isAdCreate = computed(() => adTo.value === undefined);
+const isAdCreate = computed(() => isDefined(adTo));
 </script>
 
 <style scoped></style>
