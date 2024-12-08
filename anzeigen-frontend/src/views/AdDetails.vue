@@ -132,18 +132,22 @@
 import type {
   AdCategory,
   AdTO,
+  GetAdRequest,
   SwbFileTO,
   SwbImageTO,
   SwbUserTO,
 } from "@/api/swbrett";
 
-import { useDateFormat } from "@vueuse/core";
-import { ref } from "vue";
+import { useDateFormat, useMemoize } from "@vueuse/core";
+import { useRouteQuery } from "@vueuse/router";
+import { aw } from "vitest/dist/chunks/reporters.anwo7Y6a";
+import { onMounted, ref, watch } from "vue";
 
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
+import { useGetAd } from "@/composables/api/useAdApi";
 import { DATE_DISPLAY_FORMAT } from "@/Constants";
 
 /**
@@ -198,7 +202,29 @@ const exampleAd: AdTO = {
   views: 150,
 };
 
-const adDetails = ref<AdTO>(exampleAd);
+const { call: getAdCall, data: getAdData } = useGetAd();
+
+const adDetails = ref<Readonly<AdTO> | null>(exampleAd);
+
+const idQuery = useRouteQuery("id");
+
+watch(idQuery, (newId) => {
+  if (newId !== null) updateAd(newId.toString() || "1");
+});
+
+onMounted(() => {
+  updateAd(idQuery.value?.toString() || "");
+});
+
+const updateAd = async (id: string) => {
+  console.log("idQuery:", id);
+  adDetails.value = (await getAd(parseInt(id))).value as AdTO;
+};
+
+const getAd = useMemoize(async (adId: number) => {
+  await getAdCall({ id: adId });
+  return getAdData;
+});
 </script>
 
 <style scoped></style>
