@@ -48,7 +48,7 @@
             <v-container class="pl-0">
               <v-row>
                 <v-col class="py-0"> Art </v-col>
-                <v-col class="py-0"> {{ adDetails.adType }} </v-col>
+                <v-col class="py-0"> {{ adType }} </v-col>
               </v-row>
               <v-row>
                 <v-col class="py-0"> Kategorie </v-col>
@@ -66,6 +66,10 @@
                     )
                   }}
                 </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0"> Aufrufe </v-col>
+                <v-col class="py-0"> {{ adDetails.views }} </v-col>
               </v-row>
               <v-row>
                 <v-col class="py-0"> Ablaufdatum </v-col>
@@ -132,6 +136,7 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
+import { computed } from "vue";
 
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
@@ -139,9 +144,13 @@ import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { DATE_DISPLAY_FORMAT } from "@/Constants";
 
-defineProps<{
+const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
 }>();
+
+const adType = computed(() =>
+  adDetails.adType === "SEEK" ? "Suche" : "Biete"
+);
 </script>
 
 <style scoped></style>
