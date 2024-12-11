@@ -1,128 +1,23 @@
 <template>
   <v-container>
     <v-row justify="center">
-      <v-col cols="10">
+      <v-col
+        cols="12"
+        md="10"
+        xl="8"
+      >
         <v-container>
-          <v-row>
-            <v-col>
-              <ad-display-sheet class="pa-2">
-                <v-img
-                  cover
-                  max-height="300"
-                  src="https://picsum.photos/300"
-                />
-              </ad-display-sheet>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ad-display-card>
-                <template #title>
-                  {{ adDetails.title }}
-                </template>
-                <template #subtitle>
-                  <ad-price
-                    v-if="adDetails.price"
-                    :price="adDetails.price"
-                  />
-                </template>
-                <template #text>
-                  {{ adDetails.description }}
-                </template>
-              </ad-display-card>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ad-display-card>
-                <template #subtitle>Details</template>
-                <template #text>
-                  <v-container class="pl-0">
-                    <v-row>
-                      <v-col class="py-0"> Art </v-col>
-                      <v-col class="py-0"> {{ adDetails.adType }} </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="py-0"> Kategorie </v-col>
-                      <v-col class="py-0">
-                        {{ adDetails.adCategory?.name }}
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="py-0"> Erstellungsdatum </v-col>
-                      <v-col class="py-0">
-                        {{
-                          useDateFormat(
-                            adDetails.creationDateTime,
-                            DATE_DISPLAY_FORMAT
-                          )
-                        }}
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="py-0"> Ablaufdatum </v-col>
-                      <v-col class="py-0">
-                        {{
-                          useDateFormat(
-                            adDetails.expiryDate,
-                            DATE_DISPLAY_FORMAT
-                          )
-                        }}
-                      </v-col>
-                    </v-row>
-                    <v-row>
-                      <v-col class="py-0"> Direkter Link </v-col>
-                      <v-col class="py-0">
-                        <icon-text
-                          label="https://weissesbrett.muenchen.de/board/main/7430"
-                          href="https://weissesbrett.muenchen.de/board/main/7430"
-                        />
-                      </v-col>
-                    </v-row>
-                  </v-container>
-                </template>
-              </ad-display-card>
-            </v-col>
-          </v-row>
-          <v-row>
-            <v-col>
-              <ad-display-card>
-                <template #subtitle>Weitere Informationen</template>
-                <template #text>
-                  <icon-text
-                    v-for="i in adDetails.adFiles"
-                    :key="i.id"
-                    :label="i.name!"
-                    icon="link-variant"
-                  />
-                </template>
-              </ad-display-card>
-            </v-col>
-            <v-col>
-              <ad-display-card>
-                <template #subtitle>Kontakt</template>
-                <template #text>
-                  <icon-text
-                    v-if="adDetails.phone"
-                    icon="phone"
-                    :label="adDetails.phone"
-                  />
-                  <icon-text
-                    v-if="adDetails.email"
-                    icon="email"
-                    :label="adDetails.email"
-                  />
-                  <icon-text
-                    v-if="adDetails.swbUser?.displayName"
-                    icon="account"
-                    :label="adDetails.swbUser?.displayName"
-                    href="https://google.de"
-                  />
-                </template>
-              </ad-display-card>
-            </v-col>
-          </v-row>
+          <v-btn
+            color="accent"
+            @click="back"
+            >Zurück</v-btn
+          >
         </v-container>
+        <ad-overview
+          v-if="!getAdError && adDetails !== null"
+          :ad-details="adDetails"
+        />
+        <ad-not-found v-else />
       </v-col>
     </v-row>
   </v-container>
@@ -132,27 +27,19 @@
 import type {
   AdCategory,
   AdTO,
-  GetAdRequest,
   SwbFileTO,
   SwbImageTO,
   SwbUserTO,
 } from "@/api/swbrett";
 
-import { useDateFormat, useMemoize } from "@vueuse/core";
+import { useMemoize } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
-import { aw } from "vitest/dist/chunks/reporters.anwo7Y6a";
 import { onMounted, ref, watch } from "vue";
+import { useRouter } from "vue-router";
 
-import AdPrice from "@/components/Ad/AdPrice.vue";
-import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
-import IconText from "@/components/common/IconText.vue";
+import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
+import AdOverview from "@/components/Ad/Details/AdOverview.vue";
 import { useGetAd } from "@/composables/api/useAdApi";
-import { DATE_DISPLAY_FORMAT } from "@/Constants";
-
-/**
- * This could be huge here: https://vueuse.org/core/useMemoize/
- */
 
 const exampleAd: AdTO = {
   id: 1,
@@ -202,14 +89,23 @@ const exampleAd: AdTO = {
   views: 150,
 };
 
-const { call: getAdCall, data: getAdData } = useGetAd();
+const router = useRouter();
 
 const adDetails = ref<Readonly<AdTO> | null>(exampleAd);
+
+const { call: getAdCall, data: getAdData, error: getAdError } = useGetAd();
+
+const getAd = useMemoize(async (adId: number) => {
+  await getAdCall({ id: adId });
+  return getAdData;
+});
 
 const idQuery = useRouteQuery("id");
 
 watch(idQuery, (newId) => {
-  if (newId !== null) updateAd(newId.toString() || "1");
+  if (newId !== null) {
+    updateAd(newId.toString() || "1");
+  }
 });
 
 onMounted(() => {
@@ -217,14 +113,12 @@ onMounted(() => {
 });
 
 const updateAd = async (id: string) => {
-  console.log("idQuery:", id);
   adDetails.value = (await getAd(parseInt(id))).value as AdTO;
 };
 
-const getAd = useMemoize(async (adId: number) => {
-  await getAdCall({ id: adId });
-  return getAdData;
-});
+const back = () => {
+  router.go(-1);
+};
 </script>
 
 <style scoped></style>
