@@ -34,12 +34,13 @@ import type {
 
 import { useMemoize } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
-import { onMounted, ref, watch } from "vue";
+import { onActivated, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/Details/AdOverview.vue";
 import { useGetAd } from "@/composables/api/useAdApi";
+import { useClearCacheEventBus } from "@/composables/useEventBus";
 
 const exampleAd: AdTO = {
   id: 1,
@@ -89,18 +90,22 @@ const exampleAd: AdTO = {
   views: 150,
 };
 
+const clearCacheEventBus = useClearCacheEventBus();
+
+const idQuery = useRouteQuery("id");
+
 const router = useRouter();
 
-const adDetails = ref<Readonly<AdTO> | null>(exampleAd);
-
 const { call: getAdCall, data: getAdData, error: getAdError } = useGetAd();
+
+const adDetails = ref<Readonly<AdTO> | null>(null);
 
 const getAd = useMemoize(async (adId: number) => {
   await getAdCall({ id: adId });
   return getAdData;
 });
 
-const idQuery = useRouteQuery("id");
+clearCacheEventBus.on(() => getAd.clear());
 
 watch(idQuery, (newId) => {
   if (newId !== null) {
@@ -108,7 +113,7 @@ watch(idQuery, (newId) => {
   }
 });
 
-onMounted(() => {
+onActivated(() => {
   updateAd(idQuery.value?.toString() || "");
 });
 
