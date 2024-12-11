@@ -12,6 +12,7 @@ export const ROUTER_TYPE = "hash";
  */
 export const EV_EDIT_AD_DIALOG = "eventbus-dialog";
 export const EV_SNACKBAR = "eventbus-snackbar";
+export const EV_CLEAR_CACHE = "eventBus-clear-cache";
 
 /**
  * Messages
