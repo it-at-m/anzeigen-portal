@@ -142,13 +142,13 @@ public class AdService {
         repository.save(ad);
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_DELETE_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())")
     public void deleteAd(final long id, HttpServletRequest request) {
         final Ad ad = repository.getOne(id);
         repository.delete(ad);
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_WRITE_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())")
     public void updateAllCategories(final AdCategory oldCat, final AdCategory newCat) {
         final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
