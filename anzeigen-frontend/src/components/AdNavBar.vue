@@ -24,7 +24,7 @@ import type {
 } from "@/api/swbrett";
 
 import { useEventBus } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted } from "vue";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -46,8 +46,6 @@ import { useUserStore } from "@/stores/user";
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
-
-const dialog = ref<boolean>();
 
 const {
   call: userInfoCall,
@@ -106,15 +104,8 @@ const exampleAd: AdTO = {
 };
 
 const triggerDialog = () => {
-  console.log("Triggered dialog");
-  dialog.value = true;
-
-  dialogBus.emit(exampleAd);
+  dialogBus.emit(undefined);
 };
-
-onMounted(async () => {
-  await loadUser();
-});
 
 const loading = computed(
   () =>
@@ -157,6 +148,11 @@ const loadUser = async () => {
 
   userStore.setUserId(currentUser.value?.id || -1);
 };
+
+/**
+ * Load User in setup block - happens only once
+ */
+loadUser();
 </script>
 
 <style scoped></style>

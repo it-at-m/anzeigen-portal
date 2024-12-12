@@ -61,41 +61,18 @@
 
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
-import { onMounted } from "vue";
 
-import { getUser } from "@/api/user-client";
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import { useApi } from "@/composables/useApi";
 import { useUserStore } from "@/stores/user";
-import User, { UserLocalDevelopment } from "@/types/User";
 
 useApi();
 
-useTitle("Anzeigen Portal");
-
 const userStore = useUserStore();
 
-onMounted(() => {
-  loadUser();
-});
-
-/**
- * Loads UserInfo from the backend and sets it in the store.
- */
-function loadUser(): void {
-  getUser()
-    .then((user: User) => userStore.setUser(user))
-    .catch(() => {
-      // No user info received, so fallback
-      if (import.meta.env.DEV) {
-        userStore.setUser(UserLocalDevelopment());
-      } else {
-        userStore.setUser(null);
-      }
-    });
-}
+useTitle("Anzeigen Portal");
 </script>
 
 <style>

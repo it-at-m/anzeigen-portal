@@ -34,7 +34,7 @@ public class UserController {
     public SwbUserTO findUser(@RequestBody final String lhmObjectId) {
         String sanitizedId = lhmObjectId.replaceAll("[\\r\\n\"]", "");
         final Optional<SwbUserTO> userTO = service.findUser(sanitizedId);
-        log.debug("CONTROLLER | findUser with lhmObjectID: {} was: {}", sanitizedId, userTO.isPresent());
+        log.debug("CONTROLLER | findUser was successful: {}", userTO.isPresent());
         return userTO.orElseGet(SwbUserTO::new);
     }
 

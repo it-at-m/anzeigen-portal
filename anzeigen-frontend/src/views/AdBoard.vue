@@ -1,19 +1,21 @@
 <template>
-  <ad-dialog />
-  <v-row>
-    <v-col
-      lg="3"
-      cols="12"
-    >
-      <ad-nav-bar />
-    </v-col>
-    <v-col
-      lg="9"
-      cols="12"
-    >
-      <ad-list />
-    </v-col>
-  </v-row>
+  <div>
+    <ad-dialog />
+    <v-row>
+      <v-col
+        lg="3"
+        cols="12"
+      >
+        <ad-nav-bar />
+      </v-col>
+      <v-col
+        lg="9"
+        cols="12"
+      >
+        <ad-list />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script setup lang="ts">
