@@ -70,7 +70,7 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { isDefined, useEventBus } from "@vueuse/core";
+import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
@@ -79,7 +79,6 @@ import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useCreateUser } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
-import { EV_EDIT_AD_DIALOG } from "@/Constants";
 
 const { call } = useCreateUser();
 
@@ -110,7 +109,7 @@ const createAd = () => {
 
 const close = () => (dialog.value = false);
 
-const isAdCreate = computed(() => isDefined(adTo));
+const isAdCreate = computed(() => !isDefined(adTo));
 </script>
 
 <style scoped></style>
