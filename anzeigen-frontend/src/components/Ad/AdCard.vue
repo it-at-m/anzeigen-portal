@@ -44,12 +44,6 @@
                 md="4"
                 class="d-flex justify-end"
               >
-                <v-btn
-                  color="error"
-                  prepend-icon="mdi-trash-can-outline"
-                  class="mr-1"
-                  text="Löschen"
-                />
                 <ad-edit-button is-edit />
               </v-col>
             </v-row>
