@@ -34,7 +34,7 @@ import type {
 
 import { useMemoize } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
-import { onActivated, ref, watch } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
@@ -113,8 +113,8 @@ watch(idQuery, (newId) => {
   }
 });
 
-onActivated(() => {
-  updateAd(idQuery.value?.toString() || "");
+onMounted(async () => {
+  await updateAd(idQuery.value?.toString() || "");
 });
 
 const updateAd = async (id: string) => {
