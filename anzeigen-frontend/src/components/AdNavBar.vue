@@ -15,10 +15,16 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type {
+  AdCategory,
+  AdTO,
+  SwbFileTO,
+  SwbImageTO,
+  SwbUserTO,
+} from "@/api/swbrett";
 
 import { useEventBus } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, onMounted } from "vue";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -32,11 +38,12 @@ import {
   useFindUser,
   useUserInfo,
 } from "@/composables/api/useUserApi";
+import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, EV_EDIT_AD_DIALOG } from "@/Constants";
+import { API_ERROR_MSG } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
-const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
+const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 
@@ -58,6 +65,43 @@ const {
   data: createUserData,
   loading: createUserLoading,
 } = useCreateUser();
+
+const exampleAd: AdTO = {
+  id: 1,
+  swbUser: {
+    id: 123,
+    name: "John Doe",
+    email: "johndoe@example.com",
+  } as SwbUserTO,
+  adCategory: {
+    id: 10,
+    name: "Electronics",
+  } as AdCategory,
+  adType: "SEEK", // Beispielwert aus AdTOAdTypeEnum
+  active: true,
+  title: "Smartphone for Sale",
+  description: "A lightly used smartphone in excellent condition.",
+  price: 250,
+  phone: "+123456789",
+  email: "seller@example.com",
+  link: "https://example.com/listing/1",
+  creationDateTime: new Date("2024-01-01T12:00:00Z"),
+  expiryDate: new Date("2024-12-31T23:59:59Z"),
+  imagePreviewBase64: "data:image/png;base64,iVBORw0KGgoAAAANS...",
+  adImg: {
+    id: 101,
+    fileName: "smartphone.png",
+    url: "https://example.com/images/smartphone.png",
+  } as SwbImageTO,
+  adFiles: [
+    {
+      id: 201,
+      fileName: "manual.pdf",
+      url: "https://example.com/files/manual.pdf",
+    } as SwbFileTO,
+  ],
+  views: 150,
+};
 
 const triggerDialog = () => {
   dialogBus.emit(undefined);

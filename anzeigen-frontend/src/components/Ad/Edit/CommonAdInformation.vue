@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    v-model="title"
+    v-model="adTitle"
     label="Titel"
     class="w-md-66 w-sm-75"
     :disabled="disabled"
@@ -14,9 +14,8 @@
     v-model="category"
     class="w-md-66 w-sm-75"
     placeholder="Kategorie"
-    :loading="categoryLoading"
     :disabled="disabled"
-    :items="data as AdCategory[]"
+    :items="categoryStore.categories"
     item-title="name"
     :rules="[(value) => !!value || 'Bitte wählen Sie eine Kategorie aus.']"
   />
@@ -83,19 +82,15 @@
 <script setup lang="ts">
 import type { AdCategory, AdTOAdTypeEnum } from "@/api/swbrett";
 
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { VNumberInput } from "vuetify/labs/components";
 
-import { useGetCategories } from "@/composables/api/useGetCategories";
 import { AD_MAX_TITLE_LENGTH } from "@/Constants";
+import { useCategoriesStore } from "@/stores/adcategory";
 
-const {
-  call: getCategories,
-  data,
-  loading: categoryLoading,
-} = useGetCategories();
+const categoryStore = useCategoriesStore();
 
-const title = defineModel<string>("title", { default: "" });
+const adTitle = defineModel<string>("title", { default: "" });
 
 const category = defineModel<AdCategory>("category");
 
@@ -112,10 +107,6 @@ defineProps<{
 }>();
 
 const priceOption = ref<number>(Math.sign(price.value ?? 1));
-
-onMounted(() => {
-  getCategories();
-});
 
 watch(priceOption, (newPriceOption) => {
   price.value = (newPriceOption ?? 1) * Math.abs(price.value ?? 1);

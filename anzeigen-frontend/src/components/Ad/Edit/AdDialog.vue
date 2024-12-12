@@ -25,7 +25,14 @@
           <ad-display-card>
             <template #subtitle> Allgemeine Informationen </template>
             <template #text>
-              <common-ad-information :disabled="disabledInputs" />
+              <common-ad-information
+                :disabled="disabledInputs"
+                :title="adTo?.title"
+                :category="adTo?.adCategory"
+                :ad-type="adTo?.adType"
+                :description="adTo?.description"
+                :price="adTo?.price"
+              />
             </template>
           </ad-display-card>
           <v-divider />
@@ -46,6 +53,7 @@
       </v-card-text>
       <v-card-actions class="px-4">
         <v-btn
+          :disabled="!form"
           variant="elevated"
           color="accent"
           prepend-icon="mdi-content-save-outline"
@@ -70,7 +78,7 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { isDefined, useEventBus } from "@vueuse/core";
+import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
@@ -78,7 +86,7 @@ import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vu
 import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useCreateUser } from "@/composables/api/useUserApi";
-import { EV_EDIT_AD_DIALOG } from "@/Constants";
+import { useDialogEventBus } from "@/composables/useEventBus";
 
 const { call } = useCreateUser();
 
@@ -88,9 +96,9 @@ const adTo = ref<AdTO>();
 
 const disabledInputs = ref<boolean>(false);
 
-const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
+const dialogBus = useDialogEventBus();
 
-const form = ref<boolean>();
+const form = ref<boolean>(false);
 
 dialogBus.on((event: AdTO) => {
   dialog.value = true;
@@ -109,7 +117,7 @@ const createAd = () => {
 
 const close = () => (dialog.value = false);
 
-const isAdCreate = computed(() => isDefined(adTo));
+const isAdCreate = computed(() => !isDefined(adTo));
 </script>
 
 <style scoped></style>
