@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    v-model="title"
+    v-model="adTitle"
     label="Titel"
     class="w-md-66 w-sm-75"
     :disabled="disabled"
@@ -82,16 +82,15 @@
 <script setup lang="ts">
 import type { AdCategory, AdTOAdTypeEnum } from "@/api/swbrett";
 
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { VNumberInput } from "vuetify/labs/components";
 
-import { useGetCategories } from "@/composables/api/useGetCategories";
 import { AD_MAX_TITLE_LENGTH } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory";
 
 const categoryStore = useCategoriesStore();
 
-const title = defineModel<string>("title", { default: "" });
+const adTitle = defineModel<string>("title", { default: "" });
 
 const category = defineModel<AdCategory>("category");
 

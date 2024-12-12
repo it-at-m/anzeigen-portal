@@ -25,7 +25,14 @@
           <ad-display-card>
             <template #subtitle> Allgemeine Informationen </template>
             <template #text>
-              <common-ad-information :disabled="disabledInputs" />
+              <common-ad-information
+                :disabled="disabledInputs"
+                :title="adTo?.title"
+                :category="adTo?.adCategory"
+                :ad-type="adTo?.adType"
+                :description="adTo?.description"
+                :price="adTo?.price"
+              />
             </template>
           </ad-display-card>
           <v-divider />
@@ -46,6 +53,7 @@
       </v-card-text>
       <v-card-actions class="px-4">
         <v-btn
+          :disabled="!form"
           variant="elevated"
           color="accent"
           prepend-icon="mdi-content-save-outline"
@@ -90,7 +98,7 @@ const disabledInputs = ref<boolean>(false);
 
 const dialogBus = useDialogEventBus();
 
-const form = ref<boolean>();
+const form = ref<boolean>(false);
 
 dialogBus.on((event: AdTO) => {
   dialog.value = true;
