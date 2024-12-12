@@ -33,7 +33,7 @@ public class UserService {
     public Optional<SwbUserTO> findUser(final String lhmObjectId) {
         final Optional<SwbUser> user = repository.findByLhmObjectId(lhmObjectId);
 
-        return user.map(swbUser -> mapper.toSwbUserTO(swbUser));
+        return user.map(mapper::toSwbUserTO);
     }
 
     public SwbUserTO createUser(final SwbUserTO userTO) {

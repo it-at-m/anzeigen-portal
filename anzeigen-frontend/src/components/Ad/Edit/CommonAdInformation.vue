@@ -16,7 +16,7 @@
     placeholder="Kategorie"
     :loading="categoryLoading"
     :disabled="disabled"
-    :items="data"
+    :items="data as AdCategory[]"
     item-title="name"
     :rules="[(value) => !!value || 'Bitte wählen Sie eine Kategorie aus.']"
   />

@@ -12,6 +12,7 @@ export const ROUTER_TYPE = "hash";
  */
 export const EV_EDIT_AD_DIALOG = "eventbus-dialog";
 export const EV_SNACKBAR = "eventbus-snackbar";
+export const EV_CLEAR_CACHE = "eventBus-clear-cache";
 
 /**
  * Messages
@@ -23,3 +24,4 @@ export const API_ERROR_MSG =
  * Other constants
  */
 export const AD_MAX_TITLE_LENGTH = 40;
+export const DATE_DISPLAY_FORMAT = "DD.MM.YYYY"; // use this in conjunction with useDateFormat

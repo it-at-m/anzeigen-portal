@@ -18,7 +18,7 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { useEventBus } from "@vueuse/core";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -63,10 +63,6 @@ const triggerDialog = () => {
   dialogBus.emit(undefined);
 };
 
-onMounted(async () => {
-  await loadUser();
-});
-
 const loading = computed(
   () =>
     userInfoLoading.value || findUserLoading.value || createUserLoading.value
@@ -108,6 +104,11 @@ const loadUser = async () => {
 
   userStore.setUserId(currentUser.value?.id || -1);
 };
+
+/**
+ * Load User in setup block - happens only once
+ */
+loadUser();
 </script>
 
 <style scoped></style>

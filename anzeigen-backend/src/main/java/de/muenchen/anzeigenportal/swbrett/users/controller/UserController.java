@@ -35,7 +35,7 @@ public class UserController {
         String sanitizedId = lhmObjectId.replace("\"", ""); // Entfernt Anführungszeichen
         sanitizedId = sanitizedId.replaceAll("[\\r\\n]", ""); // Entfernt Zeilenumbrüche
         final Optional<SwbUserTO> userTO = service.findUser(sanitizedId);
-        log.debug("CONTROLLER | findUser with lhmObjectID: {} was: {}", sanitizedId, userTO.isPresent());
+        log.debug("CONTROLLER | findUser was successful: {}", userTO.isPresent());
         return userTO.orElseGet(SwbUserTO::new);
     }
 
