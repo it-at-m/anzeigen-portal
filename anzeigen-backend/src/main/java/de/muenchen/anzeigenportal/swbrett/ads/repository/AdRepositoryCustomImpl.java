@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+@Slf4j
 @SuppressWarnings({ "PMD.CouplingBetweenObjects", "PMD.UselessParentheses" })
 @Repository
 public class AdRepositoryCustomImpl implements AdRepositoryCustom {
@@ -97,7 +99,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
             predicates.add(filterAdId);
         }
 
-        final Predicate[] finalPredicates = predicates.toArray(new Predicate[predicates.size()]);
+        final Predicate[] finalPredicates = predicates.toArray(new Predicate[0]);
 
         query.select(root);
         query.where(builder.and(finalPredicates));
@@ -134,8 +136,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         final List<AdTO> resultList = adsQuery.getResultList().stream().map(mapper::toAdTO).collect(Collectors.toList());
 
         final CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
+        countQuery.select(builder.count(root));
         countQuery.where(builder.and(finalPredicates));
-        countQuery.select(builder.count(countQuery.from(Ad.class)));
 
         final Long totalRows = entityManager.createQuery(countQuery).getSingleResult();
 
