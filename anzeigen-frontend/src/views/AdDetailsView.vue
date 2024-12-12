@@ -10,8 +10,9 @@
           <v-btn
             color="accent"
             @click="back"
-            >Zurück</v-btn
           >
+            Zurück
+          </v-btn>
         </v-container>
         <ad-overview
           v-if="!getAdError && adDetails !== null"

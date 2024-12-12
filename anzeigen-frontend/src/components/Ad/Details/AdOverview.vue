@@ -68,14 +68,14 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0"> Aufrufe </v-col>
-                <v-col class="py-0"> {{ adDetails.views }} </v-col>
-              </v-row>
-              <v-row>
                 <v-col class="py-0"> Ablaufdatum </v-col>
                 <v-col class="py-0">
                   {{ useDateFormat(adDetails.expiryDate, DATE_DISPLAY_FORMAT) }}
                 </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0"> Aufrufe </v-col>
+                <v-col class="py-0"> {{ adDetails.views }} </v-col>
               </v-row>
               <v-row>
                 <v-col class="py-0"> Direkter Link </v-col>
