@@ -52,8 +52,75 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
+    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Pageable pageable, final Long adId, final boolean isActive) {
+
+        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+
+        // Main query
+        CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
+        Root<Ad> ad = cq.from(Ad.class);
+        List<Predicate> predicates = buildPredicates(cb, ad, isActive, userId, searchTerm, categoryId, type, adId);
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        // Add sorting
+        if (sortBy != null) {
+            Path<?> sortPath = ad.get(sortBy);
+            if ("desc".equalsIgnoreCase(order)) {
+                cq.orderBy(cb.desc(sortPath));
+            } else {
+                cq.orderBy(cb.asc(sortPath));
+            }
+        }
+
+        TypedQuery<Ad> query = entityManager.createQuery(cq);
+
+        // Apply pagination
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+
+        List<AdTO> ads = query.getResultList()
+                .stream()
+                .map(mapper::toAdTO)
+                .collect(Collectors.toList());
+
+        // Count query for total elements
+        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        Root<Ad> countRoot = countQuery.from(Ad.class);
+        List<Predicate> countPredicates = buildPredicates(cb, countRoot, isActive, userId, searchTerm, categoryId, type, adId);
+        countQuery.select(cb.count(countRoot)).where(countPredicates.toArray(new Predicate[0]));
+        Long total = entityManager.createQuery(countQuery).getSingleResult();
+
+        return new PageImpl<>(ads, pageable, total);
+    }
+
+    private List<Predicate> buildPredicates(CriteriaBuilder cb, Root<Ad> root, boolean isActive, String userId, String searchTerm,
+                                            Long categoryId, AdType type, Long adId) {
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(root.get("active"), isActive));
+
+        if (userId != null) {
+            predicates.add(cb.equal(cb.lower(root.get("swbUser").get("id")), userId.toLowerCase()));
+        }
+        if (searchTerm != null) {
+            Predicate titlePredicate = cb.like(cb.lower(root.get("title")), "%" + searchTerm.toLowerCase() + "%");
+            Predicate descriptionPredicate = cb.like(cb.lower(root.get("description")), "%" + searchTerm.toLowerCase() + "%");
+            predicates.add(cb.or(titlePredicate, descriptionPredicate));
+        }
+        if (categoryId != null) {
+            predicates.add(cb.equal(root.get("adCategory").get("id"), categoryId));
+        }
+        if (type != null) {
+            predicates.add(cb.equal(root.get("adType"), type));
+        }
+        if (adId != null) {
+            predicates.add(cb.equal(root.get("id"), adId));
+        }
+
+        return predicates;
+    }
+
     @SuppressWarnings("PMD.UseObjectForClearerAPI")
-    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
+    public Page<AdTO> searchAdsOld(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
             final Pageable pageable, final Long adId,
             final boolean isActive) {
         final CriteriaBuilder builder = entityManager.getCriteriaBuilder();
@@ -136,11 +203,12 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         final List<AdTO> resultList = adsQuery.getResultList().stream().map(mapper::toAdTO).collect(Collectors.toList());
 
         final CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
-        countQuery.select(builder.count(root));
+        Root<Ad> countRoot = query.from(Ad.class);
+        countQuery.select(builder.count(countRoot));
         countQuery.where(builder.and(finalPredicates));
 
-        final Long totalRows = entityManager.createQuery(countQuery).getSingleResult();
+        //inal Long totalRows = entityManager.createQuery(countQuery).getSingleResult();
 
-        return new PageImpl<>(resultList, pageable, totalRows);
+        return new PageImpl<>(resultList, pageable, 10);
     }
 }
