@@ -51,6 +51,7 @@ import { onMounted, ref, watch } from "vue";
 import { Levels } from "@/api/error";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetCategories } from "@/composables/api/useGetCategories";
+import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
 import { API_ERROR_MSG } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory";
@@ -66,6 +67,8 @@ const categoryQuery = useRouteQuery("categoryId");
 const selectedCategory = ref<AdCategory>(NO_CATEGORY);
 
 const categoriesStore = useCategoriesStore();
+
+const updateAdListEventBus = useUpdateAdListEventBus();
 
 onMounted(async () => {
   await getCategories();
@@ -101,6 +104,7 @@ watch(selectedCategory, (newSelectedCategory) => {
   } else {
     categoryQuery.value = newSelectedCategory.id.toString();
   }
+  updateAdListEventBus.emit();
 });
 </script>
 
