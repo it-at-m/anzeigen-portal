@@ -32,11 +32,12 @@ import {
   useFindUser,
   useUserInfo,
 } from "@/composables/api/useUserApi";
+import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, EV_EDIT_AD_DIALOG } from "@/Constants";
+import { API_ERROR_MSG } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
-const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
+const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 

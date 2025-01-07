@@ -9,13 +9,13 @@
           cols="12"
           sm="3"
         >
-          <a href="https://google.de">
-            <v-img
-              cover
-              max-height="200"
-              src="https://picsum.photos/300"
-            />
-          </a>
+          <v-img
+            cover
+            max-height="200"
+            src="https://picsum.photos/300"
+            class="cursor-pointer"
+            @click="routeTo"
+          />
         </v-col>
         <v-col
           cols="12"
@@ -32,6 +32,8 @@
                 cols="12"
                 sm="7"
                 md="8"
+                class="cursor-pointer"
+                @click="routeTo"
               >
                 <p class="text-h5 text-truncate">
                   {{ adTo.title }}
@@ -43,7 +45,10 @@
                 md="4"
                 class="d-flex justify-end"
               >
-                <ad-edit-button is-edit />
+                <ad-edit-button
+                  is-edit
+                  @click="clickedEdit"
+                />
               </v-col>
             </v-row>
             <v-row
@@ -82,21 +87,36 @@ import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 import AdArtChip from "@/components/Ad/AdArtChip.vue";
 import AdCategoryChip from "@/components/Ad/AdCategoryChip.vue";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
+import { useDialogEventBus } from "@/composables/useEventBus";
 
-defineProps<{
+const router = useRouter();
+
+const dialogBus = useDialogEventBus();
+
+const { adTo } = defineProps<{
   adTo: DeepReadonly<AdTO>;
 }>();
 
-const description =
-  "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
-
 const isOffer = ref(false);
+
+/**
+ * Route to a specific ad
+ * @param id of the ad
+ */
+const routeTo = () => {
+  router.push({ path: "/ad", query: { id: adTo.id } });
+};
+
+const clickedEdit = () => {
+  dialogBus.emit(JSON.parse(JSON.stringify(adTo)));
+};
 </script>
 
 <style scoped>
