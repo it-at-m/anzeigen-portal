@@ -10,6 +10,7 @@
     prepend-inner-icon="mdi-magnify"
     theme="dark"
     @keyup.enter="search"
+    @click:clear="search"
   />
 </template>
 
@@ -30,7 +31,7 @@ onMounted(() => {
 });
 
 const search = () => {
-  searchQuery.value = searchValue.value ?? "";
+  searchQuery.value = searchValue.value ?? [];
 };
 </script>
 
