@@ -11,6 +11,7 @@ const routes = [
     name: ROUTES_BOARD,
     component: AdBoard,
     meta: {},
+    alias: "/myboard",
   },
   {
     path: "/ad",
