@@ -34,8 +34,7 @@
                 md="8"
               >
                 <p class="text-h5 text-truncate">
-                  Das ist ein Artikelname und hier schreibt einer zu viel rein -
-                  da kommt noch mehr
+                  {{ adTo.title }}
                 </p>
               </v-col>
               <v-col
@@ -51,13 +50,13 @@
               class="w-100"
               align="start"
             >
-              <p class="two-line-clamp">{{ description }}</p>
+              <p class="two-line-clamp">{{ adTo.description }}</p>
             </v-row>
             <v-row
               class="w-100"
               align="start"
             >
-              <ad-price :price="20" />
+              <ad-price :price="adTo.price!" />
             </v-row>
             <v-row
               class="w-100"
@@ -66,10 +65,8 @@
             >
               <v-col class="pa-0 pb-2 d-flex ga-2">
                 <ad-art-chip :is-offer="isOffer" />
-                <ad-view-count-chip :views="0" />
-                <ad-category-chip
-                  :category="{ name: 'Alle', id: 0, standard: false }"
-                />
+                <ad-view-count-chip :views="adTo.views!" />
+                <ad-category-chip :category="adTo.adCategory!" />
               </v-col>
               <v-col cols="2"> </v-col>
             </v-row>
@@ -81,6 +78,9 @@
 </template>
 
 <script setup lang="ts">
+import type { AdTO } from "@/api/swbrett";
+import type { DeepReadonly } from "vue";
+
 import { ref } from "vue";
 
 import AdArtChip from "@/components/Ad/AdArtChip.vue";
@@ -88,6 +88,10 @@ import AdCategoryChip from "@/components/Ad/AdCategoryChip.vue";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
+
+defineProps<{
+  adTo: DeepReadonly<AdTO>;
+}>();
 
 const description =
   "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";

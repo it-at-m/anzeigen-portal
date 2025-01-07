@@ -1,31 +1,25 @@
 <template>
-  <v-btn
-    color="accent"
-    @click="getAdPage"
-  >
-    Refresh List
-  </v-btn>
-  <div>
-    <p>{{ listOfAds.length }}</p>
-    <p>{{ myBoard }}</p>
-  </div>
-  <v-progress-linear
-    v-show="loading"
-    indeterminate
-  />
   <ad-card
-    v-for="i in 7"
-    :key="i"
-    class="mb-4"
-    @click="routeTo(i)"
+    v-for="ad in listOfAds"
+    :key="ad.id"
+    :ad-to="ad"
+    class="mb-2"
+    @click="routeTo(ad.id)"
   />
-  <v-btn
-    v-if="!ads?.last"
-    color="accent"
-    @click="getMoreAds"
-  >
-    Mehr Ergebnisse laden
-  </v-btn>
+  <v-skeleton-loader
+    v-if="loading"
+    class="mb-2"
+    type="heading, sentences, list-item-avatar"
+  />
+  <div class="d-flex justify-center">
+    <v-btn
+      v-if="!ads?.last && !loading"
+      color="accent"
+      @click="getMoreAds"
+    >
+      Mehr Ergebnisse laden
+    </v-btn>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -38,15 +32,12 @@ import { useRoute, useRouter } from "vue-router";
 import AdCard from "@/components/Ad/AdCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
 import { useUpdateAdListEventBus } from "@/composables/useEventBus";
-import { useMyBoard } from "@/composables/useMyBoard";
 
 const useUpdateAdList = useUpdateAdListEventBus();
 
 const router = useRouter();
 
 const route = useRoute();
-
-const myBoard = useMyBoard();
 
 const { data: ads, call: getAds, loading } = useGetAds();
 
@@ -80,7 +71,7 @@ const getAdPage = async (page = 0) => {
 
   // append to list if next page was requested
   listOfAds.value =
-    page > 1
+    page > 0
       ? [...listOfAds.value, ...(ads.value?.content || [])]
       : ads.value?.content || [];
 };
@@ -89,8 +80,8 @@ const getAdPage = async (page = 0) => {
  * Route to a specific ad
  * @param id of the ad
  */
-const routeTo = (id: number) => {
-  router.push({ path: "/ad", query: { id: id.toString() } });
+const routeTo = (id: number | undefined) => {
+  router.push({ path: "/ad", query: { id: id } });
 };
 </script>
 
