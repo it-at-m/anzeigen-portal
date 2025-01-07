@@ -4,7 +4,6 @@
     :key="ad.id"
     :ad-to="ad"
     class="mb-2"
-    @click="routeTo(ad.id)"
   />
   <v-skeleton-loader
     v-if="loading"
@@ -27,15 +26,13 @@ import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
 import { onMounted, ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 import AdCard from "@/components/Ad/AdCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
 import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 
 const useUpdateAdList = useUpdateAdListEventBus();
-
-const router = useRouter();
 
 const route = useRoute();
 
@@ -45,13 +42,19 @@ const listOfAds = ref<DeepReadonly<AdTO[]>>([]);
 
 const currentPageNumber = ref<number>(0);
 
-useUpdateAdList.on(() => {
-  // call getAds whenether something changes
+useUpdateAdList.on(async () => {
+  // EventBus is too quick - nextTick is too slow
+  await new Promise((r) => setTimeout(r, 10));
+
   listOfAds.value = [];
-  getAdPage();
+  await getAdPage();
 });
 
-onMounted(() => getAdPage());
+onMounted(async () => {
+  // nextTick is too slow - slowed done
+  await new Promise((r) => setTimeout(r, 500));
+  await getAdPage();
+});
 
 const getMoreAds = () => {
   currentPageNumber.value++;
@@ -63,6 +66,8 @@ const getMoreAds = () => {
  * @param page page number to get
  */
 const getAdPage = async (page = 0) => {
+  console.log(route.query);
+
   await getAds({
     isActive: true,
     page,
@@ -74,14 +79,6 @@ const getAdPage = async (page = 0) => {
     page > 0
       ? [...listOfAds.value, ...(ads.value?.content || [])]
       : ads.value?.content || [];
-};
-
-/**
- * Route to a specific ad
- * @param id of the ad
- */
-const routeTo = (id: number | undefined) => {
-  router.push({ path: "/ad", query: { id: id } });
 };
 </script>
 
