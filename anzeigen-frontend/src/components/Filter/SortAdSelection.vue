@@ -26,7 +26,7 @@ import {
 } from "@/composables/useGetSortingSelections";
 
 const orderQuery = useRouteQuery("order");
-const orderByQuery = useRouteQuery("orderBy");
+const orderByQuery = useRouteQuery("sortBy");
 
 const sortingCriteria = ref<CriteriaValue>({ criteria: "titel", order: "asc" });
 
