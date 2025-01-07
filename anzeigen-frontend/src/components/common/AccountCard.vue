@@ -6,7 +6,7 @@
     :loading="loading"
     :disabled="loading"
     subtitle="Hier gehts zu Ihren Anzeigen"
-    link
+    @click="routeTo"
   >
     <template #prepend>
       <ad2-image-avatar username="vorname nachname" />
@@ -15,14 +15,24 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from "vue-router";
+
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import { useUserStore } from "@/stores/user";
+
+const router = useRouter();
 
 const userStore = useUserStore();
 
 const { loading = false } = defineProps<{
   loading?: boolean;
 }>();
+
+const routeTo = () => {
+  router.push({
+    path: "/myBoard",
+  });
+};
 </script>
 
 <style scoped></style>
