@@ -20,6 +20,7 @@ import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
+import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 import {
   sortingOrderSelections,
   useIsValidOrderSelection,
@@ -28,7 +29,9 @@ import {
 const orderQuery = useRouteQuery("order");
 const orderByQuery = useRouteQuery("sortBy");
 
-const sortingCriteria = ref<CriteriaValue>({ criteria: "titel", order: "asc" });
+const updateAdListEventBus = useUpdateAdListEventBus();
+
+const sortingCriteria = ref<CriteriaValue>({ criteria: "title", order: "asc" });
 
 onMounted(() => {
   if (
@@ -52,5 +55,7 @@ onMounted(() => {
 watch(sortingCriteria, (newSortingCriteria) => {
   orderQuery.value = newSortingCriteria.order;
   orderByQuery.value = newSortingCriteria.criteria;
+
+  updateAdListEventBus.emit();
 });
 </script>
