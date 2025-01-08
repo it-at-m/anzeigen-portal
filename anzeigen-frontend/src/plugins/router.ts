@@ -1,7 +1,6 @@
-// Composables
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import { ROUTES_AD, ROUTES_BOARD } from "@/Constants";
+import { ROUTES_AD, ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
 import AdBoard from "@/views/AdBoard.vue";
 import AdDetailsView from "@/views/AdDetailsView.vue";
 
@@ -14,11 +13,8 @@ const routes = [
   },
   {
     path: "/myboard",
-    name: "my" + ROUTES_BOARD,
+    name: ROUTES_MYBOARD,
     component: AdBoard,
-    props: {
-      isMyBoard: true,
-    },
     meta: {},
   },
   {
