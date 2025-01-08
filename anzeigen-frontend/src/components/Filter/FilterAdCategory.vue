@@ -104,7 +104,7 @@ watch(selectedCategory, (newSelectedCategory) => {
     !newSelectedCategory.id ||
     newSelectedCategory?.id === -1
   ) {
-    categoryQuery.value = [];
+    categoryQuery.value = null;
   } else {
     categoryQuery.value = newSelectedCategory.id.toString();
   }

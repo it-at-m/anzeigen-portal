@@ -60,7 +60,7 @@ watch([isOffer, isSeek], ([newIsOffer, newIsSeek], [oldIsOffer, oldIsSeek]) => {
 
   // Update URL parameter
   if (isOffer.value && isSeek.value) {
-    typeQuery.value = [];
+    typeQuery.value = null;
   } else {
     typeQuery.value = isOffer.value ? "OFFER" : "SEEK";
   }

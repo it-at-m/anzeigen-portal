@@ -83,7 +83,7 @@ const isUserSelected = computed(
 );
 
 const resetUserQuery = () => {
-  userQuery.value = [];
+  userQuery.value = null;
 };
 
 onMounted(() => {

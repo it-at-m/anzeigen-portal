@@ -35,7 +35,7 @@ onMounted(() => {
 });
 
 const search = () => {
-  searchQuery.value = searchValue.value ?? [];
+  searchQuery.value = searchValue.value ?? null;
   updateAdListEventBus.emit();
 };
 </script>
