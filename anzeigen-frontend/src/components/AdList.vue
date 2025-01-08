@@ -24,16 +24,14 @@
 <script setup lang="ts">
 import type { GetAdsRequest } from "@/api/swbrett";
 
-import { onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { computed, onMounted, watch } from "vue";
+import { useRoute } from "vue-router";
 
 import AdCard from "@/components/Ad/AdCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
-import { ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
+import { ROUTES_MYBOARD } from "@/Constants";
 import { useAdStore } from "@/stores/adStore";
 import { useUserStore } from "@/stores/user";
-
-const router = useRouter();
 
 const route = useRoute();
 
@@ -42,10 +40,6 @@ const { data: ads, call: getAds, loading } = useGetAds();
 const adStore = useAdStore();
 
 const userStore = useUserStore();
-
-const { isMyBoard } = defineProps<{
-  isMyBoard: boolean;
-}>();
 
 /**
  * Initializes the store with ads
@@ -56,13 +50,15 @@ onMounted(async () => {
   }
 });
 
+const updateUrl = computed(() => [route.name, route.path]);
+
+const routeName = computed(() => route.name);
+
 /**
  * Triggers refresh of ad list after changes in url
  */
-router.afterEach(async (to) => {
-  if (to.name === ROUTES_BOARD || to.name === ROUTES_MYBOARD) {
-    await getAdPage(false);
-  }
+watch(updateUrl, async () => {
+  await getAdPage(false);
 });
 
 /**
@@ -83,7 +79,7 @@ const getAdPage = async (isNextPage: boolean) => {
     ...route.query,
   };
 
-  if (isMyBoard) {
+  if (routeName.value === ROUTES_MYBOARD) {
     requestQuery.userId = userStore.userID?.toString();
   }
 
