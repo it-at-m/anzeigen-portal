@@ -105,7 +105,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         predicates.add(cb.equal(root.get("active"), isActive));
 
         if (userId != null) {
-            predicates.add(cb.equal(cb.lower(root.get("swbUser").get("id")), userId.toLowerCase()));
+            predicates.add(cb.equal(root.get("swbUser").get("id"), userId));
         }
         if (searchTerm != null) {
             Predicate titlePredicate = cb.like(cb.lower(root.get("title")), "%" + searchTerm.toLowerCase() + "%");
