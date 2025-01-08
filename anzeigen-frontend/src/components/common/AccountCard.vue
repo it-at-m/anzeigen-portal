@@ -5,7 +5,7 @@
     :title="userStore.getUser?.displayName"
     :loading="loading"
     :disabled="loading"
-    subtitle="Hier gehts zu Ihren Anzeigen"
+    subtitle="Hier geht es zu Ihren Anzeigen"
     @click="routeTo"
   >
     <template #prepend>
@@ -15,12 +15,14 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
+
+const route = useRoute();
 
 const userStore = useUserStore();
 
@@ -31,6 +33,7 @@ const { loading = false } = defineProps<{
 const routeTo = () => {
   router.push({
     path: "/myBoard",
+    query: route.query,
   });
 };
 </script>
