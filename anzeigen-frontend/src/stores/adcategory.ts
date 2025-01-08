@@ -1,7 +1,7 @@
 import type { AdCategory } from "@/api/swbrett";
 
 import { defineStore } from "pinia";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 export const useCategoriesStore = defineStore("category", () => {
   const categories = ref<AdCategory[]>([]);
@@ -10,5 +10,7 @@ export const useCategoriesStore = defineStore("category", () => {
     categories.value = payload;
   };
 
-  return { categories, setCategories };
+  const isEmpty = computed(() => categories.value.length === 0);
+
+  return { categories, setCategories, isEmpty };
 });

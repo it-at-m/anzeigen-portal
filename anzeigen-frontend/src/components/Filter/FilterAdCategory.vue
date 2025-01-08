@@ -71,6 +71,10 @@ const categoriesStore = useCategoriesStore();
 const updateAdListEventBus = useUpdateAdListEventBus();
 
 onMounted(async () => {
+  if (!categoriesStore.isEmpty) {
+    return;
+  }
+
   await getCategories();
 
   // error catching
