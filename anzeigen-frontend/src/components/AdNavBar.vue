@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject } from "vue";
+import { computed, inject, onMounted } from "vue";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -70,6 +70,12 @@ const loading = computed(
 
 const currentUser = computed(() => findUserData.value || createUserData.value);
 
+onMounted(() => {
+  if (!userStore.userID) {
+    loadUser();
+  }
+});
+
 const loadUser = async () => {
   // userinfo call
   await userInfoCall();
@@ -104,11 +110,6 @@ const loadUser = async () => {
 
   userStore.setUserId(currentUser.value?.id || -1);
 };
-
-/**
- * Load User in setup block - happens only once
- */
-loadUser();
 </script>
 
 <style scoped></style>
