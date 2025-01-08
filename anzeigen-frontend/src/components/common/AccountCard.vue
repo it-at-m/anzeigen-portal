@@ -32,10 +32,13 @@ const { loading = false } = defineProps<{
 
 const routeTo = () => {
   router.push({
-    path: "/myBoard",
+    path: "/myboard",
     query: route.query,
   });
 };
+// /board?foo=bar
+
+// /myboard?foo=bar
 </script>
 
 <style scoped></style>
