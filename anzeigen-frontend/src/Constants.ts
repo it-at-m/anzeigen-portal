@@ -1,3 +1,5 @@
+import type { InjectionKey, Ref } from "vue";
+
 export const ROUTES_BOARD = "board";
 export const ROUTES_AD = "ad";
 export const ROUTES_GETSTARTED = "getstarted";
@@ -20,6 +22,13 @@ export const EV_UPDATE_AD_LIST = "eventBus-update-ad-list";
  */
 export const API_ERROR_MSG =
   "Ein Fehler ist aufgetreten. Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.";
+
+/**
+ * Injection Keys
+ */
+export const IK_IS_MYBOARD: InjectionKey<Readonly<Ref<boolean>>> = Symbol(
+  "injection-key-my-board"
+);
 
 /**
  * Other constants

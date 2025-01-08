@@ -12,24 +12,34 @@
         lg="9"
         cols="12"
       >
-        <ad-list />
+        <ad-list :is-my-board="isMyBoard" />
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, provide, ref, toRef } from "vue";
 
 import { checkHealth } from "@/api/health-client";
 import AdDialog from "@/components/Ad/Edit/AdDialog.vue";
 import AdList from "@/components/AdList.vue";
 import AdNavBar from "@/components/AdNavBar.vue";
 import { useSnackbar } from "@/composables/useSnackbar";
+import { IK_IS_MYBOARD } from "@/Constants";
 import HealthState from "@/types/HealthState";
 
 const snackbar = useSnackbar();
 const status = ref("DOWN");
+
+const { isMyBoard = false } = defineProps<{
+  isMyBoard: boolean;
+}>();
+
+provide(
+  IK_IS_MYBOARD,
+  toRef(() => isMyBoard)
+);
 
 onMounted(() => {
   checkHealth()

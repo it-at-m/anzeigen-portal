@@ -7,7 +7,7 @@
     @click="triggerDialog"
   />
   <ad-display-sheet class="mb-4">
-    <filter-ad-category />
+    <filter-ad-category v-if="!isMyBoard" />
     <filter-ad-type />
   </ad-display-sheet>
 
@@ -15,10 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
-
-import { useEventBus } from "@vueuse/core";
-import { computed } from "vue";
+import { computed, inject } from "vue";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -34,12 +31,14 @@ import {
 } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG } from "@/Constants";
+import { API_ERROR_MSG, IK_IS_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
+
+const isMyBoard = inject(IK_IS_MYBOARD);
 
 const {
   call: userInfoCall,
