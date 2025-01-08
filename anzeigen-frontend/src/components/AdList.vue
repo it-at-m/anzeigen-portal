@@ -5,6 +5,18 @@
     :ad-to="ad"
     class="mb-2"
   />
+  <ad-display-card v-if="adStore.isEmpty">
+    <template #title> Es konnte keine Anzeige gefunden werden </template>
+    <template #subtitle>
+      Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu
+      finden.
+    </template>
+    <template #text>
+      <router-link to="/board">
+        Klicken Sie hier um alle verfügbaren Anzeigen zu sehen.
+      </router-link>
+    </template>
+  </ad-display-card>
   <v-skeleton-loader
     v-if="loading"
     class="mb-2"
@@ -28,6 +40,7 @@ import { computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
 import AdCard from "@/components/Ad/AdCard.vue";
+import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
 import { ROUTES_MYBOARD } from "@/Constants";
 import { useAdStore } from "@/stores/adStore";
