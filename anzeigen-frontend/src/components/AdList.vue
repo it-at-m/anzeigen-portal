@@ -1,6 +1,6 @@
 <template>
   <ad-card
-    v-for="ad in listOfAds"
+    v-for="ad in adStore.listOfAds"
     :key="ad.id"
     :ad-to="ad"
     class="mb-2"
@@ -22,63 +22,76 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
-import type { DeepReadonly } from "vue";
+import type { GetAdsRequest } from "@/api/swbrett";
 
-import { onMounted, ref } from "vue";
-import { useRoute } from "vue-router";
+import { onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
 
 import AdCard from "@/components/Ad/AdCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
-import { useUpdateAdListEventBus } from "@/composables/useEventBus";
+import { ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
+import { useAdStore } from "@/stores/adStore";
+import { useUserStore } from "@/stores/user";
 
-const useUpdateAdList = useUpdateAdListEventBus();
+const router = useRouter();
 
 const route = useRoute();
 
 const { data: ads, call: getAds, loading } = useGetAds();
 
-const listOfAds = ref<DeepReadonly<AdTO[]>>([]);
+const adStore = useAdStore();
 
-const currentPageNumber = ref<number>(0);
+const userStore = useUserStore();
 
-useUpdateAdList.on(async () => {
-  // EventBus is too quick - nextTick is too slow
-  await new Promise((r) => setTimeout(r, 10));
+const { isMyBoard } = defineProps<{
+  isMyBoard: boolean;
+}>();
 
-  listOfAds.value = [];
-  await getAdPage();
-});
-
+/**
+ * Initializes the store with ads
+ */
 onMounted(async () => {
-  // nextTick is too slow - slowed done
-  await new Promise((r) => setTimeout(r, 500));
-  await getAdPage();
+  if (adStore.isEmpty) {
+    await getAdPage(false);
+  }
 });
 
+/**
+ * Triggers refresh of ad list after changes in url
+ */
+router.afterEach(async (to) => {
+  if (to.name === ROUTES_BOARD || to.name === ROUTES_MYBOARD) {
+    await getAdPage(false);
+  }
+});
+
+/**
+ * Get the next page via getAdPage
+ */
 const getMoreAds = () => {
-  currentPageNumber.value++;
-  getAdPage(currentPageNumber.value);
+  getAdPage(true);
 };
 
 /**
  * Fetch a page of ads. This can be a new list of ads or a next page
- * @param page page number to get
+ * @param isNextPage
  */
-const getAdPage = async (page = 0) => {
-  console.log(route.query);
-
-  await getAds({
+const getAdPage = async (isNextPage: boolean) => {
+  const requestQuery: GetAdsRequest = {
     isActive: true,
-    page,
+    page: isNextPage ? adStore.nextPage : 0,
     ...route.query,
-  });
+  };
 
-  // append to list if next page was requested
-  listOfAds.value =
-    page > 0
-      ? [...listOfAds.value, ...(ads.value?.content || [])]
-      : ads.value?.content || [];
+  if (isMyBoard) {
+    requestQuery.userId = userStore.userID?.toString();
+  }
+
+  await getAds(requestQuery);
+
+  if (ads.value) {
+    adStore.addNewAds(ads.value, isNextPage);
+  }
 };
 </script>
 
