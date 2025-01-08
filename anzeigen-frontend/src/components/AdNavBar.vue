@@ -20,7 +20,8 @@
 
 <script setup lang="ts">
 import { useRouteQuery } from "@vueuse/router";
-import { computed, inject, onMounted } from "vue";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -37,16 +38,18 @@ import {
 } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, IK_IS_MYBOARD } from "@/Constants";
+import { API_ERROR_MSG, ROUTES_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 
-const isMyBoard = inject(IK_IS_MYBOARD);
-
 const userQuery = useRouteQuery("userId");
+
+const route = useRoute();
+
+const isMyBoard = computed(() => route.name === ROUTES_MYBOARD);
 
 const {
   call: userInfoCall,
