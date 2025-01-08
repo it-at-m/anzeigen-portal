@@ -86,7 +86,7 @@
 import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
-import { ref } from "vue";
+import { computed } from "vue";
 import { useRouter } from "vue-router";
 
 import AdArtChip from "@/components/Ad/AdArtChip.vue";
@@ -104,7 +104,7 @@ const { adTo } = defineProps<{
   adTo: DeepReadonly<AdTO>;
 }>();
 
-const isOffer = ref(false);
+const isOffer = computed(() => adTo.adType === "OFFER");
 
 /**
  * Route to a specific ad
