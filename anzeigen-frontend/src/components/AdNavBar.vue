@@ -7,6 +7,10 @@
     @click="triggerDialog"
   />
   <ad-display-sheet class="mb-4">
+    <user-filter
+      v-if="isUserSelected"
+      @click="resetUserQuery"
+    />
     <filter-ad-category v-if="!isMyBoard" />
     <filter-ad-type />
   </ad-display-sheet>
@@ -15,6 +19,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouteQuery } from "@vueuse/router";
 import { computed, inject, onMounted } from "vue";
 
 import { Levels } from "@/api/error";
@@ -24,6 +29,7 @@ import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
+import UserFilter from "@/components/Filter/UserFilter.vue";
 import {
   useCreateUser,
   useFindUser,
@@ -39,6 +45,8 @@ const userStore = useUserStore();
 const snackbar = useSnackbar();
 
 const isMyBoard = inject(IK_IS_MYBOARD);
+
+const userQuery = useRouteQuery("userId");
 
 const {
   call: userInfoCall,
@@ -69,6 +77,14 @@ const loading = computed(
 );
 
 const currentUser = computed(() => findUserData.value || createUserData.value);
+
+const isUserSelected = computed(
+  () => userQuery.value && userQuery.value.length !== 0
+);
+
+const resetUserQuery = () => {
+  userQuery.value = [];
+};
 
 onMounted(() => {
   if (!userStore.userID) {
