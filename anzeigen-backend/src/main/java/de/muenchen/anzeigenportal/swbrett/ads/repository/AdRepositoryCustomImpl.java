@@ -52,7 +52,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
-    @SuppressWarnings({"PMD.UseObjectForClearerAPI"})
+    @SuppressWarnings({ "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
             final Pageable pageable, final Long adId, final boolean isActive) {
 
@@ -103,7 +103,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     }
 
     private List<Predicate> buildPredicates(final CriteriaBuilder cb, final Root<Ad> root, final boolean isActive, final String userId, final String searchTerm,
-                                            final Long categoryId, final AdType type, final Long adId) {
+            final Long categoryId, final AdType type, final Long adId) {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(root.get("active"), isActive));
 
