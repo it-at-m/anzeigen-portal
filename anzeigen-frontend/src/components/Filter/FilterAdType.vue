@@ -25,11 +25,15 @@ import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
+import { useUpdateAdListEventBus } from "@/composables/useEventBus";
+import { QUERY_NAME_TYPE } from "@/Constants";
 
 const isOffer = ref<boolean>(true);
 const isSeek = ref<boolean>(true);
 
-const typeQuery = useRouteQuery("type");
+const typeQuery = useRouteQuery(QUERY_NAME_TYPE);
+
+const updateAdListEventBus = useUpdateAdListEventBus();
 
 /**
  * Initializes checkbox selections based on the "type" URL parameter.
@@ -57,9 +61,12 @@ watch([isOffer, isSeek], ([newIsOffer, newIsSeek], [oldIsOffer, oldIsSeek]) => {
 
   // Update URL parameter
   if (isOffer.value && isSeek.value) {
-    typeQuery.value = [];
+    typeQuery.value = null;
   } else {
     typeQuery.value = isOffer.value ? "OFFER" : "SEEK";
   }
+
+  // TODO: is triggered twice
+  updateAdListEventBus.emit();
 });
 </script>

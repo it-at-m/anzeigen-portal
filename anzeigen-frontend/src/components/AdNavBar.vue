@@ -7,7 +7,11 @@
     @click="triggerDialog"
   />
   <ad-display-sheet class="mb-4">
-    <filter-ad-category />
+    <user-filter
+      v-if="isUserSelected"
+      @click="resetUserQuery"
+    />
+    <filter-ad-category v-if="!isMyBoard" />
     <filter-ad-type />
   </ad-display-sheet>
 
@@ -15,16 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import type {
-  AdCategory,
-  AdTO,
-  SwbFileTO,
-  SwbImageTO,
-  SwbUserTO,
-} from "@/api/swbrett";
-
-import { useEventBus } from "@vueuse/core";
+import { useRouteQuery } from "@vueuse/router";
 import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -33,6 +30,7 @@ import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
+import UserFilter from "@/components/Filter/UserFilter.vue";
 import {
   useCreateUser,
   useFindUser,
@@ -40,12 +38,18 @@ import {
 } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG } from "@/Constants";
+import { API_ERROR_MSG, QUERY_NAME_USERID, ROUTES_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
+
+const userQuery = useRouteQuery(QUERY_NAME_USERID);
+
+const route = useRoute();
+
+const isMyBoard = computed(() => route.name === ROUTES_MYBOARD);
 
 const {
   call: userInfoCall,
@@ -66,43 +70,6 @@ const {
   loading: createUserLoading,
 } = useCreateUser();
 
-const exampleAd: AdTO = {
-  id: 1,
-  swbUser: {
-    id: 123,
-    name: "John Doe",
-    email: "johndoe@example.com",
-  } as SwbUserTO,
-  adCategory: {
-    id: 10,
-    name: "Electronics",
-  } as AdCategory,
-  adType: "SEEK", // Beispielwert aus AdTOAdTypeEnum
-  active: true,
-  title: "Smartphone for Sale",
-  description: "A lightly used smartphone in excellent condition.",
-  price: 250,
-  phone: "+123456789",
-  email: "seller@example.com",
-  link: "https://example.com/listing/1",
-  creationDateTime: new Date("2024-01-01T12:00:00Z"),
-  expiryDate: new Date("2024-12-31T23:59:59Z"),
-  imagePreviewBase64: "data:image/png;base64,iVBORw0KGgoAAAANS...",
-  adImg: {
-    id: 101,
-    fileName: "smartphone.png",
-    url: "https://example.com/images/smartphone.png",
-  } as SwbImageTO,
-  adFiles: [
-    {
-      id: 201,
-      fileName: "manual.pdf",
-      url: "https://example.com/files/manual.pdf",
-    } as SwbFileTO,
-  ],
-  views: 150,
-};
-
 const triggerDialog = () => {
   dialogBus.emit(undefined);
 };
@@ -113,6 +80,20 @@ const loading = computed(
 );
 
 const currentUser = computed(() => findUserData.value || createUserData.value);
+
+const isUserSelected = computed(
+  () => userQuery.value && userQuery.value.length !== 0
+);
+
+const resetUserQuery = () => {
+  userQuery.value = null;
+};
+
+onMounted(() => {
+  if (!userStore.userID) {
+    loadUser();
+  }
+});
 
 const loadUser = async () => {
   // userinfo call
@@ -148,11 +129,6 @@ const loadUser = async () => {
 
   userStore.setUserId(currentUser.value?.id || -1);
 };
-
-/**
- * Load User in setup block - happens only once
- */
-loadUser();
 </script>
 
 <style scoped></style>

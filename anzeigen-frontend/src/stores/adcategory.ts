@@ -1,11 +1,7 @@
 import type { AdCategory } from "@/api/swbrett";
 
 import { defineStore } from "pinia";
-import { ref } from "vue";
-
-import { useGetCategories } from "@/composables/api/useGetCategories";
-
-const { call, data, error } = useGetCategories();
+import { computed, ref } from "vue";
 
 export const useCategoriesStore = defineStore("category", () => {
   const categories = ref<AdCategory[]>([]);
@@ -14,12 +10,7 @@ export const useCategoriesStore = defineStore("category", () => {
     categories.value = payload;
   };
 
-  const update = async () => {
-    await call();
-    if (!error.value) {
-      categories.value = data.value as AdCategory[];
-    }
-  };
+  const isEmpty = computed(() => categories.value.length === 0);
 
-  return { categories, setCategories, update };
+  return { categories, setCategories, isEmpty };
 });

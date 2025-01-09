@@ -34,5 +34,5 @@ export const useUserStore = defineStore("user", () => {
     userID.value = payload;
   }
 
-  return { getUser, setUser, swbUserTo, lhmObjectId, setUserId };
+  return { getUser, setUser, swbUserTo, lhmObjectId, setUserId, userID };
 });

@@ -24,7 +24,7 @@ public class UserService {
         return existingUser.orElse(repository.save(user));
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())")
     public SwbUserTO getUser(final long id) {
         final SwbUser user = repository.getOne(id);
         return mapper.toSwbUserTO(user);

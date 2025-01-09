@@ -1,7 +1,8 @@
-// Composables
+import type { RouteLocationNormalizedGeneric } from "vue-router";
+
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import { ROUTES_AD, ROUTES_BOARD } from "@/Constants";
+import { ROUTES_AD, ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
 import AdBoard from "@/views/AdBoard.vue";
 import AdDetailsView from "@/views/AdDetailsView.vue";
 
@@ -13,12 +14,27 @@ const routes = [
     meta: {},
   },
   {
+    path: "/myboard",
+    name: ROUTES_MYBOARD,
+    component: AdBoard,
+    meta: {},
+  },
+  {
     path: "/ad",
     name: ROUTES_AD,
     component: AdDetailsView,
     meta: {},
   },
-  { path: "/:catchAll(.*)*", redirect: "/board" }, // CatchAll route
+  {
+    path: "/:catchAll(.*)*",
+    redirect: "/board",
+    beforeEnter: (to: RouteLocationNormalizedGeneric) => {
+      if (!to.query.order || !to.query.sortBy) {
+        to.query.order = "asc";
+        to.query.sortBy = "title";
+      }
+    },
+  }, // CatchAll route
 ];
 
 const router = createRouter({

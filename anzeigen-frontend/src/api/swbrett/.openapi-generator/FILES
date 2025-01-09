@@ -3,6 +3,8 @@ apis/index.ts
 index.ts
 models/AdCategory.ts
 models/AdTO.ts
+models/GetAds200Response.ts
+models/GetAds200ResponseSort.ts
 models/SettingTO.ts
 models/SwbFileTO.ts
 models/SwbImageTO.ts

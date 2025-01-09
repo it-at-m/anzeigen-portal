@@ -1,4 +1,4 @@
-type Criteria = "titel" | "price" | "creationDate";
+type Criteria = "title" | "price" | "creationDate";
 
 interface CriteriaValue {
   criteria: Criteria;

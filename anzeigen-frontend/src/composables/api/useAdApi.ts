@@ -3,6 +3,8 @@ import type {
   CreateAdRequest,
   DeleteAdRequest,
   GetAdRequest,
+  GetAds200Response,
+  GetAdsRequest,
   UpdateAdRequest,
 } from "@/api/swbrett";
 
@@ -45,5 +47,14 @@ export function useGetAd() {
 
   return useApiCall<GetAdRequest, AdTO>((params: GetAdRequest) =>
     api.getAd(params)
+  );
+}
+
+export function useGetAds() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
+  return useApiCall<GetAdsRequest, GetAds200Response>((params: GetAdsRequest) =>
+    api.getAds(params)
   );
 }

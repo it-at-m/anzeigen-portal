@@ -1,7 +1,7 @@
 import type { SortingOrder } from "@/types/SortingOrderCriteria";
 
 export const sortingOrderSelections = [
-  { title: "Titel (alphabetisch)", value: { criteria: "titel", order: "asc" } },
+  { title: "Titel (alphabetisch)", value: { criteria: "title", order: "asc" } },
   { title: "Preis aufsteigend", value: { criteria: "price", order: "asc" } },
   { title: "Preis absteigend", value: { criteria: "price", order: "desc" } },
   {

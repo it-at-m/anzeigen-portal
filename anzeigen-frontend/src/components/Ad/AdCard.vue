@@ -9,13 +9,13 @@
           cols="12"
           sm="3"
         >
-          <a href="https://google.de">
-            <v-img
-              cover
-              max-height="200"
-              src="https://picsum.photos/300"
-            />
-          </a>
+          <v-img
+            cover
+            max-height="200"
+            src="https://picsum.photos/300"
+            class="cursor-pointer"
+            @click="routeTo"
+          />
         </v-col>
         <v-col
           cols="12"
@@ -32,10 +32,11 @@
                 cols="12"
                 sm="7"
                 md="8"
+                class="cursor-pointer"
+                @click="routeTo"
               >
                 <p class="text-h5 text-truncate">
-                  Das ist ein Artikelname und hier schreibt einer zu viel rein -
-                  da kommt noch mehr
+                  {{ adTo.title }}
                 </p>
               </v-col>
               <v-col
@@ -44,26 +45,23 @@
                 md="4"
                 class="d-flex justify-end"
               >
-                <v-btn
-                  color="error"
-                  prepend-icon="mdi-trash-can-outline"
-                  class="mr-1"
-                  text="Löschen"
+                <ad-edit-button
+                  is-edit
+                  @click="clickedEdit"
                 />
-                <ad-edit-button is-edit />
               </v-col>
             </v-row>
             <v-row
               class="w-100"
               align="start"
             >
-              <p class="two-line-clamp">{{ description }}</p>
+              <p class="two-line-clamp">{{ adTo.description }}</p>
             </v-row>
             <v-row
               class="w-100"
               align="start"
             >
-              <ad-price :price="20" />
+              <ad-price :price="adTo.price!" />
             </v-row>
             <v-row
               class="w-100"
@@ -72,10 +70,8 @@
             >
               <v-col class="pa-0 pb-2 d-flex ga-2">
                 <ad-art-chip :is-offer="isOffer" />
-                <ad-view-count-chip :views="0" />
-                <ad-category-chip
-                  :category="{ name: 'Alle', id: 0, standard: false }"
-                />
+                <ad-view-count-chip :views="adTo.views!" />
+                <ad-category-chip :category="adTo.adCategory!" />
               </v-col>
               <v-col cols="2"> </v-col>
             </v-row>
@@ -87,18 +83,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import type { AdTO } from "@/api/swbrett";
+import type { DeepReadonly } from "vue";
+
+import { computed } from "vue";
+import { useRouter } from "vue-router";
 
 import AdArtChip from "@/components/Ad/AdArtChip.vue";
 import AdCategoryChip from "@/components/Ad/AdCategoryChip.vue";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
+import { useDialogEventBus } from "@/composables/useEventBus";
 
-const description =
-  "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+const router = useRouter();
 
-const isOffer = ref(false);
+const dialogBus = useDialogEventBus();
+
+const { adTo } = defineProps<{
+  adTo: DeepReadonly<AdTO>;
+}>();
+
+const isOffer = computed(() => adTo.adType === "OFFER");
+
+/**
+ * Route to a specific ad
+ * @param id of the ad
+ */
+const routeTo = () => {
+  router.push({ path: "/ad", query: { id: adTo.id } });
+};
+
+const clickedEdit = () => {
+  dialogBus.emit(JSON.parse(JSON.stringify(adTo)));
+};
 </script>
 
 <style scoped>

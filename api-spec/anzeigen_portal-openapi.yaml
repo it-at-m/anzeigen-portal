@@ -329,9 +329,43 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            application/json:
               schema:
-                $ref: "#/components/schemas/AdTO"
+                type: "object"
+                properties:
+                  content:
+                    type: "array"
+                    items:
+                      $ref: "#/components/schemas/AdTO"
+                  totalElements:
+                    type: "integer"
+                    format: "int64"
+                  totalPages:
+                    type: "integer"
+                    format: "int32"
+                  size:
+                    type: "integer"
+                    format: "int32"
+                  number:
+                    type: "integer"
+                    format: "int32"
+                  numberOfElements:
+                    type: "integer"
+                    format: "int32"
+                  sort:
+                    type: "object"
+                    description: "Sort information"
+                    properties:
+                      sorted:
+                        type: "boolean"
+                      unsorted:
+                        type: "boolean"
+                      empty:
+                        type: "boolean"
+                  first:
+                    type: "boolean"
+                  last:
+                    type: "boolean"
   /swbreads:
     post:
       summary: "POST swbreads"
