@@ -14,11 +14,24 @@
             Zurück
           </v-btn>
         </v-container>
-        <ad-overview
-          v-if="!getAdError && adDetails !== null"
-          :ad-details="adDetails"
-        />
-        <ad-not-found v-else />
+        <div
+          v-if="loading"
+          class="d-flex justify-center h-100 align-center"
+        >
+          <v-progress-circular
+            indeterminate
+            size="100"
+            color="accent"
+            width="6"
+          />
+        </div>
+        <div v-else>
+          <ad-overview
+            v-if="!getAdError && adDetails !== null"
+            :ad-details="adDetails"
+          />
+          <ad-not-found v-else />
+        </div>
       </v-col>
     </v-row>
   </v-container>
@@ -43,7 +56,12 @@ const idQuery = useRouteQuery("id");
 
 const router = useRouter();
 
-const { call: getAdCall, data: getAdData, error: getAdError } = useGetAd();
+const {
+  call: getAdCall,
+  data: getAdData,
+  error: getAdError,
+  loading,
+} = useGetAd();
 
 const adDetails = ref<Readonly<AdTO> | null>(null);
 
