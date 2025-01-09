@@ -15,14 +15,13 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute, useRouter } from "vue-router";
+import { useRouter } from "vue-router";
 
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
+import { DEFAULT_BOARD_QUERIES, ROUTES_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
-
-const route = useRoute();
 
 const userStore = useUserStore();
 
@@ -32,13 +31,10 @@ const { loading = false } = defineProps<{
 
 const routeTo = () => {
   router.push({
-    path: "/myboard",
-    query: route.query,
+    name: ROUTES_MYBOARD,
+    query: DEFAULT_BOARD_QUERIES,
   });
 };
-// /board?foo=bar
-
-// /myboard?foo=bar
 </script>
 
 <style scoped></style>

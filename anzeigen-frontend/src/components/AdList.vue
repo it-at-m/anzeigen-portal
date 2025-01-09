@@ -12,7 +12,12 @@
       finden.
     </template>
     <template #text>
-      <router-link to="/board">
+      <router-link
+        :to="{
+          name: ROUTES_BOARD,
+          query: DEFAULT_BOARD_QUERIES,
+        }"
+      >
         Klicken Sie hier um alle verfügbaren Anzeigen zu sehen.
       </router-link>
     </template>
@@ -42,7 +47,11 @@ import { useRoute } from "vue-router";
 import AdCard from "@/components/Ad/AdCard.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
-import { ROUTES_MYBOARD } from "@/Constants";
+import {
+  DEFAULT_BOARD_QUERIES,
+  ROUTES_BOARD,
+  ROUTES_MYBOARD,
+} from "@/Constants";
 import { useAdStore } from "@/stores/adStore";
 import { useUserStore } from "@/stores/user";
 

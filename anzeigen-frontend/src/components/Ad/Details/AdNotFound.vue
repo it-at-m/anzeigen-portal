@@ -21,7 +21,12 @@
         <ad-display-card>
           <template #title> Es konnte keine Anzeige gefunden werden </template>
           <template #text>
-            <router-link to="/board">
+            <router-link
+              :to="{
+                name: ROUTES_BOARD,
+                query: DEFAULT_BOARD_QUERIES,
+              }"
+            >
               Klicken Sie hier um zur Übersicht zurückzukehren.
             </router-link>
           </template>
@@ -34,6 +39,7 @@
 <script setup lang="ts">
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
+import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
 </script>
 
 <style scoped></style>
