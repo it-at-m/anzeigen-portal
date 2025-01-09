@@ -140,7 +140,6 @@ import type { AdTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
 import { computed } from "vue";
-import { id } from "vuetify/locale";
 
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";

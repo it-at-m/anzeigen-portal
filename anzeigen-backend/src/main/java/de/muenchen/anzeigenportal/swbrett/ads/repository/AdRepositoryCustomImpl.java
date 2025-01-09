@@ -51,7 +51,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
-    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order, final Pageable pageable, final Long adId, final boolean isActive) {
+    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
+            final Pageable pageable, final Long adId, final boolean isActive) {
 
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -90,9 +91,9 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         // Add Sorting
         Expression<?> sortExpression = PRICE_STRING.equals(sortBy)
                 ? cb.selectCase()
-                .when(cb.equal(root.get(sortBy), 0), -1) // 0: Zu verschenken
-                .when(cb.greaterThan(root.get(sortBy), 0), root.get(sortBy)) // >0: Festpreis
-                .otherwise(cb.neg(root.get(sortBy))) // <0: Verhandelbar
+                        .when(cb.equal(root.get(sortBy), 0), -1) // 0: Zu verschenken
+                        .when(cb.greaterThan(root.get(sortBy), 0), root.get(sortBy)) // >0: Festpreis
+                        .otherwise(cb.neg(root.get(sortBy))) // <0: Verhandelbar
                 : root.get(sortBy);
 
         // Add Ordering
@@ -100,7 +101,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     }
 
     private List<Predicate> buildPredicates(CriteriaBuilder cb, Root<Ad> root, boolean isActive, String userId, String searchTerm,
-                                            Long categoryId, AdType type, Long adId) {
+            Long categoryId, AdType type, Long adId) {
         List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(root.get("active"), isActive));
 

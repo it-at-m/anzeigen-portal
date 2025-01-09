@@ -72,7 +72,6 @@ import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import { useApi } from "@/composables/useApi";
 import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
-import router from "@/plugins/router";
 import { useUserStore } from "@/stores/user";
 
 useApi();
