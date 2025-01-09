@@ -5,26 +5,9 @@
     width="800"
   >
     <template #activator="{ props: open }">
-      <template v-if="buttontext">
-        <v-btn
-          color="primary"
-          v-bind="open"
-        >
-          {{ buttontext }}
-        </v-btn>
-      </template>
-      <template v-else-if="icontext">
-        <v-btn
-          color="primary"
-          v-bind="open"
-        >
-          <v-icon size="large">
-            {{ icontext }}
-          </v-icon>
-        </v-btn>
-      </template>
+      <slot :activator="open" />
     </template>
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         {{ dialogtitle }}
       </v-card-title>
@@ -36,6 +19,7 @@
         <v-btn
           id="yesnodialog-btn-no"
           variant="text"
+          :disabled="loading"
           @click="no"
         >
           Nein
@@ -43,6 +27,7 @@
         <v-btn
           id="yesnodialog-btn-yes"
           color="primary"
+          :disabled="loading"
           @click="yes"
         >
           Ja
@@ -74,15 +59,15 @@
  *    @yes="deleteSome"></yes-no-dialog>
  */
 
+const modelValue = defineModel<boolean>();
+
 defineProps<{
   /**
    * Control flag for dialog
    */
-  modelValue: boolean;
-  buttontext?: string;
-  icontext?: string;
   dialogtitle: string;
   dialogtext: string;
+  loading?: boolean;
 }>();
 
 const emits = defineEmits<{

@@ -4,7 +4,7 @@
     persistent
     max-width="900px"
   >
-    <v-card>
+    <v-card :disabled="loading">
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
           <v-row>
@@ -57,19 +57,31 @@
           variant="elevated"
           color="accent"
           prepend-icon="mdi-content-save-outline"
-          @click="createAd"
+          @click="writeAd"
         >
           <p v-if="isAdCreate">Erstellen</p>
           <p v-else>Speichern</p>
         </v-btn>
-        <v-btn
+        <yes-no-dialog
           v-if="!isAdCreate"
-          variant="elevated"
-          color="error"
-          prepend-icon="mdi-trash-can-outline"
+          :model-value="deleteDialog"
+          :loading="deactivateAdLoading"
+          dialogtitle="Anzeige löschen"
+          dialogtext="Möchten Sie wirklich die Anzeige löschen?"
+          @yes="confirmedDeletion"
+          @no="deleteDialog = false"
         >
-          Löschen
-        </v-btn>
+          <template #default>
+            <v-btn
+              variant="elevated"
+              color="error"
+              prepend-icon="mdi-trash-can-outline"
+              @click="deleteDialog = true"
+            >
+              Löschen
+            </v-btn>
+          </template>
+        </yes-no-dialog>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -80,15 +92,23 @@ import type { AdTO } from "@/api/swbrett";
 
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
 import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vue";
 import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { useCreateUser } from "@/composables/api/useUserApi";
+import YesNoDialog from "@/components/common/YesNoDialog.vue";
+import {
+  useCreateAd,
+  useDeactivateAd,
+  useUpdateAd,
+} from "@/composables/api/useAdApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
+import { DEFAULT_BOARD_QUERIES } from "@/Constants";
+import router from "@/plugins/router";
 
-const { call } = useCreateUser();
+const route = useRoute();
 
 const dialog = ref<boolean>(false);
 
@@ -100,24 +120,49 @@ const dialogBus = useDialogEventBus();
 
 const form = ref<boolean>(false);
 
+const deleteDialog = ref<boolean>(false);
+
 dialogBus.on((event: AdTO) => {
   dialog.value = true;
   adTo.value = event;
 });
 
-const createAd = () => {
-  call({
-    swbUserTO: {
-      displayName: "user",
-      id: 4,
-      lhmObjectId: "idontknow",
-    },
-  });
-};
+const { loading: deactivateAdLoading, call: deactivateAd } = useDeactivateAd();
 
-const close = () => (dialog.value = false);
+const { loading: createAdLoading, call: createAd } = useCreateAd();
+
+const { loading: updateAdLoading, call: updateAd } = useUpdateAd();
+
+const loading = computed(() => createAdLoading.value || updateAdLoading.value);
 
 const isAdCreate = computed(() => !isDefined(adTo));
+
+const confirmedDeletion = async () => {
+  if (adTo.value?.id) {
+    await deactivateAd({ id: adTo.value.id });
+  }
+  deleteDialog.value = false;
+  dialog.value = false;
+};
+
+const writeAd = async () => {
+  if (isAdCreate.value) {
+    await createAd({});
+  } else {
+    await updateAd({ id: adTo.value?.id, adTO: adTo });
+  }
+
+  close();
+};
+
+const close = () => {
+  // TODO: Somehow trigger a refresh of the adlist
+  //router.go(0); // This a complete reload
+  router.push({
+    name: route.name,
+  });
+  dialog.value = false;
+};
 </script>
 
 <style scoped></style>
