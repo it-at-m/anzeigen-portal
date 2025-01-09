@@ -46,13 +46,11 @@
 import type { AdCategory } from "@/api/swbrett";
 
 import { useRouteQuery } from "@vueuse/router";
-import { aw } from "vitest/dist/chunks/reporters.anwo7Y6a";
 import { onMounted, ref, watch } from "vue";
 
 import { Levels } from "@/api/error";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetCategories } from "@/composables/api/useGetCategories";
-import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
 import { API_ERROR_MSG, QUERY_NAME_CATEGORYID } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory";
@@ -68,8 +66,6 @@ const categoryQuery = useRouteQuery(QUERY_NAME_CATEGORYID);
 const selectedCategory = ref<AdCategory>(NO_CATEGORY);
 
 const categoriesStore = useCategoriesStore();
-
-const updateAdListEventBus = useUpdateAdListEventBus();
 
 onMounted(async () => {
   if (!categoriesStore.isEmpty) {
@@ -109,7 +105,6 @@ watch(selectedCategory, (newSelectedCategory) => {
   } else {
     categoryQuery.value = newSelectedCategory.id.toString();
   }
-  updateAdListEventBus.emit();
 });
 </script>
 
