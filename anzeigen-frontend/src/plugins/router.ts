@@ -1,3 +1,5 @@
+import type { RouteLocationNormalizedGeneric } from "vue-router";
+
 import { createRouter, createWebHashHistory } from "vue-router";
 
 import { ROUTES_AD, ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
@@ -26,7 +28,7 @@ const routes = [
   {
     path: "/:catchAll(.*)*",
     redirect: "/board",
-    beforeEnter: (to) => {
+    beforeEnter: (to: RouteLocationNormalizedGeneric) => {
       if (!to.query.order || !to.query.sortBy) {
         to.query.order = "asc";
         to.query.sortBy = "title";
