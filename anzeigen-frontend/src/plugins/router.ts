@@ -23,7 +23,16 @@ const routes = [
     component: AdDetailsView,
     meta: {},
   },
-  { path: "/:catchAll(.*)*", redirect: "/board" }, // CatchAll route
+  {
+    path: "/:catchAll(.*)*",
+    redirect: "/board",
+    beforeEnter: (to) => {
+      if (!to.query.order || !to.query.sortBy) {
+        to.query.order = "asc";
+        to.query.sortBy = "title";
+      }
+    },
+  }, // CatchAll route
 ];
 
 const router = createRouter({
