@@ -20,15 +20,19 @@ import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
+import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 import {
   sortingOrderSelections,
   useIsValidOrderSelection,
 } from "@/composables/useGetSortingSelections";
+import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants";
 
-const orderQuery = useRouteQuery("order");
-const orderByQuery = useRouteQuery("orderBy");
+const orderQuery = useRouteQuery(QUERY_NAME_ORDER);
+const orderByQuery = useRouteQuery(QUERY_NAME_SORTBY);
 
-const sortingCriteria = ref<CriteriaValue>({ criteria: "titel", order: "asc" });
+const updateAdListEventBus = useUpdateAdListEventBus();
+
+const sortingCriteria = ref<CriteriaValue>({ criteria: "title", order: "asc" });
 
 onMounted(() => {
   if (
@@ -52,5 +56,7 @@ onMounted(() => {
 watch(sortingCriteria, (newSortingCriteria) => {
   orderQuery.value = newSortingCriteria.order;
   orderByQuery.value = newSortingCriteria.criteria;
+
+  updateAdListEventBus.emit();
 });
 </script>

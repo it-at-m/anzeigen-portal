@@ -116,14 +116,17 @@
             />
             <icon-text
               v-if="adDetails.email"
+              class="my-2"
               icon="email"
               :label="adDetails.email"
             />
             <icon-text
-              v-if="adDetails.swbUser?.displayName"
+              v-if="adDetails.swbUser?.id"
               icon="account"
-              :label="adDetails.swbUser?.displayName"
-              href="https://google.de"
+              link
+              class="cursor-pointer"
+              label="weiter Anzeigen dieses Nutzers"
+              @click="routeToUser(adDetails.swbUser.id!)"
             />
           </template>
         </ad-display-card>
@@ -143,6 +146,7 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { DATE_DISPLAY_FORMAT } from "@/Constants";
+import router from "@/plugins/router";
 
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
@@ -151,6 +155,15 @@ const { adDetails } = defineProps<{
 const adType = computed(() =>
   adDetails.adType === "SEEK" ? "Suche" : "Biete"
 );
+
+const routeToUser = (id: number) => {
+  router.push({
+    path: "/board",
+    query: {
+      userId: id,
+    },
+  });
+};
 </script>
 
 <style scoped></style>

@@ -16,7 +16,12 @@
                 cols="3"
                 class="d-flex align-center justify-start"
               >
-                <router-link to="/">
+                <router-link
+                  :to="{
+                    name: ROUTES_BOARD,
+                    query: DEFAULT_BOARD_QUERIES,
+                  }"
+                >
                   <v-toolbar-title class="font-weight-bold">
                     <span class="text-white">Schwarzes-</span>
                     <span class="text-secondary">Brett</span>
@@ -66,6 +71,7 @@ import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import { useApi } from "@/composables/useApi";
+import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 useApi();

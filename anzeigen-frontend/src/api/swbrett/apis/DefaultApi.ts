@@ -14,6 +14,7 @@
 import type {
   AdCategory,
   AdTO,
+  GetAds200Response,
   SettingTO,
   SwbFileTO,
   SwbImageTO,
@@ -25,6 +26,8 @@ import {
   AdCategoryToJSON,
   AdTOFromJSON,
   AdTOToJSON,
+  GetAds200ResponseFromJSON,
+  GetAds200ResponseToJSON,
   SettingTOFromJSON,
   SettingTOToJSON,
   SwbFileTOFromJSON,
@@ -727,7 +730,7 @@ export class DefaultApi extends runtime.BaseAPI {
   async getAdsRaw(
     requestParameters: GetAdsRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<runtime.ApiResponse<AdTO>> {
+  ): Promise<runtime.ApiResponse<GetAds200Response>> {
     if (requestParameters["isActive"] == null) {
       throw new runtime.RequiredError(
         "isActive",
@@ -786,7 +789,7 @@ export class DefaultApi extends runtime.BaseAPI {
     );
 
     return new runtime.JSONApiResponse(response, (jsonValue) =>
-      AdTOFromJSON(jsonValue)
+      GetAds200ResponseFromJSON(jsonValue)
     );
   }
 
@@ -796,7 +799,7 @@ export class DefaultApi extends runtime.BaseAPI {
   async getAds(
     requestParameters: GetAdsRequest,
     initOverrides?: RequestInit | runtime.InitOverrideFunction
-  ): Promise<AdTO> {
+  ): Promise<GetAds200Response> {
     const response = await this.getAdsRaw(requestParameters, initOverrides);
     return await response.value();
   }

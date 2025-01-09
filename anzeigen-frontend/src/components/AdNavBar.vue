@@ -7,7 +7,11 @@
     @click="triggerDialog"
   />
   <ad-display-sheet class="mb-4">
-    <filter-ad-category />
+    <user-filter
+      v-if="isUserSelected"
+      @click="resetUserQuery"
+    />
+    <filter-ad-category v-if="!isMyBoard" />
     <filter-ad-type />
   </ad-display-sheet>
 
@@ -15,10 +19,9 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
-
-import { useEventBus } from "@vueuse/core";
-import { computed } from "vue";
+import { useRouteQuery } from "@vueuse/router";
+import { computed, onMounted } from "vue";
+import { useRoute } from "vue-router";
 
 import { Levels } from "@/api/error";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -27,18 +30,26 @@ import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
+import UserFilter from "@/components/Filter/UserFilter.vue";
 import {
   useCreateUser,
   useFindUser,
   useUserInfo,
 } from "@/composables/api/useUserApi";
+import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, EV_EDIT_AD_DIALOG } from "@/Constants";
+import { API_ERROR_MSG, QUERY_NAME_USERID, ROUTES_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
-const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
+const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
+
+const userQuery = useRouteQuery(QUERY_NAME_USERID);
+
+const route = useRoute();
+
+const isMyBoard = computed(() => route.name === ROUTES_MYBOARD);
 
 const {
   call: userInfoCall,
@@ -69,6 +80,20 @@ const loading = computed(
 );
 
 const currentUser = computed(() => findUserData.value || createUserData.value);
+
+const isUserSelected = computed(
+  () => userQuery.value && userQuery.value.length !== 0
+);
+
+const resetUserQuery = () => {
+  userQuery.value = null;
+};
+
+onMounted(() => {
+  if (!userStore.userID) {
+    loadUser();
+  }
+});
 
 const loadUser = async () => {
   // userinfo call
@@ -104,11 +129,6 @@ const loadUser = async () => {
 
   userStore.setUserId(currentUser.value?.id || -1);
 };
-
-/**
- * Load User in setup block - happens only once
- */
-loadUser();
 </script>
 
 <style scoped></style>

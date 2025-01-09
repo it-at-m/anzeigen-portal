@@ -8,6 +8,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import jakarta.persistence.criteria.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +19,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
+@Slf4j
 @SuppressWarnings({ "PMD.CouplingBetweenObjects", "PMD.UselessParentheses" })
 @Repository
 public class AdRepositoryCustomImpl implements AdRepositoryCustom {
@@ -43,102 +45,86 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
 
     @Override
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
-    @PreAuthorize("hasAuthority(T(de.muenchen.intranet.sbrett.security.AuthoritiesEnum).BACKEND_READ_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())")
     public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
             final String order, final Pageable pageable,
             final Long adId) {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
-    @SuppressWarnings("PMD.UseObjectForClearerAPI")
+    @SuppressWarnings({ "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
-            final Pageable pageable, final Long adId,
-            final boolean isActive) {
-        final CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        final CriteriaQuery<Ad> query = builder.createQuery(Ad.class);
+            final Pageable pageable, final Long adId, final boolean isActive) {
 
-        final Root<Ad> root = query.from(Ad.class);
-        final Path<Long> pathSwbUserId = root.get("swbUser").get("id");
-        final Path<Long> pathCategoryId = root.get("adCategory").get("id");
-        final Path<AdType> pathAdType = root.get("adType");
-        final Path<Boolean> pathActive = root.get("active");
-        final Path<String> pathTitle = root.get("title");
-        final Path<String> pathDescription = root.get("description");
-        final Path<Double> pathAdId = root.get("id");
+        final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
-        /**
-         * Search and Filter
-         */
+        // Main query
+        final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
+        final Root<Ad> ad = cq.from(Ad.class);
+        final List<Predicate> predicates = buildPredicates(cb, ad, isActive, userId, searchTerm, categoryId, type, adId);
+        cq.where(predicates.toArray(new Predicate[0]));
+
+        // Add sorting and order
+        final Order orderCriteria = buildSorter(cb, ad, sortBy, order);
+        cq.orderBy(orderCriteria);
+
+        final TypedQuery<Ad> query = entityManager.createQuery(cq);
+
+        // Apply pagination
+        query.setFirstResult((int) pageable.getOffset());
+        query.setMaxResults(pageable.getPageSize());
+
+        final List<AdTO> ads = query.getResultList()
+                .stream()
+                .map(mapper::toAdTO)
+                .collect(Collectors.toList());
+
+        // Count query for total elements
+        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        final Root<Ad> countRoot = countQuery.from(Ad.class);
+        final List<Predicate> countPredicates = buildPredicates(cb, countRoot, isActive, userId, searchTerm, categoryId, type, adId);
+        countQuery.select(cb.count(countRoot)).where(countPredicates.toArray(new Predicate[0]));
+        final Long total = entityManager.createQuery(countQuery).getSingleResult();
+
+        return new PageImpl<>(ads, pageable, total);
+    }
+
+    public Order buildSorter(final CriteriaBuilder cb, final Root<Ad> root, final String sortBy, final String order) {
+        // Add Sorting
+        final Expression<?> sortExpression = PRICE_STRING.equals(sortBy)
+                ? cb.selectCase()
+                        .when(cb.equal(root.get(sortBy), 0), -1) // 0: Zu verschenken
+                        .when(cb.greaterThan(root.get(sortBy), 0), root.get(sortBy)) // >0: Festpreis
+                        .otherwise(cb.neg(root.get(sortBy))) // <0: Verhandelbar
+                : root.get(sortBy);
+
+        // Add Ordering
+        return ORDER_ASC.equals(order) ? cb.asc(sortExpression) : cb.desc(sortExpression);
+    }
+
+    private List<Predicate> buildPredicates(final CriteriaBuilder cb, final Root<Ad> root, final boolean isActive, final String userId, final String searchTerm,
+            final Long categoryId, final AdType type, final Long adId) {
         final List<Predicate> predicates = new ArrayList<>();
-
-        // active = false ist für den User wie gelöscht
-        final Predicate filterActive = builder.equal(pathActive, isActive);
-        predicates.add(filterActive);
+        predicates.add(cb.equal(root.get("active"), isActive));
 
         if (userId != null) {
-            final Predicate filterUser = builder.equal(pathSwbUserId, userId);
-            predicates.add(filterUser);
-        }
-        if (categoryId != null) {
-            final Predicate filterCategory = builder.equal(pathCategoryId, categoryId);
-            predicates.add(filterCategory);
-        }
-        if (type != null) {
-            final Predicate filterType = builder.equal(pathAdType, type);
-            predicates.add(filterType);
+            predicates.add(cb.equal(root.get("swbUser").get("id"), userId));
         }
         if (searchTerm != null) {
-            final Predicate searchTitle = builder.like(builder.lower(pathTitle), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
-            final Predicate searchDescription = builder.like(builder.lower(pathDescription), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
-            predicates.add(builder.or(searchTitle, searchDescription));
+            final Predicate titlePredicate = cb.like(cb.lower(root.get("title")), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
+            final Predicate descriptionPredicate = cb.like(cb.lower(root.get("description")), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
+            predicates.add(cb.or(titlePredicate, descriptionPredicate));
+        }
+        if (categoryId != null) {
+            predicates.add(cb.equal(root.get("adCategory").get("id"), categoryId));
+        }
+        if (type != null) {
+            predicates.add(cb.equal(root.get("adType"), type));
         }
         if (adId != null) {
-            final Predicate filterAdId = builder.equal(pathAdId, adId);
-            predicates.add(filterAdId);
+            predicates.add(cb.equal(root.get("id"), adId));
         }
 
-        final Predicate[] finalPredicates = predicates.toArray(new Predicate[predicates.size()]);
-
-        query.select(root);
-        query.where(builder.and(finalPredicates));
-
-        /**
-         * Sort and Order
-         */
-        Expression<Object> sortExpression = root.get(sortBy);
-
-        if (PRICE_STRING.equals(sortBy)) {
-
-            // Sonderbehandlung bei Sortierung nach Preis.
-            final Expression<Integer> se2 = root.get(sortBy);
-            sortExpression = (builder.selectCase()
-                    .when(builder.equal(sortExpression, 0), -1) // 0:  Zu verschenken
-                    .when(builder.greaterThan(se2, 0), sortExpression) // >0: Festpreis
-                    .when(builder.lessThan(se2, 0), builder.neg(se2)) // <0: Verhandelbar
-            );
-        }
-
-        if (ORDER_ASC.equals(order)) {
-            query.orderBy(builder.asc(sortExpression));
-        } else if (ORDER_DESC.equals(order)) {
-            query.orderBy(builder.desc(sortExpression));
-        }
-
-        /**
-         * Pagination
-         */
-        final TypedQuery<Ad> adsQuery = entityManager.createQuery(query);
-        adsQuery.setFirstResult((int) pageable.getOffset());
-        adsQuery.setMaxResults(pageable.getPageSize());
-
-        final List<AdTO> resultList = adsQuery.getResultList().stream().map(mapper::toAdTO).collect(Collectors.toList());
-
-        final CriteriaQuery<Long> countQuery = builder.createQuery(Long.class);
-        countQuery.where(builder.and(finalPredicates));
-        countQuery.select(builder.count(countQuery.from(Ad.class)));
-
-        final Long totalRows = entityManager.createQuery(countQuery).getSingleResult();
-
-        return new PageImpl<>(resultList, pageable, totalRows);
+        return predicates;
     }
 }
