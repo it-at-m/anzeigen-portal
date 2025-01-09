@@ -46,6 +46,7 @@
                 class="d-flex justify-end"
               >
                 <ad-edit-button
+                  v-if="belongsToCurrentUser"
                   is-edit
                   @click="clickedEdit"
                 />
@@ -95,8 +96,11 @@ import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus";
+import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
+
+const userStore = useUserStore();
 
 const dialogBus = useDialogEventBus();
 
@@ -105,6 +109,10 @@ const { adTo } = defineProps<{
 }>();
 
 const isOffer = computed(() => adTo.adType === "OFFER");
+
+const belongsToCurrentUser = computed(() => {
+  return adTo.swbUser?.id === userStore.userID;
+});
 
 /**
  * Route to a specific ad
