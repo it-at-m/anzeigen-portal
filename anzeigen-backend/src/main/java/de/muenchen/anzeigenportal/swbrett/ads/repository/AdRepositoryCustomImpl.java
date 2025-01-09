@@ -16,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -51,45 +52,46 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
     }
 
+    @SuppressWarnings({"PMD.UseObjectForClearerAPI"})
     public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
             final Pageable pageable, final Long adId, final boolean isActive) {
 
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
+        final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
         // Main query
-        CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
-        Root<Ad> ad = cq.from(Ad.class);
-        List<Predicate> predicates = buildPredicates(cb, ad, isActive, userId, searchTerm, categoryId, type, adId);
+        final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
+        final Root<Ad> ad = cq.from(Ad.class);
+        final List<Predicate> predicates = buildPredicates(cb, ad, isActive, userId, searchTerm, categoryId, type, adId);
         cq.where(predicates.toArray(new Predicate[0]));
 
         // Add sorting and order
-        Order orderCriteria = buildSorter(cb, ad, sortBy, order);
+        final Order orderCriteria = buildSorter(cb, ad, sortBy, order);
         cq.orderBy(orderCriteria);
 
-        TypedQuery<Ad> query = entityManager.createQuery(cq);
+        final TypedQuery<Ad> query = entityManager.createQuery(cq);
 
         // Apply pagination
         query.setFirstResult((int) pageable.getOffset());
         query.setMaxResults(pageable.getPageSize());
 
-        List<AdTO> ads = query.getResultList()
+        final List<AdTO> ads = query.getResultList()
                 .stream()
                 .map(mapper::toAdTO)
                 .collect(Collectors.toList());
 
         // Count query for total elements
-        CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
-        Root<Ad> countRoot = countQuery.from(Ad.class);
-        List<Predicate> countPredicates = buildPredicates(cb, countRoot, isActive, userId, searchTerm, categoryId, type, adId);
+        final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
+        final Root<Ad> countRoot = countQuery.from(Ad.class);
+        final List<Predicate> countPredicates = buildPredicates(cb, countRoot, isActive, userId, searchTerm, categoryId, type, adId);
         countQuery.select(cb.count(countRoot)).where(countPredicates.toArray(new Predicate[0]));
-        Long total = entityManager.createQuery(countQuery).getSingleResult();
+        final Long total = entityManager.createQuery(countQuery).getSingleResult();
 
         return new PageImpl<>(ads, pageable, total);
     }
 
-    public Order buildSorter(CriteriaBuilder cb, Root<Ad> root, final String sortBy, final String order) {
+    public Order buildSorter(final CriteriaBuilder cb, final Root<Ad> root, final String sortBy, final String order) {
         // Add Sorting
-        Expression<?> sortExpression = PRICE_STRING.equals(sortBy)
+        final Expression<?> sortExpression = PRICE_STRING.equals(sortBy)
                 ? cb.selectCase()
                         .when(cb.equal(root.get(sortBy), 0), -1) // 0: Zu verschenken
                         .when(cb.greaterThan(root.get(sortBy), 0), root.get(sortBy)) // >0: Festpreis
@@ -100,17 +102,17 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         return ORDER_ASC.equals(order) ? cb.asc(sortExpression) : cb.desc(sortExpression);
     }
 
-    private List<Predicate> buildPredicates(CriteriaBuilder cb, Root<Ad> root, boolean isActive, String userId, String searchTerm,
-            Long categoryId, AdType type, Long adId) {
-        List<Predicate> predicates = new ArrayList<>();
+    private List<Predicate> buildPredicates(final CriteriaBuilder cb, final Root<Ad> root, final boolean isActive, final String userId, final String searchTerm,
+                                            final Long categoryId, final AdType type, final Long adId) {
+        final List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(root.get("active"), isActive));
 
         if (userId != null) {
             predicates.add(cb.equal(root.get("swbUser").get("id"), userId));
         }
         if (searchTerm != null) {
-            Predicate titlePredicate = cb.like(cb.lower(root.get("title")), "%" + searchTerm.toLowerCase() + "%");
-            Predicate descriptionPredicate = cb.like(cb.lower(root.get("description")), "%" + searchTerm.toLowerCase() + "%");
+            final Predicate titlePredicate = cb.like(cb.lower(root.get("title")), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
+            final Predicate descriptionPredicate = cb.like(cb.lower(root.get("description")), "%" + searchTerm.toLowerCase(Locale.GERMAN) + "%");
             predicates.add(cb.or(titlePredicate, descriptionPredicate));
         }
         if (categoryId != null) {
