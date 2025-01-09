@@ -40,3 +40,8 @@ export const DEFAULT_BOARD_QUERIES = {
   sortBy: "title",
   order: "asc",
 };
+export const QUERY_NAME_ORDER = "order";
+export const QUERY_NAME_SORTBY = "sortBy";
+export const QUERY_NAME_TYPE = "type";
+export const QUERY_NAME_CATEGORYID = "categoryId";
+export const QUERY_NAME_USERID = "userId";

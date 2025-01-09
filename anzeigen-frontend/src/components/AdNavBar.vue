@@ -38,14 +38,14 @@ import {
 } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, ROUTES_MYBOARD } from "@/Constants";
+import { API_ERROR_MSG, QUERY_NAME_USERID, ROUTES_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 
-const userQuery = useRouteQuery("userId");
+const userQuery = useRouteQuery(QUERY_NAME_USERID);
 
 const route = useRoute();
 

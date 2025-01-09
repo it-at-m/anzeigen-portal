@@ -25,9 +25,10 @@ import {
   sortingOrderSelections,
   useIsValidOrderSelection,
 } from "@/composables/useGetSortingSelections";
+import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants";
 
-const orderQuery = useRouteQuery("order");
-const orderByQuery = useRouteQuery("sortBy");
+const orderQuery = useRouteQuery(QUERY_NAME_ORDER);
+const orderByQuery = useRouteQuery(QUERY_NAME_SORTBY);
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 

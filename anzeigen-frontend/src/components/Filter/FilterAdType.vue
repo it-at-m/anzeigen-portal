@@ -26,11 +26,12 @@ import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useUpdateAdListEventBus } from "@/composables/useEventBus";
+import { QUERY_NAME_TYPE } from "@/Constants";
 
 const isOffer = ref<boolean>(true);
 const isSeek = ref<boolean>(true);
 
-const typeQuery = useRouteQuery("type");
+const typeQuery = useRouteQuery(QUERY_NAME_TYPE);
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 
