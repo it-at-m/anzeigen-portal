@@ -1,5 +1,6 @@
 package de.muenchen.anzeigenportal.swbrett.ads.service;
 
+import de.muenchen.anzeigenportal.security.AuthUtils;
 import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
@@ -12,13 +13,19 @@ import de.muenchen.anzeigenportal.swbrett.images.service.ImageResizeService;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,6 +33,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AdService {
 
@@ -51,6 +59,9 @@ public class AdService {
 
     @Autowired
     private AdValidationService validationService;
+
+    @Autowired
+    private UserService userService;
 
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
@@ -137,9 +148,17 @@ public class AdService {
     }
 
     public void deactivateAd(final long id, HttpServletRequest request) {
-        final Ad ad = repository.getOne(id);
-        ad.setActive(false);
-        repository.save(ad);
+        log.debug("Current User: {}", AuthUtils.getLhmObjectID());
+        SwbUserTO currentUser = userService.findUser(AuthUtils.getLhmObjectID()).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));
+
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
+
+        if (ad.getSwbUser().getId().equals(currentUser.getId())) {
+            ad.setActive(false);
+            repository.save(ad);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())")
