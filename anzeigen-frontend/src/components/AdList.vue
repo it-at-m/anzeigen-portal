@@ -47,6 +47,7 @@ import { useRoute } from "vue-router";
 import AdCard from "@/components/Ad/AdCard.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
+import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 import {
   DEFAULT_BOARD_QUERIES,
   ROUTES_BOARD,
@@ -63,6 +64,8 @@ const adStore = useAdStore();
 
 const userStore = useUserStore();
 
+const updateAdListEventBus = useUpdateAdListEventBus();
+
 /**
  * Initializes the store with ads
  */
@@ -70,6 +73,13 @@ onMounted(async () => {
   if (adStore.isEmpty) {
     await getAdPage(false);
   }
+});
+
+/**
+ * Triggers refresh upon event - used by dialog
+ */
+updateAdListEventBus.on(async () => {
+  await getAdPage(false);
 });
 
 const updateUrl = computed(() => [route.name, route.path]);

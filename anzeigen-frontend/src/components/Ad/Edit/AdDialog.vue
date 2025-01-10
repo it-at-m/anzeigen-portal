@@ -92,7 +92,6 @@ import type { AdTO } from "@/api/swbrett";
 
 import { isDefined } from "@vueuse/core";
 import { computed, ref } from "vue";
-import { useRoute } from "vue-router";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
 import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vue";
@@ -104,11 +103,12 @@ import {
   useDeactivateAd,
   useUpdateAd,
 } from "@/composables/api/useAdApi";
-import { useDialogEventBus } from "@/composables/useEventBus";
-import { DEFAULT_BOARD_QUERIES } from "@/Constants";
-import router from "@/plugins/router";
+import {
+  useDialogEventBus,
+  useUpdateAdListEventBus,
+} from "@/composables/useEventBus";
 
-const route = useRoute();
+const updateAdListEventBus = useUpdateAdListEventBus();
 
 const dialog = ref<boolean>(false);
 
@@ -149,18 +149,14 @@ const writeAd = async () => {
   if (isAdCreate.value) {
     await createAd({});
   } else {
-    await updateAd({ id: adTo.value?.id, adTO: adTo });
+    await updateAd({ id: adTo.value?.id, adTO: adTo.value });
   }
 
   close();
 };
 
 const close = () => {
-  // TODO: Somehow trigger a refresh of the adlist
-  //router.go(0); // This a complete reload
-  router.push({
-    name: route.name,
-  });
+  updateAdListEventBus.emit();
   dialog.value = false;
 };
 </script>
