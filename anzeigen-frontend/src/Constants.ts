@@ -52,7 +52,6 @@ export const QUERY_NAME_USERID = "userId";
 
 export const EMPTY_ADTO_OBJECT = {
   swbUser: {} as SwbUserTO,
-  adCategory: {} as AdCategory,
   adImg: {} as SwbImageTO,
   adFiles: [],
 } as AdTO;
