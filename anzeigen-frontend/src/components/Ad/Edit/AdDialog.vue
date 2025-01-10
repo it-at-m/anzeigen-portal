@@ -4,7 +4,7 @@
     persistent
     max-width="900px"
   >
-    <v-card :disabled="loading">
+    <v-card>
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
           <v-row>
@@ -15,23 +15,20 @@
               prepend-icon="mdi-window-close"
               variant="outlined"
               text="Abbrechen"
+              :disabled="loading"
               @click="close"
             />
           </v-row>
         </v-container>
       </v-card-title>
-      <v-card-text>
+      <v-card-text :disabled="loading">
         <v-form v-model="form">
           <ad-display-card>
             <template #subtitle> Allgemeine Informationen </template>
             <template #text>
               <common-ad-information
-                :disabled="disabledInputs"
-                :title="adTo?.title"
-                :category="adTo?.adCategory"
-                :ad-type="adTo?.adType"
-                :description="adTo?.description"
-                :price="adTo?.price"
+                v-model="adTo"
+                :disabled="loading"
               />
             </template>
           </ad-display-card>
@@ -39,21 +36,27 @@
           <ad-display-card>
             <template #subtitle> Optionale Informationen </template>
             <template #text>
-              <optional-ad-information :disabled="disabledInputs" />
+              <optional-ad-information
+                v-model="adTo"
+                :disabled="loading"
+              />
             </template>
           </ad-display-card>
           <v-divider />
           <ad-display-card>
             <template #subtitle> Verkäufer Informationen </template>
             <template #text>
-              <seller-ad-information :disabled="disabledInputs" />
+              <seller-ad-information
+                v-model="adTo"
+                :disabled="loading"
+              />
             </template>
           </ad-display-card>
         </v-form>
       </v-card-text>
       <v-card-actions class="px-4">
         <v-btn
-          :disabled="!form"
+          :disabled="!form || loading"
           variant="elevated"
           color="accent"
           prepend-icon="mdi-content-save-outline"
@@ -65,7 +68,6 @@
         <yes-no-dialog
           v-if="!isAdCreate"
           :model-value="deleteDialog"
-          :loading="deactivateAdLoading"
           dialogtitle="Anzeige löschen"
           dialogtext="Möchten Sie wirklich die Anzeige löschen?"
           @yes="confirmedDeletion"
@@ -76,6 +78,7 @@
               variant="elevated"
               color="error"
               prepend-icon="mdi-trash-can-outline"
+              :disabled="loading"
               @click="deleteDialog = true"
             >
               Löschen
@@ -90,8 +93,7 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { isDefined } from "@vueuse/core";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
 import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vue";
@@ -99,20 +101,15 @@ import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import {
-  useCreateAd,
-  useDeactivateAd,
-  useUpdateAd,
-} from "@/composables/api/useAdApi";
-import {
   useDialogEventBus,
   useUpdateAdListEventBus,
 } from "@/composables/useEventBus";
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 
-const dialog = ref<boolean>(false);
+const dialog = defineModel<boolean>();
 
-const adTo = ref<AdTO>();
+const adTo = ref<AdTO>({} as AdTO);
 
 const disabledInputs = ref<boolean>(false);
 
@@ -120,36 +117,39 @@ const dialogBus = useDialogEventBus();
 
 const form = ref<boolean>(false);
 
+const isAdCreate = ref<boolean>(false);
+
+const emit = defineEmits<{
+  updateAd: [AdTO];
+  createAd: [AdTO];
+  deactivateAd: [number];
+}>();
+
+defineProps<{
+  loading: boolean;
+}>();
+
 const deleteDialog = ref<boolean>(false);
 
 dialogBus.on((event: AdTO) => {
+  isAdCreate.value = !event.id;
   dialog.value = true;
   adTo.value = event;
 });
 
-const { loading: deactivateAdLoading, call: deactivateAd } = useDeactivateAd();
-
-const { loading: createAdLoading, call: createAd } = useCreateAd();
-
-const { loading: updateAdLoading, call: updateAd } = useUpdateAd();
-
-const loading = computed(() => createAdLoading.value || updateAdLoading.value);
-
-const isAdCreate = computed(() => !isDefined(adTo));
-
 const confirmedDeletion = async () => {
   if (adTo.value?.id) {
-    await deactivateAd({ id: adTo.value.id });
+    emit("deactivateAd", adTo.value?.id);
   }
   deleteDialog.value = false;
-  dialog.value = false;
 };
 
 const writeAd = async () => {
-  if (isAdCreate.value) {
-    await createAd({});
-  } else {
-    await updateAd({ id: adTo.value?.id, adTO: adTo.value });
+  if (adTo.value) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    isAdCreate.value
+      ? emit("createAd", adTo.value)
+      : emit("updateAd", adTo.value);
   }
 
   close();
