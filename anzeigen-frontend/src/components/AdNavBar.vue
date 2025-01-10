@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import type { AdTO } from "@/api/swbrett";
+
 import { useRouteQuery } from "@vueuse/router";
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -38,7 +40,12 @@ import {
 } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, QUERY_NAME_USERID, ROUTES_MYBOARD } from "@/Constants";
+import {
+  API_ERROR_MSG,
+  EMPTY_ADTO_OBJECT,
+  QUERY_NAME_USERID,
+  ROUTES_MYBOARD,
+} from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
@@ -71,7 +78,7 @@ const {
 } = useCreateUser();
 
 const triggerDialog = () => {
-  dialogBus.emit(undefined);
+  dialogBus.emit(EMPTY_ADTO_OBJECT);
 };
 
 const loading = computed(
