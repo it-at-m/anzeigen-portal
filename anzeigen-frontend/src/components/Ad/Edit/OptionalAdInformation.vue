@@ -26,7 +26,13 @@
 </template>
 
 <script setup lang="ts">
+import type { AdTO } from "@/api/swbrett";
+
 import { ref } from "vue";
+
+import { EMPTY_ADTO_OBJECT } from "@/Constants";
+
+const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 defineProps<{
   disabled?: boolean;

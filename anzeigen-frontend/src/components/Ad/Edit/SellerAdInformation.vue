@@ -29,10 +29,15 @@
 </template>
 
 <script setup lang="ts">
+import type { AdTO } from "@/api/swbrett";
+
 import { computed, useTemplateRef, watch } from "vue";
 import { VDateInput } from "vuetify/labs/components";
 
 import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
+import { EMPTY_ADTO_OBJECT } from "@/Constants";
+
+const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 const expiryDate = defineModel<Date>("expiryDate");
 

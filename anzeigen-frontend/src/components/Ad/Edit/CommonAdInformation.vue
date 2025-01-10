@@ -1,9 +1,9 @@
 <template>
   <v-text-field
-    v-model="adTitle"
+    v-model="adTO.title"
+    :disabled="disabled"
     label="Titel"
     class="w-md-66 w-sm-75"
-    :disabled="disabled"
     :rules="[
       (value) => !!value || 'Bitte geben Sie einen Titel ein.',
       (value) =>
@@ -11,7 +11,7 @@
     ]"
   />
   <v-select
-    v-model="category"
+    v-model="adTO.adCategory"
     class="w-md-66 w-sm-75"
     placeholder="Kategorie"
     :disabled="disabled"
@@ -20,7 +20,7 @@
     :rules="[(value) => !!value || 'Bitte wählen Sie eine Kategorie aus.']"
   />
   <v-radio-group
-    v-model="adType"
+    v-model="adTO.adType"
     :disabled="disabled"
     inline
   >
@@ -34,7 +34,7 @@
     />
   </v-radio-group>
   <v-textarea
-    v-model="description"
+    v-model="adTO.description"
     label="Beschreibung"
     max-rows="3"
     :disabled="disabled"
@@ -44,51 +44,24 @@
         'Bitte geben Sie eine Beschreibung mit maximal 1000 Zeichen ein.',
     ]"
   />
-  <v-number-input
-    label="Preis"
-    class="w-md-66 w-sm-75"
-    :min="0"
-    :disabled="priceOption === 0 || disabled"
-    :model-value="displayedPrice"
-    @update:model-value="updatedPrice"
-  >
-    <template #append-inner>
-      <v-icon
-        class="mr-2"
-        icon="mdi-currency-eur"
-      />
-    </template>
-  </v-number-input>
-  <v-radio-group
-    v-model="priceOption"
+  <ad-price-selection
+    v-model="adTO.price!"
     :disabled="disabled"
-    inline
-  >
-    <v-radio
-      label="Festpreis"
-      :value="1"
-    />
-    <v-radio
-      label="VB"
-      :value="-1"
-    />
-    <v-radio
-      label="Zu verschenken"
-      :value="0"
-    />
-  </v-radio-group>
+  />
 </template>
 
 <script setup lang="ts">
-import type { AdCategory, AdTOAdTypeEnum } from "@/api/swbrett";
+import type { AdCategory, AdTO, AdTOAdTypeEnum } from "@/api/swbrett";
 
 import { computed, ref, watch } from "vue";
-import { VNumberInput } from "vuetify/labs/components";
 
-import { AD_MAX_TITLE_LENGTH } from "@/Constants";
+import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
+import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory";
 
 const categoryStore = useCategoriesStore();
+
+const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 const adTitle = defineModel<string>("title", { default: "" });
 
@@ -106,7 +79,7 @@ defineProps<{
   disabled?: boolean;
 }>();
 
-const priceOption = ref<number>(Math.sign(price.value ?? 1));
+const priceOption = ref<number>(Math.sign(adTO.value.price ?? 1));
 
 watch(priceOption, (newPriceOption) => {
   price.value = (newPriceOption ?? 1) * Math.abs(price.value ?? 1);
