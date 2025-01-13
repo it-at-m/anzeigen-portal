@@ -6,6 +6,7 @@
     class="w-md-66 w-sm-75"
     :disabled="disabled"
   />
+  <ad-files-upload v-model="adTO.adFiles" />
   <v-file-input
     v-model="additionalFileInternal"
     label="Optionale Anhänge"
@@ -29,7 +30,9 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { ref } from "vue";
+import { VFileUpload } from "vuetify/labs/VFileUpload";
 
+import AdFilesUpload from "@/components/Ad/Edit/AdFilesUpload.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
