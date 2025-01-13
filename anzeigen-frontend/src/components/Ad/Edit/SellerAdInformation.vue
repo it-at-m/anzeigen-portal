@@ -1,14 +1,11 @@
 <template>
-  <v-date-input
-    v-model="expiryDate"
-    class="w-md-66 w-sm-75"
-    label="Ablaufdatum"
-    :min="yesterdayDate"
+  <ad-date-selector
+    v-model="adTO.expiryDate"
     :disabled="disabled"
   />
   <v-text-field
     ref="refPhoneNumber"
-    v-model="phoneNumber"
+    v-model="adTO.phone"
     prepend-icon="mdi-phone-outline"
     class="w-md-66 w-sm-75"
     label="Telefonnummer"
@@ -17,7 +14,7 @@
   />
   <v-text-field
     ref="refEmail"
-    v-model="email"
+    v-model="adTO.email"
     prepend-icon="mdi-email-outline"
     class="w-md-66 w-sm-75"
     label="E-Mail Adresse"
@@ -31,15 +28,13 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { computed, useTemplateRef, watch } from "vue";
-import { VDateInput } from "vuetify/labs/components";
+import { useTemplateRef, watch } from "vue";
 
 import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
+import AdDateSelector from "@/components/Ad/Edit/AdDateSelector.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
-
-const expiryDate = defineModel<Date>("expiryDate");
 
 const phoneNumber = defineModel<string>("phone", { default: "" });
 
@@ -56,41 +51,37 @@ const refEmail = useTemplateRef("refEmail");
  * Watches the input for phone number / email and triggers the validation again.
  * This needs to be done, otherwise one input can retain its error state
  */
-watch([phoneNumber, email], () => {
-  refPhone.value?.validate();
-  refEmail.value?.validate();
-});
-
-/**
- * Returns date object for yesterday (today - 1)
- */
-const yesterdayDate = computed(() => {
-  const todayDate = new Date();
-  todayDate.setDate(todayDate.getDate() - 1);
-  return todayDate;
-});
+watch(
+  () => [adTO.value.phone, adTO.value.email],
+  () => {
+    refPhone.value?.validate();
+    refEmail.value?.validate();
+  }
+);
 
 /**
  * Validation rule for email - do not ask me why it is so complicated
  * @param value the current input
  */
 const ruleEmail = (value: string) =>
+  value.length === 0 ||
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/.test(
     value
-  ) || "Die E-Mail Adresse ist nicht valide";
+  ) ||
+  "Die E-Mail Adresse ist nicht valide";
 
 /**
  * Validation rule for phone number - includes the '+' at the start
  * @param value the current input
  */
 const rulePhoneNumber = (value: string) =>
-  /^\+?\d*$/.test(value) || "Die Telefonnummer ist ungültig";
+  /^\+?\d*\/?\d*$/.test(value) || "Die Telefonnummer ist ungültig";
 
 /**
  * Minimum one contact needs to be set - this can be email or phone number
  */
 const minOneContactRule = () =>
-  !!email.value ||
-  !!phoneNumber.value ||
+  !!adTO.value.email ||
+  !!adTO.value.phone ||
   "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an.";
 </script>
