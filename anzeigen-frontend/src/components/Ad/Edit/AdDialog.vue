@@ -24,7 +24,7 @@
       <v-card-text :disabled="loading">
         <v-form v-model="form">
           <ad-display-card>
-            <template #subtitle> Allgemeine Informationen </template>
+            <template #title> Allgemeine Informationen </template>
             <template #text>
               <common-ad-information
                 v-model="adTo"
