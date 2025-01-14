@@ -16,7 +16,7 @@
     :disabled="disabled"
   />
   <v-text-field
-    v-model="link"
+    v-model="adTO.link"
     prepend-icon="mdi-link"
     label="Link (optional)"
     class="w-md-66 w-sm-75"
@@ -30,7 +30,6 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { ref } from "vue";
-import { VFileUpload } from "vuetify/labs/VFileUpload";
 
 import AdFilesUpload from "@/components/Ad/Edit/AdFilesUpload.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
@@ -40,8 +39,6 @@ const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 defineProps<{
   disabled?: boolean;
 }>();
-
-const link = defineModel<string>("link");
 
 const pictureInternal = ref<File>();
 
