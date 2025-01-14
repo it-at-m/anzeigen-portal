@@ -90,6 +90,7 @@ import type { DeepReadonly } from "vue";
 import { computed } from "vue";
 import { useRouter } from "vue-router";
 
+import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdArtChip from "@/components/Ad/AdArtChip.vue";
 import AdCategoryChip from "@/components/Ad/AdCategoryChip.vue";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
@@ -123,7 +124,7 @@ const routeTo = () => {
 };
 
 const clickedEdit = () => {
-  dialogBus.emit(JSON.parse(JSON.stringify(adTo)));
+  dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(adTo as AdTO), false));
 };
 </script>
 
