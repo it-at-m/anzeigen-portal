@@ -66,7 +66,7 @@ public class UserInfoAuthoritiesService {
             // value present in cache
             @SuppressWarnings("unchecked")
             final Collection<SimpleGrantedAuthority> authorities = (Collection<SimpleGrantedAuthority>) valueWrapper.get();
-            log.debug("Resolved authorities (from cache): {}", authorities);
+            log.debug("Resolved authorities (from cache for {}): {}", jwt.getSubject(), authorities);
             return authorities;
         }
 

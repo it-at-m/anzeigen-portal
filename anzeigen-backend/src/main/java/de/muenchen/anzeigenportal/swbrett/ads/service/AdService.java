@@ -142,6 +142,7 @@ public class AdService {
         updatedAd.setFiles(updatedFiles);
 
         final Ad ad = repository.getOne(id);
+        // TODO: check if it is  this users ad
         updatedAd.setId(ad.getId());
 
         return mapper.toAdTO(repository.save(updatedAd));
