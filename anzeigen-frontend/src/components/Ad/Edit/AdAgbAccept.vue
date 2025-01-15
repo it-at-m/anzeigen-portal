@@ -3,6 +3,7 @@
     v-model="isChecked"
     color="accent"
     :disabled="disabled"
+    :rules="[(value) => value || 'Bitte akzeptieren Sie die AGB.']"
   >
     <template #label>
       <p>
