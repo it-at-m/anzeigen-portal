@@ -48,12 +48,15 @@ import {
   DELETE_AD_SUCCESS,
   UPDATE_AD_SUCCESS,
 } from "@/Constants";
+import { useUserStore } from "@/stores/user";
 
 const dialog = ref<boolean>(false);
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 
 const snackbarEventBus = useSnackbarEventBus();
+
+const userStore = useUserStore();
 
 const {
   loading: deactivateAdLoading,
@@ -115,6 +118,10 @@ const updateAdClick = async (updatedAd: AdTO) => {
  * @param createdAd - The new advertisement data.
  */
 const createAdClick = async (createdAd: AdTO) => {
+  // set user to this user
+  createdAd.swbUser = userStore.swbUserTo;
+
+  console.log(createdAd);
   await createAd({ adTO: createdAd });
   finalHandler(CREATE_AD_SUCCESS);
 };
