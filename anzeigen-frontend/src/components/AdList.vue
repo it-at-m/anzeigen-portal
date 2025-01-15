@@ -3,7 +3,7 @@
     v-for="ad in adStore.listOfAds"
     :key="ad.id"
     :ad-to="ad"
-    class="mb-2"
+    class="mb-4"
   />
   <ad-display-card v-if="adStore.isEmpty">
     <template #title> Es konnte keine Anzeige gefunden werden </template>
