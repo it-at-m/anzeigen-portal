@@ -47,7 +47,7 @@ import { useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/Details/AdOverview.vue";
-import { useGetAd } from "@/composables/api/useAdApi";
+import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi";
 import { useClearCacheEventBus } from "@/composables/useEventBus";
 
 const clearCacheEventBus = useClearCacheEventBus();
@@ -62,6 +62,8 @@ const {
   error: getAdError,
   loading,
 } = useGetAd();
+
+const { call: incrementView } = useIncrementAdView();
 
 const adDetails = ref<Readonly<AdTO> | null>(null);
 
@@ -79,6 +81,9 @@ watch(idQuery, (newId) => {
 });
 
 onMounted(async () => {
+  if (idQuery.value) {
+    await incrementView({ id: parseInt(idQuery.value.toString()) });
+  }
   await updateAd(idQuery.value?.toString() || "");
 });
 

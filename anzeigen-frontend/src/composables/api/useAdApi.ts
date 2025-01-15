@@ -5,6 +5,7 @@ import type {
   GetAdRequest,
   GetAds200Response,
   GetAdsRequest,
+  IncrementViewRequest,
   UpdateAdRequest,
 } from "@/api/swbrett";
 
@@ -56,5 +57,15 @@ export function useGetAds() {
 
   return useApiCall<GetAdsRequest, GetAds200Response>((params: GetAdsRequest) =>
     api.getAds(params)
+  );
+}
+
+export function useIncrementAdView() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  return useApiCall<IncrementViewRequest, void>(
+    (params: IncrementViewRequest) => api.incrementView(params)
   );
 }
