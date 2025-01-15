@@ -1,4 +1,4 @@
-import type { AdCategory, AdTO, SwbImageTO, SwbUserTO } from "@/api/swbrett";
+import type { AdTO, SwbImageTO, SwbUserTO } from "@/api/swbrett";
 import type { InjectionKey, Ref } from "vue";
 
 export const ROUTES_BOARD = "board";
@@ -51,6 +51,7 @@ export const QUERY_NAME_CATEGORYID = "categoryId";
 export const QUERY_NAME_USERID = "userId";
 
 export const EMPTY_ADTO_OBJECT = {
+  adType: "OFFER",
   swbUser: {} as SwbUserTO,
   adImg: {} as SwbImageTO,
   adFiles: [],
