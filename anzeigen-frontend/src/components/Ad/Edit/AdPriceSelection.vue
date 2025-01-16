@@ -3,6 +3,7 @@
     label="Preis"
     class="w-md-66 w-sm-75"
     :min="0"
+    color="accent"
     :disabled="priceOption === 0 || disabled"
     :model-value="price"
     @update:model-value="updatedPrice"
@@ -17,6 +18,7 @@
   <v-radio-group
     v-model="priceOption"
     :disabled="disabled"
+    color="accent"
     inline
     @update:model-value="updatePriceOption"
   >
