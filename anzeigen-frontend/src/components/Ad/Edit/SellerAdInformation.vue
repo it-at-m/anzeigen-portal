@@ -6,6 +6,7 @@
   <v-text-field
     ref="refPhoneNumber"
     v-model="adTO.phone"
+    color="accent"
     prepend-icon="mdi-phone-outline"
     class="w-md-66 w-sm-75"
     label="Telefonnummer"
@@ -15,6 +16,7 @@
   <v-text-field
     ref="refEmail"
     v-model="adTO.email"
+    color="accent"
     prepend-icon="mdi-email-outline"
     class="w-md-66 w-sm-75"
     label="E-Mail Adresse"

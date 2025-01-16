@@ -1,6 +1,7 @@
 <template>
   <v-text-field
     v-model="adTO.title"
+    color="accent"
     :disabled="disabled"
     label="Titel"
     class="w-md-66 w-sm-75"
@@ -14,6 +15,7 @@
   <v-radio-group
     v-model="adTO.adType"
     :disabled="disabled"
+    color="accent"
     inline
   >
     <v-radio
@@ -27,6 +29,7 @@
   </v-radio-group>
   <v-textarea
     v-model="adTO.description"
+    color="accent"
     label="Beschreibung"
     max-rows="3"
     :disabled="disabled"
