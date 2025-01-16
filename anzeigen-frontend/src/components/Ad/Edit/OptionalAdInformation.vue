@@ -1,20 +1,4 @@
 <template>
-  <v-file-input
-    v-model="pictureInternal"
-    prepend-icon="mdi-camera"
-    label="Titelbild auswählen"
-    class="w-md-66 w-sm-75"
-    :disabled="disabled"
-  />
-  <ad-files-upload v-model="adTO.adFiles" />
-  <v-file-input
-    v-model="additionalFileInternal"
-    label="Optionale Anhänge"
-    class="w-md-66 w-sm-75"
-    multiple
-    show-size
-    :disabled="disabled"
-  />
   <v-text-field
     v-model="adTO.link"
     prepend-icon="mdi-link"
@@ -24,6 +8,12 @@
     :disabled="disabled"
     :rules="[ruleLink]"
   />
+  <ad-titel-picture
+    v-model="adTO.adImg"
+    style="margin-bottom: 16px !important"
+    class="mb-4"
+  />
+  <ad-files-upload v-model="adTO.adFiles" />
 </template>
 
 <script setup lang="ts">
@@ -32,27 +22,9 @@ import type { AdTO } from "@/api/swbrett";
 import { ref } from "vue";
 
 import AdFilesUpload from "@/components/Ad/Edit/AdFilesUpload.vue";
+import AdTitelPicture from "@/components/Ad/Edit/AdTitelPicture.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
-/**
- * <v-file-upload
- *         v-if="!file"
- *         v-model="file"
- *         clearable
- *         density="compact"
- *         browse-text="Titelbild hochladen"
- *         title="Titelbild hochladen"
- *         accept="image/png"
- *         reverse
- *       ></v-file-upload>
- *       <v-file-upload-item
- *         v-else
- *         :file="file"
- *         clearable
- *         size
- *         @click:remove="clearFile"
- *       />
- */
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 defineProps<{
