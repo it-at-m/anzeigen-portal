@@ -3,6 +3,7 @@
     :model-value="modelValue"
     class="w-md-66 w-sm-75"
     placeholder="Kategorie"
+    color="accent"
     :disabled="disabled"
     :items="categoryStore.categories"
     item-title="name"
