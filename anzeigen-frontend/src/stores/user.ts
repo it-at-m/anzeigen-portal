@@ -19,6 +19,7 @@ export const useUserStore = defineStore("user", () => {
 
   const swbUserTo = computed(() => {
     return {
+      id: userID.value,
       lhmObjectId: user.value?.lhmObjectID,
       displayName: user.value?.displayName,
     } as SwbUserTO;
