@@ -11,15 +11,12 @@
   <ad-titel-picture
     v-model="adTO.adImg"
     style="margin-bottom: 16px !important"
-    class="mb-4"
   />
   <ad-files-upload v-model="adTO.adFiles" />
 </template>
 
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
-
-import { ref } from "vue";
 
 import AdFilesUpload from "@/components/Ad/Edit/AdFilesUpload.vue";
 import AdTitelPicture from "@/components/Ad/Edit/AdTitelPicture.vue";
@@ -30,10 +27,6 @@ const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 defineProps<{
   disabled?: boolean;
 }>();
-
-const pictureInternal = ref<File>();
-
-const additionalFileInternal = ref<File[]>();
 
 const ruleLink = (value: string) =>
   !value ||

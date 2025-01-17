@@ -38,10 +38,6 @@ import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
-const phoneNumber = defineModel<string>("phone", { default: "" });
-
-const email = defineModel<string>("email", { default: "" });
-
 defineProps<{
   disabled?: boolean;
 }>();

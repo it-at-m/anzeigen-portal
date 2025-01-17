@@ -46,28 +46,15 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory, AdTO, AdTOAdTypeEnum } from "@/api/swbrett";
+import type { AdTO } from "@/api/swbrett";
 
 import { computed, ref, watch } from "vue";
 
 import AdCategorySelector from "@/components/Ad/Edit/AdCategorySelector.vue";
 import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
-import { useCategoriesStore } from "@/stores/adcategory";
-
-const categoryStore = useCategoriesStore();
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
-
-const adTitle = defineModel<string>("title", { default: "" });
-
-const category = ref<AdCategory>();
-
-const adType = defineModel<AdTOAdTypeEnum>("adType", {
-  default: "OFFER",
-});
-
-const description = defineModel<string>("description", { default: "" });
 
 const price = defineModel<number>("price", { default: 1 });
 
