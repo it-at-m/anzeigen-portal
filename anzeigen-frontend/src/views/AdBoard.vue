@@ -121,7 +121,6 @@ const createAdClick = async (createdAd: AdTO) => {
   // set user to this user
   createdAd.swbUser = userStore.swbUserTo;
 
-  console.log(createdAd);
   await createAd({ adTO: createdAd });
   finalHandler(CREATE_AD_SUCCESS);
 };

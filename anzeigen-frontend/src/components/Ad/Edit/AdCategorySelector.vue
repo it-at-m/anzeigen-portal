@@ -37,7 +37,6 @@ const updatedSelection = (selection: AdCategory) => {
   const selectedCategory = categoryStore.getCategory(id);
 
   if (selectedCategory) {
-    console.log(selectedCategory);
     emit("update:modelValue", selectedCategory);
   }
 };

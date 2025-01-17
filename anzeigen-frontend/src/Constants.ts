@@ -1,4 +1,4 @@
-import type { AdTO, SwbImageTO, SwbUserTO } from "@/api/swbrett";
+import type { AdTO, SwbUserTO } from "@/api/swbrett";
 import type { InjectionKey, Ref } from "vue";
 
 export const ROUTES_BOARD = "board";

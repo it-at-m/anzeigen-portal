@@ -48,7 +48,7 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { computed, ref, watch } from "vue";
+import { ref, watch } from "vue";
 
 import AdCategorySelector from "@/components/Ad/Edit/AdCategorySelector.vue";
 import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
@@ -67,11 +67,6 @@ const priceOption = ref<number>(Math.sign(adTO.value.price ?? 1));
 watch(priceOption, (newPriceOption) => {
   price.value = (newPriceOption ?? 1) * Math.abs(price.value ?? 1);
 });
-
-const displayedPrice = computed(() => Math.abs(price.value ?? 0));
-
-const updatedPrice = (newPrice: number) =>
-  (price.value = newPrice * priceOption.value);
 </script>
 
 <style scoped></style>

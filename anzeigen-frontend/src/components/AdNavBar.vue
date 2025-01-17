@@ -19,8 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
-
 import { useRouteQuery } from "@vueuse/router";
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
