@@ -1,6 +1,5 @@
 package de.muenchen.anzeigenportal.swbrett.ads.service;
 
-import de.muenchen.anzeigenportal.security.AuthUtils;
 import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
@@ -13,7 +12,6 @@ import de.muenchen.anzeigenportal.swbrett.images.service.ImageResizeService;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
-import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -37,6 +35,8 @@ import java.util.stream.Collectors;
 public class AdService {
 
     private static final int FIRST_PAGE = 0;
+
+    private static final String AD_NOT_FOUND = "Ad not found";
 
     @Autowired
     private AdRepository repository;
@@ -93,7 +93,7 @@ public class AdService {
     }
 
     public void incrementView(final long id) {
-        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
         ad.setViews(ad.getViews() + 1);
         repository.save(ad);
     }
@@ -120,7 +120,7 @@ public class AdService {
     }
 
     public AdTO updateAd(final long id, final AdTO updatedAdTO, HttpServletRequest request) throws IOException {
-        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
 
         if (!userService.isCurrentUser(ad.getSwbUser().getId())) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
@@ -151,7 +151,7 @@ public class AdService {
     }
 
     public void deactivateAd(final long id, HttpServletRequest request) {
-        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
 
         if (userService.isCurrentUser(ad.getSwbUser().getId())) {
             ad.setActive(false);
@@ -163,7 +163,7 @@ public class AdService {
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())")
     public void deleteAd(final long id, HttpServletRequest request) {
-        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
         repository.delete(ad);
     }
 
