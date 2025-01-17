@@ -26,6 +26,7 @@ import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 import { Levels } from "@/api/error";
+import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
@@ -78,7 +79,7 @@ const {
 } = useCreateUser();
 
 const triggerDialog = () => {
-  dialogBus.emit(EMPTY_ADTO_OBJECT);
+  dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(EMPTY_ADTO_OBJECT), false));
 };
 
 const loading = computed(
