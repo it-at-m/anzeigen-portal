@@ -66,7 +66,7 @@ watch(
  * @param value the current input
  */
 const ruleEmail = (value: string) =>
-  value.length === 0 ||
+  !value ||
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/.test(
     value
   ) ||
@@ -77,7 +77,7 @@ const ruleEmail = (value: string) =>
  * @param value the current input
  */
 const rulePhoneNumber = (value: string) =>
-  /^\+?\d*\/?\d*$/.test(value) || "Die Telefonnummer ist ungültig";
+  !value || /^\+?\d* ?\/?\d*$/.test(value) || "Die Telefonnummer ist ungültig";
 
 /**
  * Minimum one contact needs to be set - this can be email or phone number

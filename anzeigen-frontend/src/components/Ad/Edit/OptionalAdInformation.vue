@@ -6,7 +6,7 @@
     class="w-md-66 w-sm-75"
     type="url"
     :disabled="disabled"
-    :rules="[ruleLink]"
+    :rules="[() => true, ruleLink]"
   />
   <ad-titel-picture
     v-model="adTO.adImg"
@@ -36,9 +36,11 @@ const pictureInternal = ref<File>();
 const additionalFileInternal = ref<File[]>();
 
 const ruleLink = (value: string) =>
+  !value ||
   /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(
     value
-  ) || "Bitte geben Sie einen validen Link an.";
+  ) ||
+  "Bitte geben Sie einen validen Link an.";
 </script>
 
 <style scoped></style>
