@@ -6,13 +6,19 @@ package de.muenchen.anzeigenportal.swbrett.images.service;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import lombok.extern.slf4j.Slf4j;
+import org.imgscalr.Scalr;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.imageio.ImageIO;
 
+@Slf4j
 @Component
 @SuppressWarnings("PMD.UselessParentheses")
 public class ImageResizeService {
@@ -21,30 +27,26 @@ public class ImageResizeService {
 
     public byte[] resizeImageToPreviewImage(final byte[] originalImage) throws IOException {
 
-        // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
-        // (The JRE image processing ignores it, and thus the images may turn out rotated.)
-        // TODO: above comment still important?
-
-        final Image image = Toolkit.getDefaultToolkit().createImage(originalImage);
-
-        // New size to fit inside a MAX_SIZExMAX_SIZE square:
-        int newWidth = image.getWidth(null);
-        int newHeight = image.getHeight(null);
-        if (newWidth > newHeight) {
-            newHeight = (newHeight * MAX_SIZE) / newWidth;
-            newWidth = MAX_SIZE;
-        } else {
-            newWidth = (newWidth * MAX_SIZE) / newHeight;
-            newHeight = MAX_SIZE;
+        BufferedImage bufferedImage = createImageFromBytes(originalImage);
+        if (bufferedImage == null) {
+            log.debug("No image to resize.");
+            throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "This media type is not supported.");
         }
 
-        // Resize original image to desired preview image size.
-        image.getScaledInstance(newWidth, newHeight, Image.SCALE_AREA_AVERAGING);
-        final BufferedImage outputImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        outputImage.getGraphics().drawImage(image, 0, 0, null);
+        BufferedImage resizedImage = Scalr.resize(bufferedImage, MAX_SIZE);
 
-        final ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(outputImage, "jpg", bos);
-        return bos.toByteArray();
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(resizedImage, "jpg", baos);
+        return baos.toByteArray();
+    }
+
+    private BufferedImage createImageFromBytes(byte[] imageData) {
+        log.debug("Creating image from byte[] with length: {}", imageData.length);
+        ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+        try {
+            return ImageIO.read(bais);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
