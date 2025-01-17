@@ -42,7 +42,7 @@ import type { AdTO } from "@/api/swbrett";
 
 import { useMemoize } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
@@ -60,12 +60,17 @@ const {
   call: getAdCall,
   data: getAdData,
   error: getAdError,
-  loading,
+  loading: getAdLoading,
 } = useGetAd();
 
-const { call: incrementView } = useIncrementAdView();
+const { call: incrementView, loading: incrementAdViewLoading } =
+  useIncrementAdView();
 
 const adDetails = ref<Readonly<AdTO> | null>(null);
+
+const loading = computed(
+  () => getAdLoading.value || incrementAdViewLoading.value
+);
 
 const getAd = useMemoize(async (adId: number) => {
   await getAdCall({ id: adId });
