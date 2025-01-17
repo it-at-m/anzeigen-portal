@@ -62,6 +62,10 @@ public class SwbImage {
         return this.getImageBlob() != null;
     }
 
+    public boolean hasId() {
+        return this.id != 0 ;
+    }
+
     public void setImage(final byte[] image) {
         this.setImageBlob(NonContextualLobCreator.INSTANCE.createBlob(image));
     }
