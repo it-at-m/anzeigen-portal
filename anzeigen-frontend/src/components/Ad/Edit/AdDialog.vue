@@ -100,18 +100,11 @@ import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vu
 import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
-import {
-  useDialogEventBus,
-  useUpdateAdListEventBus,
-} from "@/composables/useEventBus";
-
-const updateAdListEventBus = useUpdateAdListEventBus();
+import { useDialogEventBus } from "@/composables/useEventBus";
 
 const dialog = defineModel<boolean>();
 
 const adTo = ref<AdTO>({} as AdTO);
-
-const disabledInputs = ref<boolean>(false);
 
 const dialogBus = useDialogEventBus();
 
@@ -151,12 +144,9 @@ const writeAd = async () => {
       ? emit("createAd", adTo.value)
       : emit("updateAd", adTo.value);
   }
-
-  close();
 };
 
 const close = () => {
-  updateAdListEventBus.emit();
   dialog.value = false;
 };
 </script>
