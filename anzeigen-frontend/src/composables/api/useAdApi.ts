@@ -6,6 +6,7 @@ import type {
   GetAdRequest,
   GetAds200Response,
   GetAdsRequest,
+  IncrementViewRequest,
   UpdateAdRequest,
 } from "@/api/swbrett";
 
@@ -67,5 +68,15 @@ export function useDeactivateAd() {
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   return useApiCall<DeactivateAdRequest, void>((params: DeactivateAdRequest) =>
     api.deactivateAd(params)
+  );
+}
+
+export function useIncrementAdView() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  return useApiCall<IncrementViewRequest, void>(
+    (params: IncrementViewRequest) => api.incrementView(params)
   );
 }
