@@ -63,7 +63,7 @@ public class SwbImage {
     }
 
     public boolean hasId() {
-        return this.id != 0 ;
+        return this.id != 0;
     }
 
     public void setImage(final byte[] image) {

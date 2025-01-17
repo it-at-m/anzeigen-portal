@@ -149,7 +149,8 @@ public class AdService {
 
     public void deactivateAd(final long id, HttpServletRequest request) {
         log.debug("Current User: {}", AuthUtils.getLhmObjectID());
-        SwbUserTO currentUser = userService.findUser(AuthUtils.getLhmObjectID()).orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));
+        SwbUserTO currentUser = userService.findUser(AuthUtils.getLhmObjectID())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));
 
         final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
 
