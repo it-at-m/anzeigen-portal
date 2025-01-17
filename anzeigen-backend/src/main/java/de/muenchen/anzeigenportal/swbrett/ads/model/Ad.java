@@ -89,7 +89,7 @@ public class Ad {
     private byte[] imagePreview;
 
     @Setter
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "fk_ad_id")
     private SwbImage imageOriginal; //TODO: was ist hier gewollt?
 

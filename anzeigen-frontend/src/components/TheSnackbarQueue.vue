@@ -35,7 +35,7 @@ snackbarBus.on((message: SnackbarMessage) => {
   queue.value.push({
     color: message.level || "info",
     text: message.message || "",
-    timeout: message.timeout || message.level === Levels.ERROR ? 10000 : 5000,
+    timeout: message.timeout || message.level === Levels.ERROR ? 5000 : 2500,
     icon: getIcon(message.level || Levels.INFO),
   });
 });

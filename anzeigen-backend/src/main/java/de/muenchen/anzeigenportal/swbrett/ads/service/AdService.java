@@ -12,13 +12,17 @@ import de.muenchen.anzeigenportal.swbrett.images.service.ImageResizeService;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
+import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -26,10 +30,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class AdService {
 
     private static final int FIRST_PAGE = 0;
+
+    private static final String AD_NOT_FOUND = "Ad not found";
 
     @Autowired
     private AdRepository repository;
@@ -51,6 +58,9 @@ public class AdService {
 
     @Autowired
     private AdValidationService validationService;
+
+    @Autowired
+    private UserService userService;
 
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
@@ -78,12 +88,12 @@ public class AdService {
     }
 
     public AdTO getAd(final long id) {
-        final Ad ad = repository.getOne(id);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
         return mapper.toAdTO(ad);
     }
 
     public void incrementView(final long id) {
-        final Ad ad = repository.getOne(id);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
         ad.setViews(ad.getViews() + 1);
         repository.save(ad);
     }
@@ -100,7 +110,7 @@ public class AdService {
         final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);
 
-        if (ad.getImageOriginal() != null) {
+        if (ad.getImageOriginal() != null && ad.getImageOriginal().hasImage()) {
             final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(ad.getImageOriginal().getImage());
             ad.setImagePreview(imagePreview);
         }
@@ -110,6 +120,12 @@ public class AdService {
     }
 
     public AdTO updateAd(final long id, final AdTO updatedAdTO, HttpServletRequest request) throws IOException {
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
+
+        if (!userService.isCurrentUser(ad.getSwbUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+
         final Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);
 
@@ -118,10 +134,10 @@ public class AdService {
                 final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(updatedAd.getImageOriginal().getImage());
                 updatedAd.setImagePreview(imagePreview);
             } else {
+                // the obj is not null and no picture was included - therefore the id must be set. Load the picture which is already saved
                 final SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
                 updatedAd.setImageOriginal(image);
             }
-
         }
 
         final List<SwbFile> updatedFiles = updatedAd.getFiles().stream()
@@ -129,22 +145,25 @@ public class AdService {
                 .collect(Collectors.toList());
 
         updatedAd.setFiles(updatedFiles);
-
-        final Ad ad = repository.getOne(id);
         updatedAd.setId(ad.getId());
 
         return mapper.toAdTO(repository.save(updatedAd));
     }
 
     public void deactivateAd(final long id, HttpServletRequest request) {
-        final Ad ad = repository.getOne(id);
-        ad.setActive(false);
-        repository.save(ad);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
+
+        if (userService.isCurrentUser(ad.getSwbUser().getId())) {
+            ad.setActive(false);
+            repository.save(ad);
+        } else {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())")
     public void deleteAd(final long id, HttpServletRequest request) {
-        final Ad ad = repository.getOne(id);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
         repository.delete(ad);
     }
 
@@ -152,7 +171,7 @@ public class AdService {
     public void updateAllCategories(final AdCategory oldCat, final AdCategory newCat) {
         final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
-        allAdsOfCategory.stream().forEach(ad -> {
+        allAdsOfCategory.forEach(ad -> {
             ad.setAdCategory(newCat);
             repository.save(ad);
         });

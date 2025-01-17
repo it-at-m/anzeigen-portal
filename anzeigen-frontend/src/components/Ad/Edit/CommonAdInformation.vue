@@ -1,28 +1,24 @@
 <template>
   <v-text-field
-    v-model="title"
+    v-model="adTO.title"
+    color="accent"
+    :disabled="disabled"
     label="Titel"
     class="w-md-66 w-sm-75"
-    :disabled="disabled"
     :rules="[
       (value) => !!value || 'Bitte geben Sie einen Titel ein.',
       (value) =>
         value.length < AD_MAX_TITLE_LENGTH || 'Bitte kürzen Sie den Titel',
     ]"
   />
-  <v-select
-    v-model="category"
-    class="w-md-66 w-sm-75"
-    placeholder="Kategorie"
-    :loading="categoryLoading"
+  <ad-category-selector
+    v-model="adTO.adCategory"
     :disabled="disabled"
-    :items="data as AdCategory[]"
-    item-title="name"
-    :rules="[(value) => !!value || 'Bitte wählen Sie eine Kategorie aus.']"
   />
   <v-radio-group
-    v-model="adType"
+    v-model="adTO.adType"
     :disabled="disabled"
+    color="accent"
     inline
   >
     <v-radio
@@ -35,7 +31,8 @@
     />
   </v-radio-group>
   <v-textarea
-    v-model="description"
+    v-model="adTO.description"
+    color="accent"
     label="Beschreibung"
     max-rows="3"
     :disabled="disabled"
@@ -45,65 +42,22 @@
         'Bitte geben Sie eine Beschreibung mit maximal 1000 Zeichen ein.',
     ]"
   />
-  <v-number-input
-    label="Preis"
-    class="w-md-66 w-sm-75"
-    :min="0"
-    :disabled="priceOption === 0 || disabled"
-    :model-value="displayedPrice"
-    @update:model-value="updatedPrice"
-  >
-    <template #append-inner>
-      <v-icon
-        class="mr-2"
-        icon="mdi-currency-eur"
-      />
-    </template>
-  </v-number-input>
-  <v-radio-group
-    v-model="priceOption"
+  <ad-price-selection
+    v-model="adTO.price!"
     :disabled="disabled"
-    inline
-  >
-    <v-radio
-      label="Festpreis"
-      :value="1"
-    />
-    <v-radio
-      label="VB"
-      :value="-1"
-    />
-    <v-radio
-      label="Zu verschenken"
-      :value="0"
-    />
-  </v-radio-group>
+  />
 </template>
 
 <script setup lang="ts">
-import type { AdCategory, AdTOAdTypeEnum } from "@/api/swbrett";
+import type { AdTO } from "@/api/swbrett";
 
-import { computed, onMounted, ref, watch } from "vue";
-import { VNumberInput } from "vuetify/labs/components";
+import { ref, watch } from "vue";
 
-import { useGetCategories } from "@/composables/api/useGetCategories";
-import { AD_MAX_TITLE_LENGTH } from "@/Constants";
+import AdCategorySelector from "@/components/Ad/Edit/AdCategorySelector.vue";
+import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
+import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 
-const {
-  call: getCategories,
-  data,
-  loading: categoryLoading,
-} = useGetCategories();
-
-const title = defineModel<string>("title", { default: "" });
-
-const category = defineModel<AdCategory>("category");
-
-const adType = defineModel<AdTOAdTypeEnum>("adType", {
-  default: "OFFER",
-});
-
-const description = defineModel<string>("description", { default: "" });
+const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 const price = defineModel<number>("price", { default: 1 });
 
@@ -111,20 +65,11 @@ defineProps<{
   disabled?: boolean;
 }>();
 
-const priceOption = ref<number>(Math.sign(price.value ?? 1));
-
-onMounted(() => {
-  getCategories();
-});
+const priceOption = ref<number>(Math.sign(adTO.value.price ?? 1));
 
 watch(priceOption, (newPriceOption) => {
   price.value = (newPriceOption ?? 1) * Math.abs(price.value ?? 1);
 });
-
-const displayedPrice = computed(() => Math.abs(price.value ?? 0));
-
-const updatedPrice = (newPrice: number) =>
-  (price.value = newPrice * priceOption.value);
 </script>
 
 <style scoped></style>

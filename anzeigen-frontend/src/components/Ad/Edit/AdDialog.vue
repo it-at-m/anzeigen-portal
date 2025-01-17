@@ -4,7 +4,7 @@
     persistent
     max-width="900px"
   >
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
           <v-row>
@@ -15,53 +15,76 @@
               prepend-icon="mdi-window-close"
               variant="outlined"
               text="Abbrechen"
+              :disabled="loading"
               @click="close"
             />
           </v-row>
         </v-container>
       </v-card-title>
-      <v-card-text>
+      <v-card-text :disabled="loading">
         <v-form v-model="form">
           <ad-display-card>
             <template #subtitle> Allgemeine Informationen </template>
             <template #text>
-              <common-ad-information :disabled="disabledInputs" />
+              <common-ad-information
+                v-model="adTo"
+                :disabled="loading"
+              />
             </template>
           </ad-display-card>
           <v-divider />
           <ad-display-card>
             <template #subtitle> Optionale Informationen </template>
             <template #text>
-              <optional-ad-information :disabled="disabledInputs" />
+              <optional-ad-information
+                v-model="adTo"
+                :disabled="loading"
+              />
             </template>
           </ad-display-card>
           <v-divider />
           <ad-display-card>
             <template #subtitle> Verkäufer Informationen </template>
             <template #text>
-              <seller-ad-information :disabled="disabledInputs" />
+              <seller-ad-information
+                v-model="adTo"
+                :disabled="loading"
+              />
             </template>
           </ad-display-card>
         </v-form>
       </v-card-text>
       <v-card-actions class="px-4">
         <v-btn
+          :disabled="!form || loading"
           variant="elevated"
           color="accent"
           prepend-icon="mdi-content-save-outline"
-          @click="createAd"
+          @click="writeAd"
         >
           <p v-if="isAdCreate">Erstellen</p>
           <p v-else>Speichern</p>
         </v-btn>
-        <v-btn
+        <yes-no-dialog
           v-if="!isAdCreate"
-          variant="elevated"
-          color="error"
-          prepend-icon="mdi-trash-can-outline"
+          :model-value="deleteDialog"
+          dialogtitle="Anzeige löschen"
+          dialogtext="Möchten Sie wirklich die Anzeige löschen?"
+          @yes="confirmedDeletion"
+          @no="deleteDialog = false"
         >
-          Löschen
-        </v-btn>
+          <template #default>
+            <v-btn
+              variant="elevated"
+              color="error"
+              prepend-icon="mdi-trash-can-outline"
+              :disabled="loading"
+              @click="deleteDialog = true"
+            >
+              Löschen
+            </v-btn>
+          </template>
+        </yes-no-dialog>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -70,46 +93,62 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { isDefined, useEventBus } from "@vueuse/core";
-import { computed, ref } from "vue";
+import { ref } from "vue";
 
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
 import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vue";
 import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { useCreateUser } from "@/composables/api/useUserApi";
-import { EV_EDIT_AD_DIALOG } from "@/Constants";
+import YesNoDialog from "@/components/common/YesNoDialog.vue";
+import { useDialogEventBus } from "@/composables/useEventBus";
 
-const { call } = useCreateUser();
+const dialog = defineModel<boolean>();
 
-const dialog = ref<boolean>(false);
+const adTo = ref<AdTO>({} as AdTO);
 
-const adTo = ref<AdTO>();
+const dialogBus = useDialogEventBus();
 
-const disabledInputs = ref<boolean>(false);
+const form = ref<boolean>(false);
 
-const dialogBus = useEventBus<AdTO>(EV_EDIT_AD_DIALOG);
+const isAdCreate = ref<boolean>(false);
 
-const form = ref<boolean>();
+const emit = defineEmits<{
+  updateAd: [AdTO];
+  createAd: [AdTO];
+  deactivateAd: [number];
+}>();
+
+defineProps<{
+  loading: boolean;
+}>();
+
+const deleteDialog = ref<boolean>(false);
 
 dialogBus.on((event: AdTO) => {
+  isAdCreate.value = !event.id;
   dialog.value = true;
   adTo.value = event;
 });
 
-const createAd = () => {
-  call({
-    swbUserTO: {
-      displayName: "user",
-      id: 4,
-      lhmObjectId: "idontknow",
-    },
-  });
+const confirmedDeletion = async () => {
+  if (adTo.value?.id) {
+    emit("deactivateAd", adTo.value?.id);
+  }
+  deleteDialog.value = false;
 };
 
-const close = () => (dialog.value = false);
+const writeAd = async () => {
+  if (adTo.value) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    isAdCreate.value
+      ? emit("createAd", adTo.value)
+      : emit("updateAd", adTo.value);
+  }
+};
 
-const isAdCreate = computed(() => isDefined(adTo));
+const close = () => {
+  dialog.value = false;
+};
 </script>
 
 <style scoped></style>

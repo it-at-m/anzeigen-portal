@@ -23,7 +23,7 @@
                   }"
                 >
                   <v-toolbar-title class="font-weight-bold">
-                    <span class="text-white">Schwarzes-</span>
+                    <span class="text-white">Schwarzes </span>
                     <span class="text-secondary">Brett</span>
                   </v-toolbar-title>
                 </router-link>

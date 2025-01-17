@@ -17,7 +17,11 @@ export function useApiCall<TRequest, TResponse = void>(
 
     return apiMethod(params)
       .then((data) => (dataInternal.value = data))
-      .catch(() => (errorInternal.value = true))
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error(error);
+        return (errorInternal.value = true);
+      })
       .finally(() => (loadingInternal.value = false));
   };
 

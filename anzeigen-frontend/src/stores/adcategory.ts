@@ -10,7 +10,11 @@ export const useCategoriesStore = defineStore("category", () => {
     categories.value = payload;
   };
 
+  const getCategory = (id: number) => {
+    return categories.value.find((category) => category.id === id);
+  };
+
   const isEmpty = computed(() => categories.value.length === 0);
 
-  return { categories, setCategories, isEmpty };
+  return { categories, setCategories, isEmpty, getCategory };
 });

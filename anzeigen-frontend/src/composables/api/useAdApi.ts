@@ -1,6 +1,7 @@
 import type {
   AdTO,
   CreateAdRequest,
+  DeactivateAdRequest,
   DeleteAdRequest,
   GetAdRequest,
   GetAds200Response,
@@ -57,6 +58,16 @@ export function useGetAds() {
 
   return useApiCall<GetAdsRequest, GetAds200Response>((params: GetAdsRequest) =>
     api.getAds(params)
+  );
+}
+
+export function useDeactivateAd() {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  return useApiCall<DeactivateAdRequest, void>((params: DeactivateAdRequest) =>
+    api.deactivateAd(params)
   );
 }
 

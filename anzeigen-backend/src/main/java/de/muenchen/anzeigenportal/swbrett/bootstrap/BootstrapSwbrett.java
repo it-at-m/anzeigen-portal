@@ -68,7 +68,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         this.bootstrapSettings();
         final List<SwbUserTO> users = this.bootstrapUsers();
         final List<AdCategory> adCategories = this.bootstrapAdCategories();
-        this.bootstrapAds(users.get(0), adCategories);
+        this.bootstrapAds(users.get(0), users.get(3), adCategories);
         // this.bootstrapRandomAds(users.get(2), adCategories.get(0), 51);
         // this.bootstrapRandomAds(users.get(2), adCategories.get(4), 233);
 
@@ -158,6 +158,12 @@ public class BootstrapSwbrett implements CommandLineRunner {
             u.setDisplayName("Randall Random");
             result.add(userService.saveOrGet(u));
         }
+        {
+            final SwbUser u = new SwbUser();
+            u.setLhmObjectId("1234567");
+            u.setDisplayName("testuser");
+            result.add(userService.saveOrGet(u));
+        }
 
         LOG.info("  ... Users erstellt");
         return result.stream().map(userMapper::toSwbUserTO).collect(Collectors.toList());
@@ -192,7 +198,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
     }
 
     @SuppressWarnings("PMD.NcssCount")
-    private void bootstrapAds(final SwbUserTO user, final List<AdCategory> adCategories) throws IOException {
+    private void bootstrapAds(final SwbUserTO user, final SwbUserTO user2, final List<AdCategory> adCategories) throws IOException {
         LOG.info("  Bootstrap Ads...");
 
         final AdTO ad1 = new AdTO();
@@ -293,7 +299,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
 
         final AdTO ad7 = new AdTO();
         ad7.setActive(true);
-        ad7.setSwbUser(user);
+        ad7.setSwbUser(user2);
         ad7.setAdCategory(adCategories.get(0));
         //        ad_7.setAdFiles(...);
         //        ad_7.setAdImg(...);
@@ -311,7 +317,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
 
         final AdTO ad8 = new AdTO();
         ad8.setActive(true);
-        ad8.setSwbUser(user);
+        ad8.setSwbUser(user2);
         ad8.setAdCategory(adCategories.get(0));
         //        ad_8.setAdFiles(...);
         //        ad_8.setAdImg(...);
@@ -331,7 +337,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
 
         final AdTO ad9 = new AdTO();
         ad9.setActive(true);
-        ad9.setSwbUser(user);
+        ad9.setSwbUser(user2);
         ad9.setAdCategory(adCategories.get(0));
         //        ad_9.setAdFiles(...);
         //        ad_9.setAdImg(...);

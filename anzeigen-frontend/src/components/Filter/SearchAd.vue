@@ -18,15 +18,11 @@
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref } from "vue";
 
-import { useUpdateAdListEventBus } from "@/composables/useEventBus";
-
 const searchValue = ref<string>();
 
 // TODO: do not constantly update the query upon keypress - rather update it on keyup.enter!
 
 const searchQuery = useRouteQuery("searchTerm");
-
-const updateAdListEventBus = useUpdateAdListEventBus();
 
 onMounted(() => {
   if (searchQuery.value && searchQuery.value !== "") {
@@ -36,7 +32,6 @@ onMounted(() => {
 
 const search = () => {
   searchQuery.value = searchValue.value ?? null;
-  updateAdListEventBus.emit();
 };
 </script>
 

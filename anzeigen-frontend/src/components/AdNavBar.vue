@@ -24,6 +24,7 @@ import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
 
 import { Levels } from "@/api/error";
+import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
@@ -38,7 +39,12 @@ import {
 } from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, QUERY_NAME_USERID, ROUTES_MYBOARD } from "@/Constants";
+import {
+  API_ERROR_MSG,
+  EMPTY_ADTO_OBJECT,
+  QUERY_NAME_USERID,
+  ROUTES_MYBOARD,
+} from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
@@ -71,7 +77,7 @@ const {
 } = useCreateUser();
 
 const triggerDialog = () => {
-  dialogBus.emit(undefined);
+  dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(EMPTY_ADTO_OBJECT), false));
 };
 
 const loading = computed(
