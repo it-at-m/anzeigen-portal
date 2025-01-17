@@ -4,7 +4,6 @@
 
 package de.muenchen.anzeigenportal.swbrett.images.service;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -27,22 +26,22 @@ public class ImageResizeService {
 
     public byte[] resizeImageToPreviewImage(final byte[] originalImage) throws IOException {
 
-        BufferedImage bufferedImage = createImageFromBytes(originalImage);
+        final BufferedImage bufferedImage = createImageFromBytes(originalImage);
         if (bufferedImage == null) {
             log.debug("No image to resize.");
             throw new ResponseStatusException(HttpStatus.UNSUPPORTED_MEDIA_TYPE, "This media type is not supported.");
         }
 
-        BufferedImage resizedImage = Scalr.resize(bufferedImage, MAX_SIZE);
+        final BufferedImage resizedImage = Scalr.resize(bufferedImage, MAX_SIZE);
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         ImageIO.write(resizedImage, "jpg", baos);
         return baos.toByteArray();
     }
 
-    private BufferedImage createImageFromBytes(byte[] imageData) {
+    private BufferedImage createImageFromBytes(final byte[] imageData) {
         log.debug("Creating image from byte[] with length: {}", imageData.length);
-        ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(imageData);
         try {
             return ImageIO.read(bais);
         } catch (IOException e) {

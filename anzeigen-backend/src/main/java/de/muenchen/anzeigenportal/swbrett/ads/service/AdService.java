@@ -88,12 +88,12 @@ public class AdService {
     }
 
     public AdTO getAd(final long id) {
-        final Ad ad = repository.getOne(id);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
         return mapper.toAdTO(ad);
     }
 
     public void incrementView(final long id) {
-        final Ad ad = repository.getOne(id);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
         ad.setViews(ad.getViews() + 1);
         repository.save(ad);
     }
@@ -120,6 +120,12 @@ public class AdService {
     }
 
     public AdTO updateAd(final long id, final AdTO updatedAdTO, HttpServletRequest request) throws IOException {
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
+
+        if (!userService.isCurrentUser(ad.getSwbUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+        }
+
         final Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);
 
@@ -129,7 +135,7 @@ public class AdService {
                 updatedAd.setImagePreview(imagePreview);
             } else {
                 // the obj is not null and no picture was included - therefore the id must be set. Load the picture which is already saved
-                SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
+                final SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
                 updatedAd.setImageOriginal(image);
             }
         }
@@ -139,22 +145,15 @@ public class AdService {
                 .collect(Collectors.toList());
 
         updatedAd.setFiles(updatedFiles);
-
-        final Ad ad = repository.getOne(id);
-        // TODO: check if it is  this users ad
         updatedAd.setId(ad.getId());
 
         return mapper.toAdTO(repository.save(updatedAd));
     }
 
     public void deactivateAd(final long id, HttpServletRequest request) {
-        log.debug("Current User: {}", AuthUtils.getLhmObjectID());
-        SwbUserTO currentUser = userService.findUser(AuthUtils.getLhmObjectID())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));
-
         final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
 
-        if (ad.getSwbUser().getId().equals(currentUser.getId())) {
+        if (userService.isCurrentUser(ad.getSwbUser().getId())) {
             ad.setActive(false);
             repository.save(ad);
         } else {
@@ -164,7 +163,7 @@ public class AdService {
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())")
     public void deleteAd(final long id, HttpServletRequest request) {
-        final Ad ad = repository.getOne(id);
+        final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ad not found"));
         repository.delete(ad);
     }
 
@@ -172,7 +171,7 @@ public class AdService {
     public void updateAllCategories(final AdCategory oldCat, final AdCategory newCat) {
         final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
-        allAdsOfCategory.stream().forEach(ad -> {
+        allAdsOfCategory.forEach(ad -> {
             ad.setAdCategory(newCat);
             repository.save(ad);
         });
