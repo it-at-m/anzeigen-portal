@@ -10,9 +10,13 @@
   />
   <ad-titel-picture
     v-model="adTO.adImg"
+    :disabled="disabled"
     style="margin-bottom: 16px !important"
   />
-  <ad-files-upload v-model="adTO.adFiles" />
+  <ad-files-upload
+    v-model="adTO.adFiles"
+    :disabled="disabled"
+  />
 </template>
 
 <script setup lang="ts">

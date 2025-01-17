@@ -11,7 +11,10 @@
         value.length < AD_MAX_TITLE_LENGTH || 'Bitte kürzen Sie den Titel',
     ]"
   />
-  <ad-category-selector v-model="adTO.adCategory" />
+  <ad-category-selector
+    v-model="adTO.adCategory"
+    :disabled="disabled"
+  />
   <v-radio-group
     v-model="adTO.adType"
     :disabled="disabled"

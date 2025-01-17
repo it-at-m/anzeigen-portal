@@ -4,7 +4,7 @@
     persistent
     max-width="900px"
   >
-    <v-card>
+    <v-card :loading="loading">
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
           <v-row>
@@ -24,7 +24,7 @@
       <v-card-text :disabled="loading">
         <v-form v-model="form">
           <ad-display-card>
-            <template #title> Allgemeine Informationen </template>
+            <template #subtitle> Allgemeine Informationen </template>
             <template #text>
               <common-ad-information
                 v-model="adTo"

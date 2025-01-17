@@ -2,12 +2,14 @@
   <div class="w-md-66 w-sm-75">
     <v-file-upload
       v-if="!computedPicture"
+      :disabled="disabled"
       title="Optionales Titelbild hochladen"
       density="compact"
       @update:model-value="uploadPicture"
     />
     <v-file-upload-item
       v-else
+      :disabled="disabled"
       title="Ein Titelbild wurde ausgewählt."
       clearable
       @click:remove="clearFile"
@@ -27,6 +29,7 @@ import { VFileUpload, VFileUploadItem } from "vuetify/labs/VFileUpload";
 
 const { modelValue } = defineProps<{
   modelValue: SwbImageTO | undefined;
+  disabled?: boolean;
 }>();
 
 const emit = defineEmits<{

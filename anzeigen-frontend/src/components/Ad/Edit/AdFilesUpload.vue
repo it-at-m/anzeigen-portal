@@ -3,6 +3,7 @@
     <v-file-upload
       :model-value="computedFiles"
       clearable
+      :disabled="disabled"
       density="compact"
       multiple
       title="Optionale Anhänge hochladen"
@@ -28,6 +29,7 @@ import { VFileUpload, VFileUploadItem } from "vuetify/labs/VFileUpload";
 
 const { modelValue } = defineProps<{
   modelValue?: SwbFileTO[];
+  disabled?: boolean;
 }>();
 
 const emit = defineEmits<{
