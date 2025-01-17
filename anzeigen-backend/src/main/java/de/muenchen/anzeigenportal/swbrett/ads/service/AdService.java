@@ -13,7 +13,6 @@ import de.muenchen.anzeigenportal.swbrett.images.service.ImageResizeService;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
-import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -111,7 +110,7 @@ public class AdService {
         final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);
 
-        if (ad.getImageOriginal() != null) {
+        if (ad.getImageOriginal() != null && ad.getImageOriginal().hasImage()) {
             final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(ad.getImageOriginal().getImage());
             ad.setImagePreview(imagePreview);
         }
@@ -129,10 +128,10 @@ public class AdService {
                 final byte[] imagePreview = imageResizeService.resizeImageToPreviewImage(updatedAd.getImageOriginal().getImage());
                 updatedAd.setImagePreview(imagePreview);
             } else {
-                final SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
+                // the obj is not null and no picture was included - therefore the id must be set. Load the picture which is already saved
+                SwbImage image = imageService.getImage(updatedAd.getImageOriginal().getId());
                 updatedAd.setImageOriginal(image);
             }
-
         }
 
         final List<SwbFile> updatedFiles = updatedAd.getFiles().stream()
