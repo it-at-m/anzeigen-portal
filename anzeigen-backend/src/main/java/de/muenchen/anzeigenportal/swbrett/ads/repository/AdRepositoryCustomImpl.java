@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     private AdMapper mapper;
 
     @Override
+    @Transactional
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
             final String order, final Pageable pageable,
@@ -44,6 +46,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     }
 
     @Override
+    @Transactional
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())")
     public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
