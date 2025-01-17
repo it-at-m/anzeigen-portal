@@ -17,26 +17,6 @@
       </template>
     </v-file-upload-item>
   </div>
-  <v-file-input
-    v-if="false"
-    :model-value="computedPicture"
-    prepend-icon=""
-    label="Titelbild"
-    @update:model-value="uploadPicture"
-  >
-    <template #prepend>
-      <v-icon
-        v-if="!computedPicture"
-        icon="mdi-panorama-outline"
-      />
-      <img
-        v-else
-        :src="computedPreview"
-        alt="Hallo"
-        height="50px"
-      />
-    </template>
-  </v-file-input>
 </template>
 
 <script setup lang="ts">
@@ -63,10 +43,6 @@ const computedPicture = computed(() => {
   });
 });
 
-const computedPreview = computed(
-  () => "data:image/jpeg;base64," + modelValue?.imageBase64
-);
-
 const uploadPicture = async (files: File[] | File) => {
   const file = Array.isArray(files) ? files[0] : files;
 
@@ -77,9 +53,8 @@ const uploadPicture = async (files: File[] | File) => {
   const reader = new FileReader();
   reader.onloadend = function () {
     const result = (reader.result as string).split(",")[1];
-    const base64 = window.btoa(result);
     emit("update:modelValue", {
-      imageBase64: base64,
+      imageBase64: result,
     });
   };
 
