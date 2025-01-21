@@ -4,17 +4,15 @@
       <v-col>
         <ad-display-sheet
           class="pa-2 d-flex justify-center"
-          style="height: 300px"
+          style="max-height: 500px"
         >
-          <v-img
+          <ad-image-display
             v-if="adDetails.imagePreviewBase64"
-            max-height="300"
-            :src="adDetails.imagePreviewBase64"
+            :ad-details="adDetails"
           />
           <v-icon
             v-else
-            class="w-100 h-100"
-            style="background-color: #eeeeee"
+            class="w-100 h-100 rounded image-background-color"
             icon="mdi-camera"
             color="accent"
             size="196"
@@ -142,6 +140,7 @@ import { useDateFormat } from "@vueuse/shared";
 import { computed } from "vue";
 
 import AdPrice from "@/components/Ad/AdPrice.vue";
+import AdImageDisplay from "@/components/Ad/Details/AdImageDisplay.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
@@ -168,4 +167,8 @@ const routeToUser = (id: number) => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.image-background-color {
+  background-color: #eeeeee;
+}
+</style>

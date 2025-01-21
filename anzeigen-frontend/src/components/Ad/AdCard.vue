@@ -9,13 +9,25 @@
           cols="12"
           sm="3"
         >
-          <v-img
-            cover
-            max-height="200"
-            src="https://picsum.photos/300"
-            class="cursor-pointer"
-            @click="routeTo"
-          />
+          <div class="h-100 d-flex align-content-center">
+            <v-img
+              v-if="adTo.imagePreviewBase64"
+              rounded
+              cover
+              max-height="200"
+              :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adTo.imagePreviewBase64"
+              class="cursor-pointer"
+              @click="routeTo"
+            />
+            <v-icon
+              v-else
+              class="w-100 h-100 rounded"
+              style="background-color: #eeeeee"
+              icon="mdi-camera"
+              color="accent"
+              size="164"
+            />
+          </div>
         </v-col>
         <v-col
           cols="12"
@@ -97,6 +109,7 @@ import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus";
+import { PREVIEW_IMAGE_FILE_URI_PREFIX } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
