@@ -81,8 +81,8 @@
                 <v-col class="py-0"> Direkter Link </v-col>
                 <v-col class="py-0">
                   <icon-text
-                    label="https://weissesbrett.muenchen.de/board/main/7430"
-                    href="https://weissesbrett.muenchen.de/board/main/7430"
+                    :label="currentLink"
+                    :href="currentLink"
                   />
                 </v-col>
               </v-row>
@@ -151,6 +151,8 @@ import router from "@/plugins/router";
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
 }>();
+
+const currentLink = computed(() => window.location.href);
 
 const adType = computed(() =>
   adDetails.adType === "SEEK" ? "Suche" : "Biete"
