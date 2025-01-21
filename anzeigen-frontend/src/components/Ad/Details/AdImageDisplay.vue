@@ -2,32 +2,20 @@
   <v-img
     max-height="500"
     class="rounded image-background-color"
-    :src="PREVIEW_IMAGE_FILE_URI_PREFIX + computedImage"
+    :lazy-src="PREVIEW_IMAGE_FILE_URI_PREFIX + adDetails.imagePreviewBase64"
+    :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adImageData?.imageBase64"
   />
 </template>
 
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import { computed, onMounted } from "vue";
+import { onMounted } from "vue";
 
 import { useGetAdImage } from "@/composables/api/useFilesApi";
 import { PREVIEW_IMAGE_FILE_URI_PREFIX } from "@/Constants";
 
-const {
-  call: getAdImage,
-  data: adImageData,
-  loading: adImageLoading,
-} = useGetAdImage();
-
-/**
- * Computes the image date to be displayed. This way there is no flickering of the image.
- */
-const computedImage = computed(() =>
-  adImageLoading.value || !adImageData.value
-    ? adDetails.imagePreviewBase64
-    : adImageData.value.imageBase64
-);
+const { call: getAdImage, data: adImageData } = useGetAdImage();
 
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
