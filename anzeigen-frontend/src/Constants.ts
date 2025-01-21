@@ -44,7 +44,7 @@ export const DEFAULT_BOARD_QUERIES = {
   sortBy: "title",
   order: "asc",
 };
-export const PREVIEW_IMAGE_FILE_URI_PREFIX = "data:image;base64,";
+export const PREVIEW_IMAGE_FILE_URI_PREFIX = "data:image/jpeg;base64,";
 export const QUERY_NAME_ORDER = "order";
 export const QUERY_NAME_SORTBY = "sortBy";
 export const QUERY_NAME_TYPE = "type";
