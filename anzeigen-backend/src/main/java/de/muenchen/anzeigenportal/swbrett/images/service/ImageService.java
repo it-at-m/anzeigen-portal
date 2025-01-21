@@ -9,6 +9,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -39,11 +40,13 @@ public class ImageService {
     @Autowired
     private ImageMapper mapper;
 
+    @Transactional
     public SwbImageTO getImageTO(final long id) {
         final SwbImage image = repository.getOne(id);
         return mapper.toSwbImageTO(image);
     }
 
+    @Transactional
     public SwbImage getImage(final long id) {
         return repository.getOne(id);
     }
