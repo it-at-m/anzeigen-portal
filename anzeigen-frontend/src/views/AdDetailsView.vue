@@ -42,13 +42,14 @@ import type { AdTO } from "@/api/swbrett";
 
 import { useMemoize } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
-import { onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/Details/AdOverview.vue";
 import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi";
 import { useClearCacheEventBus } from "@/composables/useEventBus";
+import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
 
 const clearCacheEventBus = useClearCacheEventBus();
 
@@ -60,12 +61,14 @@ const {
   call: getAdCall,
   data: getAdData,
   error: getAdError,
-  loading,
+  loading: getAdLoading,
 } = useGetAd();
 
 const { call: incrementView } = useIncrementAdView();
 
 const adDetails = ref<Readonly<AdTO> | null>(null);
+
+const loading = computed(() => getAdLoading.value);
 
 const getAd = useMemoize(async (adId: number) => {
   await getAdCall({ id: adId });
@@ -76,23 +79,31 @@ clearCacheEventBus.on(() => getAd.clear());
 
 watch(idQuery, (newId) => {
   if (newId !== null) {
-    updateAd(newId.toString() || "1");
+    updateDisplayedAd(newId.toString() || "1");
   }
 });
 
-onMounted(async () => {
+onMounted(() => {
   if (idQuery.value) {
-    await incrementView({ id: parseInt(idQuery.value.toString()) });
+    incrementView({ id: parseInt(idQuery.value.toString()) });
+
+    updateDisplayedAd(idQuery.value?.toString());
   }
-  await updateAd(idQuery.value?.toString() || "");
 });
 
-const updateAd = async (id: string) => {
+const updateDisplayedAd = async (id: string) => {
   adDetails.value = (await getAd(parseInt(id))).value as AdTO;
 };
 
 const back = () => {
-  router.go(-1);
+  if (window.history.length > 1) {
+    router.go(-1);
+  } else {
+    router.push({
+      name: ROUTES_BOARD,
+      query: DEFAULT_BOARD_QUERIES,
+    });
+  }
 };
 </script>
 

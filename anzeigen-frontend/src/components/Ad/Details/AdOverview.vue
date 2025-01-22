@@ -79,8 +79,8 @@
                 <v-col class="py-0"> Direkter Link </v-col>
                 <v-col class="py-0">
                   <icon-text
-                    label="https://weissesbrett.muenchen.de/board/main/7430"
-                    href="https://weissesbrett.muenchen.de/board/main/7430"
+                    :label="currentLink"
+                    :href="currentLink"
                   />
                 </v-col>
               </v-row>
@@ -90,31 +90,44 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col v-if="adDetails.adFiles?.length !== 0">
-        <ad-display-card>
+      <v-col
+        v-if="adDetails.adFiles?.length !== 0"
+        cols="12"
+        lg="6"
+      >
+        <ad-display-card
+          :loading="getFileLoading"
+          :disabled="getFileLoading"
+        >
           <template #subtitle>Weitere Informationen</template>
           <template #text>
             <icon-text
               v-for="i in adDetails.adFiles"
               :key="i.id"
+              class="mb-2 cursor-pointer"
               :label="i.name!"
               icon="link-variant"
+              @click="downloadFile(i.id!)"
             />
           </template>
         </ad-display-card>
       </v-col>
-      <v-col>
+      <v-col
+        cols="12"
+        lg="6"
+      >
         <ad-display-card>
           <template #subtitle>Kontakt</template>
           <template #text>
             <icon-text
               v-if="adDetails.phone"
+              class="mb-2"
               icon="phone"
               :label="adDetails.phone"
             />
             <icon-text
               v-if="adDetails.email"
-              class="my-2"
+              class="mb-2"
               icon="email"
               :label="adDetails.email"
             />
@@ -122,7 +135,7 @@
               v-if="adDetails.swbUser?.id"
               icon="account"
               link
-              class="cursor-pointer"
+              class="cursor-pointer mb-2"
               label="weiter Anzeigen dieses Nutzers"
               @click="routeToUser(adDetails.swbUser.id!)"
             />
@@ -144,12 +157,17 @@ import AdImageDisplay from "@/components/Ad/Details/AdImageDisplay.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
+import { useGetFile } from "@/composables/api/useFilesApi";
 import { DATE_DISPLAY_FORMAT } from "@/Constants";
 import router from "@/plugins/router";
 
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
 }>();
+
+const currentLink = computed(() => window.location.href);
+
+const { call: getFile, data: fileData, loading: getFileLoading } = useGetFile();
 
 const adType = computed(() =>
   adDetails.adType === "SEEK" ? "Suche" : "Biete"
@@ -162,6 +180,21 @@ const routeToUser = (id: number) => {
       userId: id,
     },
   });
+};
+
+const downloadFile = async (id: number) => {
+  await getFile({ id: id });
+
+  if (fileData.value && fileData.value.fileBase64 && fileData.value.name) {
+    const blob = new Blob([fileData.value?.fileBase64]);
+    const fileURL = URL.createObjectURL(blob);
+    const downloadLink = document.createElement("a");
+
+    downloadLink.href = fileURL;
+    downloadLink.download = fileData.value.name;
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+  }
 };
 </script>
 
