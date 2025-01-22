@@ -20,7 +20,7 @@ public class FileService {
 
     @Transactional
     public SwbFileTO getFileTO(final long id) {
-        final SwbFile file = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));;
+        final SwbFile file = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found"));
         return mapper.toSwbFileTO(file);
     }
 
