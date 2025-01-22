@@ -3,7 +3,7 @@
     <v-file-upload
       v-if="!computedPicture"
       :disabled="disabled"
-      title="Optionales Titelbild hochladen"
+      title="Titelbild hochladen"
       density="compact"
       @update:model-value="uploadPicture"
     />

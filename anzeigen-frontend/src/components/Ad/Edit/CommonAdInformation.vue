@@ -1,20 +1,4 @@
 <template>
-  <v-text-field
-    v-model="adTO.title"
-    color="accent"
-    :disabled="disabled"
-    label="Titel"
-    class="w-md-66 w-sm-75"
-    :rules="[
-      (value) => !!value || 'Bitte geben Sie einen Titel ein.',
-      (value) =>
-        value.length < AD_MAX_TITLE_LENGTH || 'Bitte kürzen Sie den Titel',
-    ]"
-  />
-  <ad-category-selector
-    v-model="adTO.adCategory"
-    :disabled="disabled"
-  />
   <v-radio-group
     v-model="adTO.adType"
     :disabled="disabled"
@@ -30,8 +14,29 @@
       value="SEEK"
     />
   </v-radio-group>
+  <v-text-field
+    v-model="adTO.title"
+    variant="outlined"
+    density="compact"
+    color="accent"
+    :disabled="disabled"
+    label="Titel"
+    :rules="[
+      (value) => !!value || 'Bitte geben Sie einen Titel ein.',
+      (value) =>
+        value.length < AD_MAX_TITLE_LENGTH || 'Bitte kürzen Sie den Titel',
+    ]"
+  />
+  <ad-category-selector
+    v-model="adTO.adCategory"
+    variant="outlined"
+    :disabled="disabled"
+  />
+
   <v-textarea
     v-model="adTO.description"
+    variant="outlined"
+    density="compact"
     color="accent"
     label="Beschreibung"
     max-rows="3"
@@ -55,6 +60,7 @@ import { ref, watch } from "vue";
 
 import AdCategorySelector from "@/components/Ad/Edit/AdCategorySelector.vue";
 import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
+import AdTitelPicture from "@/components/Ad/Edit/AdTitelPicture.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });

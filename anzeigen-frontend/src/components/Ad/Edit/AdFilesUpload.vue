@@ -1,12 +1,14 @@
 <template>
   <div class="w-md-66 w-sm-75 my-2">
+    <v-file-input label="Anhänge hochladen" />
+
     <v-file-upload
       :model-value="computedFiles"
       clearable
       :disabled="disabled"
       density="compact"
       multiple
-      title="Optionale Anhänge hochladen"
+      title="Anhänge hochladen"
       show-size
       @update:model-value="uploadedFile"
     >

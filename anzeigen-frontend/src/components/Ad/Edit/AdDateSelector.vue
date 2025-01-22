@@ -1,7 +1,8 @@
 <template>
   <v-text-field
-    class="w-md-66 w-sm-75"
+    variant="outlined"
     :model-value="displayValue"
+    density="compact"
     color="accent"
     label="Ablaufdatum"
     type="date"

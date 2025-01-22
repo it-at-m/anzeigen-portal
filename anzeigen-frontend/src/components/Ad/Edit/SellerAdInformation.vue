@@ -6,9 +6,10 @@
   <v-text-field
     ref="refPhoneNumber"
     v-model="adTO.phone"
+    density="compact"
+    variant="outlined"
     color="accent"
     prepend-icon="mdi-phone-outline"
-    class="w-md-66 w-sm-75"
     label="Telefonnummer"
     :rules="[minOneContactRule, rulePhoneNumber]"
     :disabled="disabled"
@@ -16,9 +17,10 @@
   <v-text-field
     ref="refEmail"
     v-model="adTO.email"
+    variant="outlined"
+    density="compact"
     color="accent"
     prepend-icon="mdi-email-outline"
-    class="w-md-66 w-sm-75"
     label="E-Mail Adresse"
     type="email"
     :rules="[minOneContactRule, ruleEmail]"

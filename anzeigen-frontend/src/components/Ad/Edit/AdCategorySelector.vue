@@ -1,7 +1,7 @@
 <template>
   <v-select
     :model-value="modelValue"
-    class="w-md-66 w-sm-75"
+    density="compact"
     placeholder="Kategorie"
     color="accent"
     :disabled="disabled"

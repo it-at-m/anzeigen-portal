@@ -34,7 +34,7 @@
           </ad-display-card>
           <v-divider />
           <ad-display-card>
-            <template #subtitle> Optionale Informationen </template>
+            <template #subtitle> Weitere Informationen </template>
             <template #text>
               <optional-ad-information
                 v-model="adTo"
@@ -55,16 +55,6 @@
         </v-form>
       </v-card-text>
       <v-card-actions class="px-4">
-        <v-btn
-          :disabled="!form || loading"
-          variant="elevated"
-          color="accent"
-          prepend-icon="mdi-content-save-outline"
-          @click="writeAd"
-        >
-          <p v-if="isAdCreate">Erstellen</p>
-          <p v-else>Speichern</p>
-        </v-btn>
         <yes-no-dialog
           v-if="!isAdCreate"
           :model-value="deleteDialog"
@@ -85,6 +75,16 @@
             </v-btn>
           </template>
         </yes-no-dialog>
+        <v-btn
+          :disabled="!form || loading"
+          variant="elevated"
+          color="accent"
+          prepend-icon="mdi-content-save-outline"
+          @click="writeAd"
+        >
+          <p v-if="isAdCreate">Erstellen</p>
+          <p v-else>Speichern</p>
+        </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
