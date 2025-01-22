@@ -1,4 +1,9 @@
-import type { GetImageRequest, SwbImageTO } from "@/api/swbrett";
+import type {
+  GetFileRequest,
+  GetImageRequest,
+  SwbFileTO,
+  SwbImageTO,
+} from "@/api/swbrett";
 
 import { inject } from "vue";
 
@@ -11,5 +16,14 @@ export const useGetAdImage = () => {
 
   return useApiCall<GetImageRequest, SwbImageTO>((params: GetImageRequest) =>
     api.getImage(params)
+  );
+};
+
+export const useGetFile = () => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
+  return useApiCall<GetFileRequest, SwbFileTO>((params: GetFileRequest) =>
+    api.getFile(params)
   );
 };
