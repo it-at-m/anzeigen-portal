@@ -64,8 +64,7 @@ const {
   loading: getAdLoading,
 } = useGetAd();
 
-const { call: incrementView, loading: incrementAdViewLoading } =
-  useIncrementAdView();
+const { call: incrementView } = useIncrementAdView();
 
 const adDetails = ref<Readonly<AdTO> | null>(null);
 
