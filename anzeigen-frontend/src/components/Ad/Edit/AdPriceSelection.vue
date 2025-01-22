@@ -1,52 +1,63 @@
 <template>
-  <v-container>
-    <v-row>
-      <v-col>
-        <v-number-input
-          variant="outlined"
-          label="Preis"
-          :min="0"
-          color="accent"
-          :disabled="priceOption === 0 || disabled"
-          :model-value="price"
-          @update:model-value="updatedPrice"
-        >
-          <template #append-inner>
-            <v-icon
-              class="mr-2"
-              icon="mdi-currency-eur"
-            />
-          </template>
-        </v-number-input>
-      </v-col>
-      <v-col>
-        <v-radio-group
-          v-model="priceOption"
-          :disabled="disabled"
-          color="accent"
-          inline
-          @update:model-value="updatePriceOption"
-        >
-          <v-radio
-            label="Festpreis"
-            :value="1"
+  <v-row>
+    <v-col
+      cols="12"
+      sm="5"
+    >
+      <v-number-input
+        variant="outlined"
+        density="compact"
+        label="Preis"
+        hide-details
+        :min="0"
+        color="accent"
+        :disabled="priceOption === 0 || disabled"
+        :model-value="price"
+        @update:model-value="updatedPrice"
+      >
+        <template #append-inner>
+          <v-icon
+            class="mr-2"
+            icon="mdi-currency-eur"
           />
-          <v-radio
-            label="VB"
-            :value="-1"
-          />
-          <v-radio
-            label="Zu verschenken"
-            :value="0"
-          /> </v-radio-group
-      ></v-col>
-    </v-row>
-  </v-container>
+        </template>
+      </v-number-input>
+    </v-col>
+    <v-col
+      cols="12"
+      sm="7"
+    >
+      <v-select
+        v-model="priceOption"
+        density="compact"
+        :disabled="disabled"
+        :items="selectionArray"
+        color="accent"
+        variant="outlined"
+        @update:model-value="updatePriceOption"
+      />
+    </v-col>
+  </v-row>
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
 import { VNumberInput } from "vuetify/labs/components";
+
+const selectionArray = [
+  {
+    title: "Festpreis",
+    value: 1,
+  },
+  {
+    title: "Verhandlungsbasis",
+    value: -1,
+  },
+  {
+    title: "Zu verschenken",
+    value: 0,
+  },
+];
 
 const { modelValue = 1 } = defineProps<{
   disabled?: boolean;
@@ -66,6 +77,8 @@ const updatedPrice = (updatedPrice: number) => {
 };
 
 const updatePriceOption = (updatedPriceOption: number | null) => {
+  console.log(updatedPriceOption);
+
   emit(
     "update:modelValue",
     (updatedPriceOption ?? 1) * Math.max(1, price.value)
