@@ -34,14 +34,8 @@
               >
                 <search-ad />
               </v-col>
-              <v-col
-                cols="1"
-                class="d-flex justify-end"
-              >
-                <ad2-image-avatar
-                  v-if="userStore.getUser !== null"
-                  :username="userStore.getUser.username"
-                />
+              <v-col cols="1">
+                <v-spacer />
               </v-col>
             </v-row>
           </v-col>
