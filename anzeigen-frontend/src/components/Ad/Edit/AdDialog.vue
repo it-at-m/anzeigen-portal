@@ -50,7 +50,7 @@
           </ad-display-card>
         </v-form>
       </v-card-text>
-      <v-card-actions class="px-4">
+      <v-card-actions class="px-4 mb-1">
         <yes-no-dialog
           v-if="!isAdCreate"
           :model-value="deleteDialog"
