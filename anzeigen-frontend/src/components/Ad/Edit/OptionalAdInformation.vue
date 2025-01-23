@@ -11,9 +11,9 @@
   <v-text-field
     v-model="adTO.link"
     variant="outlined"
+    density="compact"
     prepend-icon="mdi-link"
     label="Link (optional)"
-    class="w-md-66 w-sm-75 mt-4"
     type="url"
     :disabled="disabled"
     :rules="[() => true, ruleLink]"
