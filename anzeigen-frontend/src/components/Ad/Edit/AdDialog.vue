@@ -10,14 +10,6 @@
           <v-row>
             <p v-if="isAdCreate">Anzeige erstellen</p>
             <p v-else>Anzeige bearbeiten</p>
-            <v-spacer />
-            <v-btn
-              prepend-icon="mdi-window-close"
-              variant="outlined"
-              text="Abbrechen"
-              :disabled="loading"
-              @click="close"
-            />
           </v-row>
         </v-container>
       </v-card-title>
@@ -50,6 +42,10 @@
                 v-model="adTo"
                 :disabled="loading"
               />
+              <ad-agb-accept
+                :disabled="loading"
+                :model-value="!isAdCreate"
+              />
             </template>
           </ad-display-card>
         </v-form>
@@ -59,7 +55,7 @@
           v-if="!isAdCreate"
           :model-value="deleteDialog"
           dialogtitle="Anzeige löschen"
-          dialogtext="Möchten Sie wirklich die Anzeige löschen?"
+          dialogtext="Möchten Sie die Anzeige wirklich löschen?"
           @yes="confirmedDeletion"
           @no="deleteDialog = false"
         >
@@ -75,6 +71,14 @@
             </v-btn>
           </template>
         </yes-no-dialog>
+        <v-spacer />
+        <v-btn
+          prepend-icon="mdi-window-close"
+          variant="outlined"
+          text="Abbrechen"
+          :disabled="loading"
+          @click="close"
+        />
         <v-btn
           :disabled="!form || loading"
           variant="elevated"
@@ -95,6 +99,7 @@ import type { AdTO } from "@/api/swbrett";
 
 import { ref } from "vue";
 
+import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
 import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
 import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vue";
 import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
