@@ -26,7 +26,6 @@
     :rules="[minOneContactRule, ruleEmail]"
     :disabled="disabled"
   />
-  <ad-agb-accept :disabled="disabled" />
 </template>
 
 <script setup lang="ts">
@@ -34,7 +33,6 @@ import type { AdTO } from "@/api/swbrett";
 
 import { useTemplateRef, watch } from "vue";
 
-import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
 import AdDateSelector from "@/components/Ad/Edit/AdDateSelector.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
