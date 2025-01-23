@@ -1,23 +1,33 @@
 <template>
-  <div class="w-md-66 w-sm-75 my-2">
-    <v-file-upload
-      :model-value="computedFiles"
-      clearable
+  <v-file-input
+    label="Anhänge hochladen"
+    :model-value="computedFiles"
+    :disabled="disabled"
+    class="mb-4"
+    multiple
+    hide-details
+    :clearable="false"
+    variant="outlined"
+    density="compact"
+    @update:model-value="uploadedFile"
+  >
+    <template #selection>Weitere Anhänge hochladen</template>
+  </v-file-input>
+  <div
+    class="pl-10"
+    :class="{ 'mb-4': computedFiles.length > 0 }"
+  >
+    <v-file-upload-item
+      v-for="file in computedFiles"
+      :key="file.name"
+      :file="file"
       :disabled="disabled"
+      :file-icon="computedIcon(file)"
+      clearable
       density="compact"
-      multiple
-      title="Optionale Anhänge hochladen"
       show-size
-      @update:model-value="uploadedFile"
-    >
-      <template #item="{ file }">
-        <v-file-upload-item
-          density="compact"
-          :file="file"
-          @click:remove="removeFile(file)"
-        />
-      </template>
-    </v-file-upload>
+      @click:remove="removeFile(file)"
+    />
   </div>
 </template>
 
@@ -25,7 +35,7 @@
 import type { SwbFileTO } from "@/api/swbrett";
 
 import { computed } from "vue";
-import { VFileUpload, VFileUploadItem } from "vuetify/labs/VFileUpload";
+import { VFileUploadItem } from "vuetify/labs/VFileUpload";
 
 const { modelValue } = defineProps<{
   modelValue?: SwbFileTO[];
@@ -64,8 +74,17 @@ const removeFile = (removeFile: File) => {
   );
 };
 
-const uploadedFile = async (uploads: File[]) => {
+const computedIcon = (file: File) =>
+  file.name.endsWith("pdf")
+    ? "mdi-file-document-outline"
+    : "mdi-panorama-outline";
+
+const uploadedFile = async (uploads: File[] | File) => {
   const toReturn: SwbFileTO[] = modelValue || [];
+
+  if (!Array.isArray(uploads)) {
+    uploads = [uploads];
+  }
 
   for (const file of uploads) {
     if (

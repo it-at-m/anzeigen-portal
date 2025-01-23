@@ -8,7 +8,7 @@
   />
   <ad-display-sheet class="mb-4">
     <user-filter
-      v-if="isUserSelected"
+      v-if="isUserSelected || isMyBoard"
       @click="resetUserQuery"
     />
     <filter-ad-category v-if="!isMyBoard" />
@@ -41,10 +41,13 @@ import { useDialogEventBus } from "@/composables/useEventBus";
 import { useSnackbar } from "@/composables/useSnackbar";
 import {
   API_ERROR_MSG,
+  DEFAULT_BOARD_QUERIES,
   EMPTY_ADTO_OBJECT,
   QUERY_NAME_USERID,
+  ROUTES_BOARD,
   ROUTES_MYBOARD,
 } from "@/Constants";
+import router from "@/plugins/router";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
@@ -92,7 +95,14 @@ const isUserSelected = computed(
 );
 
 const resetUserQuery = () => {
-  userQuery.value = null;
+  if (isMyBoard.value) {
+    router.push({
+      name: ROUTES_BOARD,
+      query: DEFAULT_BOARD_QUERIES,
+    });
+  } else {
+    userQuery.value = null;
+  }
 };
 
 onMounted(() => {

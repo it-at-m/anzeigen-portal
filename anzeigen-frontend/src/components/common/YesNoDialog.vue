@@ -18,7 +18,8 @@
         <v-spacer />
         <v-btn
           id="yesnodialog-btn-no"
-          variant="text"
+          variant="flat"
+          color="accent"
           :disabled="loading"
           @click="no"
         >
@@ -26,7 +27,8 @@
         </v-btn>
         <v-btn
           id="yesnodialog-btn-yes"
-          color="primary"
+          color="accent"
+          variant="outlined"
           :disabled="loading"
           @click="yes"
         >

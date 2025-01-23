@@ -1,13 +1,4 @@
 <template>
-  <v-text-field
-    v-model="adTO.link"
-    prepend-icon="mdi-link"
-    label="Link (optional)"
-    class="w-md-66 w-sm-75"
-    type="url"
-    :disabled="disabled"
-    :rules="[() => true, ruleLink]"
-  />
   <ad-titel-picture
     v-model="adTO.adImg"
     :disabled="disabled"
@@ -16,6 +7,16 @@
   <ad-files-upload
     v-model="adTO.adFiles"
     :disabled="disabled"
+  />
+  <v-text-field
+    v-model="adTO.link"
+    variant="outlined"
+    density="compact"
+    prepend-icon="mdi-link"
+    label="Link (optional)"
+    type="url"
+    :disabled="disabled"
+    :rules="[() => true, ruleLink]"
   />
 </template>
 

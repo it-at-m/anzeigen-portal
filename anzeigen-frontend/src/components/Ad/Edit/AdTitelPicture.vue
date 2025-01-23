@@ -1,31 +1,21 @@
 <template>
-  <div class="w-md-66 w-sm-75">
-    <v-file-upload
-      v-if="!computedPicture"
-      :disabled="disabled"
-      title="Optionales Titelbild hochladen"
-      density="compact"
-      @update:model-value="uploadPicture"
-    />
-    <v-file-upload-item
-      v-else
-      :disabled="disabled"
-      title="Ein Titelbild wurde ausgewählt."
-      clearable
-      @click:remove="clearFile"
-    >
-      <template #prepend>
-        <v-icon icon="mdi-panorama-outline" />
-      </template>
-    </v-file-upload-item>
-  </div>
+  <v-file-input
+    label="Titelbild hochladen"
+    variant="outlined"
+    density="compact"
+    hide-details
+    :disabled="disabled"
+    prepend-icon="mdi-panorama-outline"
+    :model-value="computedPicture"
+    @update:model-value="uploadPicture"
+    @click:clear="clearFile"
+  />
 </template>
 
 <script setup lang="ts">
 import type { SwbImageTO } from "@/api/swbrett";
 
 import { computed } from "vue";
-import { VFileUpload, VFileUploadItem } from "vuetify/labs/VFileUpload";
 
 const { modelValue } = defineProps<{
   modelValue: SwbImageTO | undefined;
@@ -41,7 +31,7 @@ const computedPicture = computed(() => {
     return undefined;
   }
 
-  return new File([new Blob([""])], "Titelbild", {
+  return new File([new Blob([""])], "Ein Titelbild wurde ausgewählt", {
     type: "image/jpeg",
   });
 });
