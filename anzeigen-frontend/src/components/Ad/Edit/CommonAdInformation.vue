@@ -60,7 +60,6 @@ import { ref, watch } from "vue";
 
 import AdCategorySelector from "@/components/Ad/Edit/AdCategorySelector.vue";
 import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
-import AdTitelPicture from "@/components/Ad/Edit/AdTitelPicture.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });

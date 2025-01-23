@@ -76,14 +76,11 @@ const updatedPrice = (updatedPrice: number) => {
   emit("update:modelValue", priceOption.value * updatedPrice);
 };
 
-const updatePriceOption = (updatedPriceOption: number | null) => {
-  console.log(updatedPriceOption);
-
+const updatePriceOption = (updatedPriceOption: number | null) =>
   emit(
     "update:modelValue",
     (updatedPriceOption ?? 1) * Math.max(1, price.value)
   );
-};
 </script>
 
 <style scoped></style>

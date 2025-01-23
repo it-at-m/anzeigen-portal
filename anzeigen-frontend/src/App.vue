@@ -61,16 +61,12 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 
-import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import { useApi } from "@/composables/useApi";
 import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
-import { useUserStore } from "@/stores/user";
 
 useApi();
-
-const userStore = useUserStore();
 
 useTitle("Anzeigen Portal");
 </script>
