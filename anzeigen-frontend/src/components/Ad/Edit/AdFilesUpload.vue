@@ -5,6 +5,7 @@
     :disabled="disabled"
     class="mb-4"
     multiple
+    :accept="ALLOWED_FILE_TYPES"
     hide-details
     :clearable="false"
     variant="outlined"
@@ -36,6 +37,23 @@ import type { SwbFileTO } from "@/api/swbrett";
 
 import { computed } from "vue";
 import { VFileUploadItem } from "vuetify/labs/VFileUpload";
+
+import { Levels } from "@/api/error.ts";
+import { useSnackbar } from "@/composables/useSnackbar.ts";
+import {
+  ALLOWED_FILE_TYPES,
+  FILE_SIZE_TO_BIG,
+  TOO_MANY_FILES,
+} from "@/Constants.ts";
+import { useSettingStore } from "@/stores/settings.ts";
+
+const settingStore = useSettingStore();
+const snackbar = useSnackbar();
+
+const maxFileSize =
+  settingStore.getSetting("MAX_SWB_FILE_SIZE")?.numberValue || 1;
+const maxFileNumber =
+  settingStore.getSetting("MAX_SWB_FILES_LENGTH")?.numberValue || 5;
 
 const { modelValue } = defineProps<{
   modelValue?: SwbFileTO[];
@@ -100,6 +118,23 @@ const uploadedFile = async (uploads: File[] | File) => {
 
   if (!Array.isArray(uploads)) {
     uploads = [uploads];
+  }
+
+  if (uploads.length + toReturn.length > maxFileNumber) {
+    snackbar.sendMessage({
+      level: Levels.WARNING,
+      message: TOO_MANY_FILES(maxFileSize.toString()),
+    });
+    return;
+  }
+
+  const aggregatedFileSize = uploads.reduce((acc, file) => acc + file.size, 0);
+  if (aggregatedFileSize > maxFileSize * 1024 * 1024) {
+    snackbar.sendMessage({
+      level: Levels.WARNING,
+      message: FILE_SIZE_TO_BIG(maxFileSize.toString()),
+    });
+    return;
   }
 
   for (const file of uploads) {
