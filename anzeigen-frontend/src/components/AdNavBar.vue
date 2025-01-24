@@ -94,6 +94,9 @@ const isUserSelected = computed(
   () => userQuery.value && userQuery.value.length !== 0
 );
 
+/**
+ * Resets the selection of a specific user - can be the current user (/myboard) or any other.
+ */
 const resetUserQuery = () => {
   if (isMyBoard.value) {
     router.push({
@@ -105,12 +108,19 @@ const resetUserQuery = () => {
   }
 };
 
+/**
+ * Loads the user upon loading if not set.
+ */
 onMounted(() => {
   if (!userStore.userID) {
     loadUser();
   }
 });
 
+/**
+ * Loads current user. Therefore, requests all parameters from the sso endpoint and matches those with the backend.
+ * If no user exists a new one will be created.
+ */
 const loadUser = async () => {
   // userinfo call
   await userInfoCall();

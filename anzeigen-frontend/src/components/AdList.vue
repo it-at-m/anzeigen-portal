@@ -82,8 +82,14 @@ updateAdListEventBus.on(async () => {
   await getAdPage(false);
 });
 
+/**
+ * Computed property for easier watching of route.name and path
+ */
 const updateUrl = computed(() => [route.name, route.path]);
 
+/**
+ * Reactive route.name
+ */
 const routeName = computed(() => route.name);
 
 /**

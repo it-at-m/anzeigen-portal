@@ -22,6 +22,9 @@ import { VSnackbarQueue } from "vuetify/labs/VSnackbarQueue";
 import { Levels } from "@/api/error";
 import { snackbarBus } from "@/composables/useSnackbar";
 
+/**
+ * Internal state of all messages to be displayed.
+ */
 const queue = ref<SnackbarMessageInternal[]>([]);
 
 interface SnackbarMessageInternal {
@@ -31,6 +34,9 @@ interface SnackbarMessageInternal {
   icon: string;
 }
 
+/**
+ * Pushes a new message onto the state.
+ */
 snackbarBus.on((message: SnackbarMessage) => {
   queue.value.push({
     color: message.level || "info",
@@ -40,6 +46,10 @@ snackbarBus.on((message: SnackbarMessage) => {
   });
 });
 
+/**
+ * Computes the icon according to the message level.
+ * @param level
+ */
 const getIcon = (level: Levels) => {
   switch (level) {
     case Levels.INFO:
