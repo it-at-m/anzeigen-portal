@@ -169,10 +169,17 @@ const currentLink = computed(() => window.location.href);
 
 const { call: getFile, data: fileData, loading: getFileLoading } = useGetFile();
 
+/**
+ * Computes the ad type, returning "Suche" for SEEK and "Biete" for other ad types.
+ */
 const adType = computed(() =>
   adDetails.adType === "SEEK" ? "Suche" : "Biete"
 );
 
+/**
+ * Navigates to the user page with the specified user ID.
+ * @param id - The ID of the user.
+ */
 const routeToUser = (id: number) => {
   router.push({
     path: "/board",
@@ -182,6 +189,11 @@ const routeToUser = (id: number) => {
   });
 };
 
+/**
+ * Downloads a file based on the provided ID.
+ * Retrieves the file, creates a Blob, and triggers a download.
+ * @param id - The ID of the file to download.
+ */
 const downloadFile = async (id: number) => {
   await getFile({ id: id });
 

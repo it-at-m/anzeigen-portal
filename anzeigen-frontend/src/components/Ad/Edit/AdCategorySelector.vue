@@ -30,6 +30,11 @@ const emit = defineEmits<{
   "update:modelValue": [modelValue: AdCategory];
 }>();
 
+/**
+ * Emits an update for the selected category when the selection changes.
+ *
+ * @param selection - The selected category (id is extracted for compatibility).
+ */
 const updatedSelection = (selection: AdCategory) => {
   // Type error of v-select. It does not return the category, instead it returns the id.
   const id = selection as number;
