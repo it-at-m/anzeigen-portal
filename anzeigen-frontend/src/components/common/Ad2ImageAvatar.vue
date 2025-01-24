@@ -21,9 +21,15 @@ const {
   avatarSize?: string;
 }>();
 
+/**
+ * Computes the URL for the user's avatar.
+ */
 const avatarUrl = computed(() => {
   return DefaultLhmAvatarService.avatarHref(username, avatarMode, avatarSize);
 });
 
+/**
+ * Computes the alt text for the user's avatar.
+ */
 const altText = computed(() => `Bild von ${username}`);
 </script>
