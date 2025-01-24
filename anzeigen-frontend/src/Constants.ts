@@ -27,6 +27,10 @@ export const API_ERROR_MSG =
 export const CREATE_AD_SUCCESS = "Die Anzeige wurde erfolgreich erstellt.";
 export const UPDATE_AD_SUCCESS = "Die Anzeige wurde erfolgreich aktualisiert.";
 export const DELETE_AD_SUCCESS = "Die Anzeige wurde erfolgreich gelöscht.";
+export const FILE_SIZE_TO_BIG = (size: string) =>
+  "Die ausgewählte(n) Datei(n) ist / sind zu groß. Maximal " + size + "MB.";
+export const TOO_MANY_FILES = (amount: string) =>
+  "Die Anzahl der Dateien ist überschritten. Maximal " + amount + " Stück.";
 
 /**
  * Injection Keys
@@ -38,6 +42,9 @@ export const IK_IS_MYBOARD: InjectionKey<Readonly<Ref<boolean>>> = Symbol(
 /**
  * Other constants
  */
+export const ALLOWED_FILE_TYPES =
+  "image/png, image/jpeg, image/jpg, application/pdf";
+export const ALLOWED_IMAGE_TYPES = "image/png, image/jpeg, image/jpg";
 export const AD_MAX_TITLE_LENGTH = 40;
 export const DATE_DISPLAY_FORMAT = "DD.MM.YYYY"; // use this in conjunction with useDateFormat
 export const DEFAULT_BOARD_QUERIES = {
