@@ -14,6 +14,7 @@
     density="compact"
     prepend-icon="mdi-link"
     label="Link (optional)"
+    hide-details="auto"
     type="url"
     :disabled="disabled"
     :rules="[() => true, ruleLink]"

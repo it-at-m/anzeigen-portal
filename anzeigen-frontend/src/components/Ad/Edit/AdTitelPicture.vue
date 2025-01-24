@@ -3,7 +3,7 @@
     label="Titelbild hochladen"
     variant="outlined"
     density="compact"
-    hide-details
+    hide-details="auto"
     :accept="ALLOWED_IMAGE_TYPES"
     :disabled="disabled"
     prepend-icon="mdi-panorama-outline"
