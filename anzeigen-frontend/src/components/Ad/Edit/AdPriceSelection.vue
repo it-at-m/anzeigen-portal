@@ -31,6 +31,7 @@
         v-model="priceOption"
         density="compact"
         :disabled="disabled"
+        hide-details="auto"
         :items="selectionArray"
         color="accent"
         variant="outlined"

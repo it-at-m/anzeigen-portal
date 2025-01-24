@@ -20,6 +20,8 @@
     density="compact"
     color="accent"
     :disabled="disabled"
+    class="mb-4"
+    hide-details="auto"
     label="Titel"
     :rules="[
       (value) => !!value || 'Bitte geben Sie einen Titel ein.',
@@ -31,6 +33,7 @@
     v-model="adTO.adCategory"
     variant="outlined"
     :disabled="disabled"
+    hide-details="auto"
   />
 
   <v-textarea
@@ -39,6 +42,8 @@
     density="compact"
     color="accent"
     label="Beschreibung"
+    class="my-4"
+    hide-details="auto"
     max-rows="3"
     :disabled="disabled"
     :rules="[

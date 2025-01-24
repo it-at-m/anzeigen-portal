@@ -2,6 +2,7 @@
   <ad-date-selector
     v-model="adTO.expiryDate"
     :disabled="disabled"
+    class="mb-4"
   />
   <v-text-field
     ref="refPhoneNumber"
@@ -11,8 +12,10 @@
     color="accent"
     prepend-icon="mdi-phone-outline"
     label="Telefonnummer"
+    hide-details="auto"
     :rules="[minOneContactRule, rulePhoneNumber]"
     :disabled="disabled"
+    class="mb-4"
   />
   <v-text-field
     ref="refEmail"
@@ -23,8 +26,10 @@
     prepend-icon="mdi-email-outline"
     label="E-Mail Adresse"
     type="email"
+    hide-details="auto"
     :rules="[minOneContactRule, ruleEmail]"
     :disabled="disabled"
+    class="mb-4"
   />
 </template>
 

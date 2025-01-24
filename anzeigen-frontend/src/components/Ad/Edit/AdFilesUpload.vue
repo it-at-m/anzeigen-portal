@@ -4,9 +4,9 @@
     :model-value="computedFiles"
     :disabled="disabled"
     class="mb-4"
+    hide-details="auto"
     multiple
     :accept="ALLOWED_FILE_TYPES"
-    hide-details
     :clearable="false"
     variant="outlined"
     density="compact"
