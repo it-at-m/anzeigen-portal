@@ -9,7 +9,7 @@ import { Configuration, DefaultApi } from "@/api/swbrett";
 export const DEFAULT_API_KEY: InjectionKey<DefaultApi> = Symbol("defaultApi");
 
 /**
- * Initialisiert und konfiguriert die API mit Standard-Einstellungen.
+ * Initializes and configures the API with default settings.
  */
 export const useApi = () => {
   const config = new Configuration({
@@ -22,9 +22,9 @@ export const useApi = () => {
 };
 
 /**
- * Konvertiert ein Headers-Objekt in ein einfaches Schlüssel-Wert-Paar-Objekt.
- * @param {Headers} headers - Das zu konvertierende Headers-Objekt.
- * @returns {HTTPHeaders} Ein Objekt mit den gleichen Headern.
+ * Converts a Headers object into a simple key-value pair object.
+ * @param {Headers} headers - The headers object to be converted.
+ * @returns {HTTPHeaders} An object with the same headers.
  */
 function convertHeaders(headers: Headers): HTTPHeaders {
   const httpHeaders: HTTPHeaders = {};

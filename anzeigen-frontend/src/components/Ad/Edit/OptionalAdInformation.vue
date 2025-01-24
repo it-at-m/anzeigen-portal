@@ -33,6 +33,12 @@ defineProps<{
   disabled?: boolean;
 }>();
 
+/**
+ * Validates if the given string is a valid URL.
+ *
+ * @param value - The URL string to be validated.
+ * @returns An error message if the URL is invalid, otherwise returns true.
+ */
 const ruleLink = (value: string) =>
   !value ||
   /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(

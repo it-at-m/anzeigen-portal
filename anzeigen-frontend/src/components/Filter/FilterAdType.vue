@@ -27,6 +27,9 @@ import { onMounted, ref, watch } from "vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { QUERY_NAME_TYPE } from "@/Constants";
 
+/**
+ * Internal state of current selected ad-type. Both can be true!
+ */
 const isOffer = ref<boolean>(true);
 const isSeek = ref<boolean>(true);
 

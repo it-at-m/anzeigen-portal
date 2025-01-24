@@ -29,6 +29,9 @@ const { loading = false } = defineProps<{
   loading?: boolean;
 }>();
 
+/**
+ * Provides routing functionality to navigate to a specific route.
+ */
 const routeTo = () => {
   router.push({
     name: ROUTES_MYBOARD,

@@ -1,5 +1,8 @@
-import type { SortingOrder } from "@/types/SortingOrderCriteria";
+import type { SortingOrder } from "@/types/SortingOrderCriteria.ts";
 
+/**
+ * A list of predefined sorting options for selection.
+ */
 export const sortingOrderSelections = [
   { title: "Titel (alphabetisch)", value: { criteria: "title", order: "asc" } },
   { title: "Preis aufsteigend", value: { criteria: "price", order: "asc" } },
@@ -14,7 +17,12 @@ export const sortingOrderSelections = [
   },
 ] as SortingOrder[];
 
-export const useIsValidOrderSelection = (selectionToCheck: {
+/**
+ * Validates if a given selection matches any predefined sorting option.
+ * @param selectionToCheck - The sorting criteria and order to validate.
+ * @returns `true` if the selection is valid, otherwise `false`.
+ */
+export const isValidOrderSelection = (selectionToCheck: {
   criteria: string;
   order: string;
 }) =>

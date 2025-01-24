@@ -38,6 +38,10 @@ const emit = defineEmits<{
   "update:modelValue": [modelValue: SwbImageTO | undefined];
 }>();
 
+/**
+ * Computes the picture based on the model value.
+ * Returns a new File object if a valid image is available in the model.
+ */
 const computedPicture = computed(() => {
   if (!modelValue || (!modelValue.id && !modelValue.imageBase64)) {
     return undefined;
@@ -48,6 +52,11 @@ const computedPicture = computed(() => {
   });
 });
 
+/**
+ * Handles the upload of a picture.
+ * Converts the selected file to a base64-encoded string and updates the model value.
+ * @param files - The file to upload.
+ */
 const uploadPicture = async (files: File[] | File) => {
   const file = Array.isArray(files) ? files[0] : files;
 
@@ -74,6 +83,9 @@ const uploadPicture = async (files: File[] | File) => {
   reader.readAsDataURL(file);
 };
 
+/**
+ * Clears the current file by emiting undefined.
+ */
 const clearFile = () => {
   emit("update:modelValue", undefined);
 };

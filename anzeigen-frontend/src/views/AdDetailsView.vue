@@ -66,10 +66,18 @@ const {
 
 const { call: incrementView } = useIncrementAdView();
 
+/**
+ * State of the current displayed ad.
+ */
 const adDetails = ref<Readonly<AdTO> | null>(null);
 
 const loading = computed(() => getAdLoading.value);
 
+/**
+ * Uses Memoize to cache the results of the request for the details of a specific ad.
+ *
+ * @param adId the id of the ad
+ */
 const getAd = useMemoize(async (adId: number) => {
   await getAdCall({ id: adId });
   return getAdData;
@@ -77,12 +85,20 @@ const getAd = useMemoize(async (adId: number) => {
 
 clearCacheEventBus.on(() => getAd.clear());
 
+/**
+ * Watches the `idQuery` for changes, increments the view count and fetches the new ad accordingly.
+ */
 watch(idQuery, (newId) => {
   if (newId !== null) {
+    incrementView({ id: parseInt(newId.toString()) });
+
     updateDisplayedAd(newId.toString() || "1");
   }
 });
 
+/**
+ * Initializes the component by incrementing the view count of the current adID and fetches the new ad.
+ */
 onMounted(() => {
   if (idQuery.value) {
     incrementView({ id: parseInt(idQuery.value.toString()) });
@@ -91,10 +107,17 @@ onMounted(() => {
   }
 });
 
+/**
+ * Updates the displayed ad details based on the given ad ID.
+ * @param id - The ID of the ad to display.
+ */
 const updateDisplayedAd = async (id: string) => {
   adDetails.value = (await getAd(parseInt(id))).value as AdTO;
 };
 
+/**
+ * Navigates back in history or to the default board if no history exists.
+ */
 const back = () => {
   if (window.history.length > 1) {
     router.go(-1);

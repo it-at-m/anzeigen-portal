@@ -18,12 +18,21 @@ const { isEdit = false } = defineProps<{
   isEdit?: boolean;
 }>();
 
+/**
+ * Computes the text based on whether the component is in edit mode or not.
+ */
 const computedText = computed(() =>
   isEdit ? "Bearbeiten" : "Anzeige erstellen"
 );
 
+/**
+ * Computes the icon based on whether the component is in edit mode or not.
+ */
 const computedIcon = computed(() => (isEdit ? "mdi-pencil" : "mdi-plus"));
 
+/**
+ * Emits a "click" event when the action is triggered.
+ */
 const click = () => emit("click");
 </script>
 

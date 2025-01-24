@@ -109,7 +109,7 @@ import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AdPrice from "@/components/Ad/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus";
-import { PREVIEW_IMAGE_FILE_URI_PREFIX } from "@/Constants";
+import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
@@ -122,20 +122,28 @@ const { adTo } = defineProps<{
   adTo: DeepReadonly<AdTO>;
 }>();
 
+/**
+ * Computes whether the ad is an offer based on its ad type.
+ */
 const isOffer = computed(() => adTo.adType === "OFFER");
 
-const belongsToCurrentUser = computed(() => {
-  return adTo.swbUser?.id === userStore.userID;
-});
+/**
+ * Computes whether the ad belongs to the current user based on the user ID.
+ */
+const belongsToCurrentUser = computed(
+  () => adTo.swbUser?.id === userStore.userID
+);
 
 /**
- * Route to a specific ad
- * @param id of the ad
+ * Routes the ad details page with the current clicked ad.
  */
 const routeTo = () => {
-  router.push({ path: "/ad", query: { id: adTo.id } });
+  router.push({ name: ROUTES_AD, query: { id: adTo.id } });
 };
 
+/**
+ * Emits an event to edit the ad when clicked.
+ */
 const clickedEdit = () => {
   dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(adTo as AdTO), false));
 };
@@ -145,7 +153,7 @@ const clickedEdit = () => {
 .two-line-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2; /* Anzahl der Zeilen, die angezeigt werden sollen */
+  -webkit-line-clamp: 2; /* Number of lines to be displayed */
   overflow: hidden;
 }
 </style>

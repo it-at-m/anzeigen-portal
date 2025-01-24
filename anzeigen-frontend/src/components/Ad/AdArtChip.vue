@@ -14,7 +14,14 @@ const { isOffer = false } = defineProps<{
   isOffer?: boolean;
 }>();
 
+/**
+ * Computes the text based on the offer status.
+ */
 const computedText = computed(() => (isOffer ? "Biete" : "Suche"));
+
+/**
+ * Computes the icon based on the offer status.
+ */
 const computedIcon = computed(() =>
   isOffer ? "mdi-hand-extended-outline" : "mdi-binoculars"
 );

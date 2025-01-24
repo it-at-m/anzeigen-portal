@@ -1,11 +1,13 @@
 <template>
-  <ad-card
-    v-for="ad in adStore.listOfAds"
-    :key="ad.id"
-    :ad-to="ad"
-    class="mb-4"
-  />
-  <ad-display-card v-if="adStore.isEmpty">
+  <div v-if="!loading">
+    <ad-card
+      v-for="ad in adStore.listOfAds"
+      :key="ad.id"
+      :ad-to="ad"
+      class="mb-4"
+    />
+  </div>
+  <ad-display-card v-if="adStore.isEmpty && !loading">
     <template #title> Es konnte keine Anzeige gefunden werden </template>
     <template #subtitle>
       Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu
@@ -82,8 +84,14 @@ updateAdListEventBus.on(async () => {
   await getAdPage(false);
 });
 
+/**
+ * Computed property for easier watching of route.name and path
+ */
 const updateUrl = computed(() => [route.name, route.path]);
 
+/**
+ * Reactive route.name
+ */
 const routeName = computed(() => route.name);
 
 /**
