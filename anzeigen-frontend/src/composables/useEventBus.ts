@@ -10,6 +10,10 @@ import {
   EV_UPDATE_AD_LIST,
 } from "@/Constants";
 
+/**
+ * Composes all event buses as composables.
+ */
+
 export const useSnackbarEventBus = () =>
   useEventBus<SnackbarMessage>(EV_SNACKBAR);
 
