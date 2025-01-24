@@ -20,11 +20,11 @@ import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import {
-  sortingOrderSelections,
-  useIsValidOrderSelection,
-} from "@/composables/useGetSortingSelections";
 import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants";
+import {
+  isValidOrderSelection,
+  sortingOrderSelections,
+} from "@/util/sortingSelection.ts";
 
 const orderQuery = useRouteQuery(QUERY_NAME_ORDER);
 const orderByQuery = useRouteQuery(QUERY_NAME_SORTBY);
@@ -35,7 +35,7 @@ onMounted(() => {
   if (
     orderQuery.value &&
     orderByQuery.value &&
-    useIsValidOrderSelection({
+    isValidOrderSelection({
       criteria: orderByQuery.value.toString(),
       order: orderQuery.value.toString(),
     })
