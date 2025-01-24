@@ -22,8 +22,14 @@ const { price } = defineProps<{
   price: number;
 }>();
 
+/**
+ * Computes whether the item is being given away for free based on its price.
+ */
 const toGiveAway = computed(() => price === 0);
 
+/**
+ * Computes the appendix tag based on the price, using a negotiate tag for negative prices.
+ */
 const appendixTag = computed(() => (price < 0 ? NEGOTIATE_TAG : ""));
 </script>
 
