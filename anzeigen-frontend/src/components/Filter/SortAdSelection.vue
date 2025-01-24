@@ -29,8 +29,14 @@ import {
 const orderQuery = useRouteQuery(QUERY_NAME_ORDER);
 const orderByQuery = useRouteQuery(QUERY_NAME_SORTBY);
 
+/**
+ * Internal state of the current selected sorting criteria.
+ */
 const sortingCriteria = ref<CriteriaValue>({ criteria: "title", order: "asc" });
 
+/**
+ * Initializes sorting criteria from the query parameters when the component is mounted.
+ */
 onMounted(() => {
   if (
     orderQuery.value &&
@@ -50,6 +56,9 @@ onMounted(() => {
   orderByQuery.value = sortingCriteria.value.criteria;
 });
 
+/**
+ * Watches for changes in sorting criteria and updates the corresponding query parameters.
+ */
 watch(sortingCriteria, (newSortingCriteria) => {
   orderQuery.value = newSortingCriteria.order;
   orderByQuery.value = newSortingCriteria.criteria;
