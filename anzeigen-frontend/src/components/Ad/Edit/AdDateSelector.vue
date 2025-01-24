@@ -4,17 +4,36 @@
     :model-value="displayValue"
     density="compact"
     color="accent"
+    hide-details="auto"
     label="Ablaufdatum"
     type="date"
     prepend-icon="mdi-calendar-range"
     :disabled="disabled"
-    :rules="[isDate, isMinDate]"
+    :rules="[isDate, isMinDate, isMaxDate]"
     @update:model-value="valueChanged"
   />
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+import { useSettingStore } from "@/stores/settings.ts";
+
+const DAYS_IN_WEEK = 7;
+
+const settingStore = useSettingStore();
+/**
+ * The amount of weeks in advance ... why weeks? idk
+ */
+const maxAdvanceDate = computed(() => {
+  const newDate = new Date();
+  newDate.setDate(
+    newDate.getDate() +
+      DAYS_IN_WEEK *
+        (settingStore.getSetting("MAX_EXPIRY_DATE_RANGE")?.numberValue || 4)
+  );
+  return newDate;
+});
 
 const { modelValue } = defineProps<{
   modelValue: Date | undefined;
@@ -25,15 +44,12 @@ const emit = defineEmits<{
   "update:modelValue": [modelValue: Date];
 }>();
 
-// TODO replace this with api call - set maximum date!
 /**
  * computed the displayed date, ever the already selected or a predefined maximum value
  */
-const computedDate = computed(() => {
-  return !modelValue
-    ? new Date().setMonth(new Date().getMonth() + 2)
-    : modelValue;
-});
+const computedDate = computed(() =>
+  !modelValue ? maxAdvanceDate.value : modelValue
+);
 
 /**
  * Converts the modelValue string to format of "YYYY-MM-DD" which is necessary for html input of type date
@@ -54,7 +70,7 @@ const displayValue = computed(() => {
 const valueChanged = (value: string) => {
   const convertedDate = new Date(value);
   if (!isNaN(convertedDate.getTime())) {
-    emit("update:modelValue", new Date(value));
+    emit("update:modelValue", convertedDate);
   }
 };
 
@@ -74,6 +90,18 @@ const isMinDate = (value: string) => {
   return (
     (selectedDate && selectedDate >= new Date()) ||
     "Das Datum darf nicht in der Vergangenheit liegen!"
+  );
+};
+
+/**
+ * Date must be in at least today or in the future
+ * @param value selected date
+ */
+const isMaxDate = (value: string) => {
+  const selectedDate = new Date(value);
+  return (
+    (selectedDate && selectedDate <= maxAdvanceDate.value) ||
+    "Das Datum is zu weit in der Zukunft!"
   );
 };
 </script>
