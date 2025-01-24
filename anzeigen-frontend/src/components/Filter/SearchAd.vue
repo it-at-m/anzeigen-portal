@@ -9,12 +9,14 @@
     clearable
     prepend-inner-icon="mdi-magnify"
     theme="dark"
+    @keyup="debouncedSearch"
     @keyup.enter="search"
     @click:clear="search"
   />
 </template>
 
 <script setup lang="ts">
+import { useDebounceFn } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref } from "vue";
 
@@ -35,6 +37,17 @@ onMounted(() => {
     searchValue.value = searchQuery.value.toString();
   }
 });
+
+/**
+ * Debounced function to update the query only every 1s
+ */
+const debouncedSearch = useDebounceFn(
+  () => {
+    searchQuery.value = searchValue.value ?? null;
+  },
+  1000,
+  { maxWait: 2000 }
+);
 
 /**
  * Updates the search query parameter based on the current search value.
