@@ -19,6 +19,8 @@
 </template>
 
 <script setup lang="ts">
+import type { SettingTO } from "@/api/swbrett";
+
 import { useRouteQuery } from "@vueuse/router";
 import { computed, onMounted } from "vue";
 import { useRoute } from "vue-router";
@@ -32,6 +34,7 @@ import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
 import UserFilter from "@/components/Filter/UserFilter.vue";
+import { useGetSettings } from "@/composables/api/useSettingsApi.ts";
 import {
   useCreateUser,
   useFindUser,
@@ -48,10 +51,12 @@ import {
   ROUTES_MYBOARD,
 } from "@/Constants";
 import router from "@/plugins/router";
+import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
+const settingStore = useSettingStore();
 const snackbar = useSnackbar();
 
 const userQuery = useRouteQuery(QUERY_NAME_USERID);
@@ -79,13 +84,23 @@ const {
   loading: createUserLoading,
 } = useCreateUser();
 
+const {
+  call: getSettings,
+  data: settingsData,
+  loading: settingsLoading,
+  error: settingsError,
+} = useGetSettings();
+
 const triggerDialog = () => {
   dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(EMPTY_ADTO_OBJECT), false));
 };
 
 const loading = computed(
   () =>
-    userInfoLoading.value || findUserLoading.value || createUserLoading.value
+    userInfoLoading.value ||
+    findUserLoading.value ||
+    createUserLoading.value ||
+    settingsLoading.value
 );
 
 const currentUser = computed(() => findUserData.value || createUserData.value);
@@ -106,10 +121,28 @@ const resetUserQuery = () => {
 };
 
 onMounted(() => {
+  if (!settingStore.isLoaded) {
+    loadSettings();
+  }
+
   if (!userStore.userID) {
     loadUser();
   }
 });
+
+const loadSettings = async () => {
+  await getSettings();
+
+  if (settingsError.value) {
+    snackbar.sendMessage({
+      level: Levels.ERROR,
+      message: API_ERROR_MSG,
+    });
+    return;
+  }
+
+  settingStore.setSettings(settingsData.value as SettingTO[]);
+};
 
 const loadUser = async () => {
   // userinfo call
