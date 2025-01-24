@@ -5,7 +5,7 @@ import { inject } from "vue";
 import { useApiCall } from "@/composables/api/useApiCall";
 import { DEFAULT_API_KEY } from "@/composables/useApi";
 
-export const useGetCategories = () => {
+export const useCategoriesApi = () => {
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const api = inject(DEFAULT_API_KEY)!;
 
