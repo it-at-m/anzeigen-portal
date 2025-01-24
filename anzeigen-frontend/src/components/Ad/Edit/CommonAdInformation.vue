@@ -72,6 +72,10 @@ defineProps<{
 
 const priceOption = ref<number>(Math.sign(adTO.value.price ?? 1));
 
+/**
+ * Watches for changes in the price option and updates the price accordingly.
+ * Ensures that the price is adjusted based on the selected price option (e.g., fixed, negotiable, or free).
+ */
 watch(priceOption, (newPriceOption) => {
   price.value = (newPriceOption ?? 1) * Math.abs(price.value ?? 1);
 });

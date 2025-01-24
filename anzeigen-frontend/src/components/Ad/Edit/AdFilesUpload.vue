@@ -46,6 +46,9 @@ const emit = defineEmits<{
   "update:modelValue": [swbFiles: SwbFileTO[]];
 }>();
 
+/**
+ * Computes the files to be displayed, converting them from the model value to File objects.
+ */
 const computedFiles = computed(() => {
   if (!modelValue || modelValue.length === 0) {
     return [];
@@ -63,6 +66,10 @@ const computedFiles = computed(() => {
   });
 });
 
+/**
+ * Removes a specific file from the model value.
+ * @param removeFile - The file to be removed.
+ */
 const removeFile = (removeFile: File) => {
   if (!modelValue) {
     return;
@@ -74,11 +81,20 @@ const removeFile = (removeFile: File) => {
   );
 };
 
+/**
+ * Determines the icon to display based on the file type (e.g., PDF or image).
+ * @param file - The file to evaluate.
+ * @returns The appropriate icon for the file.
+ */
 const computedIcon = (file: File) =>
   file.name.endsWith("pdf")
     ? "mdi-file-document-outline"
     : "mdi-panorama-outline";
 
+/**
+ * Handles uploading a file or multiple files, encoding them into base64 and updating the model value.
+ * @param uploads - The file(s) to upload.
+ */
 const uploadedFile = async (uploads: File[] | File) => {
   const toReturn: SwbFileTO[] = modelValue || [];
 

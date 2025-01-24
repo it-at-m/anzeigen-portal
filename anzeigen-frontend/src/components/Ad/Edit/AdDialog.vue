@@ -129,12 +129,19 @@ defineProps<{
 
 const deleteDialog = ref<boolean>(false);
 
+/**
+ * Listens for ad-related events and opens the dialog with the ad data. This a created ad or an empty ad.
+ */
 dialogBus.on((event: AdTO) => {
   isAdCreate.value = !event.id;
   dialog.value = true;
   adTo.value = event;
 });
 
+/**
+ * Handles the confirmation of ad deletion.
+ * Emits the "deactivateAd" event with the ad ID and closes the delete dialog.
+ */
 const confirmedDeletion = async () => {
   if (adTo.value?.id) {
     emit("deactivateAd", adTo.value?.id);
@@ -142,6 +149,10 @@ const confirmedDeletion = async () => {
   deleteDialog.value = false;
 };
 
+/**
+ * Handles the creation or updating of an ad.
+ * Emits the appropriate event based on whether it's a new ad or an existing one.
+ */
 const writeAd = async () => {
   if (adTo.value) {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -151,6 +162,9 @@ const writeAd = async () => {
   }
 };
 
+/**
+ * Closes the ad dialog.
+ */
 const close = () => {
   dialog.value = false;
 };

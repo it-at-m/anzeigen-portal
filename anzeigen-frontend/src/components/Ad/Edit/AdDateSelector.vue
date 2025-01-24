@@ -25,7 +25,10 @@ const emit = defineEmits<{
   "update:modelValue": [modelValue: Date];
 }>();
 
-// TODO replace this with api call
+// TODO replace this with api call - set maximum date!
+/**
+ * computed the displayed date, ever the already selected or a predefined maximum value
+ */
 const computedDate = computed(() => {
   return !modelValue
     ? new Date().setMonth(new Date().getMonth() + 2)

@@ -44,6 +44,9 @@
 import { computed } from "vue";
 import { VNumberInput } from "vuetify/labs/components";
 
+/**
+ * Array of available price options, representing different pricing methods.
+ */
 const selectionArray = [
   {
     title: "Festpreis",
@@ -68,14 +71,28 @@ const emit = defineEmits<{
   "update:modelValue": [modelValue: number];
 }>();
 
+/**
+ * Computes the absolute value of the model's price.
+ */
 const price = computed(() => Math.abs(modelValue));
 
+/**
+ * Computes the sign of the price, representing whether it's a fixed price, negotiable, or free.
+ */
 const priceOption = computed(() => Math.sign(modelValue));
 
+/**
+ * Updates the model value with the new price, adjusting for the price option (e.g., negotiable or free).
+ * @param updatedPrice - The new price value.
+ */
 const updatedPrice = (updatedPrice: number) => {
   emit("update:modelValue", priceOption.value * updatedPrice);
 };
 
+/**
+ * Updates the model value based on a new price option, adjusting for the price's magnitude.
+ * @param updatedPriceOption - The new price option to apply (e.g., fixed, negotiable, free).
+ */
 const updatePriceOption = (updatedPriceOption: number | null) =>
   emit(
     "update:modelValue",
