@@ -152,8 +152,8 @@ import type { AdTO } from "@/api/swbrett";
 import { useDateFormat } from "@vueuse/shared";
 import { computed } from "vue";
 
-import AdPrice from "@/components/Ad/AdPrice.vue";
-import AdImageDisplay from "@/components/Ad/Details/AdImageDisplay.vue";
+import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
+import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";

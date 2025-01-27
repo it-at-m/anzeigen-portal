@@ -63,8 +63,8 @@ import type { AdTO } from "@/api/swbrett";
 
 import { ref, watch } from "vue";
 
-import AdCategorySelector from "@/components/Ad/Edit/AdCategorySelector.vue";
-import AdPriceSelection from "@/components/Ad/Edit/AdPriceSelection.vue";
+import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
+import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });

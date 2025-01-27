@@ -24,8 +24,8 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
-import AdFilesUpload from "@/components/Ad/Edit/AdFilesUpload.vue";
-import AdTitelPicture from "@/components/Ad/Edit/AdTitelPicture.vue";
+import AdFilesUpload from "@/components/Ad/dialog/optional/AdFilesUpload.vue";
+import AdTitelPicture from "@/components/Ad/dialog/optional/AdTitelPicture.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });

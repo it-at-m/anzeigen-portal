@@ -61,7 +61,7 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 
-import SearchAd from "@/components/Filter/SearchAd.vue";
+import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import { useApi } from "@/composables/useApi";
 import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";

@@ -99,13 +99,13 @@ import type { AdTO } from "@/api/swbrett";
 
 import { ref } from "vue";
 
-import AdAgbAccept from "@/components/Ad/Edit/AdAgbAccept.vue";
-import CommonAdInformation from "@/components/Ad/Edit/CommonAdInformation.vue";
-import OptionalAdInformation from "@/components/Ad/Edit/OptionalAdInformation.vue";
-import SellerAdInformation from "@/components/Ad/Edit/SellerAdInformation.vue";
+import AdAgbAccept from "@/components/Ad/dialog/AdAgbAccept.vue";
+import CommonAdInformation from "@/components/Ad/dialog/CommonAdInformation.vue";
+import OptionalAdInformation from "@/components/Ad/dialog/OptionalAdInformation.vue";
+import SellerAdInformation from "@/components/Ad/dialog/SellerAdInformation.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
-import { useDialogEventBus } from "@/composables/useEventBus";
+import { useDialogEventBus } from "@/composables/useEventBus.ts";
 
 const dialog = defineModel<boolean>();
 

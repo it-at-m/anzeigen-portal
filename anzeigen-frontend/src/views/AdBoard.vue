@@ -30,7 +30,7 @@ import type { AdTO } from "@/api/swbrett";
 import { computed, ref } from "vue";
 
 import { Levels } from "@/api/error";
-import AdDialog from "@/components/Ad/Edit/AdDialog.vue";
+import AdDialog from "@/components/AdDialog.vue";
 import AdList from "@/components/AdList.vue";
 import AdNavBar from "@/components/AdNavBar.vue";
 import {
