@@ -469,7 +469,7 @@ paths:
       operationId: "sanitizeImage"
       requestBody:
         content:
-          application/json:
+          text/plain:
             schema:
               type: "string"
         required: true
@@ -477,7 +477,7 @@ paths:
         "200":
           description: "OK"
           content:
-            '*/*':
+            text/plain:
               schema:
                 type: "string"
   /images/{id}:
@@ -566,7 +566,7 @@ paths:
       operationId: "findUser"
       requestBody:
         content:
-          application/json:
+          text/plain:
             schema:
               type: "string"
         required: true
