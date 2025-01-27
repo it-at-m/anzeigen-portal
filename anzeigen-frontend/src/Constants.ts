@@ -26,6 +26,8 @@ export const API_ERROR_MSG =
   "Ein Fehler ist aufgetreten. Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.";
 export const CREATE_AD_SUCCESS = "Die Anzeige wurde erfolgreich erstellt.";
 export const UPDATE_AD_SUCCESS = "Die Anzeige wurde erfolgreich aktualisiert.";
+export const FILE_TYPE_INCORRECT =
+  "Das ausgewählte Bild wird nicht unterstützt.";
 export const DELETE_AD_SUCCESS = "Die Anzeige wurde erfolgreich gelöscht.";
 export const FILE_SIZE_TO_BIG = (size: string) =>
   "Die ausgewählte(n) Datei(n) ist / sind zu groß. Maximal " + size + "MB.";

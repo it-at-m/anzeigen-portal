@@ -6,6 +6,7 @@
     hide-details="auto"
     :accept="ALLOWED_IMAGE_TYPES"
     :disabled="disabled"
+    :loading="sanitizeImgLoading"
     prepend-icon="mdi-panorama-outline"
     :model-value="computedPicture"
     @update:model-value="uploadPicture"
@@ -19,8 +20,13 @@ import type { SwbImageTO } from "@/api/swbrett";
 import { computed } from "vue";
 
 import { Levels } from "@/api/error.ts";
+import { useSanitizeImage } from "@/composables/api/useFilesApi.ts";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
-import { ALLOWED_IMAGE_TYPES, FILE_SIZE_TO_BIG } from "@/Constants.ts";
+import {
+  ALLOWED_IMAGE_TYPES,
+  FILE_SIZE_TO_BIG,
+  FILE_TYPE_INCORRECT,
+} from "@/Constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 
 const settingStore = useSettingStore();
@@ -28,6 +34,13 @@ const maxImageSize =
   settingStore.getSetting("MAX_SWB_IMAGE_SIZE")?.numberValue || 1;
 
 const snackbar = useSnackbar();
+
+const {
+  call: sanitizeImg,
+  loading: sanitizeImgLoading,
+  data: sanitizeImgData,
+  error: sanitizeImgError,
+} = useSanitizeImage();
 
 const { modelValue } = defineProps<{
   modelValue: SwbImageTO | undefined;
@@ -73,10 +86,24 @@ const uploadPicture = async (files: File[] | File) => {
   }
 
   const reader = new FileReader();
-  reader.onloadend = function () {
+  reader.onloadend = async function () {
     const result = (reader.result as string).split(",")[1];
+
+    // Make api call to sanitize and check image
+    await sanitizeImg({
+      body: result,
+    });
+
+    if (sanitizeImgError.value || !sanitizeImgData.value) {
+      snackbar.sendMessage({
+        level: Levels.WARNING,
+        message: FILE_TYPE_INCORRECT,
+      });
+      return;
+    }
+
     emit("update:modelValue", {
-      imageBase64: result,
+      imageBase64: sanitizeImgData.value.toString(),
     });
   };
 
