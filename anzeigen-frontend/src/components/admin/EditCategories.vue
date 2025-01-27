@@ -9,71 +9,79 @@
       >
         Kategorie hinzufügen
       </v-btn>
-      <v-list lines="two">
+      <v-list lines="three">
         <v-list-item
           v-for="category in categoryStore.categories"
           :key="category.id"
+          variant="outlined"
           :title="category.name"
           rounded
           class="mb-2"
         >
           <template #title>
-            <div v-if="category.id === categoryToEdit.id">
-              <v-text-field
-                variant="outlined"
-                class="w-66"
-                color="accent"
-                hide-details
-                :model-value="category.name"
-              />
-            </div>
-            <div v-else>
-              {{ category.name }}
-            </div>
-          </template>
-          <template #append>
-            <v-row>
-              <v-col
-                v-if="!category.standard && category.id !== categoryToEdit?.id"
-                cols="6"
-              >
-                <v-btn
-                  class="w-100"
-                  prepend-icon="mdi-trash-can-outline"
-                  variant="outlined"
-                  color="red"
-                >
-                  Löschen
-                </v-btn>
+            <v-row align-content="center">
+              <v-col cols="8">
+                <div v-if="category.id === categoryToEdit.id">
+                  <v-text-field
+                    variant="outlined"
+                    class="w-66 pt-1"
+                    messages="Kategoriename"
+                    density="compact"
+                    color="accent"
+                    hide-details="auto"
+                    :model-value="category.name"
+                  />
+                </div>
+                <div v-else>
+                  {{ category.name }}
+                </div>
               </v-col>
-              <v-col
-                v-if="category.id === categoryToEdit?.id"
-                cols="6"
-              >
-                <v-btn
-                  class="w-100"
-                  prepend-icon="mdi-pencil"
-                  variant="outlined"
-                  color="accent"
-                  @click="resetEditCategory"
-                >
-                  Abbrechen
-                </v-btn>
-              </v-col>
-              <v-col cols="6">
-                <v-btn
-                  prepend-icon="mdi-pencil"
-                  class="ml-2 w-100"
-                  variant="flat"
-                  color="accent"
-                  @click="editCategory(category)"
-                >
-                  {{
-                    category.id === categoryToEdit?.id
-                      ? "Speichern"
-                      : "Bearbeiten"
-                  }}
-                </v-btn>
+              <v-col cols="4">
+                <v-row>
+                  <v-col
+                    v-if="category.id !== categoryToEdit?.id"
+                    cols="6"
+                  >
+                    <v-btn
+                      class="w-100"
+                      prepend-icon="mdi-trash-can-outline"
+                      variant="outlined"
+                      :disabled="category.standard"
+                      color="red"
+                    >
+                      Löschen
+                    </v-btn>
+                  </v-col>
+                  <v-col
+                    v-if="category.id === categoryToEdit?.id"
+                    cols="6"
+                  >
+                    <v-btn
+                      class="w-100"
+                      prepend-icon="mdi-pencil"
+                      variant="outlined"
+                      color="accent"
+                      @click="resetEditCategory"
+                    >
+                      Abbrechen
+                    </v-btn>
+                  </v-col>
+                  <v-col cols="6">
+                    <v-btn
+                      prepend-icon="mdi-pencil"
+                      class="ml-2 w-100"
+                      variant="flat"
+                      color="accent"
+                      @click="editCategory(category)"
+                    >
+                      {{
+                        category.id === categoryToEdit?.id
+                          ? "Speichern"
+                          : "Bearbeiten"
+                      }}
+                    </v-btn>
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </template>
