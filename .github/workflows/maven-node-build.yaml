@@ -1,30 +1,34 @@
 name: build all
 
-on: [push]
+on:
+  pull_request:
+  push:
+    branches:
+      - "main"
+
 jobs:
   build:
     runs-on: ubuntu-latest
     env:
       TZ: Europe/Berlin # timezone
     strategy:
+      fail-fast: false
       matrix:
         include: # hier müssen die Pfade angegeben werden
-          - app-path: anzeigen-backend # z. B. sps-backend
-          - app-path: anzeigen-frontend # z. B. sps-frontend
+          - app-path: anzeigen-backend
+          - app-path: anzeigen-frontend
     steps:
-      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - uses: it-at-m/.github/.github/actions/action-checkout@main
       - if:  ${{hashFiles(format('./{0}/package.json', matrix.app-path))!=null}}
         id: node
         uses: it-at-m/.github/.github/actions/action-npm-build@main
         with:
           app-path:  "${{ matrix.app-path }}"
-          node-version: 20
       - if:  ${{hashFiles(format('./{0}/pom.xml', matrix.app-path))!=null}}
         id: maven
         uses: it-at-m/.github/.github/actions/action-maven-build@main
         with:
           app-path: "${{ matrix.app-path }}"
-          java-version: 21
       - if: github.ref == 'refs/heads/main'
         uses: it-at-m/.github/.github/actions/action-build-image@main
         with:
@@ -32,5 +36,4 @@ jobs:
           image-name: "${{  matrix.app-path }}"
           artifact-name: ${{join(steps.*.outputs.artifact-name)}}
           registry-password: ${{ secrets.GITHUB_TOKEN }}
-          registry: ghcr.io
           registry-username: ${{ github.actor }}
