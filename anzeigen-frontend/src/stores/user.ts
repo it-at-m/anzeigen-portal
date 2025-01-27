@@ -3,6 +3,7 @@ import type { SwbUserTO } from "@/api/swbrett";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
+import { ADMIN_AUTHORITIES } from "@/Constants.ts";
 import User from "@/types/User";
 
 export interface UserState {
@@ -40,6 +41,15 @@ export const useUserStore = defineStore("user", () => {
   const lhmObjectId = computed(() => user.value?.lhmObjectID);
 
   /**
+   *
+   */
+  const isAdmin = computed(() =>
+    ADMIN_AUTHORITIES.every((element) =>
+      user.value?.authorities.includes(element)
+    )
+  );
+
+  /**
    * Set the current user.
    * @param payload new user
    */
@@ -55,5 +65,13 @@ export const useUserStore = defineStore("user", () => {
     userID.value = payload;
   }
 
-  return { getUser, setUser, swbUserTo, lhmObjectId, setUserId, userID };
+  return {
+    getUser,
+    setUser,
+    swbUserTo,
+    lhmObjectId,
+    setUserId,
+    userID,
+    isAdmin,
+  };
 });

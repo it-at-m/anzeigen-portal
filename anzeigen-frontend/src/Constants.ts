@@ -4,6 +4,7 @@ import type { InjectionKey, Ref } from "vue";
 export const ROUTES_BOARD = "board";
 export const ROUTES_MYBOARD = "myboard";
 export const ROUTES_AD = "ad";
+export const ROUTES_ADMIN = "admin";
 export const ROUTES_GETSTARTED = "getstarted";
 
 export const AD2IMAGE_URL = import.meta.env.VITE_AD2IMAGE_URL;
@@ -44,6 +45,11 @@ export const IK_IS_MYBOARD: InjectionKey<Readonly<Ref<boolean>>> = Symbol(
 /**
  * Other constants
  */
+export const ADMIN_AUTHORITIES = [
+  "BACKEND_READ_THEENTITY",
+  "BACKEND_WRITE_THEENTITY",
+  "BACKEND_DELETE_THEENTITY",
+];
 export const ALLOWED_FILE_TYPES =
   "image/png, image/jpeg, image/jpg, application/pdf";
 export const ALLOWED_IMAGE_TYPES = "image/png, image/jpeg, image/jpg";
