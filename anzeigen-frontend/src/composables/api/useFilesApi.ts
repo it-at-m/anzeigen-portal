@@ -1,6 +1,7 @@
 import type {
   GetFileRequest,
   GetImageRequest,
+  SanitizeImageRequest,
   SwbFileTO,
   SwbImageTO,
 } from "@/api/swbrett";
@@ -25,5 +26,14 @@ export const useGetFile = () => {
 
   return useApiCall<GetFileRequest, SwbFileTO>((params: GetFileRequest) =>
     api.getFile(params)
+  );
+};
+
+export const useSanitizeImage = () => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const api = inject(DEFAULT_API_KEY)!;
+
+  return useApiCall<SanitizeImageRequest, string>(
+    (params: SanitizeImageRequest) => api.sanitizeImage(params)
   );
 };

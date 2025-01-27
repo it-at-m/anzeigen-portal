@@ -32,6 +32,7 @@ public class UserController {
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
     public SwbUserTO findUser(@RequestBody final String lhmObjectId) {
+        // Not necessary anymore but security wise not that bad
         final String sanitizedId = lhmObjectId.replaceAll("[\\r\\n\"]", "");
         final Optional<SwbUserTO> userTO = service.findUser(sanitizedId);
         log.debug("CONTROLLER | findUser was successful: {}", userTO.isPresent());
