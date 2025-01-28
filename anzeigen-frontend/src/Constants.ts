@@ -46,9 +46,9 @@ export const IK_IS_MYBOARD: InjectionKey<Readonly<Ref<boolean>>> = Symbol(
  * Other constants
  */
 export const ADMIN_AUTHORITIES = [
-  "BACKEND_READ_THEENTITY",
-  "BACKEND_WRITE_THEENTITY",
-  "BACKEND_DELETE_THEENTITY",
+  "REFARCH_BACKEND_READ_THEENTITY",
+  "REFARCH_BACKEND_WRITE_THEENTITY",
+  "REFARCH_BACKEND_DELETE_THEENTITY",
 ];
 export const ALLOWED_FILE_TYPES =
   "image/png, image/jpeg, image/jpg, application/pdf";
