@@ -1,7 +1,7 @@
 <template>
   <v-chip
     variant="tonal"
-    prepend-icon="mdi-check-all"
+    prepend-icon="mdi-card-multiple"
     color="accent"
     :text="category.name"
   />
