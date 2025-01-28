@@ -40,8 +40,10 @@
                   :to="{ name: ROUTES_ADMIN }"
                 >
                   <v-toolbar-title class="font-weight-bold d-flex justify-end">
-                    <span class="text-white">Admin</span>
-                    <span class="text-secondary">Board</span>
+                    <v-icon
+                      icon="mdi-cog"
+                      color="white"
+                    />
                   </v-toolbar-title>
                 </router-link>
                 <v-spacer v-else />
