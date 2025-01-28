@@ -10,14 +10,11 @@ import type {
   UpdateAdRequest,
 } from "@/api/swbrett";
 
-import { inject } from "vue";
-
 import { useApiCall } from "@/composables/api/useApiCall";
-import { DEFAULT_API_KEY } from "@/composables/useApi";
+import { ApiFactory } from "@/util/apiFactory.ts";
 
 export const useUpdateAd = () => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   return useApiCall<UpdateAdRequest, AdTO>((params: UpdateAdRequest) =>
     api.updateAd(params)
@@ -25,8 +22,7 @@ export const useUpdateAd = () => {
 };
 
 export const useDeleteAd = () => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   return useApiCall<DeleteAdRequest, void>((params: DeleteAdRequest) =>
@@ -35,8 +31,7 @@ export const useDeleteAd = () => {
 };
 
 export function useCreateAd() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   return useApiCall<CreateAdRequest, AdTO>((params: CreateAdRequest) =>
     api.createAd(params)
@@ -44,8 +39,7 @@ export function useCreateAd() {
 }
 
 export function useGetAd() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   return useApiCall<GetAdRequest, AdTO>((params: GetAdRequest) =>
     api.getAd(params)
@@ -53,8 +47,7 @@ export function useGetAd() {
 }
 
 export function useGetAds() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   return useApiCall<GetAdsRequest, GetAds200Response>((params: GetAdsRequest) =>
     api.getAds(params)
@@ -62,8 +55,7 @@ export function useGetAds() {
 }
 
 export function useDeactivateAd() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   return useApiCall<DeactivateAdRequest, void>((params: DeactivateAdRequest) =>
@@ -72,8 +64,7 @@ export function useDeactivateAd() {
 }
 
 export function useIncrementAdView() {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   return useApiCall<IncrementViewRequest, void>(
