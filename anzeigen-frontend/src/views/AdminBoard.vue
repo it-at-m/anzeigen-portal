@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>Administrationsseite</h2>
     <edit-categories class="my-4" />
     <general-settings />
   </div>

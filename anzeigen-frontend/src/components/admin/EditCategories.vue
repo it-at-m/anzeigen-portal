@@ -1,21 +1,16 @@
 <template>
   <ad-display-card>
-    <template #title>
-      <v-row>
-        <v-col> Kategorien bearbeiten </v-col>
-        <v-col class="d-flex justify-end">
-          <v-btn
-            prepend-icon="mdi-plus"
-            color="accent"
-            variant="flat"
-            @click="createDialog = true"
-          >
-            Kategorie erstellen
-          </v-btn>
-        </v-col>
-      </v-row>
-    </template>
+    <template #title> Kategorien bearbeiten </template>
     <template #text>
+      <v-btn
+        prepend-icon="mdi-plus"
+        color="accent"
+        class="ml-4"
+        variant="tonal"
+        @click="createDialog = true"
+      >
+        Kategorie erstellen
+      </v-btn>
       <v-dialog
         v-model="createDialog"
         max-width="600"
