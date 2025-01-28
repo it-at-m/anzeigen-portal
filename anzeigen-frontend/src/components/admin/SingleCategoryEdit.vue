@@ -70,6 +70,7 @@
               <v-btn
                 variant="outlined"
                 color="error"
+                :disabled="category.standard"
                 class="w-100"
                 prepend-icon="mdi-trash-can-outline"
                 @click="deleteDialog = true"
