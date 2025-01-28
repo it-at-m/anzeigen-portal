@@ -19,13 +19,10 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTO } from "@/api/swbrett";
-
 import { useRouteQuery } from "@vueuse/router";
-import { computed, onMounted } from "vue";
+import { computed } from "vue";
 import { useRoute } from "vue-router";
 
-import { Levels } from "@/api/error";
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdEditButton from "@/components/Ad/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
@@ -34,16 +31,8 @@ import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
 import UserFilter from "@/components/Filter/UserFilter.vue";
-import { useGetSettings } from "@/composables/api/useSettingsApi.ts";
-import {
-  useCreateUser,
-  useFindUser,
-  useUserInfo,
-} from "@/composables/api/useUserApi";
 import { useDialogEventBus } from "@/composables/useEventBus";
-import { useSnackbar } from "@/composables/useSnackbar";
 import {
-  API_ERROR_MSG,
   DEFAULT_BOARD_QUERIES,
   EMPTY_ADTO_OBJECT,
   QUERY_NAME_USERID,
@@ -51,13 +40,10 @@ import {
   ROUTES_MYBOARD,
 } from "@/Constants";
 import router from "@/plugins/router";
-import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
-const settingStore = useSettingStore();
-const snackbar = useSnackbar();
 
 const userQuery = useRouteQuery(QUERY_NAME_USERID);
 
@@ -65,45 +51,11 @@ const route = useRoute();
 
 const isMyBoard = computed(() => route.name === ROUTES_MYBOARD);
 
-const {
-  call: userInfoCall,
-  data: userInfoData,
-  error: userInfoError,
-  loading: userInfoLoading,
-} = useUserInfo();
-
-const {
-  call: findUserCall,
-  data: findUserData,
-  loading: findUserLoading,
-} = useFindUser();
-
-const {
-  call: createUserCall,
-  data: createUserData,
-  loading: createUserLoading,
-} = useCreateUser();
-
-const {
-  call: getSettings,
-  data: settingsData,
-  loading: settingsLoading,
-  error: settingsError,
-} = useGetSettings();
-
 const triggerDialog = () => {
   dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(EMPTY_ADTO_OBJECT), false));
 };
 
-const loading = computed(
-  () =>
-    userInfoLoading.value ||
-    findUserLoading.value ||
-    createUserLoading.value ||
-    settingsLoading.value
-);
-
-const currentUser = computed(() => findUserData.value || createUserData.value);
+const loading = computed(() => !userStore.userID);
 
 const isUserSelected = computed(
   () => userQuery.value && userQuery.value.length !== 0
@@ -121,75 +73,6 @@ const resetUserQuery = () => {
   } else {
     userQuery.value = null;
   }
-};
-
-/**
- * Loads the user upon loading if not set.
- */
-onMounted(() => {
-  if (!settingStore.isLoaded) {
-    loadSettings();
-  }
-
-  if (!userStore.userID) {
-    loadUser();
-  }
-});
-
-/**
- * Loads settings and stores them in the settings store.
- */
-const loadSettings = async () => {
-  await getSettings();
-
-  if (settingsError.value) {
-    snackbar.sendMessage({
-      level: Levels.ERROR,
-      message: API_ERROR_MSG,
-    });
-    return;
-  }
-
-  settingStore.setSettings(settingsData.value as SettingTO[]);
-};
-
-/**
- * Loads current user. Therefore, requests all parameters from the sso endpoint and matches those with the backend.
- * If no user exists a new one will be created.
- */
-const loadUser = async () => {
-  // userinfo call
-  await userInfoCall();
-  if (userInfoError.value) {
-    snackbar.sendMessage({
-      level: Levels.ERROR,
-      message: API_ERROR_MSG,
-    });
-    return;
-  }
-
-  // save into store
-  userStore.setUser(JSON.parse(JSON.stringify(userInfoData.value)));
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  await findUserCall({ body: userStore.lhmObjectId! });
-
-  if (findUserData.value?.id === undefined) {
-    // no user was found - therefore create a new one
-    await createUserCall({
-      swbUserTO: {
-        displayName: userStore.getUser?.displayName,
-        lhmObjectId: userStore.lhmObjectId,
-      },
-    });
-  }
-
-  snackbar.sendMessage({
-    level: findUserData.value?.id ? Levels.INFO : Levels.SUCCESS,
-    message: `Willkommen ${findUserData.value?.id ? "" : "zurück"} ${currentUser.value?.displayName}.`,
-  });
-
-  userStore.setUserId(currentUser.value?.id || -1);
 };
 </script>
 

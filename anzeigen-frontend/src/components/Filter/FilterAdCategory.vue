@@ -48,21 +48,14 @@ import type { AdCategory } from "@/api/swbrett";
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
-import { Levels } from "@/api/error";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { useCategoriesApi } from "@/composables/api/useCategoriesApi.ts";
-import { useSnackbar } from "@/composables/useSnackbar";
-import { API_ERROR_MSG, QUERY_NAME_CATEGORYID } from "@/Constants";
+import { QUERY_NAME_CATEGORYID } from "@/Constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory";
 
 /**
  * Standard for no category selection.
  */
 const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
-
-const { call: getCategories, data, loading, error } = useCategoriesApi();
-
-const snackbar = useSnackbar();
 
 const categoriesStore = useCategoriesStore();
 
@@ -76,26 +69,7 @@ const selectedCategory = ref<AdCategory>(NO_CATEGORY);
 /**
  * Initializes and manages category selection and data fetching for categories.
  */
-onMounted(async () => {
-  // If categories are already loaded, do nothing.
-  if (!categoriesStore.isEmpty) {
-    return;
-  }
-
-  // Fetch categories from the API.
-  await getCategories();
-
-  // Error handling: show a snackbar if the API call fails.
-  if (error.value) {
-    snackbar.sendMessage({
-      level: Levels.ERROR,
-      message: API_ERROR_MSG,
-    });
-  }
-
-  // Store the fetched categories.
-  categoriesStore.setCategories(data.value as AdCategory[]);
-
+onMounted(() => {
   // Set initial category selection if a query is provided.
   if (categoryQuery.value && categoriesStore.categories.length !== 0) {
     // search for matching category and set it
