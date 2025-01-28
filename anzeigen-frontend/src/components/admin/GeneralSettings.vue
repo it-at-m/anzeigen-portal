@@ -42,28 +42,26 @@ const {
   error: settingsError,
 } = useGetSettings();
 
-onMounted(() => {
+onMounted(async () => {
   if (!settingStore.isLoaded) {
-    loadSettings();
+    await getSettings();
+
+    if (settingsError.value) {
+      snackbar.sendMessage({
+        level: Levels.ERROR,
+        message: API_ERROR_MSG,
+      });
+      return;
+    }
+
+    settingStore.setSettings(settingsData.value as SettingTO[]);
   }
 });
 
 /**
  * Loads settings and stores them in the settings store.
  */
-const loadSettings = async () => {
-  await getSettings();
-
-  if (settingsError.value) {
-    snackbar.sendMessage({
-      level: Levels.ERROR,
-      message: API_ERROR_MSG,
-    });
-    return;
-  }
-
-  settingStore.setSettings(settingsData.value as SettingTO[]);
-};
+const loadSettings = async () => {};
 </script>
 
 <style scoped></style>
