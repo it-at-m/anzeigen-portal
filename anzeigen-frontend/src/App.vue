@@ -70,16 +70,12 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory, SettingTO } from "@/api/swbrett";
-
 import { useTitle } from "@vueuse/core";
 import { computed, onMounted } from "vue";
 
 import { Levels } from "@/api/error.ts";
 import SearchAd from "@/components/Filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
-import { useGetCategories } from "@/composables/api/useCategoriesApi.ts";
-import { useGetSettings } from "@/composables/api/useSettingsApi.ts";
 import {
   useCreateUser,
   useFindUser,
@@ -88,6 +84,7 @@ import {
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
 import { useApi } from "@/composables/useApi";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
+import { useUpdateSettings } from "@/composables/useUpdateSettings.ts";
 import {
   API_ERROR_MSG,
   DEFAULT_BOARD_QUERIES,
@@ -103,17 +100,12 @@ useApi();
 useTitle("Anzeigen Portal");
 
 const updateCategories = useUpdateCategories();
+const updateSettings = useUpdateSettings();
 
 const settingStore = useSettingStore();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 const categoriesStore = useCategoriesStore();
-
-const {
-  call: getSettings,
-  data: settingsData,
-  error: settingsError,
-} = useGetSettings();
 
 const {
   call: userInfoCall,
@@ -125,12 +117,6 @@ const { call: findUserCall, data: findUserData } = useFindUser();
 
 const { call: createUserCall, data: createUserData } = useCreateUser();
 
-const {
-  call: getCategories,
-  data: categoryData,
-  error: categoryError,
-} = useGetCategories();
-
 const currentUser = computed(() => findUserData.value || createUserData.value);
 
 /**
@@ -138,7 +124,7 @@ const currentUser = computed(() => findUserData.value || createUserData.value);
  */
 onMounted(async () => {
   if (!settingStore.isLoaded) {
-    await loadSettings();
+    await updateSettings();
   }
   if (!userStore.userID) {
     await loadUser();
@@ -147,23 +133,6 @@ onMounted(async () => {
     await updateCategories();
   }
 });
-
-/**
- * Loads settings and stores them in the settings store.
- */
-const loadSettings = async () => {
-  await getSettings();
-
-  if (settingsError.value) {
-    snackbar.sendMessage({
-      level: Levels.ERROR,
-      message: API_ERROR_MSG,
-    });
-    return;
-  }
-
-  settingStore.setSettings(settingsData.value as SettingTO[]);
-};
 
 /**
  * Loads current user. Therefore, requests all parameters from the sso endpoint and matches those with the backend.
