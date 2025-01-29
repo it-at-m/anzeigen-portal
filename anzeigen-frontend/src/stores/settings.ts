@@ -12,6 +12,12 @@ export const useSettingStore = defineStore("settings", () => {
     settings.value = payload;
   };
 
+  const setSetting = (setting: SettingTO) => {
+    settings.value = settings.value.map((s) =>
+      s.settingName === setting.settingName ? setting : s
+    );
+  };
+
   const getSetting = (settingName: SettingTOSettingNameEnum) =>
     settings.value.find((setting) => setting.settingName === settingName);
 
@@ -20,5 +26,6 @@ export const useSettingStore = defineStore("settings", () => {
     isLoaded,
     setSettings,
     getSetting,
+    setSetting,
   };
 });
