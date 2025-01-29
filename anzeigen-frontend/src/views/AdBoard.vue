@@ -18,6 +18,14 @@
         lg="9"
         cols="12"
       >
+        <v-sheet
+          v-if="motd?.textValue"
+          class="mb-4 pa-4"
+          rounded
+          color="accent"
+        >
+          <p>{{ motd.textValue }}</p>
+        </v-sheet>
         <ad-list />
       </v-col>
     </v-row>
@@ -48,6 +56,7 @@ import {
   DELETE_AD_SUCCESS,
   UPDATE_AD_SUCCESS,
 } from "@/Constants";
+import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user";
 
 const dialog = ref<boolean>(false);
@@ -57,6 +66,8 @@ const updateAdListEventBus = useUpdateAdListEventBus();
 const snackbarEventBus = useSnackbarEventBus();
 
 const userStore = useUserStore();
+
+const settingStore = useSettingStore();
 
 const {
   loading: deactivateAdLoading,
@@ -83,6 +94,8 @@ const loading = computed(
   () =>
     createAdLoading.value || updateAdLoading.value || deactivateAdLoading.value
 );
+
+const motd = computed(() => settingStore.getSetting("MOTD"));
 
 /**
  * Aggregated isError over all api-calls
