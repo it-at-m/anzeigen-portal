@@ -9,11 +9,11 @@ export const sortingOrderSelections = [
   { title: "Preis absteigend", value: { criteria: "price", order: "desc" } },
   {
     title: "Erstellungsdatum aufsteigend",
-    value: { criteria: "creationDate", order: "asc" },
+    value: { criteria: "creationDateTime", order: "asc" },
   },
   {
     title: "Erstellungsdatum absteigend",
-    value: { criteria: "creationDate", order: "desc" },
+    value: { criteria: "creationDateTime", order: "desc" },
   },
 ] as SortingOrder[];
 
