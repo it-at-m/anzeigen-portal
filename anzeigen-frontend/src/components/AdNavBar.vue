@@ -31,9 +31,9 @@ import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/Filter/FilterAdType.vue";
 import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
 import UserFilter from "@/components/Filter/UserFilter.vue";
+import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import {
-  DEFAULT_BOARD_QUERIES,
   EMPTY_ADTO_OBJECT,
   QUERY_NAME_USERID,
   ROUTES_BOARD,
@@ -44,6 +44,7 @@ import { useUserStore } from "@/stores/user";
 
 const dialogBus = useDialogEventBus();
 const userStore = useUserStore();
+const defaultQuery = useDefaultQuery();
 
 const userQuery = useRouteQuery(QUERY_NAME_USERID);
 
@@ -68,7 +69,7 @@ const resetUserQuery = () => {
   if (isMyBoard.value) {
     router.push({
       name: ROUTES_BOARD,
-      query: DEFAULT_BOARD_QUERIES,
+      query: defaultQuery.value,
     });
   } else {
     userQuery.value = null;

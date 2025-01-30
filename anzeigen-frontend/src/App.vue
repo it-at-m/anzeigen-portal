@@ -19,7 +19,7 @@
                 <router-link
                   :to="{
                     name: ROUTES_BOARD,
-                    query: DEFAULT_BOARD_QUERIES,
+                    query: defaultQuery,
                   }"
                 >
                   <v-toolbar-title class="font-weight-bold">
@@ -83,14 +83,10 @@ import {
 } from "@/composables/api/useUserApi.ts";
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
 import { useApi } from "@/composables/useApi";
+import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
 import { useUpdateSettings } from "@/composables/useUpdateSettings.ts";
-import {
-  API_ERROR_MSG,
-  DEFAULT_BOARD_QUERIES,
-  ROUTES_ADMIN,
-  ROUTES_BOARD,
-} from "@/Constants";
+import { API_ERROR_MSG, ROUTES_ADMIN, ROUTES_BOARD } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user.ts";
@@ -99,6 +95,7 @@ useApi();
 
 useTitle("Anzeigen Portal");
 
+const defaultQuery = useDefaultQuery();
 const updateCategories = useUpdateCategories();
 const updateSettings = useUpdateSettings();
 

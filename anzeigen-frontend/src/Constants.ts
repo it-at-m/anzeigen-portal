@@ -36,13 +36,6 @@ export const TOO_MANY_FILES = (amount: string) =>
   "Die Anzahl der Dateien ist überschritten. Maximal " + amount + " Stück.";
 
 /**
- * Injection Keys
- */
-export const IK_IS_MYBOARD: InjectionKey<Readonly<Ref<boolean>>> = Symbol(
-  "injection-key-my-board"
-);
-
-/**
  * Other constants
  */
 export const ADMIN_AUTHORITIES = [
@@ -55,10 +48,6 @@ export const ALLOWED_FILE_TYPES =
 export const ALLOWED_IMAGE_TYPES = "image/png, image/jpeg, image/jpg";
 export const AD_MAX_TITLE_LENGTH = 40;
 export const DATE_DISPLAY_FORMAT = "DD.MM.YYYY"; // use this in conjunction with useDateFormat
-export const DEFAULT_BOARD_QUERIES = {
-  sortBy: "title",
-  order: "asc",
-};
 export const PREVIEW_IMAGE_FILE_URI_PREFIX = "data:image/jpeg;base64,";
 export const QUERY_NAME_ORDER = "order";
 export const QUERY_NAME_SORTBY = "sortBy";

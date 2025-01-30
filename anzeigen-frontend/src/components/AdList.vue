@@ -17,7 +17,7 @@
       <router-link
         :to="{
           name: ROUTES_BOARD,
-          query: DEFAULT_BOARD_QUERIES,
+          query: defaultQuery,
         }"
       >
         Klicken Sie hier um alle verfügbaren Anzeigen zu sehen.
@@ -49,16 +49,14 @@ import { useRoute } from "vue-router";
 import AdCard from "@/components/Ad/AdCard.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
+import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useUpdateAdListEventBus } from "@/composables/useEventBus";
-import {
-  DEFAULT_BOARD_QUERIES,
-  ROUTES_BOARD,
-  ROUTES_MYBOARD,
-} from "@/Constants";
+import { ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
 import { useAdStore } from "@/stores/adStore";
 import { useUserStore } from "@/stores/user";
 
 const route = useRoute();
+const defaultQuery = useDefaultQuery();
 
 const { data: ads, call: getAds, loading } = useGetAds();
 
