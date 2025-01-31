@@ -5,6 +5,7 @@
     :label="settingName"
     color="accent"
     density="compact"
+    accept="application/pdf"
     clearable
     @update:model-value="updateFile"
   />
@@ -55,13 +56,14 @@ const updateFile = (files: File | File[] | undefined) => {
   const reader = new FileReader();
   reader.onloadend = function () {
     const result = (reader.result as string).split(",")[1];
+    console.log((reader.result as string).split(",")[0]);
 
     settingStore.setSetting({
       ...computedSetting.value,
       fileValue: {
         size: file.size,
         name: file.name,
-        fileBase64: window.btoa(result),
+        fileBase64: result,
       },
     });
   };
