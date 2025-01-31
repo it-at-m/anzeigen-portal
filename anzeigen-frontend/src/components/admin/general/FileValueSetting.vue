@@ -56,7 +56,6 @@ const updateFile = (files: File | File[] | undefined) => {
   const reader = new FileReader();
   reader.onloadend = function () {
     const result = (reader.result as string).split(",")[1];
-    console.log((reader.result as string).split(",")[0]);
 
     settingStore.setSetting({
       ...computedSetting.value,
