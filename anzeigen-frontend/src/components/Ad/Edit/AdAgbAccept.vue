@@ -8,14 +8,20 @@
     <template #label>
       <p>
         Ich bin mit den
-        <a @click="clickedFileDownload('AGB_FILE')">
+        <a
+          class="text-decoration-underline link-color"
+          @click="clickedFileDownload('AGB_FILE')"
+        >
           Nutzungsbedingungen (AGB)
         </a>
         einverstanden. Das Schwarze Brett darf nur zu rein privaten Zwecken
         genutzt werden. Insbesondere Werbung kommerzieller Art ist nicht
         gestattet! Informationen zur Verarbeitung personenbezogener Daten
         enthalten die
-        <a @click="clickedFileDownload('DATENSCHUTZHINWEISE_FILE')">
+        <a
+          class="text-decoration-underline link-color"
+          @click="clickedFileDownload('DATENSCHUTZHINWEISE_FILE')"
+        >
           Datenschutzhinweise
         </a>
         .
@@ -52,3 +58,9 @@ const clickedFileDownload = (settingName: SettingTOSettingNameEnum) => {
   }
 };
 </script>
+
+<style scoped>
+.link-color {
+  color: #0066cc;
+}
+</style>
