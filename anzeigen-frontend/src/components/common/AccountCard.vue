@@ -18,12 +18,15 @@
 import { useRouter } from "vue-router";
 
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
-import { DEFAULT_BOARD_QUERIES, ROUTES_MYBOARD } from "@/Constants";
+import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
+import { ROUTES_MYBOARD } from "@/Constants";
 import { useUserStore } from "@/stores/user";
 
 const router = useRouter();
 
 const userStore = useUserStore();
+
+const defaultQuery = useDefaultQuery();
 
 const { loading = false } = defineProps<{
   loading?: boolean;
@@ -35,7 +38,7 @@ const { loading = false } = defineProps<{
 const routeTo = () => {
   router.push({
     name: ROUTES_MYBOARD,
-    query: DEFAULT_BOARD_QUERIES,
+    query: defaultQuery.value,
   });
 };
 </script>

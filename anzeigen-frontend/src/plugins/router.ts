@@ -2,9 +2,15 @@ import type { RouteLocationNormalizedGeneric } from "vue-router";
 
 import { createRouter, createWebHashHistory } from "vue-router";
 
-import { ROUTES_AD, ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
+import {
+  ROUTES_AD,
+  ROUTES_ADMIN,
+  ROUTES_BOARD,
+  ROUTES_MYBOARD,
+} from "@/Constants";
 import AdBoard from "@/views/AdBoard.vue";
 import AdDetailsView from "@/views/AdDetailsView.vue";
+import AdminBoard from "@/views/AdminBoard.vue";
 
 const routes = [
   {
@@ -23,6 +29,12 @@ const routes = [
     path: "/ad",
     name: ROUTES_AD,
     component: AdDetailsView,
+    meta: {},
+  },
+  {
+    path: "/admin",
+    name: ROUTES_ADMIN,
+    component: AdminBoard,
     meta: {},
   },
   {
@@ -47,5 +59,9 @@ const router = createRouter({
     };
   },
 });
+
+/**
+ * Admin navigation guard
+ */
 
 export default router;
