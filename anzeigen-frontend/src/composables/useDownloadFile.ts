@@ -17,17 +17,35 @@ export const useDownloadFile = () => {
     await getFile({ id: id });
 
     if (fileData.value && fileData.value.fileBase64 && fileData.value.name) {
-      const blob = new Blob([window.atob(fileData.value?.fileBase64)], {
-        type: "application/pdf",
-      });
-      console.log(blob.size, ":", fileData.value.fileBase64.length);
-      const fileURL = URL.createObjectURL(blob);
-      const downloadLink = document.createElement("a");
-
-      downloadLink.href = fileURL;
-      downloadLink.download = fileData.value.name;
-      document.body.appendChild(downloadLink);
-      downloadLink.click();
+      const a = document.createElement("a");
+      a.href =
+        "data:" +
+        getFileExtension(fileData.value.fileBase64) +
+        ";base64," +
+        fileData.value.fileBase64;
+      a.download = fileData.value.name;
+      a.click();
     }
   };
+};
+
+/**
+ * Improve this later - use real magic numbers instead
+ * @param value
+ */
+const getFileExtension = (value: string) => {
+  /**
+   * Bestimmt den MIME-Typ anhand des ersten Zeichens eines Strings.
+   * @param {string} value - Der zu analysierende String.
+   * @returns {string} Der erkannte MIME-Typ oder 'unknown' bei unbekanntem Typ.
+   */
+  const mapping: Record<string, string> = {
+    "/": "image/jpeg",
+    i: "image/png",
+    R: "image/gif",
+    U: "image/webp",
+    J: "application/pdf",
+  };
+
+  return mapping[value.charAt(0)] || "unknown";
 };
