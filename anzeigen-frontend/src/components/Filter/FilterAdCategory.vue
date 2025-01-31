@@ -4,7 +4,7 @@
     <template #text>
       <v-skeleton-loader
         type="heading@8"
-        :loading="loading"
+        :loading="categoriesStore.isEmpty"
       >
         <v-tabs
           v-model="selectedCategory"
@@ -70,6 +70,8 @@ const selectedCategory = ref<AdCategory>(NO_CATEGORY);
  * Initializes and manages category selection and data fetching for categories.
  */
 onMounted(() => {
+  // TODO: store is empty at startup
+
   // Set initial category selection if a query is provided.
   if (categoryQuery.value && categoriesStore.categories.length !== 0) {
     // search for matching category and set it
