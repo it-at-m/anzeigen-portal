@@ -7,13 +7,13 @@
         :loading="categoriesStore.isEmpty"
       >
         <v-tabs
-          v-model="selectedCategory"
+          v-model="selectedCategoryId"
           class="w-100"
           direction="vertical"
         >
           <v-tab
-            :key="-1"
-            :value="NO_CATEGORY"
+            :key="NO_CATEGORY.id"
+            :value="NO_CATEGORY.id"
           >
             <template #prepend>
               <v-icon
@@ -26,7 +26,7 @@
           <v-tab
             v-for="category in categoriesStore.categories"
             :key="category.id"
-            :value="category"
+            :value="category.id"
           >
             <template #prepend>
               <v-icon
@@ -43,19 +43,12 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory } from "@/api/swbrett";
-
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { QUERY_NAME_CATEGORYID } from "@/Constants.ts";
+import { NO_CATEGORY, QUERY_NAME_CATEGORYID } from "@/Constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory";
-
-/**
- * Standard for no category selection.
- */
-const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 
 const categoriesStore = useCategoriesStore();
 
@@ -64,38 +57,23 @@ const categoryQuery = useRouteQuery(QUERY_NAME_CATEGORYID);
 /**
  * Internal state of current selected category.
  */
-const selectedCategory = ref<AdCategory>(NO_CATEGORY);
+const selectedCategoryId = ref<number>(-1);
 
 /**
  * Initializes and manages category selection and data fetching for categories.
  */
 onMounted(() => {
-  // TODO: store is empty at startup
-
-  // Set initial category selection if a query is provided.
-  if (categoryQuery.value && categoriesStore.categories.length !== 0) {
-    // search for matching category and set it
-    selectedCategory.value =
-      categoriesStore.categories.find(
-        (category) =>
-          category.id && category.id.toString() === categoryQuery.value
-      ) || selectedCategory.value;
-  }
+  selectedCategoryId.value = categoryQuery.value
+    ? parseInt(categoryQuery.value.toString())
+    : -1;
 });
 
 /**
  * Watches for changes in the selected category and updates the query parameter accordingly.
  */
-watch(selectedCategory, (newSelectedCategory) => {
-  if (
-    newSelectedCategory === undefined ||
-    !newSelectedCategory.id ||
-    newSelectedCategory?.id === -1
-  ) {
-    categoryQuery.value = null;
-  } else {
-    categoryQuery.value = newSelectedCategory.id.toString();
-  }
+watch(selectedCategoryId, (newSelectedCategoryId) => {
+  categoryQuery.value =
+    newSelectedCategoryId === -1 ? null : newSelectedCategoryId.toString();
 });
 </script>
 

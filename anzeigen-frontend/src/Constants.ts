@@ -43,6 +43,7 @@ export const ADMIN_AUTHORITIES = [
   "REFARCH_BACKEND_WRITE_THEENTITY",
   "REFARCH_BACKEND_DELETE_THEENTITY",
 ];
+export const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 export const ALLOWED_FILE_TYPES =
   "image/png, image/jpeg, image/jpg, application/pdf";
 export const ALLOWED_IMAGE_TYPES = "image/png, image/jpeg, image/jpg";
