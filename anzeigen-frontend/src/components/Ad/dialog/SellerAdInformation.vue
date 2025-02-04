@@ -38,7 +38,7 @@ import type { AdTO } from "@/api/swbrett";
 
 import { useTemplateRef, watch } from "vue";
 
-import AdDateSelector from "@/components/Ad/Edit/AdDateSelector.vue";
+import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });

@@ -45,8 +45,8 @@ import { useRouteQuery } from "@vueuse/router";
 import { computed, onMounted, ref, watch } from "vue";
 import { useRouter } from "vue-router";
 
-import AdNotFound from "@/components/Ad/Details/AdNotFound.vue";
-import AdOverview from "@/components/Ad/Details/AdOverview.vue";
+import AdNotFound from "@/components/Ad/details/AdNotFound.vue";
+import AdOverview from "@/components/Ad/details/AdOverview.vue";
 import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useClearCacheEventBus } from "@/composables/useEventBus";

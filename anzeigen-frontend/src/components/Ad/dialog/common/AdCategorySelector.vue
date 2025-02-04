@@ -17,7 +17,7 @@
 <script setup lang="ts">
 import type { AdCategory } from "@/api/swbrett";
 
-import { useCategoriesStore } from "@/stores/adcategory";
+import { useCategoriesStore } from "@/stores/adcategory.ts";
 
 const categoryStore = useCategoriesStore();
 

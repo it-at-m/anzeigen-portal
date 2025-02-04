@@ -74,7 +74,7 @@ import { useTitle } from "@vueuse/core";
 import { computed, onMounted } from "vue";
 
 import { Levels } from "@/api/error.ts";
-import SearchAd from "@/components/Filter/SearchAd.vue";
+import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import {
   useCreateUser,
