@@ -103,14 +103,14 @@ import { computed } from "vue";
 import { useRouter } from "vue-router";
 
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
-import AdArtChip from "@/components/Ad/AdArtChip.vue";
-import AdCategoryChip from "@/components/Ad/AdCategoryChip.vue";
-import AdEditButton from "@/components/Ad/AdEditButton.vue";
-import AdPrice from "@/components/Ad/AdPrice.vue";
-import AdViewCountChip from "@/components/Ad/AdViewCountChip.vue";
-import { useDialogEventBus } from "@/composables/useEventBus";
-import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants";
-import { useUserStore } from "@/stores/user";
+import AdArtChip from "@/components/Ad/list/AdArtChip.vue";
+import AdCategoryChip from "@/components/Ad/list/AdCategoryChip.vue";
+import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
+import AdPrice from "@/components/Ad/list/AdPrice.vue";
+import AdViewCountChip from "@/components/Ad/list/AdViewCountChip.vue";
+import { useDialogEventBus } from "@/composables/useEventBus.ts";
+import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants.ts";
+import { useUserStore } from "@/stores/user.ts";
 
 const router = useRouter();
 

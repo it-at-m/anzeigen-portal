@@ -46,7 +46,7 @@ import type { GetAdsRequest } from "@/api/swbrett";
 import { computed, onMounted, watch } from "vue";
 import { useRoute } from "vue-router";
 
-import AdCard from "@/components/Ad/AdCard.vue";
+import AdCard from "@/components/Ad/list/AdCard.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";

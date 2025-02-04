@@ -24,13 +24,13 @@ import { computed } from "vue";
 import { useRoute } from "vue-router";
 
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
-import AdEditButton from "@/components/Ad/AdEditButton.vue";
+import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
-import FilterAdCategory from "@/components/Filter/FilterAdCategory.vue";
-import FilterAdType from "@/components/Filter/FilterAdType.vue";
-import SortAdSelection from "@/components/Filter/SortAdSelection.vue";
-import UserFilter from "@/components/Filter/UserFilter.vue";
+import FilterAdCategory from "@/components/filter/FilterAdCategory.vue";
+import FilterAdType from "@/components/filter/FilterAdType.vue";
+import SortAdSelection from "@/components/filter/SortAdSelection.vue";
+import UserFilter from "@/components/filter/UserFilter.vue";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useDialogEventBus } from "@/composables/useEventBus";
 import {
