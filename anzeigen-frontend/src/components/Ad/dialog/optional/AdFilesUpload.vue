@@ -153,7 +153,7 @@ const uploadedFile = async (uploads: File[] | File) => {
       toReturn.push({
         size: file.size,
         name: file.name,
-        fileBase64: window.btoa(result),
+        fileBase64: result,
       });
     };
 

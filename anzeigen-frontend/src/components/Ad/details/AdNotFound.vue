@@ -24,7 +24,7 @@
             <router-link
               :to="{
                 name: ROUTES_BOARD,
-                query: DEFAULT_BOARD_QUERIES,
+                query: defaultQuery,
               }"
             >
               Klicken Sie hier um zur Übersicht zurückzukehren.
@@ -39,7 +39,10 @@
 <script setup lang="ts">
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
-import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
+import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
+import { ROUTES_BOARD } from "@/Constants";
+
+const defaultQuery = useDefaultQuery();
 </script>
 
 <style scoped></style>

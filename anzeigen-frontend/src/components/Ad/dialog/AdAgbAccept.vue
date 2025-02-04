@@ -8,22 +8,36 @@
     <template #label>
       <p>
         Ich bin mit den
-        <a :href="agbFile">Nutzungsbedingungen (AGB)</a> einverstanden. Das
-        Schwarze Brett darf nur zu rein privaten Zwecken genutzt werden.
-        Insbesondere Werbung kommerzieller Art ist nicht gestattet!
-        Informationen zur Verarbeitung personenbezogener Daten enthalten die
-        <a :href="securityFile">Datenschutzhinweise</a>.
+        <a
+          class="text-decoration-underline link-color"
+          @click="clickedFileDownload('AGB_FILE')"
+        >
+          Nutzungsbedingungen (AGB)
+        </a>
+        einverstanden. Das Schwarze Brett darf nur zu rein privaten Zwecken
+        genutzt werden. Insbesondere Werbung kommerzieller Art ist nicht
+        gestattet! Informationen zur Verarbeitung personenbezogener Daten
+        enthalten die
+        <a
+          class="text-decoration-underline link-color"
+          @click="clickedFileDownload('DATENSCHUTZHINWEISE_FILE')"
+        >
+          Datenschutzhinweise
+        </a>
+        .
       </p>
     </template>
   </v-checkbox>
 </template>
 
 <script setup lang="ts">
-import { useObjectUrl } from "@vueuse/core";
-import { onMounted, ref } from "vue";
+import type { SettingTOSettingNameEnum } from "@/api/swbrett";
 
-import AGB from "@/static/AGB-1.pdf";
-import SecInfo from "@/static/Datenschutzhinweise.pdf";
+import { useDownloadFile } from "@/composables/useDownloadFile.ts";
+import { useSettingStore } from "@/stores/settings.ts";
+
+const settingStore = useSettingStore();
+const downloadFile = useDownloadFile();
 
 /**
  * Value if checkbox is checked
@@ -37,28 +51,16 @@ defineProps<{
   disabled?: boolean;
 }>();
 
-/**
- * Blob and objectUrl for AGB
- */
-const agbBlob = ref();
-const agbFile = useObjectUrl(agbBlob);
-
-/**
- * Blob and objectUrl for Datenschutzhinweise
- */
-const securityBlob = ref();
-const securityFile = useObjectUrl(securityBlob);
-
-/**
- * Load files on mount
- */
-onMounted(async () => {
-  const [agbResponse, secResponse] = await Promise.all([
-    fetch(AGB),
-    fetch(SecInfo),
-  ]);
-
-  agbBlob.value = await agbResponse.blob();
-  securityBlob.value = await secResponse.blob();
-});
+const clickedFileDownload = (settingName: SettingTOSettingNameEnum) => {
+  const setting = settingStore.getSetting(settingName);
+  if (setting?.fileValue?.id) {
+    downloadFile(setting?.fileValue?.id);
+  }
+};
 </script>
+
+<style scoped>
+.link-color {
+  color: #0066cc;
+}
+</style>

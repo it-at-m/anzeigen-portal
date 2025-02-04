@@ -91,28 +91,6 @@
     </v-row>
     <v-row>
       <v-col
-        v-if="adDetails.adFiles?.length !== 0"
-        cols="12"
-        lg="6"
-      >
-        <ad-display-card
-          :loading="getFileLoading"
-          :disabled="getFileLoading"
-        >
-          <template #subtitle>Weitere Informationen</template>
-          <template #text>
-            <icon-text
-              v-for="i in adDetails.adFiles"
-              :key="i.id"
-              class="mb-2 cursor-pointer"
-              :label="i.name!"
-              icon="link-variant"
-              @click="downloadFile(i.id!)"
-            />
-          </template>
-        </ad-display-card>
-      </v-col>
-      <v-col
         cols="12"
         lg="6"
       >
@@ -142,6 +120,25 @@
           </template>
         </ad-display-card>
       </v-col>
+      <v-col
+        v-if="adDetails.adFiles?.length !== 0"
+        cols="12"
+        lg="6"
+      >
+        <ad-display-card>
+          <template #subtitle>Weitere Informationen</template>
+          <template #text>
+            <icon-text
+              v-for="i in adDetails.adFiles"
+              :key="i.id"
+              class="mb-2 cursor-pointer"
+              :label="i.name!"
+              icon="link-variant"
+              @click="downloadFile(i.id!)"
+            />
+          </template>
+        </ad-display-card>
+      </v-col>
     </v-row>
   </v-container>
 </template>
@@ -157,17 +154,17 @@ import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
-import { useGetFile } from "@/composables/api/useFilesApi";
+import { useDownloadFile } from "@/composables/useDownloadFile.ts";
 import { DATE_DISPLAY_FORMAT } from "@/Constants";
 import router from "@/plugins/router";
+
+const downloadFile = useDownloadFile();
 
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
 }>();
 
 const currentLink = computed(() => window.location.href);
-
-const { call: getFile, data: fileData, loading: getFileLoading } = useGetFile();
 
 /**
  * Computes the ad type, returning "Suche" for SEEK and "Biete" for other ad types.
@@ -187,26 +184,6 @@ const routeToUser = (id: number) => {
       userId: id,
     },
   });
-};
-
-/**
- * Downloads a file based on the provided ID.
- * Retrieves the file, creates a Blob, and triggers a download.
- * @param id - The ID of the file to download.
- */
-const downloadFile = async (id: number) => {
-  await getFile({ id: id });
-
-  if (fileData.value && fileData.value.fileBase64 && fileData.value.name) {
-    const blob = new Blob([fileData.value?.fileBase64]);
-    const fileURL = URL.createObjectURL(blob);
-    const downloadLink = document.createElement("a");
-
-    downloadLink.href = fileURL;
-    downloadLink.download = fileData.value.name;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-  }
 };
 </script>
 

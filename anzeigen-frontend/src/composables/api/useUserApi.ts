@@ -5,15 +5,12 @@ import type {
 } from "@/api/swbrett";
 import type User from "@/types/User";
 
-import { inject } from "vue";
-
 import { getUser } from "@/api/user-client";
 import { useApiCall } from "@/composables/api/useApiCall";
-import { DEFAULT_API_KEY } from "@/composables/useApi";
+import { ApiFactory } from "@/util/apiFactory.ts";
 
 export const useCreateUser = () => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   return useApiCall<CreateUserRequest, SwbUserTO>((params: CreateUserRequest) =>
     api.createUser(params)
@@ -21,8 +18,7 @@ export const useCreateUser = () => {
 };
 
 export const useFindUser = () => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   return useApiCall<FindUserRequest, SwbUserTO>((params: FindUserRequest) =>
     api.findUser(params)

@@ -7,6 +7,7 @@ import de.muenchen.anzeigenportal.swbrett.settings.repository.SettingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,20 +21,22 @@ public class SettingService {
     @Autowired
     private SettingMapper mapper;
 
+    @Transactional
     public List<SettingTO> getAllSettings() {
         final List<Setting> all = repository.findAll();
         return all.stream().map(mapper::toSettingTO).collect(Collectors.toList());
     }
 
+    @Transactional
     public SettingTO getSetting(final SettingName name) {
         final Setting setting = repository.findBySettingName(name);
         return mapper.toSettingTO(setting);
     }
 
-    public SettingTO createSetting(final SettingTO settingTO) {
+    public void createSetting(final SettingTO settingTO) {
         final Setting setting = mapper.toSetting(settingTO);
         final Setting savedSetting = repository.save(setting);
-        return mapper.toSettingTO(savedSetting);
+        mapper.toSettingTO(savedSetting);
     }
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())")

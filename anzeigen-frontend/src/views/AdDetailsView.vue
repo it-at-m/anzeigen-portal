@@ -48,12 +48,14 @@ import { useRouter } from "vue-router";
 import AdNotFound from "@/components/Ad/details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/details/AdOverview.vue";
 import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi";
+import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useClearCacheEventBus } from "@/composables/useEventBus";
-import { DEFAULT_BOARD_QUERIES, ROUTES_BOARD } from "@/Constants";
+import { ROUTES_BOARD } from "@/Constants";
 
 const clearCacheEventBus = useClearCacheEventBus();
 
 const idQuery = useRouteQuery("id");
+const defaultQuery = useDefaultQuery();
 
 const router = useRouter();
 
@@ -124,7 +126,7 @@ const back = () => {
   } else {
     router.push({
       name: ROUTES_BOARD,
-      query: DEFAULT_BOARD_QUERIES,
+      query: defaultQuery.value,
     });
   }
 };

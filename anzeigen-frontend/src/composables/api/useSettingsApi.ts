@@ -1,23 +1,31 @@
-import type { GetSettingRequest, SettingTO } from "@/api/swbrett";
-
-import { inject } from "vue";
+import type {
+  GetSettingRequest,
+  SettingTO,
+  UpdateSettingsRequest,
+} from "@/api/swbrett";
 
 import { useApiCall } from "@/composables/api/useApiCall.ts";
-import { DEFAULT_API_KEY } from "@/composables/useApi.ts";
+import { ApiFactory } from "@/util/apiFactory.ts";
+
+export const useGetSetting = () => {
+  const api = ApiFactory.getInstance();
+
+  return useApiCall<GetSettingRequest, SettingTO>((params) =>
+    api.getSetting(params)
+  );
+};
 
 export const useGetSettings = () => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+  const api = ApiFactory.getInstance();
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
   return useApiCall<void, SettingTO[]>(() => api.getSettings());
 };
 
-export const useGetSetting = () => {
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const api = inject(DEFAULT_API_KEY)!;
+export const usePutSettings = () => {
+  const api = ApiFactory.getInstance();
 
-  return useApiCall<GetSettingRequest, SettingTO>((params) =>
-    api.getSetting(params)
+  return useApiCall<UpdateSettingsRequest, SettingTO[]>((params) =>
+    api.updateSettings(params)
   );
 };

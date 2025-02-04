@@ -1,7 +1,7 @@
 /**
  * Types of sorting criteria.
  */
-type Criteria = "title" | "price" | "creationDate";
+type Criteria = "title" | "price" | "creationDateTime";
 
 /**
  * Represents the value of a sorting criterion with its order.
