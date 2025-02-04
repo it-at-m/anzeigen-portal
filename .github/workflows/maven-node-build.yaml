@@ -24,7 +24,7 @@ jobs:
         uses: it-at-m/.github/.github/actions/action-npm-build@main
         with:
           app-path:  "${{ matrix.app-path }}"
-          node-version: "20"
+          node-version: "22"
       - if:  ${{hashFiles(format('./{0}/pom.xml', matrix.app-path))!=null}}
         id: maven
         uses: it-at-m/.github/.github/actions/action-maven-build@main
