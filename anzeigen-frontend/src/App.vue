@@ -23,8 +23,12 @@
                   }"
                 >
                   <v-toolbar-title class="font-weight-bold">
-                    <span class="text-white">Schwarzes </span>
-                    <span class="text-secondary">Brett</span>
+                    <span class="text-white"
+                      >{{ t("common.titleFirst") }}
+                    </span>
+                    <span class="text-secondary">
+                      {{ t("common.titleSecond") }}
+                    </span>
                   </v-toolbar-title>
                 </router-link>
               </v-col>
@@ -72,6 +76,7 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 import { computed, onMounted } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import SearchAd from "@/components/filter/SearchAd.vue";
@@ -90,6 +95,8 @@ import { API_ERROR_MSG, ROUTES_ADMIN, ROUTES_BOARD } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user.ts";
+
+const { t } = useI18n();
 
 useApi();
 
