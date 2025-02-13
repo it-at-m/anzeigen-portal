@@ -20,7 +20,7 @@ public interface AdRepositoryCustom {
             Pageable pageable,
             Long adId);
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
     Page<AdTO> searchDeactivatedAds(String userId,
             String searchTerm,
             Long categoryId,

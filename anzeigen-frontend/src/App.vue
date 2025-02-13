@@ -1,6 +1,7 @@
 <template>
   <v-app>
     <the-snackbar-queue />
+    <no-permison-dialog :activator="noPermission" />
     <v-app-bar color="primary">
       <v-container class="ad-max-width">
         <v-row
@@ -71,9 +72,10 @@
 
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
-import { computed, onMounted } from "vue";
+import { computed, onMounted, ref } from "vue";
 
 import { Levels } from "@/api/error.ts";
+import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import {
@@ -104,13 +106,19 @@ const userStore = useUserStore();
 const snackbar = useSnackbar();
 const categoriesStore = useCategoriesStore();
 
+const noPermission = ref<boolean>(false);
+
 const {
   call: userInfoCall,
   data: userInfoData,
   error: userInfoError,
 } = useUserInfo();
 
-const { call: findUserCall, data: findUserData } = useFindUser();
+const {
+  call: findUserCall,
+  data: findUserData,
+  error: findUserError,
+} = useFindUser();
 
 const { call: createUserCall, data: createUserData } = useCreateUser();
 
@@ -161,10 +169,16 @@ const loadUser = async () => {
       },
     });
   }
+  if (findUserError.value) {
+    // User does not have the proper authorities
+    noPermission.value = true;
+    snackbar.reset();
+    return;
+  }
 
   snackbar.sendMessage({
     level: findUserData.value?.id ? Levels.INFO : Levels.SUCCESS,
-    message: `Willkommen ${findUserData.value?.id ? "" : "zurück"} ${currentUser.value?.displayName}.`,
+    message: `Willkommen ${findUserData.value?.id ? "zurück" : ""} ${currentUser.value?.displayName || userInfoData.value?.displayName}.`,
   });
 
   userStore.setUserId(currentUser.value?.id || -1);

@@ -1,5 +1,6 @@
 package de.muenchen.anzeigenportal.configuration;
 
+import de.muenchen.anzeigenportal.security.AuthoritiesEnum;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
@@ -46,7 +47,7 @@ public class SecurityConfiguration {
                         AntPathRequestMatcher.antMatcher("/actuator/metrics"))
                         .permitAll())
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/**")
-                        .authenticated())
+                        .hasAnyAuthority(AuthoritiesEnum.ANWENDER.name(), AuthoritiesEnum.FACHADMIN.name()))
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer
                         .jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(new JwtUserInfoAuthenticationConverter(
                                 new UserInfoAuthoritiesService(userInfoUri, restTemplateBuilder)))));
