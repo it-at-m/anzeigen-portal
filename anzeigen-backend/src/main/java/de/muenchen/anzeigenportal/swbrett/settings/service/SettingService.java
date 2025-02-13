@@ -39,7 +39,7 @@ public class SettingService {
         mapper.toSettingTO(savedSetting);
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
     public List<SettingTO> saveSettings(final List<SettingTO> settingTOs) {
         final List<Setting> settings = settingTOs.stream().map(mapper::toSetting).collect(Collectors.toList());
         final List<Setting> savedSettings = repository.saveAll(settings);

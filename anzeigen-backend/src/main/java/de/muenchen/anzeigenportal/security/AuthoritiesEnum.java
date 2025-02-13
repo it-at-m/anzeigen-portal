@@ -9,9 +9,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * in the annotation e.g. {@link PreAuthorize}.
  */
 public enum AuthoritiesEnum {
-    REFARCH_BACKEND_READ_THEENTITY,
-    REFARCH_BACKEND_WRITE_THEENTITY,
-    REFARCH_BACKEND_DELETE_THEENTITY,
+    ANWENDER,
+    FACHADMIN,
     // add your authorities here and also add these new authorities to sso-authorisation.json.
 
 }
