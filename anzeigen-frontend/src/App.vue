@@ -178,7 +178,7 @@ const loadUser = async () => {
 
   snackbar.sendMessage({
     level: findUserData.value?.id ? Levels.INFO : Levels.SUCCESS,
-    message: `Willkommen ${findUserData.value?.id ? "" : "zurück"} ${currentUser.value?.displayName}.`,
+    message: `Willkommen ${findUserData.value?.id ? "zurück" : ""} ${currentUser.value?.displayName || userInfoData.value?.displayName}.`,
   });
 
   userStore.setUserId(currentUser.value?.id || -1);
