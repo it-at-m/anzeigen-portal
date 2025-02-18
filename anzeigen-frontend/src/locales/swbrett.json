@@ -52,5 +52,11 @@
   "adCategorySelector": {
     "ruleMsg": "Bitte wählen Sie eine Kategorie aus.",
     "placeholder": "Kategorie"
+  },
+  "adPriceSelector": {
+    "label": "Preis",
+    "fixedPrice": "Festpreis",
+    "negotiation": "Verhandlungsbasis",
+    "toGiveAway": "Zu verschenken"
   }
 }

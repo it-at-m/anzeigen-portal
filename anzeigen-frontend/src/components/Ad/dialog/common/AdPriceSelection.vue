@@ -7,7 +7,7 @@
       <v-number-input
         variant="outlined"
         density="compact"
-        label="Preis"
+        :label="t('adPriceSelector.label')"
         hide-details
         :min="0"
         color="accent"
@@ -43,22 +43,25 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { VNumberInput } from "vuetify/labs/components";
+
+const { t } = useI18n();
 
 /**
  * Array of available price options, representing different pricing methods.
  */
 const selectionArray = [
   {
-    title: "Festpreis",
+    title: t("adPriceSelector.fixedPrice"),
     value: 1,
   },
   {
-    title: "Verhandlungsbasis",
+    title: t("adPriceSelector.negotiation"),
     value: -1,
   },
   {
-    title: "Zu verschenken",
+    title: t("adPriceSelector.toGiveAway"),
     value: 0,
   },
 ];
