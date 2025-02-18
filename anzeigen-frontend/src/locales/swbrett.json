@@ -1,6 +1,16 @@
 {
   "common": {
     "titleFirst": "Schwarzes ",
-    "titleSecond": "Brett"
+    "titleSecond": "Brett",
+    "create": "Erstellen",
+    "save": "Speichern",
+    "delete": "Löschen"
+  },
+  "adDialog": {
+    "generalInformation": "Allgemeine Informationen",
+    "additionalInformation": "Weitere Informationen",
+    "sellerInformation": "Verkäufer Informationen",
+    "adCreate": "Anzeige erstellen",
+    "adEdit": "Anzeige bearbeiten"
   }
 }
