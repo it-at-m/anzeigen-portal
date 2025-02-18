@@ -83,5 +83,14 @@
   "optionalAdInformation": {
     "label": "Link (optional)",
     "ruleMsg": "Bitte geben Sie einen validen Link an."
+  },
+  "sellerAdInformation": {
+    "labelPhone": "Telefonnummer",
+    "labelEmail": "E-Mail Adresse",
+    "ruleMsg": {
+      "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
+      "invalidEmail": "Die E-Mail Adresse ist nicht valide",
+      "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
+    }
   }
 }
