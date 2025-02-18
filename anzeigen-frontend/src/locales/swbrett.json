@@ -12,7 +12,12 @@
       "offer": "Biete"
     },
     "adCreate": "Anzeige erstellen",
-    "adEdit": "Anzeige bearbeiten"
+    "adEdit": "Anzeige bearbeiten",
+    "priceOptions": {
+      "fixedPrice": "Festpreis",
+      "negotiation": "Verhandlungsbasis | VB",
+      "toGiveAway": "Zu verschenken"
+    }
   },
   "adDialog": {
     "generalInformation": "Allgemeine Informationen",
@@ -54,10 +59,7 @@
     "placeholder": "Kategorie"
   },
   "adPriceSelector": {
-    "label": "Preis",
-    "fixedPrice": "Festpreis",
-    "negotiation": "Verhandlungsbasis",
-    "toGiveAway": "Zu verschenken"
+    "label": "Preis"
   },
   "adFilesUpload": {
     "label": "Anhänge hochladen",

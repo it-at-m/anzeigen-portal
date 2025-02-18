@@ -53,15 +53,15 @@ const { t } = useI18n();
  */
 const selectionArray = [
   {
-    title: t("adPriceSelector.fixedPrice"),
+    title: t("ad.priceOptions.fixedPrice"),
     value: 1,
   },
   {
-    title: t("adPriceSelector.negotiation"),
+    title: t("ad.priceOptions.negotiation"),
     value: -1,
   },
   {
-    title: t("adPriceSelector.toGiveAway"),
+    title: t("ad.priceOptions.toGiveAway"),
     value: 0,
   },
 ];

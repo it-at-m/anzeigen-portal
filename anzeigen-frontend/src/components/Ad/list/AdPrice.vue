@@ -3,7 +3,7 @@
     v-if="toGiveAway"
     class="text-h5 text-accent font-weight-bold"
   >
-    Zu verschenken
+    {{ t("ad.priceOptions.toGiveAway") }}
   </p>
   <p
     v-else
@@ -15,8 +15,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
-const NEGOTIATE_TAG = "VB";
+const { t } = useI18n();
 
 const { price } = defineProps<{
   price: number;
@@ -30,7 +31,9 @@ const toGiveAway = computed(() => price === 0);
 /**
  * Computes the appendix tag based on the price, using a negotiate tag for negative prices.
  */
-const appendixTag = computed(() => (price < 0 ? NEGOTIATE_TAG : ""));
+const appendixTag = computed(() =>
+  price < 0 ? t("ad.priceOptions.negotiation", 0) : ""
+);
 </script>
 
 <style scoped></style>
