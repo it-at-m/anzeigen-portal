@@ -8,8 +8,8 @@
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
           <v-row>
-            <p v-if="isAdCreate">{{ t("adDialog.adCreate") }}</p>
-            <p v-else>{{ t("adDialog.adEdit") }}</p>
+            <p v-if="isAdCreate">{{ t("ad.adCreate") }}</p>
+            <p v-else>{{ t("ad.adEdit") }}</p>
           </v-row>
         </v-container>
       </v-card-title>

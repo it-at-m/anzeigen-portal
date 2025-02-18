@@ -10,14 +10,14 @@
     "type": {
       "search": "Suche",
       "offer": "Biete"
-    }
+    },
+    "adCreate": "Anzeige erstellen",
+    "adEdit": "Anzeige bearbeiten"
   },
   "adDialog": {
     "generalInformation": "Allgemeine Informationen",
     "additionalInformation": "Weitere Informationen",
-    "sellerInformation": "Verkäufer Informationen",
-    "adCreate": "Anzeige erstellen",
-    "adEdit": "Anzeige bearbeiten"
+    "sellerInformation": "Verkäufer Informationen"
   },
   "adList": {
     "noAdFound": {
