@@ -20,5 +20,9 @@
       "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
     },
     "loadMore": "Mehr Ergebnisse laden"
+  },
+  "adNotFound": {
+    "title": "Es konnte keine Anzeige gefunden werden",
+    "text": "Klicken Sie hier um zur Übersicht zurückzukehren."
   }
 }
