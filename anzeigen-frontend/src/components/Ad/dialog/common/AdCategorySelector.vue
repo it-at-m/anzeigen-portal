@@ -2,14 +2,14 @@
   <v-select
     :model-value="modelValue"
     density="compact"
-    placeholder="Kategorie"
+    :placeholder="t('adCategorySelector.placeholder')"
     color="accent"
     :disabled="disabled"
     :items="categoryStore.categories"
     item-title="name"
     item-value="id"
     item-color="accent"
-    :rules="[(value) => !!value || 'Bitte wählen Sie eine Kategorie aus.']"
+    :rules="[(value) => !!value || t('adCategorySelector.ruleMsg')]"
     @update:model-value="updatedSelection"
   />
 </template>
@@ -17,7 +17,11 @@
 <script setup lang="ts">
 import type { AdCategory } from "@/api/swbrett";
 
+import { useI18n } from "vue-i18n";
+
 import { useCategoriesStore } from "@/stores/adcategory.ts";
+
+const { t } = useI18n();
 
 const categoryStore = useCategoriesStore();
 

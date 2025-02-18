@@ -48,5 +48,9 @@
     "additionalInformationCard": {
       "title": "Weiter Informationen"
     }
+  },
+  "adCategorySelector": {
+    "ruleMsg": "Bitte wählen Sie eine Kategorie aus.",
+    "placeholder": "Kategorie"
   }
 }
