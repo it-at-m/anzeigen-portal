@@ -58,5 +58,9 @@
     "fixedPrice": "Festpreis",
     "negotiation": "Verhandlungsbasis",
     "toGiveAway": "Zu verschenken"
+  },
+  "adFilesUpload": {
+    "label": "Anhänge hochladen",
+    "selectionText": "Weitere Anhänge hochladen"
   }
 }

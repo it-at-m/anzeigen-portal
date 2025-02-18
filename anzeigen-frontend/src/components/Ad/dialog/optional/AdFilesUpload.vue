@@ -1,6 +1,6 @@
 <template>
   <v-file-input
-    label="Anhänge hochladen"
+    :label="t('adFilesUpload.label')"
     :model-value="computedFiles"
     :disabled="disabled"
     class="mb-4"
@@ -12,7 +12,7 @@
     density="compact"
     @update:model-value="uploadedFile"
   >
-    <template #selection>Weitere Anhänge hochladen</template>
+    <template #selection>{{ t("adFilesUpload.selectionText") }}</template>
   </v-file-input>
   <div
     class="pl-10"
@@ -36,6 +36,7 @@
 import type { SwbFileTO } from "@/api/swbrett";
 
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 import { VFileUploadItem } from "vuetify/labs/VFileUpload";
 
 import { Levels } from "@/api/error.ts";
@@ -46,6 +47,8 @@ import {
   TOO_MANY_FILES,
 } from "@/Constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
+
+const { t } = useI18n();
 
 const settingStore = useSettingStore();
 const snackbar = useSnackbar();
