@@ -62,5 +62,9 @@
   "adFilesUpload": {
     "label": "Anhänge hochladen",
     "selectionText": "Weitere Anhänge hochladen"
+  },
+  "adTitlePicture": {
+    "label": "Titelbild hochladen",
+    "ruleMsg": "Ein Titelbild wurde ausgewählt"
   }
 }

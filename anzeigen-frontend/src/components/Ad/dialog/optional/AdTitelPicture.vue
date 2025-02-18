@@ -1,6 +1,6 @@
 <template>
   <v-file-input
-    label="Titelbild hochladen"
+    :label="t('adTitlePicture.label')"
     variant="outlined"
     density="compact"
     hide-details="auto"
@@ -18,6 +18,7 @@
 import type { SwbImageTO } from "@/api/swbrett";
 
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import { useSanitizeImage } from "@/composables/api/useFilesApi.ts";
@@ -28,6 +29,8 @@ import {
   FILE_TYPE_INCORRECT,
 } from "@/Constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
+
+const { t } = useI18n();
 
 const settingStore = useSettingStore();
 const maxImageSize =
@@ -60,7 +63,7 @@ const computedPicture = computed(() => {
     return undefined;
   }
 
-  return new File([new Blob([""])], "Ein Titelbild wurde ausgewählt", {
+  return new File([new Blob([""])], t("adTitlePicture.ruleMsg"), {
     type: "image/jpeg",
   });
 });
