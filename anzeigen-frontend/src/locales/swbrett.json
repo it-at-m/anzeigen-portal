@@ -6,6 +6,12 @@
     "save": "Speichern",
     "delete": "Löschen"
   },
+  "ad": {
+    "type": {
+      "search": "Suche",
+      "offer": "Biete"
+    }
+  },
   "adDialog": {
     "generalInformation": "Allgemeine Informationen",
     "additionalInformation": "Weitere Informationen",
@@ -24,5 +30,23 @@
   "adNotFound": {
     "title": "Es konnte keine Anzeige gefunden werden",
     "text": "Klicken Sie hier um zur Übersicht zurückzukehren."
+  },
+  "adOverview": {
+    "detailsCard": {
+      "title": "Details",
+      "type": "Art",
+      "category": "Kategorie",
+      "creationDate": "Erstellungsdatum",
+      "expiryDate": "Ablaufdatum",
+      "views": "Aufrufe",
+      "directLink": "Direkter Link"
+    },
+    "contactCard": {
+      "title": "Kontakt",
+      "account": "weiter Anzeigen dieses Nutzers"
+    },
+    "additionalInformationCard": {
+      "title": "Weiter Informationen"
+    }
   }
 }
