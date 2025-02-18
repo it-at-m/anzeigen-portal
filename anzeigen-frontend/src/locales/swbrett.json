@@ -12,5 +12,13 @@
     "sellerInformation": "Verkäufer Informationen",
     "adCreate": "Anzeige erstellen",
     "adEdit": "Anzeige bearbeiten"
+  },
+  "adList": {
+    "noAdFound": {
+      "title": "Es konnte keine Anzeige gefunden werden",
+      "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu\n      finden.",
+      "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
+    },
+    "loadMore": "Mehr Ergebnisse laden"
   }
 }
