@@ -66,5 +66,13 @@
   "adTitlePicture": {
     "label": "Titelbild hochladen",
     "ruleMsg": "Ein Titelbild wurde ausgewählt"
+  },
+  "adDateSelector": {
+    "label": "Ablaufdatum",
+    "ruleMsg": {
+      "invalid": "Das Datum is nicht valide",
+      "pastDate": "Das Datum darf nicht in der Vergangenheit liegen!",
+      "maxDate": "Das Datum is zu weit in der Zukunft!"
+    }
   }
 }

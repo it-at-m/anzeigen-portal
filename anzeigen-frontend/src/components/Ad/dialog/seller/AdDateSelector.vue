@@ -5,7 +5,7 @@
     density="compact"
     color="accent"
     hide-details="auto"
-    label="Ablaufdatum"
+    :label="t('adDateSelector.label')"
     type="date"
     prepend-icon="mdi-calendar-range"
     :disabled="disabled"
@@ -16,8 +16,11 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { useSettingStore } from "@/stores/settings.ts";
+
+const { t } = useI18n();
 
 const DAYS_IN_WEEK = 7;
 
@@ -79,7 +82,9 @@ const valueChanged = (value: string) => {
  * @param value inputted date
  */
 const isDate = (value: string) =>
-  !value || !isNaN(new Date(value).getDate()) || "Das Datum is nicht valide";
+  !value ||
+  !isNaN(new Date(value).getDate()) ||
+  t("adDateSelector.ruleMsg.invalid");
 
 /**
  * Date must be in at least today or in the future
@@ -89,7 +94,7 @@ const isMinDate = (value: string) => {
   const selectedDate = new Date(value);
   return (
     (selectedDate && selectedDate >= new Date()) ||
-    "Das Datum darf nicht in der Vergangenheit liegen!"
+    t("adDateSelector.ruleMsg.pastDate")
   );
 };
 
@@ -101,7 +106,7 @@ const isMaxDate = (value: string) => {
   const selectedDate = new Date(value);
   return (
     (selectedDate && selectedDate <= maxAdvanceDate.value) ||
-    "Das Datum is zu weit in der Zukunft!"
+    t("adDateSelector.ruleMsg.maxDate")
   );
 };
 </script>
