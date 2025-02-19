@@ -24,9 +24,10 @@
     hide-details="auto"
     :label="t('commonAdInformation.titleLabel')"
     :rules="[
-      (value) => !!value || 'Bitte geben Sie einen Titel ein.',
+      (value) => !!value || t('commonAdInformation.ruleMsg.title'),
       (value) =>
-        value.length < AD_MAX_TITLE_LENGTH || 'Bitte kürzen Sie den Titel',
+        value.length < AD_MAX_TITLE_LENGTH ||
+        t('commonAdInformation.ruleMsg.titleToLong'),
     ]"
   />
   <ad-category-selector
@@ -40,12 +41,14 @@
     variant="outlined"
     density="compact"
     color="accent"
-    :label="t('commonAdInformation.description')"
+    :label="t('commonAdInformation.descriptionLabel')"
     class="my-4"
     hide-details="auto"
     max-rows="3"
     :disabled="disabled"
-    :rules="[(value) => !!value || t('commonAdInformation.ruleMsg')]"
+    :rules="[
+      (value) => !!value || t('commonAdInformation.ruleMsg.description'),
+    ]"
   />
   <ad-price-selection
     v-model="adTO.price!"
