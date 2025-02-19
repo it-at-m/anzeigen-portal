@@ -1,12 +1,12 @@
 import { createI18n } from "vue-i18n";
 
-import swbrett from "@/locales/swbrett.json";
+import deDe from "@/locales/deDe.json";
 
-export const supportedLocales = ["swbrett", "gebrauchtwarenboerse"];
+export const supportedLocales = ["deDe"];
 
 export type SupportedLocale = (typeof supportedLocales)[number];
 
-type MessageSchema = typeof swbrett;
+type MessageSchema = typeof deDe;
 
 export const defaultLocale: SupportedLocale = "swbrett";
 
@@ -14,7 +14,7 @@ const i18n = createI18n<[MessageSchema], SupportedLocale>({
   locale: defaultLocale,
   fallbackLocale: defaultLocale,
   messages: {
-    swbrett: Object.assign(swbrett),
+    swbrett: Object.assign(deDe),
   },
 });
 export default i18n;
