@@ -1,6 +1,6 @@
 <template>
   <ad-display-card>
-    <template #title>Nach Art filtern</template>
+    <template #title>{{ t("filterAdType.title") }}</template>
     <template #text>
       <v-checkbox
         v-model="isSeek"
@@ -23,10 +23,12 @@
 <script setup lang="ts">
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { QUERY_NAME_TYPE } from "@/Constants";
 
+const { t } = useI18n();
 /**
  * Internal state of current selected ad-type. Both can be true!
  */

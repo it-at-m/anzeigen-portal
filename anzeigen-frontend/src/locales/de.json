@@ -94,5 +94,17 @@
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
       "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
     }
+  },
+  "filterAdCategory": {
+    "title": "Nach Kategorie stöbern"
+  },
+  "filterAdType": {
+    "title": "Nach Art filtern"
+  },
+  "searchAd": {
+    "label": "Suche"
+  },
+  "sortAdSelection": {
+    "title": "Sortieren"
   }
 }

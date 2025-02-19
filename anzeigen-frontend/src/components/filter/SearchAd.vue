@@ -5,7 +5,7 @@
     flat
     variant="solo-inverted"
     hide-details
-    label="Suche"
+    :label="t('searchAd.label')"
     clearable
     prepend-inner-icon="mdi-magnify"
     theme="dark"
@@ -19,6 +19,9 @@
 import { useDebounceFn } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 /**
  * Internal representation of the current search value.
