@@ -23,9 +23,9 @@ import de.muenchen.anzeigenportal.domain.TheEntity;
 @PreAuthorize(TheEntityRepository.HAS_AUTHORITY_READ)
 public interface TheEntityRepository extends CrudRepository<TheEntity, UUID> { //NOSONAR
 
-    String HAS_AUTHORITY_READ = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_READ_THEENTITY.name())";
-    String HAS_AUTHORITY_WRITE = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())";
-    String HAS_AUTHORITY_DELETE = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())";
+    String HAS_AUTHORITY_READ = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())";
+    String HAS_AUTHORITY_WRITE = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())";
+    String HAS_AUTHORITY_DELETE = "hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())";
 
     /**
      * Name for the specific cache.

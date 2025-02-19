@@ -37,11 +37,7 @@ export const TOO_MANY_FILES = (amount: string) =>
 /**
  * Other constants
  */
-export const ADMIN_AUTHORITIES = [
-  "REFARCH_BACKEND_READ_THEENTITY",
-  "REFARCH_BACKEND_WRITE_THEENTITY",
-  "REFARCH_BACKEND_DELETE_THEENTITY",
-];
+export const ADMIN_AUTHORITIES = ["FACHADMIN"];
 export const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 export const ALLOWED_FILE_TYPES =
   "image/png, image/jpeg, image/jpg, application/pdf";

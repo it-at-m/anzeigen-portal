@@ -16,5 +16,7 @@ export const useSnackbar = () => {
     snackbarBus.emit(message);
   };
 
-  return { sendMessage };
+  const reset = () => snackbarBus.reset();
+
+  return { sendMessage, reset };
 };

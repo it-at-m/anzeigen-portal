@@ -161,13 +161,13 @@ public class AdService {
         }
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_DELETE_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
     public void deleteAd(final long id, HttpServletRequest request) {
         final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
         repository.delete(ad);
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).REFARCH_BACKEND_WRITE_THEENTITY.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
     public void updateAllCategories(final AdCategory oldCat, final AdCategory newCat) {
         final List<Ad> allAdsOfCategory = repository.findByAdCategory(oldCat);
 
