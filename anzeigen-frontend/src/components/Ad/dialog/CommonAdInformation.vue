@@ -6,11 +6,11 @@
     inline
   >
     <v-radio
-      label="Biete"
+      :label="t('ad.type.offer')"
       value="OFFER"
     />
     <v-radio
-      label="Suche"
+      :label="t('ad.type.search')"
       value="SEEK"
     />
   </v-radio-group>
@@ -22,11 +22,12 @@
     :disabled="disabled"
     class="mb-4"
     hide-details="auto"
-    label="Titel"
+    :label="t('commonAdInformation.titleLabel')"
     :rules="[
-      (value) => !!value || 'Bitte geben Sie einen Titel ein.',
+      (value) => !!value || t('commonAdInformation.ruleMsg.title'),
       (value) =>
-        value.length < AD_MAX_TITLE_LENGTH || 'Bitte kürzen Sie den Titel',
+        value.length < AD_MAX_TITLE_LENGTH ||
+        t('commonAdInformation.ruleMsg.titleToLong'),
     ]"
   />
   <ad-category-selector
@@ -35,21 +36,18 @@
     :disabled="disabled"
     hide-details="auto"
   />
-
   <v-textarea
     v-model="adTO.description"
     variant="outlined"
     density="compact"
     color="accent"
-    label="Beschreibung"
+    :label="t('commonAdInformation.descriptionLabel')"
     class="my-4"
     hide-details="auto"
     max-rows="3"
     :disabled="disabled"
     :rules="[
-      (value) =>
-        !!value ||
-        'Bitte geben Sie eine Beschreibung mit maximal 1000 Zeichen ein.',
+      (value) => !!value || t('commonAdInformation.ruleMsg.description'),
     ]"
   />
   <ad-price-selection
@@ -62,11 +60,13 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 
+const { t } = useI18n();
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 const price = defineModel<number>("price", { default: 1 });

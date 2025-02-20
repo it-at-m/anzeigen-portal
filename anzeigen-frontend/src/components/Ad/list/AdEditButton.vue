@@ -9,6 +9,9 @@
 
 <script setup lang="ts">
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 const emit = defineEmits<{
   click: [];
@@ -22,7 +25,7 @@ const { isEdit = false } = defineProps<{
  * Computes the text based on whether the component is in edit mode or not.
  */
 const computedText = computed(() =>
-  isEdit ? "Bearbeiten" : "Anzeige erstellen"
+  isEdit ? t("ad.adEdit") : t("ad.adCreate")
 );
 
 /**

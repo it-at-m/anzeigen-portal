@@ -8,10 +8,9 @@
     />
   </div>
   <ad-display-card v-if="adStore.isEmpty && !loading">
-    <template #title> Es konnte keine Anzeige gefunden werden </template>
+    <template #title> {{ t("adList.noAdFound.title") }} </template>
     <template #subtitle>
-      Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu
-      finden.
+      {{ t("adList.noAdFound.subTitle") }}
     </template>
     <template #text>
       <router-link
@@ -20,7 +19,7 @@
           query: defaultQuery,
         }"
       >
-        Klicken Sie hier um alle verfügbaren Anzeigen zu sehen.
+        {{ t("adList.noAdFound.text") }}
       </router-link>
     </template>
   </ad-display-card>
@@ -35,7 +34,7 @@
       color="accent"
       @click="getMoreAds"
     >
-      Mehr Ergebnisse laden
+      {{ t("adList.loadMore") }}
     </v-btn>
   </div>
 </template>
@@ -44,6 +43,7 @@
 import type { GetAdsRequest } from "@/api/swbrett";
 
 import { computed, onMounted, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
 import AdCard from "@/components/Ad/list/AdCard.vue";
@@ -54,6 +54,8 @@ import { useUpdateAdListEventBus } from "@/composables/useEventBus";
 import { ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
 import { useAdStore } from "@/stores/adStore";
 import { useUserStore } from "@/stores/user";
+
+const { t } = useI18n();
 
 const route = useRoute();
 const defaultQuery = useDefaultQuery();

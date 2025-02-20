@@ -8,15 +8,17 @@
       <v-card-title>
         <v-container class="mx-0 ad-max-width">
           <v-row>
-            <p v-if="isAdCreate">Anzeige erstellen</p>
-            <p v-else>Anzeige bearbeiten</p>
+            <p v-if="isAdCreate">{{ t("ad.adCreate") }}</p>
+            <p v-else>{{ t("ad.adEdit") }}</p>
           </v-row>
         </v-container>
       </v-card-title>
       <v-card-text :disabled="loading">
         <v-form v-model="form">
           <ad-display-card>
-            <template #subtitle> Allgemeine Informationen </template>
+            <template #subtitle>
+              {{ t("adDialog.generalInformation") }}
+            </template>
             <template #text>
               <common-ad-information
                 v-model="adTo"
@@ -26,7 +28,9 @@
           </ad-display-card>
           <v-divider />
           <ad-display-card>
-            <template #subtitle> Weitere Informationen </template>
+            <template #subtitle>
+              {{ t("adDialog.additionalInformation") }}
+            </template>
             <template #text>
               <optional-ad-information
                 v-model="adTo"
@@ -36,7 +40,9 @@
           </ad-display-card>
           <v-divider />
           <ad-display-card>
-            <template #subtitle> Verkäufer Informationen </template>
+            <template #subtitle>
+              {{ t("adDialog.sellerInformation") }}
+            </template>
             <template #text>
               <seller-ad-information
                 v-model="adTo"
@@ -67,7 +73,7 @@
               :disabled="loading"
               @click="deleteDialog = true"
             >
-              Löschen
+              {{ t("common.delete") }}
             </v-btn>
           </template>
         </yes-no-dialog>
@@ -86,8 +92,8 @@
           prepend-icon="mdi-content-save-outline"
           @click="writeAd"
         >
-          <p v-if="isAdCreate">Erstellen</p>
-          <p v-else>Speichern</p>
+          <p v-if="isAdCreate">{{ t("common.create") }}</p>
+          <p v-else>{{ t("common.save") }}</p>
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -98,6 +104,7 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdAgbAccept from "@/components/Ad/dialog/AdAgbAccept.vue";
 import CommonAdInformation from "@/components/Ad/dialog/CommonAdInformation.vue";
@@ -106,6 +113,8 @@ import SellerAdInformation from "@/components/Ad/dialog/SellerAdInformation.vue"
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import { useDialogEventBus } from "@/composables/useEventBus.ts";
+
+const { t } = useI18n();
 
 const dialog = defineModel<boolean>();
 
