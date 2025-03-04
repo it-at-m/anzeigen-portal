@@ -29,8 +29,10 @@ public final class AuthUtils {
     public static String getLhmObjectID() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+            log.debug("User authenticated: {}", jwtAuth.getTokenAttributes().getOrDefault(TOKEN_LHM_OBJECT_ID, null));
             return (String) jwtAuth.getTokenAttributes().getOrDefault(TOKEN_LHM_OBJECT_ID, null);
         } else {
+            log.debug("User not authenticated");
             return NAME_UNAUTHENTICATED_USER;
         }
     }
