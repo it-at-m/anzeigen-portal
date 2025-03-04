@@ -22,7 +22,7 @@
         </appender>
 
         <!-- Logger -->
-        <logger name="de.muenchen.anzeigenportal"
+        <logger name="de.muenchen.anzeigen-portal"
                 level="debug"
                 additivity="false">
             <appender-ref ref="STDOUT" />
@@ -44,7 +44,6 @@
         <root level="info">
             <appender-ref ref="STDOUT" />
         </root>
-
     </springProfile>
 
 
