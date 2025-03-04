@@ -50,7 +50,7 @@ public class UserService {
         final SwbUserTO currentUser = this.findUser(AuthUtils.getLhmObjectID())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));
 
-        log.debug("Current User: {}", currentUser.getLhmObjectId());
+        log.debug("Current User: {}", currentUser.getId());
 
         return currentUser.getId().equals(currentUserId);
     }
