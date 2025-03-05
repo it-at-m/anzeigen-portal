@@ -1,8 +1,7 @@
 package de.muenchen.anzeigenportal.configuration;
 
 import de.muenchen.anzeigenportal.security.AuthoritiesEnum;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.web.client.RestTemplateAutoConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +17,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 /**
  * The central class for configuration of all security aspects.
  */
+@RequiredArgsConstructor
 @Configuration
 @Profile("!no-security")
 @EnableWebSecurity
@@ -25,11 +25,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Import(RestTemplateAutoConfiguration.class)
 public class SecurityConfiguration {
 
-    @Autowired
-    private RestTemplateBuilder restTemplateBuilder;
+    private final RestTemplateBuilder restTemplateBuilder;
 
-    @Value("${security.oauth2.resource.user-info-uri}")
-    private String userInfoUri;
+    private final SecurityProperties securityProperties;
 
     @Bean
     public SecurityFilterChain filterChain(final HttpSecurity http) throws Exception {
@@ -50,7 +48,7 @@ public class SecurityConfiguration {
                         .hasAnyAuthority(AuthoritiesEnum.ANWENDER.name(), AuthoritiesEnum.FACHADMIN.name()))
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer
                         .jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(new JwtUserInfoAuthenticationConverter(
-                                new UserInfoAuthoritiesService(userInfoUri, restTemplateBuilder)))));
+                                new UserInfoAuthoritiesService(securityProperties.userInfoUri(), restTemplateBuilder)))));
 
         return http.build();
     }
