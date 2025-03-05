@@ -41,21 +41,27 @@
     <v-row>
       <v-col>
         <ad-display-card>
-          <template #subtitle>Details</template>
+          <template #subtitle>{{ t("adOverview.detailsCard.title") }}</template>
           <template #text>
             <v-container class="pl-0">
               <v-row>
-                <v-col class="py-0"> Art </v-col>
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.type") }}
+                </v-col>
                 <v-col class="py-0"> {{ adType }} </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0"> Kategorie </v-col>
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.category") }}
+                </v-col>
                 <v-col class="py-0">
                   {{ adDetails.adCategory?.name }}
                 </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0"> Erstellungsdatum </v-col>
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.creationDate") }}
+                </v-col>
                 <v-col class="py-0">
                   {{
                     useDateFormat(
@@ -66,17 +72,23 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0"> Ablaufdatum </v-col>
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.expiryDate") }}
+                </v-col>
                 <v-col class="py-0">
                   {{ useDateFormat(adDetails.expiryDate, DATE_DISPLAY_FORMAT) }}
                 </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0"> Aufrufe </v-col>
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.views") }}
+                </v-col>
                 <v-col class="py-0"> {{ adDetails.views }} </v-col>
               </v-row>
               <v-row>
-                <v-col class="py-0"> Direkter Link </v-col>
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.directLink") }}
+                </v-col>
                 <v-col class="py-0">
                   <icon-text
                     :label="currentLink"
@@ -95,7 +107,7 @@
         lg="6"
       >
         <ad-display-card>
-          <template #subtitle>Kontakt</template>
+          <template #subtitle>{{ t("adOverview.contactCard.title") }}</template>
           <template #text>
             <icon-text
               v-if="adDetails.phone"
@@ -114,7 +126,7 @@
               icon="account"
               link
               class="cursor-pointer mb-2"
-              label="weiter Anzeigen dieses Nutzers"
+              :label="t('adOverview.contactCard.account')"
               @click="routeToUser(adDetails.swbUser.id!)"
             />
           </template>
@@ -126,7 +138,9 @@
         lg="6"
       >
         <ad-display-card>
-          <template #subtitle>Weitere Informationen</template>
+          <template #subtitle>{{
+            t("adOverview.additionalInformationCard.title")
+          }}</template>
           <template #text>
             <icon-text
               v-for="i in adDetails.adFiles"
@@ -148,6 +162,7 @@ import type { AdTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
 import AdPrice from "@/components/Ad/list/AdPrice.vue";
@@ -155,8 +170,10 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
-import { DATE_DISPLAY_FORMAT } from "@/Constants";
+import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 import router from "@/plugins/router";
+
+const { t } = useI18n();
 
 const downloadFile = useDownloadFile();
 
@@ -170,7 +187,7 @@ const currentLink = computed(() => window.location.href);
  * Computes the ad type, returning "Suche" for SEEK and "Biete" for other ad types.
  */
 const adType = computed(() =>
-  adDetails.adType === "SEEK" ? "Suche" : "Biete"
+  adDetails.adType === "SEEK" ? t("ad.type.search") : t("ad.type.offer")
 );
 
 /**
@@ -179,7 +196,7 @@ const adType = computed(() =>
  */
 const routeToUser = (id: number) => {
   router.push({
-    path: "/board",
+    name: ROUTES_BOARD,
     query: {
       userId: id,
     },

@@ -2,67 +2,69 @@
   <ad-display-card>
     <template #title>Allgemeine Einstellungen</template>
     <template #text>
-      <v-row>
-        <v-col>
-          <text-value-setting setting-name="MOTD" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <text-select-value-setting setting-name="DEFAULT_SORTING" />
-        </v-col>
-        <v-col
-          cols="12"
-          md="6"
-        >
-          <text-select-value-setting setting-name="DEFAULT_ORDERING" />
-        </v-col>
-      </v-row>
+      <div class="mx-4">
+        <v-row>
+          <v-col>
+            <text-value-setting setting-name="MOTD" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <text-select-value-setting setting-name="DEFAULT_SORTING" />
+          </v-col>
+          <v-col
+            cols="12"
+            md="6"
+          >
+            <text-select-value-setting setting-name="DEFAULT_ORDERING" />
+          </v-col>
+        </v-row>
 
-      <v-row>
-        <v-col
-          v-for="settingName in NUMBER_VALUE_SETTINGS"
-          :key="settingName"
-          cols="12"
-          md="6"
-          lg="4"
-        >
-          <number-value-setting :setting-name="settingName" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col>
-          <file-value-setting setting-name="AGB_FILE" />
-          <file-value-setting setting-name="DATENSCHUTZHINWEISE_FILE" />
-        </v-col>
-      </v-row>
-      <v-row>
-        <v-col class="d-flex justify-end">
-          <v-btn
-            class="mr-2"
-            variant="outlined"
-            prepend-icon="mdi-undo-variant"
-            :disabled="!settingStore.isDirty || updateSettingsLoading"
-            color="accent"
-            @click="reloadSettings"
+        <v-row>
+          <v-col
+            v-for="settingName in NUMBER_VALUE_SETTINGS"
+            :key="settingName"
+            cols="12"
+            md="6"
+            lg="4"
           >
-            Änderungen verwerfen
-          </v-btn>
-          <v-btn
-            variant="flat"
-            :disabled="!settingStore.isDirty"
-            prepend-icon="mdi-content-save"
-            color="accent"
-            :loading="updateSettingsLoading"
-            @click="saveSettings"
-          >
-            Speichern
-          </v-btn>
-        </v-col>
-      </v-row>
+            <number-value-setting :setting-name="settingName" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <file-value-setting setting-name="AGB_FILE" />
+            <file-value-setting setting-name="DATENSCHUTZHINWEISE_FILE" />
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col class="d-flex justify-end">
+            <v-btn
+              class="mr-2"
+              variant="outlined"
+              prepend-icon="mdi-undo-variant"
+              :disabled="!settingStore.isDirty || updateSettingsLoading"
+              color="accent"
+              @click="reloadSettings"
+            >
+              Änderungen verwerfen
+            </v-btn>
+            <v-btn
+              variant="flat"
+              :disabled="!settingStore.isDirty"
+              prepend-icon="mdi-content-save"
+              color="accent"
+              :loading="updateSettingsLoading"
+              @click="saveSettings"
+            >
+              Speichern
+            </v-btn>
+          </v-col>
+        </v-row>
+      </div>
     </template>
   </ad-display-card>
 </template>

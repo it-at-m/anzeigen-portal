@@ -1,6 +1,6 @@
 <template>
   <ad-display-card>
-    <template #title>Nach Kategorie stöbern</template>
+    <template #title>{{ t("filterAdCategory.title") }}</template>
     <template #text>
       <v-skeleton-loader
         type="heading@8"
@@ -45,10 +45,13 @@
 <script setup lang="ts">
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { NO_CATEGORY, QUERY_NAME_CATEGORYID } from "@/Constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory";
+
+const { t } = useI18n();
 
 const categoriesStore = useCategoriesStore();
 

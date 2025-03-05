@@ -1,0 +1,114 @@
+{
+  "common": {
+    "titleFirst": "Schwarzes ",
+    "titleSecond": "Brett",
+    "create": "Erstellen",
+    "save": "Speichern",
+    "delete": "Löschen"
+  },
+  "ad": {
+    "type": {
+      "search": "Suche",
+      "offer": "Biete"
+    },
+    "adCreate": "Anzeige erstellen",
+    "adEdit": "Anzeige bearbeiten",
+    "priceOptions": {
+      "fixedPrice": "Festpreis",
+      "negotiation": "Verhandlungsbasis | VB",
+      "toGiveAway": "Zu verschenken"
+    }
+  },
+  "adDialog": {
+    "generalInformation": "Allgemeine Informationen",
+    "additionalInformation": "Weitere Informationen",
+    "sellerInformation": "Verkäufer Informationen"
+  },
+  "adList": {
+    "noAdFound": {
+      "title": "Es konnte keine Anzeige gefunden werden",
+      "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu\n      finden.",
+      "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
+    },
+    "loadMore": "Mehr Ergebnisse laden"
+  },
+  "adNotFound": {
+    "title": "Es konnte keine Anzeige gefunden werden",
+    "text": "Klicken Sie hier um zur Übersicht zurückzukehren."
+  },
+  "adOverview": {
+    "detailsCard": {
+      "title": "Details",
+      "type": "Art",
+      "category": "Kategorie",
+      "creationDate": "Erstellungsdatum",
+      "expiryDate": "Ablaufdatum",
+      "views": "Aufrufe",
+      "directLink": "Direkter Link"
+    },
+    "contactCard": {
+      "title": "Kontakt",
+      "account": "weiter Anzeigen dieses Nutzers"
+    },
+    "additionalInformationCard": {
+      "title": "Weiter Informationen"
+    }
+  },
+  "adCategorySelector": {
+    "ruleMsg": "Bitte wählen Sie eine Kategorie aus.",
+    "placeholder": "Kategorie"
+  },
+  "adPriceSelector": {
+    "label": "Preis"
+  },
+  "adFilesUpload": {
+    "label": "Anhänge hochladen",
+    "selectionText": "Weitere Anhänge hochladen"
+  },
+  "adTitlePicture": {
+    "label": "Titelbild hochladen",
+    "ruleMsg": "Ein Titelbild wurde ausgewählt"
+  },
+  "adDateSelector": {
+    "label": "Ablaufdatum",
+    "ruleMsg": {
+      "invalid": "Das Datum is nicht valide",
+      "pastDate": "Das Datum darf nicht in der Vergangenheit liegen!",
+      "maxDate": "Das Datum is zu weit in der Zukunft!"
+    }
+  },
+  "commonAdInformation": {
+    "titleLabel": "Titel",
+    "descriptionLabel": "Beschreibung",
+    "ruleMsg": {
+      "description": "Bitte geben Sie eine Beschreibung mit maximal 1000 Zeichen ein.",
+      "titleToLong": "Bitte kürzen Sie den Titel",
+      "title": "Bitte geben Sie einen Titel ein."
+    }
+  },
+  "optionalAdInformation": {
+    "label": "Link (optional)",
+    "ruleMsg": "Bitte geben Sie einen validen Link an."
+  },
+  "sellerAdInformation": {
+    "labelPhone": "Telefonnummer",
+    "labelEmail": "E-Mail Adresse",
+    "ruleMsg": {
+      "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
+      "invalidEmail": "Die E-Mail Adresse ist nicht valide",
+      "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
+    }
+  },
+  "filterAdCategory": {
+    "title": "Nach Kategorie stöbern"
+  },
+  "filterAdType": {
+    "title": "Nach Art filtern"
+  },
+  "searchAd": {
+    "label": "Suche"
+  },
+  "sortAdSelection": {
+    "title": "Sortieren"
+  }
+}

@@ -7,13 +7,13 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.4.2</version>
+        <version>3.4.3</version>
         <relativePath/>
     </parent>
 
     <groupId>de.muenchen.anzeigen-portal</groupId>
     <artifactId>backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.2-SNAPSHOT</version>
     <name>backend</name>
     <description>This is a basic bulletin board based on the reference architecture of it@M</description>
 
@@ -35,7 +35,7 @@
         <itm-java-codeformat.version>1.0.10</itm-java-codeformat.version>
         <pmd-maven-plugin.version>3.26.0</pmd-maven-plugin.version>
         <spotbugs-maven-plugin.version>4.8.6.6</spotbugs-maven-plugin.version>
-        <spotbugs-annotations.version>4.9.0</spotbugs-annotations.version>
+        <spotbugs-annotations.version>4.9.2</spotbugs-annotations.version>
         <findsecbugs-plugin.version>1.13.0</findsecbugs-plugin.version>
 
         <!-- Testing -->

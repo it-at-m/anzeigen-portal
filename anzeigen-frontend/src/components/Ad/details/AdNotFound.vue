@@ -19,7 +19,7 @@
     <v-row>
       <v-col>
         <ad-display-card>
-          <template #title> Es konnte keine Anzeige gefunden werden </template>
+          <template #title> {{ t("adNotFound.title") }} </template>
           <template #text>
             <router-link
               :to="{
@@ -27,7 +27,7 @@
                 query: defaultQuery,
               }"
             >
-              Klicken Sie hier um zur Übersicht zurückzukehren.
+              {{ t("adNotFound.text") }}
             </router-link>
           </template>
         </ad-display-card>
@@ -37,10 +37,14 @@
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { ROUTES_BOARD } from "@/Constants";
+
+const { t } = useI18n();
 
 const defaultQuery = useDefaultQuery();
 </script>

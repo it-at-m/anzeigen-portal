@@ -18,6 +18,8 @@ spring:
       default-page-size: 0x7fffffff
       return-body-on-update: true
       return-body-on-create: true
+  jpa:
+    database: postgresql
 
 server:
   shutdown: "graceful"

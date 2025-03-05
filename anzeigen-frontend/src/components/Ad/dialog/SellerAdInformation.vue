@@ -11,7 +11,7 @@
     variant="outlined"
     color="accent"
     prepend-icon="mdi-phone-outline"
-    label="Telefonnummer"
+    :label="t('sellerAdInformation.labelPhone')"
     hide-details="auto"
     :rules="[minOneContactRule, rulePhoneNumber]"
     :disabled="disabled"
@@ -24,7 +24,7 @@
     density="compact"
     color="accent"
     prepend-icon="mdi-email-outline"
-    label="E-Mail Adresse"
+    :label="t('sellerAdInformation.labelEmail')"
     type="email"
     hide-details="auto"
     :rules="[minOneContactRule, ruleEmail]"
@@ -37,9 +37,12 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { useTemplateRef, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
+
+const { t } = useI18n();
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
@@ -71,14 +74,16 @@ const ruleEmail = (value: string) =>
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/.test(
     value
   ) ||
-  "Die E-Mail Adresse ist nicht valide";
+  t("sellerAdInformation.invalidEmail");
 
 /**
  * Validation rule for phone number - includes the '+' at the start
  * @param value the current input
  */
 const rulePhoneNumber = (value: string) =>
-  !value || /^\+?\d* ?\/?\d*$/.test(value) || "Die Telefonnummer ist ungültig";
+  !value ||
+  /^\+?\d* ?\/?\d*$/.test(value) ||
+  t("sellerAdInformation.invalidPhoneNumber");
 
 /**
  * Minimum one contact needs to be set - this can be email or phone number
@@ -86,5 +91,5 @@ const rulePhoneNumber = (value: string) =>
 const minOneContactRule = () =>
   !!adTO.value.email ||
   !!adTO.value.phone ||
-  "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an.";
+  t("sellerAdInformation.dutyField");
 </script>

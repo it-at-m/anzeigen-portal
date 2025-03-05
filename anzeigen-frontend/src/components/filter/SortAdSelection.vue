@@ -1,6 +1,6 @@
 <template>
   <ad-display-card>
-    <template #title>Sortieren</template>
+    <template #title>{{ t("sortAdSelection.title") }}</template>
     <template #text>
       <v-select
         v-model="sortingCriteria"
@@ -18,6 +18,7 @@ import type { CriteriaValue } from "@/types/SortingOrderCriteria";
 
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants";
@@ -25,6 +26,8 @@ import {
   isValidOrderSelection,
   sortingOrderSelections,
 } from "@/util/sortingSelection.ts";
+
+const { t } = useI18n();
 
 const orderQuery = useRouteQuery(QUERY_NAME_ORDER);
 const orderByQuery = useRouteQuery(QUERY_NAME_SORTBY);

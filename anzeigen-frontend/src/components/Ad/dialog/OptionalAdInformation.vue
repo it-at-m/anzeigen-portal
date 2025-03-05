@@ -13,7 +13,7 @@
     variant="outlined"
     density="compact"
     prepend-icon="mdi-link"
-    label="Link (optional)"
+    :label="t('optionalAdInformation.label')"
     hide-details="auto"
     type="url"
     :disabled="disabled"
@@ -24,9 +24,13 @@
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
+import { useI18n } from "vue-i18n";
+
 import AdFilesUpload from "@/components/Ad/dialog/optional/AdFilesUpload.vue";
 import AdTitelPicture from "@/components/Ad/dialog/optional/AdTitelPicture.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
+
+const { t } = useI18n();
 
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
@@ -45,7 +49,7 @@ const ruleLink = (value: string) =>
   /^https:\/\/(www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_+.~#?&/=]*)$/.test(
     value
   ) ||
-  "Bitte geben Sie einen validen Link an.";
+  t("optionalAdInformation.ruleMsg");
 </script>
 
 <style scoped></style>
