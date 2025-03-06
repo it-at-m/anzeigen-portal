@@ -64,3 +64,8 @@ info:
   build:
     java.version: @java.version@
     spring-cloud.version: @spring-cloud-dependencies.version@
+
+security:
+  # possible values: none, all, changing (With changing, only changing requests such as POST, PUT, DELETE are logged)
+  requestLogging: all
+  userInfoUri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
