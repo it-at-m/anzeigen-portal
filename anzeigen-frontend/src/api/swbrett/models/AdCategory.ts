@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -61,11 +62,11 @@ export function AdCategoryFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function AdCategoryToJSON(json: any): AdCategory {
-    return AdCategoryToJSONTyped(json, false);
-}
+  export function AdCategoryToJSON(json: any): AdCategory {
+      return AdCategoryToJSONTyped(json, false);
+  }
 
-export function AdCategoryToJSONTyped(value?: AdCategory | null, ignoreDiscriminator: boolean = false): any {
+  export function AdCategoryToJSONTyped(value?: AdCategory | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -73,10 +74,6 @@ export interface DeleteAdCategoryRequest {
 
 export interface DeleteSwbreadRequest {
     id: number;
-}
-
-export interface FindUserRequest {
-    body: string;
 }
 
 export interface GetAdRequest {
@@ -474,26 +471,16 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * PUT users/find
      */
-    async findUserRaw(requestParameters: FindUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SwbUserTO>> {
-        if (requestParameters['body'] == null) {
-            throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling findUser().'
-            );
-        }
-
+    async findUserRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SwbUserTO>> {
         const queryParameters: any = {};
 
         const headerParameters: runtime.HTTPHeaders = {};
-
-        headerParameters['Content-Type'] = 'text/plain';
 
         const response = await this.request({
             path: `/users/find`,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SwbUserTOFromJSON(jsonValue));
@@ -502,8 +489,8 @@ export class DefaultApi extends runtime.BaseAPI {
     /**
      * PUT users/find
      */
-    async findUser(requestParameters: FindUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SwbUserTO> {
-        const response = await this.findUserRaw(requestParameters, initOverrides);
+    async findUser(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SwbUserTO> {
+        const response = await this.findUserRaw(initOverrides);
         return await response.value();
     }
 

@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -54,11 +55,11 @@ export function SwbImageTOFromJSONTyped(json: any, ignoreDiscriminator: boolean)
     };
 }
 
-export function SwbImageTOToJSON(json: any): SwbImageTO {
-    return SwbImageTOToJSONTyped(json, false);
-}
+  export function SwbImageTOToJSON(json: any): SwbImageTO {
+      return SwbImageTOToJSONTyped(json, false);
+  }
 
-export function SwbImageTOToJSONTyped(value?: SwbImageTO | null, ignoreDiscriminator: boolean = false): any {
+  export function SwbImageTOToJSONTyped(value?: SwbImageTO | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

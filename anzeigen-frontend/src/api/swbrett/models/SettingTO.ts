@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -110,11 +111,11 @@ export function SettingTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function SettingTOToJSON(json: any): SettingTO {
-    return SettingTOToJSONTyped(json, false);
-}
+  export function SettingTOToJSON(json: any): SettingTO {
+      return SettingTOToJSONTyped(json, false);
+  }
 
-export function SettingTOToJSONTyped(value?: SettingTO | null, ignoreDiscriminator: boolean = false): any {
+  export function SettingTOToJSONTyped(value?: SettingTO | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

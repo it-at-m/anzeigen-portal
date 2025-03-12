@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -61,11 +62,11 @@ export function GetAds200ResponseSortFromJSONTyped(json: any, ignoreDiscriminato
     };
 }
 
-export function GetAds200ResponseSortToJSON(json: any): GetAds200ResponseSort {
-    return GetAds200ResponseSortToJSONTyped(json, false);
-}
+  export function GetAds200ResponseSortToJSON(json: any): GetAds200ResponseSort {
+      return GetAds200ResponseSortToJSONTyped(json, false);
+  }
 
-export function GetAds200ResponseSortToJSONTyped(value?: GetAds200ResponseSort | null, ignoreDiscriminator: boolean = false): any {
+  export function GetAds200ResponseSortToJSONTyped(value?: GetAds200ResponseSort | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

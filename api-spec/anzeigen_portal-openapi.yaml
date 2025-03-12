@@ -564,12 +564,7 @@ paths:
     put:
       summary: "PUT users/find"
       operationId: "findUser"
-      requestBody:
-        content:
-          text/plain:
-            schema:
-              type: "string"
-        required: true
+
       responses:
         "200":
           description: "OK"

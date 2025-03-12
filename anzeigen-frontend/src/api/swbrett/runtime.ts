@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -334,11 +335,6 @@ function querystringSingleKey(key: string, value: string | number | null | undef
         return querystring(value as HTTPQuery, fullKey);
     }
     return `${encodeURIComponent(fullKey)}=${encodeURIComponent(String(value))}`;
-}
-
-export function exists(json: any, key: string) {
-    const value = json[key];
-    return value !== null && value !== undefined;
 }
 
 export function mapValues(data: any, fn: (item: any) => any) {
