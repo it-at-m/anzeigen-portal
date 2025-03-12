@@ -24,9 +24,9 @@
     "pinia": "2.3.1",
     "roboto-fontface": "0.10.0",
     "vue": "3.5.13",
-    "vue-i18n": "11.1.1",
+    "vue-i18n": "11.1.2",
     "vue-router": "4.4.5",
-    "vuetify": "3.7.14"
+    "vuetify": "3.7.15"
   },
   "devDependencies": {
     "@muenchen/prettier-codeformat": "1.0.2",
@@ -47,6 +47,6 @@
     "vite": "5.4.14",
     "vite-plugin-vuetify": "2.0.4",
     "vitest": "2.1.9",
-    "vue-tsc": "2.2.4"
+    "vue-tsc": "2.2.8"
   }
 }

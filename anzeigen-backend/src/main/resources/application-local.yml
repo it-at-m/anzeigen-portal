@@ -25,6 +25,7 @@ spring:
         jwt:
           jwk-set-uri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/certs
 
+
 # Define the local keycloak configuration here
 # Deduplication-only property
 sso:
