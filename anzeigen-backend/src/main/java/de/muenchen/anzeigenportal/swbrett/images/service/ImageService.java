@@ -135,9 +135,9 @@ public class ImageService {
 
     private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        final BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
         convertedImage.createGraphics().drawImage(image, 0, 0, null);
-        ImageIO.write(convertedImage, "png", baos);  // Verwenden von PNG als Standardformat
+        ImageIO.write(convertedImage, "png", baos); // Verwenden von PNG als Standardformat
         return baos.toByteArray();
     }
 
