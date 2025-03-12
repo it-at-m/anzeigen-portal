@@ -123,7 +123,7 @@ public class AdService {
         final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
 
         if (!userService.isCurrentUser(ad.getSwbUser().getId())) {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
 
         final Ad updatedAd = mapper.toAd(updatedAdTO);
@@ -157,7 +157,7 @@ public class AdService {
             ad.setActive(false);
             repository.save(ad);
         } else {
-            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthorized");
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
     }
 
