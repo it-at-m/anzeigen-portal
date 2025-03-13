@@ -94,7 +94,9 @@ const uploadPicture = async (files: File[] | File) => {
 
     // Make api call to sanitize and check image
     await sanitizeImg({
-      body: result,
+      swbImageSanitize: {
+        imageBase64: result,
+      },
     });
 
     if (sanitizeImgError.value || !sanitizeImgData.value) {
