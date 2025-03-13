@@ -564,7 +564,12 @@ paths:
     put:
       summary: "PUT users/find"
       operationId: "findUser"
-
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SwbUserFind"
+        required: true
       responses:
         "200":
           description: "OK"
@@ -609,6 +614,11 @@ paths:
                 $ref: "#/components/schemas/SwbUserTO"
 components:
   schemas:
+    SwbUserFind:
+      type: "object"
+      properties:
+        lhmObjectID:
+          type: "string"
     AdCategory:
       type: "object"
       properties:

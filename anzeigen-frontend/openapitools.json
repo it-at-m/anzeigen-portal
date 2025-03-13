@@ -5,7 +5,7 @@
     "version": "7.9.0",
     "generators": {
       "typescript-fetch": {
-        "generatorName": "typescript-axios",
+        "generatorName": "typescript-fetch",
         "glob": "../api-spec/anzeigen_portal-openapi.yaml",
         "output": "./src/api/swbrett",
         "additionalProperties": {
