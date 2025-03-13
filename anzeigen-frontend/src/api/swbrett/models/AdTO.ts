@@ -199,11 +199,11 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
     };
 }
 
-export function AdTOToJSON(json: any): AdTO {
-    return AdTOToJSONTyped(json, false);
-}
+  export function AdTOToJSON(json: any): AdTO {
+      return AdTOToJSONTyped(json, false);
+  }
 
-export function AdTOToJSONTyped(value?: AdTO | null, ignoreDiscriminator: boolean = false): any {
+  export function AdTOToJSONTyped(value?: AdTO | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

@@ -165,7 +165,7 @@ const loadUser = async () => {
   userStore.setUser(JSON.parse(JSON.stringify(userInfoData.value)));
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  await findUserCall({ body: userStore.lhmObjectId! });
+  await findUserCall({ swbUserFind: { lhmObjectID: userStore.lhmObjectId! } });
 
   if (findUserData.value?.id === undefined) {
     // no user was found - therefore create a new one

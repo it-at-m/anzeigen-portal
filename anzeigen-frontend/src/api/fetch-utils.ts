@@ -122,9 +122,7 @@ export function defaultCatchHandler(
  * @returns {Headers}
  */
 export function getHeaders(): Headers {
-  const headers = new Headers({
-    "Content-Type": "application/json",
-  });
+  const headers = new Headers();
   const csrfCookie = getXSRFToken();
   if (csrfCookie !== "") {
     headers.append("X-XSRF-TOKEN", csrfCookie);

@@ -68,11 +68,11 @@ export function SwbFileTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function SwbFileTOToJSON(json: any): SwbFileTO {
-    return SwbFileTOToJSONTyped(json, false);
-}
+  export function SwbFileTOToJSON(json: any): SwbFileTO {
+      return SwbFileTOToJSONTyped(json, false);
+  }
 
-export function SwbFileTOToJSONTyped(value?: SwbFileTO | null, ignoreDiscriminator: boolean = false): any {
+  export function SwbFileTOToJSONTyped(value?: SwbFileTO | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

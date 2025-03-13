@@ -61,11 +61,11 @@ export function SwbUserTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
     };
 }
 
-export function SwbUserTOToJSON(json: any): SwbUserTO {
-    return SwbUserTOToJSONTyped(json, false);
-}
+  export function SwbUserTOToJSON(json: any): SwbUserTO {
+      return SwbUserTOToJSONTyped(json, false);
+  }
 
-export function SwbUserTOToJSONTyped(value?: SwbUserTO | null, ignoreDiscriminator: boolean = false): any {
+  export function SwbUserTOToJSONTyped(value?: SwbUserTO | null, ignoreDiscriminator: boolean = false): any {
     if (value == null) {
         return value;
     }

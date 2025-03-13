@@ -19,7 +19,9 @@ import type {
   GetAds200Response,
   SettingTO,
   SwbFileTO,
+  SwbImageSanitize,
   SwbImageTO,
+  SwbUserFind,
   SwbUserTO,
 } from '../models/index';
 import {
@@ -33,8 +35,12 @@ import {
     SettingTOToJSON,
     SwbFileTOFromJSON,
     SwbFileTOToJSON,
+    SwbImageSanitizeFromJSON,
+    SwbImageSanitizeToJSON,
     SwbImageTOFromJSON,
     SwbImageTOToJSON,
+    SwbUserFindFromJSON,
+    SwbUserFindToJSON,
     SwbUserTOFromJSON,
     SwbUserTOToJSON,
 } from '../models/index';
@@ -76,7 +82,7 @@ export interface DeleteSwbreadRequest {
 }
 
 export interface FindUserRequest {
-    body: string;
+    swbUserFind: SwbUserFind;
 }
 
 export interface GetAdRequest {
@@ -140,7 +146,7 @@ export interface IncrementViewRequest {
 }
 
 export interface SanitizeImageRequest {
-    body: string;
+    swbImageSanitize: SwbImageSanitize;
 }
 
 export interface UpdateAdRequest {
@@ -475,10 +481,10 @@ export class DefaultApi extends runtime.BaseAPI {
      * PUT users/find
      */
     async findUserRaw(requestParameters: FindUserRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SwbUserTO>> {
-        if (requestParameters['body'] == null) {
+        if (requestParameters['swbUserFind'] == null) {
             throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling findUser().'
+                'swbUserFind',
+                'Required parameter "swbUserFind" was null or undefined when calling findUser().'
             );
         }
 
@@ -486,14 +492,14 @@ export class DefaultApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'text/plain';
+        headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
             path: `/users/find`,
             method: 'PUT',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: SwbUserFindToJSON(requestParameters['swbUserFind']),
         }, initOverrides);
 
         return new runtime.JSONApiResponse(response, (jsonValue) => SwbUserTOFromJSON(jsonValue));
@@ -996,10 +1002,10 @@ export class DefaultApi extends runtime.BaseAPI {
      * POST images/sanitize
      */
     async sanitizeImageRaw(requestParameters: SanitizeImageRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<string>> {
-        if (requestParameters['body'] == null) {
+        if (requestParameters['swbImageSanitize'] == null) {
             throw new runtime.RequiredError(
-                'body',
-                'Required parameter "body" was null or undefined when calling sanitizeImage().'
+                'swbImageSanitize',
+                'Required parameter "swbImageSanitize" was null or undefined when calling sanitizeImage().'
             );
         }
 
@@ -1007,14 +1013,14 @@ export class DefaultApi extends runtime.BaseAPI {
 
         const headerParameters: runtime.HTTPHeaders = {};
 
-        headerParameters['Content-Type'] = 'text/plain';
+        headerParameters['Content-Type'] = 'application/json';
 
         const response = await this.request({
             path: `/images/sanitize`,
             method: 'POST',
             headers: headerParameters,
             query: queryParameters,
-            body: requestParameters['body'] as any,
+            body: SwbImageSanitizeToJSON(requestParameters['swbImageSanitize']),
         }, initOverrides);
 
         if (this.isJsonMime(response.headers.get('content-type'))) {

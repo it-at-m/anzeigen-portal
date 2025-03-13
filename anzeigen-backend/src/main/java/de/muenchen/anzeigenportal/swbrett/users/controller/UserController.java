@@ -1,5 +1,6 @@
 package de.muenchen.anzeigenportal.swbrett.users.controller;
 
+import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserFind;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +27,14 @@ public class UserController {
     /**
      * Put Method to encrypt the email with https.
      *
-     * @param lhmObjectId unique description in keycloak for every user
+     * @param swbUserFind unique description in keycloak for every user
      * @return SwbUserTO with id, if user found. id = null if no user found
      */
     @PutMapping("/find")
     @ResponseStatus(HttpStatus.OK)
-    public SwbUserTO findUser(@RequestBody final String lhmObjectId) {
+    public SwbUserTO findUser(@RequestBody final SwbUserFind swbUserFind) {
         // Not necessary anymore but security wise not that bad
-        final String sanitizedId = lhmObjectId.replaceAll("[\\r\\n\"]", "");
+        final String sanitizedId = swbUserFind.lhmObjectID().replaceAll("[\\r\\n\"]", "");
         final Optional<SwbUserTO> userTO = service.findUser(sanitizedId);
         log.debug("CONTROLLER | findUser was successful: {}", userTO.isPresent());
         return userTO.orElseGet(SwbUserTO::new);
