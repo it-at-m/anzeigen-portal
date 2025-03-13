@@ -3,6 +3,7 @@ package de.muenchen.anzeigenportal.swbrett.images.controller;
 import java.io.IOException;
 import java.util.Base64;
 
+import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageSanitize;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +30,9 @@ public class ImageController {
      */
     @PostMapping(value = "/sanitize", produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public String sanitizeImage(@RequestBody final String imageBase64) {
+    public String sanitizeImage(@RequestBody final SwbImageSanitize imageSanitize) {
 
-        byte[] ba = Base64.getDecoder().decode(imageBase64);
+        byte[] ba = Base64.getDecoder().decode(imageSanitize.imageBase64());
 
         try {
             ba = this.service.sanitizeImage(ba);

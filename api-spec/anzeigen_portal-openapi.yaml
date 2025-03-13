@@ -469,9 +469,9 @@ paths:
       operationId: "sanitizeImage"
       requestBody:
         content:
-          text/plain:
+          application/json:
             schema:
-              type: "string"
+              $ref: "#/components/schemas/SwbImageSanitize"
         required: true
       responses:
         "200":
@@ -614,6 +614,11 @@ paths:
                 $ref: "#/components/schemas/SwbUserTO"
 components:
   schemas:
+    SwbImageSanitize:
+      type: "object"
+      properties:
+        imageBase64:
+          type: "string"
     SwbUserFind:
       type: "object"
       properties:
