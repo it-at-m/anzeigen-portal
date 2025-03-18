@@ -33,7 +33,7 @@
     "@muenchen/prettier-codeformat": "1.0.2",
     "@openapitools/openapi-generator-cli": "2.15.3",
     "@tsconfig/node-lts": "22.0.1",
-    "@types/node": "22.9.0",
+    "@types/node": "22.10.10",
     "@vitejs/plugin-vue": "5.2.1",
     "@vue/eslint-config-prettier": "10.2.0",
     "@vue/eslint-config-typescript": "14.5.0",
