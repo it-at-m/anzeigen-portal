@@ -111,6 +111,13 @@
   "sortAdSelection": {
     "title": "Sortieren"
   },
+  "generalSettings": {
+    "generalSettings": "Allgemeine Einstellungen",
+    "paging": "Paging",
+    "ads": "Anzeigen",
+    "system": "System",
+    "resetSettings": "Änderungen verwerfen"
+  },
   "applicationSettings": {
     "MOTD": {
       "description": "Aktuelle Tagesmeldung",
