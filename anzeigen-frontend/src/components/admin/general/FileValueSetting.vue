@@ -6,6 +6,7 @@
     color="accent"
     density="compact"
     accept="application/pdf"
+    hide-details="auto"
     clearable
     @update:model-value="updateFile"
   />
