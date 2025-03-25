@@ -1,5 +1,6 @@
 <template>
   <v-number-input
+    prepend-icon="mdi-numeric"
     variant="outlined"
     hide-details="auto"
     density="compact"

@@ -1,5 +1,6 @@
 <template>
   <v-select
+    prepend-icon="mdi-form-select"
     :model-value="computedSetting?.textValue"
     :label="settingName"
     hide-details

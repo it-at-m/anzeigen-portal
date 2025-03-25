@@ -1,5 +1,6 @@
 <template>
   <v-text-field
+    prepend-icon="mdi-text"
     density="compact"
     hide-details="auto"
     variant="outlined"

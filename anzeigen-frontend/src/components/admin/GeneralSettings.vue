@@ -1,45 +1,71 @@
 <template>
   <ad-display-card>
-    <template #title>Allgemeine Einstellungen</template>
+    <template #title>{{ t("generalSettings.generalSettings") }}</template>
     <template #text>
+      <ad-display-card>
+        <template #subtitle>{{ t("generalSettings.ads") }}</template>
+        <template #text>
+          <setting-with-description
+            v-for="setting in NUMBER_VALUE_SETTINGS"
+            :key="setting"
+            :setting-name="setting"
+          >
+            <template #default="settingName">
+              <number-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+          <setting-with-description setting-name="AGB_FILE">
+            <template #default="settingName">
+              <file-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+          <setting-with-description setting-name="DATENSCHUTZHINWEISE_FILE">
+            <template #default="settingName">
+              <file-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+        </template>
+      </ad-display-card>
+      <ad-display-card>
+        <template #subtitle>{{ t("generalSettings.paging") }}</template>
+        <template #text>
+          <setting-with-description setting-name="MAX_PAGE_SIZE">
+            <template #default="settingName">
+              <number-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+          <setting-with-description setting-name="DEFAULT_SORTING">
+            <template #default="settingName">
+              <text-select-value-setting
+                :setting-name="settingName.settingName"
+              />
+            </template>
+          </setting-with-description>
+          <setting-with-description setting-name="DEFAULT_ORDERING">
+            <template #default="settingName">
+              <text-select-value-setting
+                :setting-name="settingName.settingName"
+              />
+            </template>
+          </setting-with-description>
+        </template>
+      </ad-display-card>
+      <ad-display-card>
+        <template #subtitle>{{ t("generalSettings.system") }}</template>
+        <template #text>
+          <setting-with-description setting-name="MOTD">
+            <template #default="settingName">
+              <text-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+          <setting-with-description setting-name="MAX_ARCHIVE_DATE_RANGE">
+            <template #default="settingName">
+              <number-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+        </template>
+      </ad-display-card>
       <div class="mx-4">
-        <v-row>
-          <v-col>
-            <text-value-setting setting-name="MOTD" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <text-select-value-setting setting-name="DEFAULT_SORTING" />
-          </v-col>
-          <v-col
-            cols="12"
-            md="6"
-          >
-            <text-select-value-setting setting-name="DEFAULT_ORDERING" />
-          </v-col>
-        </v-row>
-
-        <v-row>
-          <v-col
-            v-for="settingName in NUMBER_VALUE_SETTINGS"
-            :key="settingName"
-            cols="12"
-            md="6"
-            lg="4"
-          >
-            <number-value-setting :setting-name="settingName" />
-          </v-col>
-        </v-row>
-        <v-row>
-          <v-col>
-            <file-value-setting setting-name="AGB_FILE" />
-            <file-value-setting setting-name="DATENSCHUTZHINWEISE_FILE" />
-          </v-col>
-        </v-row>
         <v-row>
           <v-col class="d-flex justify-end">
             <v-btn
@@ -50,7 +76,7 @@
               color="accent"
               @click="reloadSettings"
             >
-              Änderungen verwerfen
+              {{ t("generalSettings.reset") }}
             </v-btn>
             <v-btn
               variant="flat"
@@ -60,7 +86,7 @@
               :loading="updateSettingsLoading"
               @click="saveSettings"
             >
-              Speichern
+              {{ t("common.save") }}
             </v-btn>
           </v-col>
         </v-row>
@@ -72,9 +98,12 @@
 <script setup lang="ts">
 import type { SettingTO, SettingTOSettingNameEnum } from "@/api/swbrett";
 
+import { useI18n } from "vue-i18n";
+
 import { Levels } from "@/api/error.ts";
 import FileValueSetting from "@/components/admin/general/FileValueSetting.vue";
 import NumberValueSetting from "@/components/admin/general/NumberValueSetting.vue";
+import SettingWithDescription from "@/components/admin/general/SettingWithDescription.vue";
 import TextSelectValueSetting from "@/components/admin/general/TextSelectValueSetting.vue";
 import TextValueSetting from "@/components/admin/general/TextValueSetting.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
@@ -89,6 +118,8 @@ const settingStore = useSettingStore();
 
 const snackbar = useSnackbar();
 
+const { t } = useI18n();
+
 const {
   call: updateSettings,
   loading: updateSettingsLoading,
@@ -98,11 +129,9 @@ const {
 
 const NUMBER_VALUE_SETTINGS: SettingTOSettingNameEnum[] = [
   "MAX_SWB_IMAGE_SIZE",
-  "MAX_PAGE_SIZE",
   "MAX_SWB_FILE_SIZE",
   "MAX_SWB_FILES_LENGTH",
   "MAX_EXPIRY_DATE_RANGE",
-  "MAX_ARCHIVE_DATE_RANGE",
 ];
 
 const saveSettings = async () => {
