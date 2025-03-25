@@ -163,5 +163,9 @@
       "description": "Maximale Laufzeit in Wochen",
       "tooltip": "Maximale Laufzeit in Wochen"
     }
+  },
+  "filterAdActive": {
+    "title": "Inaktive / Aktive Anzeigen",
+    "label": "Aktive Anzeigen"
   }
 }
