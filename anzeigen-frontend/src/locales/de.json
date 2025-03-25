@@ -166,6 +166,7 @@
   },
   "filterAdActive": {
     "title": "Inaktive / Aktive Anzeigen",
-    "label": "Aktive Anzeigen"
+    "labelActive": "Aktive Anzeigen",
+    "labelInactive": "Inaktive Anzeigen"
   }
 }

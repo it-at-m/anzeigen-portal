@@ -2,13 +2,19 @@
   <ad-display-card>
     <template #title>{{ t("filterAdActive.title") }}</template>
     <template #text>
-      <v-checkbox
+      <v-radio-group
         v-model="activeAds"
-        :label="t('filterAdActive.label')"
-        hide-details
-        density="compact"
         color="accent"
-      />
+      >
+        <v-radio
+          :label="t('filterAdActive.labelActive')"
+          :value="true"
+        />
+        <v-radio
+          :label="t('filterAdActive.labelInactive')"
+          :value="false"
+        />
+      </v-radio-group>
     </template>
   </ad-display-card>
 </template>
