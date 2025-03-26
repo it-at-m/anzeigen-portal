@@ -123,7 +123,7 @@
         "desc": "Absteigend"
       },
       "sorting": {
-        "title":"Titel",
+        "title": "Titel",
         "price": "Preis",
         "creationDateTime": "Erstellungsdatum"
       }
