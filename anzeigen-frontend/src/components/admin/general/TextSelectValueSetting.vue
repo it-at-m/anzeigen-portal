@@ -6,11 +6,19 @@
     hide-details
     variant="outlined"
     density="compact"
-    :items="options"
-    item-title="value"
-    item-value="key"
+    :items="options.value"
     @update:model-value="updatedValue"
-  />
+  >
+    <template #item="{ item, props }">
+      <v-list-item
+        v-bind="props"
+        :title="t(`generalSettings.choices.${options.key}.${item.value}`)"
+      />
+    </template>
+    <template #selection="{ item }">
+      {{ t(`generalSettings.choices.${options.key}.${item.value}`) }}
+    </template>
+  </v-select>
 </template>
 
 <script setup lang="ts">
@@ -23,18 +31,9 @@ import { useSettingStore } from "@/stores/settings.ts";
 
 const { t } = useI18n();
 
-const CRITERIA_VALUES = [
-  { key: "title", value: t("generalSettings.choices.sorting.title") },
-  { key: "price", value: t("generalSettings.choices.sorting.price") },
-  {
-    key: "creationDateTime",
-    value: t("generalSettings.choices.sorting.creationDateTime"),
-  },
-];
-const SORTING_VALUES = [
-  { key: "asc", value: t("generalSettings.choices.ordering.asc") },
-  { key: "desc", value: t("generalSettings.choices.ordering.desc") },
-];
+const CRITERIA_VALUES = ["title", "price", "creationDateTime"];
+
+const SORTING_VALUES = ["asc", "desc"];
 
 const settingStore = useSettingStore();
 
@@ -43,7 +42,9 @@ const { settingName } = defineProps<{
 }>();
 
 const options = computed(() =>
-  settingName === "DEFAULT_ORDERING" ? SORTING_VALUES : CRITERIA_VALUES
+  settingName === "DEFAULT_ORDERING"
+    ? { value: SORTING_VALUES, key: "ordering" }
+    : { value: CRITERIA_VALUES, key: "sorting" }
 );
 
 const computedSetting = computed(() => settingStore.getSetting(settingName));
