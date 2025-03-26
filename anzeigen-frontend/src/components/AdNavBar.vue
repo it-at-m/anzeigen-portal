@@ -13,6 +13,7 @@
     />
     <filter-ad-category v-if="!isMyBoard" />
     <filter-ad-type />
+    <filter-ad-active v-if="userStore.isAdmin" />
   </ad-display-sheet>
 
   <sort-ad-selection />
@@ -27,6 +28,7 @@ import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
+import FilterAdActive from "@/components/filter/FilterAdActive.vue";
 import FilterAdCategory from "@/components/filter/FilterAdCategory.vue";
 import FilterAdType from "@/components/filter/FilterAdType.vue";
 import SortAdSelection from "@/components/filter/SortAdSelection.vue";

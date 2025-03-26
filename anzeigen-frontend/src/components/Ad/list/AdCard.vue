@@ -9,7 +9,10 @@
           cols="12"
           sm="3"
         >
-          <div class="h-100 d-flex align-content-center">
+          <div
+            class="h-100 d-flex align-content-center"
+            :class="{ inactive: !adTo.active }"
+          >
             <v-img
               v-if="adTo.imagePreviewBase64"
               rounded
@@ -45,6 +48,7 @@
                 sm="7"
                 md="8"
                 class="cursor-pointer"
+                :class="{ inactive: !adTo.active }"
                 @click="routeTo"
               >
                 <p class="text-h5 text-truncate">
@@ -68,13 +72,21 @@
               class="w-100"
               align="start"
             >
-              <p class="two-line-clamp">{{ adTo.description }}</p>
+              <p
+                class="two-line-clamp"
+                :class="{ inactive: !adTo.active }"
+              >
+                {{ adTo.description }}
+              </p>
             </v-row>
             <v-row
               class="w-100"
               align="start"
             >
-              <ad-price :price="adTo.price!" />
+              <ad-price
+                :price="adTo.price!"
+                :class="{ inactive: !adTo.active }"
+              />
             </v-row>
             <v-row
               class="w-100"
@@ -82,9 +94,18 @@
               justify="space-between"
             >
               <v-col class="pa-0 pb-2 d-flex ga-2">
-                <ad-art-chip :is-offer="isOffer" />
-                <ad-view-count-chip :views="adTo.views!" />
-                <ad-category-chip :category="adTo.adCategory!" />
+                <ad-art-chip
+                  :is-offer="isOffer"
+                  :class="{ inactive: !adTo.active }"
+                />
+                <ad-view-count-chip
+                  :views="adTo.views!"
+                  :class="{ inactive: !adTo.active }"
+                />
+                <ad-category-chip
+                  :category="adTo.adCategory!"
+                  :class="{ inactive: !adTo.active }"
+                />
               </v-col>
               <v-col cols="2"> </v-col>
             </v-row>
@@ -150,6 +171,10 @@ const clickedEdit = () => {
 </script>
 
 <style scoped>
+.inactive {
+  opacity: 60%;
+}
+
 .two-line-clamp {
   display: -webkit-box;
   -webkit-box-orient: vertical;

@@ -116,7 +116,18 @@
     "paging": "Paging",
     "ads": "Anzeigen",
     "system": "System",
-    "resetSettings": "Änderungen verwerfen"
+    "resetSettings": "Änderungen verwerfen",
+    "choices": {
+      "ordering": {
+        "asc": "Aufsteigend",
+        "desc": "Absteigend"
+      },
+      "sorting": {
+        "title": "Titel",
+        "price": "Preis",
+        "creationDateTime": "Erstellungsdatum"
+      }
+    }
   },
   "applicationSettings": {
     "MOTD": {
@@ -163,5 +174,10 @@
       "description": "Maximale Laufzeit in Wochen",
       "tooltip": "Maximale Laufzeit in Wochen"
     }
+  },
+  "filterAdActive": {
+    "title": "Inaktive / Aktive Anzeigen",
+    "labelActive": "Aktive Anzeigen",
+    "labelInactive": "Inaktive Anzeigen"
   }
 }
