@@ -7,6 +7,8 @@
     variant="outlined"
     density="compact"
     :items="options"
+    item-title="value"
+    item-value="key"
     @update:model-value="updatedValue"
   />
 </template>
@@ -15,11 +17,24 @@
 import type { SettingTOSettingNameEnum } from "@/api/swbrett";
 
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { useSettingStore } from "@/stores/settings.ts";
 
-const CRITERIA_VALUES = ["title", "price", "creationDateTime"];
-const SORTING_VALUES = ["asc", "desc"];
+const { t } = useI18n();
+
+const CRITERIA_VALUES = [
+  { key: "title", value: t("generalSettings.choices.sorting.title") },
+  { key: "price", value: t("generalSettings.choices.sorting.price") },
+  {
+    key: "creationDateTime",
+    value: t("generalSettings.choices.sorting.creationDateTime"),
+  },
+];
+const SORTING_VALUES = [
+  { key: "asc", value: t("generalSettings.choices.ordering.asc") },
+  { key: "desc", value: t("generalSettings.choices.ordering.desc") },
+];
 
 const settingStore = useSettingStore();
 
