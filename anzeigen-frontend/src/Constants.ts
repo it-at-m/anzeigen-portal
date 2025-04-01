@@ -48,6 +48,7 @@ export const PREVIEW_IMAGE_FILE_URI_PREFIX = "data:image/jpeg;base64,";
 export const QUERY_NAME_ORDER = "order";
 export const QUERY_NAME_SORTBY = "sortBy";
 export const QUERY_NAME_TYPE = "type";
+export const QUERY_IS_ACTIVE = "isActive";
 export const QUERY_NAME_CATEGORYID = "categoryId";
 export const QUERY_NAME_USERID = "userId";
 

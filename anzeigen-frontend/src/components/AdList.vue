@@ -7,7 +7,10 @@
       class="mb-4"
     />
   </div>
-  <ad-display-card v-if="adStore.isEmpty && !loading">
+  <ad-display-card
+    v-if="adStore.isEmpty && !loading"
+    class="mb-4"
+  >
     <template #title> {{ t("adList.noAdFound.title") }} </template>
     <template #subtitle>
       {{ t("adList.noAdFound.subTitle") }}
@@ -25,10 +28,9 @@
   </ad-display-card>
   <v-skeleton-loader
     v-if="loading"
-    class="mb-2"
     type="heading, sentences, list-item-avatar"
   />
-  <div class="d-flex justify-center">
+  <div class="d-flex justify-center mt-2">
     <v-btn
       v-if="!ads?.last && !loading"
       color="accent"
@@ -118,6 +120,10 @@ const getAdPage = async (isNextPage: boolean) => {
     page: isNextPage ? adStore.nextPage : 0,
     ...route.query,
   };
+
+  if (!userStore.isAdmin) {
+    requestQuery.isActive = true;
+  }
 
   if (routeName.value === ROUTES_MYBOARD) {
     requestQuery.userId = userStore.userID?.toString();
