@@ -55,4 +55,6 @@ public class AdTO {
 
     private int views;
 
+    private AdCondition condition;
+
 }
