@@ -1,4 +1,5 @@
- 
+/* tslint:disable */
+/* eslint-disable */
 export * from './AdCategory';
 export * from './AdTO';
 export * from './GetAds200Response';

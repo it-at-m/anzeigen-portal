@@ -712,6 +712,14 @@ components:
         views:
           type: "integer"
           format: "int32"
+        condition:
+          type: "string"
+          enum:
+            - "NEW"
+            - "VERY_GOOD"
+            - "GOOD"
+            - "OKAY"
+            - "DEFECTIVE"
     SettingTO:
       type: "object"
       properties:

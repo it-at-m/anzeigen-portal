@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -149,6 +150,12 @@ export interface AdTO {
      * @memberof AdTO
      */
     views?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof AdTO
+     */
+    condition?: AdTOConditionEnum;
 }
 
 
@@ -160,6 +167,18 @@ export const AdTOAdTypeEnum = {
     OFFER: 'OFFER'
 } as const;
 export type AdTOAdTypeEnum = typeof AdTOAdTypeEnum[keyof typeof AdTOAdTypeEnum];
+
+/**
+ * @export
+ */
+export const AdTOConditionEnum = {
+    NEW: 'NEW',
+    VERY_GOOD: 'VERY_GOOD',
+    GOOD: 'GOOD',
+    OKAY: 'OKAY',
+    DEFECTIVE: 'DEFECTIVE'
+} as const;
+export type AdTOConditionEnum = typeof AdTOConditionEnum[keyof typeof AdTOConditionEnum];
 
 
 /**
@@ -196,6 +215,7 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
         'adImg': json['adImg'] == null ? undefined : SwbImageTOFromJSON(json['adImg']),
         'adFiles': json['adFiles'] == null ? undefined : ((json['adFiles'] as Array<any>).map(SwbFileTOFromJSON)),
         'views': json['views'] == null ? undefined : json['views'],
+        'condition': json['condition'] == null ? undefined : json['condition'],
     };
 }
 
@@ -227,6 +247,7 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
         'adImg': SwbImageTOToJSON(value['adImg']),
         'adFiles': value['adFiles'] == null ? undefined : ((value['adFiles'] as Array<any>).map(SwbFileTOToJSON)),
         'views': value['views'],
+        'condition': value['condition'],
     };
 }
 
