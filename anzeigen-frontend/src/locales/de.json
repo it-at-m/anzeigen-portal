@@ -58,6 +58,17 @@
     "ruleMsg": "Bitte wählen Sie eine Kategorie aus.",
     "placeholder": "Kategorie"
   },
+  "adConditionSelector": {
+    "placeholder": "Zustand",
+    "ruleMsg": "Bitte wählen Sie den Zustand aus.",
+    "conditions": {
+      "new": "Neu",
+      "very_good": "Sehr gut",
+      "good": "Gut",
+      "okay": "Okay",
+      "defective": "Defekt"
+    }
+  },
   "adPriceSelector": {
     "label": "Preis"
   },
