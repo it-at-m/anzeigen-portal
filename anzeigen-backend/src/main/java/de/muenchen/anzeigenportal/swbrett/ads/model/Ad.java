@@ -85,7 +85,7 @@ public class Ad {
     private LocalDate expiryDate;
 
     @Setter
-    @Column(name = "rental_date", nullable = false)
+    @Column(name = "rental_date", nullable = true)
     private LocalDate rentalDate;
 
     @Column(name = "image_preview", nullable = true)
