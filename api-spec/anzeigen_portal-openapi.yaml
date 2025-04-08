@@ -680,6 +680,7 @@ components:
           enum:
             - "SEEK"
             - "OFFER"
+            - "RENTAL"
         active:
           type: "boolean"
         title:
@@ -699,6 +700,9 @@ components:
           type: "string"
           format: "date-time"
         expiryDate:
+          type: "string"
+          format: "date"
+        rentalDate:
           type: "string"
           format: "date"
         imagePreviewBase64:
