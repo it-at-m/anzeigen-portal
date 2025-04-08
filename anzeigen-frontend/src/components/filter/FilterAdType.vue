@@ -4,14 +4,21 @@
     <template #text>
       <v-checkbox
         v-model="isSeek"
-        label="Suche"
+        :label="t('ad.type.search')"
         hide-details
         density="compact"
         color="accent"
       />
       <v-checkbox
         v-model="isOffer"
-        label="Biete"
+        :label="t('ad.type.offer')"
+        hide-details
+        density="compact"
+        color="accent"
+      />
+      <v-checkbox
+        v-model="isRental"
+        :label="t('ad.type.rental')"
         hide-details
         density="compact"
         color="accent"
@@ -34,38 +41,55 @@ const { t } = useI18n();
  */
 const isOffer = ref<boolean>(true);
 const isSeek = ref<boolean>(true);
+const isRental = ref<boolean>(true);
 
 const typeQuery = useRouteQuery(QUERY_NAME_TYPE);
 
 /**
  * Initializes checkbox selections based on the "type" URL parameter.
- * Sets either "Offer" or "Seek" as deselected if the URL specifies a type.
+ * Deselects any type which is not in URL parameter if the URL parameter is set.
  */
 onMounted(() => {
-  if (typeQuery.value === "OFFER") {
-    isSeek.value = false;
-  } else if (typeQuery.value === "SEEK") {
-    isOffer.value = false;
+  if (!typeQuery.value) {
+    return;
   }
+
+  const typeQueryValue = Array.isArray(typeQuery.value)
+    ? typeQuery.value
+    : [typeQuery.value];
+
+  isOffer.value = typeQueryValue.includes("OFFER");
+  isSeek.value = typeQueryValue.includes("SEEK");
+  isRental.value = typeQueryValue.includes("RENTAL");
 });
 
 /**
  * Watches changes in the checkbox selections and adjusts selections and URL parameter accordingly.
- * Ensures at least one option (Offer or Seek) remains selected at all times.
- * If both options are selected, the URL parameter is cleared.
+ * Ensures at least one option (Offer, Seek or Rental) remains selected at all times.
+ * If all options are selected, the URL parameter is cleared.
  */
-watch([isOffer, isSeek], ([newIsOffer, newIsSeek], [oldIsOffer, oldIsSeek]) => {
-  if (!newIsOffer && !oldIsSeek) {
-    isSeek.value = true;
-  } else if (!newIsSeek && !oldIsOffer) {
-    isOffer.value = true;
-  }
+watch(
+  [isOffer, isSeek, isRental],
+  (
+    [newIsOffer, newIsSeek, newIsRental],
+    [oldIsOffer, oldIsSeek, oldIsRental]
+  ) => {
+    if (!newIsOffer && !newIsSeek && !newIsRental) {
+      isOffer.value = oldIsOffer;
+      isSeek.value = oldIsSeek;
+      isRental.value = oldIsRental;
+    }
 
-  // Update URL parameter
-  if (isOffer.value && isSeek.value) {
-    typeQuery.value = null;
-  } else {
-    typeQuery.value = isOffer.value ? "OFFER" : "SEEK";
+    // Update URL parameter
+    if (isOffer.value && isSeek.value && isRental.value) {
+      typeQuery.value = null;
+    } else {
+      typeQuery.value = [
+        ...(isOffer.value ? ["OFFER"] : []),
+        ...(isSeek.value ? ["SEARCH"] : []),
+        ...(isRental.value ? ["RENTAL"] : []),
+      ];
+    }
   }
-});
+);
 </script>
