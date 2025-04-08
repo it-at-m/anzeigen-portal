@@ -10,7 +10,7 @@
       value="OFFER"
     />
     <v-radio
-      :label="t('ad.type.search')"
+      :label="t('ad.type.seek')"
       value="SEEK"
     />
     <v-radio
