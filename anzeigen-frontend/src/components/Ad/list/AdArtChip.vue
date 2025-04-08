@@ -3,32 +3,37 @@
     variant="tonal"
     color="accent"
     :prepend-icon="computedIcon"
-    :text="computedText"
+    :text="t(`ad.type.${adType!.toLocaleLowerCase()}`)"
   />
 </template>
 
 <script setup lang="ts">
+import type { AdTOAdTypeEnum } from "@/api/swbrett";
+
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const { isOffer = false } = defineProps<{
-  isOffer?: boolean;
+const { adType } = defineProps<{
+  adType?: AdTOAdTypeEnum;
 }>();
-
-/**
- * Computes the text based on the offer status.
- */
-const computedText = computed(() =>
-  isOffer ? t("ad.type.offer") : t("ad.type.search")
-);
 
 /**
  * Computes the icon based on the offer status.
  */
-const computedIcon = computed(() =>
-  isOffer ? "mdi-hand-extended-outline" : "mdi-binoculars"
-);
+const computedIcon = computed(() => {
+  switch (adType) {
+    case "OFFER":
+      return "mdi-hand-extended-outline";
+    case "SEEK":
+      return "mdi-binoculars";
+    case "RENTAL":
+      return "mdi-file-sign";
+    default:
+      return "mdi-help";
+  }
+});
+//  adType != null ?  :
 </script>
 
 <style scoped></style>

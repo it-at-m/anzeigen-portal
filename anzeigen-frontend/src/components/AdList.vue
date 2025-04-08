@@ -121,6 +121,11 @@ const getAdPage = async (isNextPage: boolean) => {
     ...route.query,
   };
 
+  // Not proud of this conversion - workaround for https://github.com/it-at-m/refarch/blob/00be5e8a4462ed93f8d32a6593a0d162d24da865/refarch-gateway/src/main/java/de/muenchen/refarch/gateway/filter/GlobalRequestParameterPollutionFilter.java
+  if (requestQuery.type) {
+    requestQuery.type = requestQuery.type.toString();
+  }
+
   if (!userStore.isAdmin) {
     requestQuery.isActive = true;
   }

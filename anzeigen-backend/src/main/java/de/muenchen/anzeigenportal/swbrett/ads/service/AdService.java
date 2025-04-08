@@ -27,6 +27,8 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,12 +65,18 @@ public class AdService {
     private UserService userService;
 
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
-    public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
-            final Integer page, final Long adId,
-            final boolean isActive) {
+    public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final String types, final String sortBy, final String order,
+                              final Integer page, final Long adId,
+                              final boolean isActive) {
         String interrnalSortBy = sortBy;
         String internalOrder = order;
         Integer internalPage = page;
+
+        // Not proud of this conversion - workaround for https://github.com/it-at-m/refarch/blob/00be5e8a4462ed93f8d32a6593a0d162d24da865/refarch-gateway/src/main/java/de/muenchen/refarch/gateway/filter/GlobalRequestParameterPollutionFilter.java
+        List<AdType> typeList = new ArrayList<>();
+        if (types != null) {
+            typeList = Arrays.stream(types.split(",")).map(type -> AdType.valueOf(type.toUpperCase())).toList();
+        }
 
         if (interrnalSortBy == null) {
             interrnalSortBy = settingService.getSetting(SettingName.DEFAULT_SORTING).getTextValue();
@@ -81,9 +89,9 @@ public class AdService {
         }
         final Pageable pageable = PageRequest.of(internalPage, settingService.getSetting(SettingName.MAX_PAGE_SIZE).getNumberValue());
         if (isActive) {
-            return repository.searchActiveAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
+            return repository.searchActiveAds(userId, searchTerm, categoryId, typeList, interrnalSortBy, internalOrder, pageable, adId);
         } else {
-            return repository.searchDeactivatedAds(userId, searchTerm, categoryId, type, interrnalSortBy, internalOrder, pageable, adId);
+            return repository.searchDeactivatedAds(userId, searchTerm, categoryId, typeList, interrnalSortBy, internalOrder, pageable, adId);
         }
     }
 

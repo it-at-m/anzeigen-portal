@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -45,13 +46,13 @@ public class AdController {
             @RequestParam(value = "userId", required = false) final String userId,
             @RequestParam(value = "searchTerm", required = false) final String searchTerm,
             @RequestParam(value = "categoryId", required = false) final Long categoryId,
-            @RequestParam(value = "type", required = false) final AdType type,
+            @RequestParam(value = "type", required = false) final String types,
             @RequestParam(value = "sortBy", required = false) final String sortBy,
             @RequestParam(value = "order", required = false) final String order,
             @RequestParam(value = "page", required = false) final Integer page,
             @RequestParam(value = "adId", required = false) final Long adId) {
 
-        return service.findAds(userId, searchTerm, categoryId, type, sortBy, order, page, adId, isActive);
+        return service.findAds(userId, searchTerm, categoryId, types, sortBy, order, page, adId, isActive);
     }
 
     @GetMapping("/{id}")

@@ -8,8 +8,9 @@
   },
   "ad": {
     "type": {
-      "search": "Suche",
-      "offer": "Biete"
+      "seek": "Suche",
+      "offer": "Biete",
+      "rental": "Vermiete"
     },
     "adCreate": "Anzeige erstellen",
     "adEdit": "Anzeige bearbeiten",

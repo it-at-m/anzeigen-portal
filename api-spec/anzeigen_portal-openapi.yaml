@@ -300,9 +300,6 @@ paths:
           required: false
           schema:
             type: "string"
-            enum:
-              - "SEEK"
-              - "OFFER"
         - name: "sortBy"
           in: "query"
           required: false
@@ -680,6 +677,7 @@ components:
           enum:
             - "SEEK"
             - "OFFER"
+            - "RENTAL"
         active:
           type: "boolean"
         title:
@@ -699,6 +697,9 @@ components:
           type: "string"
           format: "date-time"
         expiryDate:
+          type: "string"
+          format: "date"
+        rentalDate:
           type: "string"
           format: "date"
         imagePreviewBase64:
