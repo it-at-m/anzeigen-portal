@@ -47,6 +47,8 @@ public class AdTO {
 
     private LocalDate expiryDate;
 
+    private LocalDate rentalDate;
+
     private String imagePreviewBase64;
 
     private SwbImageTO adImg;
