@@ -13,6 +13,10 @@
       :label="t('ad.type.search')"
       value="SEEK"
     />
+    <v-radio
+      :label="t('ad.type.rental')"
+      value="RENTAL"
+    />
   </v-radio-group>
   <v-text-field
     v-model="adTO.title"
