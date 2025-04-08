@@ -48,7 +48,9 @@
                 <v-col class="py-0">
                   {{ t("adOverview.detailsCard.type") }}
                 </v-col>
-                <v-col class="py-0"> {{ adType }} </v-col>
+                <v-col class="py-0">
+                  {{ t(`ad.type.${adDetails.adType!.toLocaleLowerCase()}`) }}
+                </v-col>
               </v-row>
               <v-row>
                 <v-col class="py-0">
@@ -182,13 +184,6 @@ const { adDetails } = defineProps<{
 }>();
 
 const currentLink = computed(() => window.location.href);
-
-/**
- * Computes the ad type, returning "Suche" for SEEK and "Biete" for other ad types.
- */
-const adType = computed(() =>
-  adDetails.adType === "SEEK" ? t("ad.type.search") : t("ad.type.offer")
-);
 
 /**
  * Navigates to the user page with the specified user ID.
