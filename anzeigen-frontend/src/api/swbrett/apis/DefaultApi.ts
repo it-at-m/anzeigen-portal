@@ -99,7 +99,7 @@ export interface GetAdsRequest {
     userId?: string;
     searchTerm?: string;
     categoryId?: number;
-    type?: GetAdsTypeEnum;
+    type?: string;
     sortBy?: string;
     order?: string;
     page?: number;
@@ -1206,14 +1206,6 @@ export class DefaultApi extends runtime.BaseAPI {
 
 }
 
-/**
- * @export
- */
-export const GetAdsTypeEnum = {
-    SEEK: 'SEEK',
-    OFFER: 'OFFER'
-} as const;
-export type GetAdsTypeEnum = typeof GetAdsTypeEnum[keyof typeof GetAdsTypeEnum];
 /**
  * @export
  */
