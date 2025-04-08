@@ -32,6 +32,7 @@ import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
+import { AdTOAdTypeEnum } from "@/api/swbrett";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { QUERY_NAME_TYPE } from "@/Constants";
 
@@ -58,9 +59,9 @@ onMounted(() => {
     ? typeQuery.value
     : [typeQuery.value];
 
-  isOffer.value = typeQueryValue.includes("OFFER");
-  isSeek.value = typeQueryValue.includes("SEEK");
-  isRental.value = typeQueryValue.includes("RENTAL");
+  isOffer.value = typeQueryValue.includes(AdTOAdTypeEnum.OFFER);
+  isSeek.value = typeQueryValue.includes(AdTOAdTypeEnum.SEEK);
+  isRental.value = typeQueryValue.includes(AdTOAdTypeEnum.RENTAL);
 });
 
 /**
@@ -85,9 +86,9 @@ watch(
       typeQuery.value = null;
     } else {
       typeQuery.value = [
-        ...(isOffer.value ? ["OFFER"] : []),
-        ...(isSeek.value ? ["SEARCH"] : []),
-        ...(isRental.value ? ["RENTAL"] : []),
+        ...(isOffer.value ? [AdTOAdTypeEnum.OFFER] : []),
+        ...(isSeek.value ? [AdTOAdTypeEnum.SEEK] : []),
+        ...(isRental.value ? [AdTOAdTypeEnum.RENTAL] : []),
       ];
     }
   }

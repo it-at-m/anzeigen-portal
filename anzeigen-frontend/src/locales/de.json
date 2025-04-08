@@ -8,7 +8,7 @@
   },
   "ad": {
     "type": {
-      "search": "Suche",
+      "seek": "Suche",
       "offer": "Biete",
       "rental": "Vermiete"
     },
