@@ -95,7 +95,7 @@
             >
               <v-col class="pa-0 pb-2 d-flex ga-2">
                 <ad-art-chip
-                  :is-offer="isOffer"
+                  :ad-type="adTo.adType"
                   :class="{ inactive: !adTo.active }"
                 />
                 <ad-view-count-chip

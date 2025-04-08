@@ -300,9 +300,6 @@ paths:
           required: false
           schema:
             type: "string"
-            enum:
-              - "SEEK"
-              - "OFFER"
         - name: "sortBy"
           in: "query"
           required: false

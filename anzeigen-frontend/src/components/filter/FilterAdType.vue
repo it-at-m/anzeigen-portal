@@ -4,7 +4,7 @@
     <template #text>
       <v-checkbox
         v-model="isSeek"
-        :label="t('ad.type.search')"
+        :label="t('ad.type.seek')"
         hide-details
         density="compact"
         color="accent"
