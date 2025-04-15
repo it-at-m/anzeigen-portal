@@ -5,7 +5,6 @@
     density="compact"
     color="accent"
     hide-details="auto"
-    :label="t('adDateSelector.label')"
     type="date"
     prepend-icon="mdi-calendar-range"
     :disabled="disabled"
@@ -15,6 +14,8 @@
 </template>
 
 <script setup lang="ts">
+import type { SettingTOSettingNameEnum } from "@/api/swbrett";
+
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -32,14 +33,14 @@ const maxAdvanceDate = computed(() => {
   const newDate = new Date();
   newDate.setDate(
     newDate.getDate() +
-      DAYS_IN_WEEK *
-        (settingStore.getSetting("MAX_EXPIRY_DATE_RANGE")?.numberValue || 4)
+      DAYS_IN_WEEK * (settingStore.getSetting(maxDateSetting)?.numberValue || 4)
   );
   return newDate;
 });
 
-const { modelValue } = defineProps<{
+const { modelValue, maxDateSetting } = defineProps<{
   modelValue: Date | undefined;
+  maxDateSetting: SettingTOSettingNameEnum;
   disabled?: boolean;
 }>();
 

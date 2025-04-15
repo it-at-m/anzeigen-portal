@@ -1,6 +1,7 @@
 <template>
   <ad-date-selector
     v-model="adTO.expiryDate"
+    max-date-setting="MAX_EXPIRY_DATE_RANGE"
     :disabled="disabled"
     class="mb-4"
   />
