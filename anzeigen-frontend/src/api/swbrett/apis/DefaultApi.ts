@@ -1220,7 +1220,8 @@ export const GetSettingSettingNameEnum = {
     MAX_PAGE_SIZE: 'MAX_PAGE_SIZE',
     DEFAULT_SORTING: 'DEFAULT_SORTING',
     DEFAULT_ORDERING: 'DEFAULT_ORDERING',
-    MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE'
+    MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE',
+    MAX_RENTAL_DATE_RANGE: 'MAX_RENTAL_DATE_RANGE'
 } as const;
 export type GetSettingSettingNameEnum = typeof GetSettingSettingNameEnum[keyof typeof GetSettingSettingNameEnum];
 /**

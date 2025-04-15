@@ -32,7 +32,7 @@
       <ad-date-selector
         v-model="adTO.rentalDate"
         :label="t('commonAdInformation.rentalDate')"
-        max-date-setting="MAX_EXPIRY_DATE_RANGE"
+        max-date-setting="MAX_RENTAL_DATE_RANGE"
         :disabled="disabled"
       />
     </v-col>

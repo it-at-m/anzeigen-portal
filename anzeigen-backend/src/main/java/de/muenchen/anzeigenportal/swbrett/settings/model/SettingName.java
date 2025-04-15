@@ -56,4 +56,9 @@ public enum SettingName {
      * Maximale Archivierungszeit einer Anzeige in Wochen (NUMBER)
      */
     MAX_ARCHIVE_DATE_RANGE,
+
+    /**
+     * Maximale Ausleihzeit einer Anzeige in Wochen (NUMBER)
+     */
+    MAX_RENTAL_DATE_RANGE,
 }
