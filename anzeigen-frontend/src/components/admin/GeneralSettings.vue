@@ -132,6 +132,7 @@ const NUMBER_VALUE_SETTINGS: SettingTOSettingNameEnum[] = [
   "MAX_SWB_FILE_SIZE",
   "MAX_SWB_FILES_LENGTH",
   "MAX_EXPIRY_DATE_RANGE",
+  "MAX_RENTAL_DATE_RANGE",
 ];
 
 const saveSettings = async () => {
