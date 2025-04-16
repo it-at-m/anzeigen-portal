@@ -25,6 +25,8 @@ const { t } = useI18n();
 
 const DAYS_IN_WEEK = 7;
 
+const FALLBACK_WEEKS = 4;
+
 const settingStore = useSettingStore();
 /**
  * The amount of weeks in advance ... why weeks? idk
@@ -33,7 +35,8 @@ const maxAdvanceDate = computed(() => {
   const newDate = new Date();
   newDate.setDate(
     newDate.getDate() +
-      DAYS_IN_WEEK * (settingStore.getSetting(maxDateSetting)?.numberValue || 4)
+      DAYS_IN_WEEK *
+        (settingStore.getSetting(maxDateSetting)?.numberValue || FALLBACK_WEEKS)
   );
   return newDate;
 });
@@ -107,7 +110,10 @@ const isMaxDate = (value: string) => {
   const selectedDate = new Date(value);
   return (
     (selectedDate && selectedDate <= maxAdvanceDate.value) ||
-    t("adDateSelector.ruleMsg.maxDate")
+    t(
+      "adDateSelector.ruleMsg.maxDate",
+      settingStore.getSetting(maxDateSetting)?.numberValue || FALLBACK_WEEKS
+    )
   );
 };
 </script>

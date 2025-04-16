@@ -75,7 +75,7 @@
     "ruleMsg": {
       "invalid": "Das Datum is nicht valide",
       "pastDate": "Das Datum darf nicht in der Vergangenheit liegen!",
-      "maxDate": "Das Datum is zu weit in der Zukunft!"
+      "maxDate": "Das Datum is zu weit in der Zukunft. |Die maximale Zeitspanne beträgt {count} Wochen."
     }
   },
   "commonAdInformation": {
