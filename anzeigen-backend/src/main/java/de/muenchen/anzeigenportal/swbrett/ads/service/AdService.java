@@ -66,8 +66,8 @@ public class AdService {
 
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> findAds(final String userId, final String searchTerm, final Long categoryId, final String types, final String sortBy, final String order,
-                              final Integer page, final Long adId,
-                              final boolean isActive) {
+            final Integer page, final Long adId,
+            final boolean isActive) {
         String interrnalSortBy = sortBy;
         String internalOrder = order;
         Integer internalPage = page;
@@ -118,7 +118,6 @@ public class AdService {
             final Integer setting = this.settingService.getSetting(SettingName.MAX_EXPIRY_DATE_RANGE).getNumberValue();
             adTO.setExpiryDate(LocalDate.now().plusWeeks(setting));
         }
-
 
         final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);

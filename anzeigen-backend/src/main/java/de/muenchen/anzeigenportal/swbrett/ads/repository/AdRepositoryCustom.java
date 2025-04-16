@@ -14,22 +14,22 @@ import java.util.List;
 public interface AdRepositoryCustom {
 
     Page<AdTO> searchActiveAds(String userId,
-                               String searchTerm,
-                               Long categoryId,
-                               List<AdType> type,
-                               String sortBy,
-                               String order,
-                               Pageable pageable,
-                               Long adId);
+            String searchTerm,
+            Long categoryId,
+            List<AdType> type,
+            String sortBy,
+            String order,
+            Pageable pageable,
+            Long adId);
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
     Page<AdTO> searchDeactivatedAds(String userId,
-                                    String searchTerm,
-                                    Long categoryId,
-                                    List<AdType> type,
-                                    String sortBy,
-                                    String order,
-                                    Pageable pageable,
-                                    Long adId);
+            String searchTerm,
+            Long categoryId,
+            List<AdType> type,
+            String sortBy,
+            String order,
+            Pageable pageable,
+            Long adId);
 
 }

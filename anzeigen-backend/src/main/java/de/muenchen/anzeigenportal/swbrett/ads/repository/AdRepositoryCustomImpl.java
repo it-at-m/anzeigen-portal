@@ -40,8 +40,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     @Transactional
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
-                                      final String order, final Pageable pageable,
-                                      final Long adId) {
+            final String order, final Pageable pageable,
+            final Long adId) {
         return searchAds(userId, searchTerm, categoryId, types, sortBy, order, pageable, adId, true);
     }
 
@@ -50,14 +50,15 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
     public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
-                                           final String order, final Pageable pageable,
-                                           final Long adId) {
+            final String order, final Pageable pageable,
+            final Long adId) {
         return searchAds(userId, searchTerm, categoryId, types, sortBy, order, pageable, adId, false);
     }
 
     @SuppressWarnings({ "PMD.UseObjectForClearerAPI" })
-    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy, final String order,
-                                final Pageable pageable, final Long adId, final boolean isActive) {
+    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
+            final String order,
+            final Pageable pageable, final Long adId, final boolean isActive) {
 
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 
@@ -106,7 +107,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     }
 
     private List<Predicate> buildPredicates(final CriteriaBuilder cb, final Root<Ad> root, final boolean isActive, final String userId, final String searchTerm,
-                                            final Long categoryId, final List<AdType> types, final Long adId) {
+            final Long categoryId, final List<AdType> types, final Long adId) {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(root.get("active"), isActive));
 
@@ -121,7 +122,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         if (categoryId != null) {
             predicates.add(cb.equal(root.get("adCategory").get("id"), categoryId));
         }
-        if (types != null  && !types.isEmpty()) {
+        if (types != null && !types.isEmpty()) {
             CriteriaBuilder.In<AdType> inClause = cb.in(root.get("adType"));
             for (AdType type : types) {
                 inClause.value(type);
