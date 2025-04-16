@@ -123,8 +123,8 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
             predicates.add(cb.equal(root.get("adCategory").get("id"), categoryId));
         }
         if (types != null && !types.isEmpty()) {
-            CriteriaBuilder.In<AdType> inClause = cb.in(root.get("adType"));
-            for (AdType type : types) {
+            final CriteriaBuilder.In<AdType> inClause = cb.in(root.get("adType"));
+            for (final AdType type : types) {
                 inClause.value(type);
             }
             predicates.add(inClause);

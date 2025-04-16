@@ -1,7 +1,6 @@
 package de.muenchen.anzeigenportal.swbrett.ads.controller;
 
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdTO;
-import de.muenchen.anzeigenportal.swbrett.ads.model.AdType;
 import de.muenchen.anzeigenportal.swbrett.ads.service.AdService;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
-import java.util.List;
 
 @Slf4j
 @RestController

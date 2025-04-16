@@ -30,6 +30,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -75,7 +76,7 @@ public class AdService {
         // Not proud of this conversion - workaround for https://github.com/it-at-m/refarch/blob/00be5e8a4462ed93f8d32a6593a0d162d24da865/refarch-gateway/src/main/java/de/muenchen/refarch/gateway/filter/GlobalRequestParameterPollutionFilter.java
         List<AdType> typeList = new ArrayList<>();
         if (types != null) {
-            typeList = Arrays.stream(types.split(",")).map(type -> AdType.valueOf(type.toUpperCase())).toList();
+            typeList = Arrays.stream(types.split(",")).map(type -> AdType.valueOf(type.toUpperCase(Locale.GERMAN))).toList();
         }
 
         if (interrnalSortBy == null) {
