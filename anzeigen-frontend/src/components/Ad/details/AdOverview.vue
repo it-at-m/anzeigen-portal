@@ -52,6 +52,14 @@
                   {{ t(`ad.type.${adDetails.adType!.toLocaleLowerCase()}`) }}
                 </v-col>
               </v-row>
+              <v-row v-if="adDetails.adType === 'RENTAL'">
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.rentalDate") }}
+                </v-col>
+                <v-col class="py-0">
+                  {{ useDateFormat(adDetails.rentalDate, DATE_DISPLAY_FORMAT) }}
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col class="py-0">
                   {{ t("adOverview.detailsCard.category") }}

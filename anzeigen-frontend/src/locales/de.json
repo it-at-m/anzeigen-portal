@@ -41,6 +41,7 @@
     "detailsCard": {
       "title": "Details",
       "type": "Art",
+      "rentalDate": "Ausleihdauer bis",
       "category": "Kategorie",
       "creationDate": "Erstellungsdatum",
       "expiryDate": "Ablaufdatum",

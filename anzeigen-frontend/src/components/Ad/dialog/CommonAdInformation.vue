@@ -26,6 +26,7 @@
       </v-radio-group>
     </v-col>
     <v-col
+      v-if="adTO.adType === 'RENTAL'"
       cols="12"
       md="5"
     >
