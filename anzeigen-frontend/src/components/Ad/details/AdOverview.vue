@@ -62,6 +62,18 @@
               </v-row>
               <v-row>
                 <v-col class="py-0">
+                  {{ t("adConditionSelector.placeholder") }}
+                </v-col>
+                <v-col class="py-0">
+                  {{
+                    t(
+                      `adConditionSelector.conditions.${adDetails.condition!.toLocaleLowerCase()}`
+                    )
+                  }}
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col class="py-0">
                   {{ t("adOverview.detailsCard.category") }}
                 </v-col>
                 <v-col class="py-0">

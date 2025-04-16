@@ -54,12 +54,31 @@
         t('commonAdInformation.ruleMsg.titleToLong'),
     ]"
   />
-  <ad-category-selector
-    v-model="adTO.adCategory"
-    variant="outlined"
-    :disabled="disabled"
-    hide-details="auto"
-  />
+  <v-row>
+    <v-col
+      cols="12"
+      md="6"
+    >
+      <ad-category-selector
+        v-model="adTO.adCategory"
+        variant="outlined"
+        :disabled="disabled"
+        hide-details="auto"
+      />
+    </v-col>
+    <v-col
+      cols="12"
+      md="6"
+    >
+      <ad-condition-selector
+        v-model="adTO.condition"
+        :disabled="disabled"
+        variant="outlined"
+        hide-details="auto"
+      />
+    </v-col>
+  </v-row>
+
   <v-textarea
     v-model="adTO.description"
     variant="outlined"
@@ -88,6 +107,7 @@ import { useI18n } from "vue-i18n";
 
 import { AdTOAdTypeEnum } from "@/api/swbrett";
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
+import AdConditionSelector from "@/components/Ad/dialog/common/AdConditionSelector.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";

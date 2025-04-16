@@ -44,6 +44,7 @@ public class AdMapper {
         ad.setCreationDateTime(adTO.getCreationDateTime());
         ad.setExpiryDate(adTO.getExpiryDate());
         ad.setViews(adTO.getViews());
+        ad.setCondition(adTO.getCondition());
         ad.setRentalDate(adTO.getRentalDate());
 
         // map Base64 to byte[]
@@ -83,6 +84,7 @@ public class AdMapper {
         adTO.setCreationDateTime(ad.getCreationDateTime());
         adTO.setExpiryDate(ad.getExpiryDate());
         adTO.setViews(ad.getViews());
+        adTO.setCondition(ad.getCondition());
         adTO.setRentalDate(ad.getRentalDate());
 
         // map byte[] to Base64

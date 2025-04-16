@@ -106,6 +106,10 @@ public class Ad {
     @Column(name = "views", nullable = false)
     private int views = 0;
 
+    @Setter
+    @Column(name = "condition", nullable = true)
+    private AdCondition condition;
+
     public void setImagePreview(final byte[] imagePreview) {
         this.imagePreview = Arrays.copyOf(imagePreview, imagePreview.length);
     }
