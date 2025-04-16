@@ -84,6 +84,10 @@ public class Ad {
     @Column(name = "expiry_date", nullable = false)
     private LocalDate expiryDate;
 
+    @Setter
+    @Column(name = "rental_date", nullable = true)
+    private LocalDate rentalDate;
+
     @Column(name = "image_preview", nullable = true)
     @Lob
     private byte[] imagePreview;

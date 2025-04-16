@@ -127,6 +127,12 @@ export interface AdTO {
     expiryDate?: Date;
     /**
      * 
+     * @type {Date}
+     * @memberof AdTO
+     */
+    rentalDate?: Date;
+    /**
+     * 
      * @type {string}
      * @memberof AdTO
      */
@@ -163,7 +169,8 @@ export interface AdTO {
  */
 export const AdTOAdTypeEnum = {
     SEEK: 'SEEK',
-    OFFER: 'OFFER'
+    OFFER: 'OFFER',
+    RENTAL: 'RENTAL'
 } as const;
 export type AdTOAdTypeEnum = typeof AdTOAdTypeEnum[keyof typeof AdTOAdTypeEnum];
 
@@ -210,6 +217,7 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
         'link': json['link'] == null ? undefined : json['link'],
         'creationDateTime': json['creationDateTime'] == null ? undefined : (new Date(json['creationDateTime'])),
         'expiryDate': json['expiryDate'] == null ? undefined : (new Date(json['expiryDate'])),
+        'rentalDate': json['rentalDate'] == null ? undefined : (new Date(json['rentalDate'])),
         'imagePreviewBase64': json['imagePreviewBase64'] == null ? undefined : json['imagePreviewBase64'],
         'adImg': json['adImg'] == null ? undefined : SwbImageTOFromJSON(json['adImg']),
         'adFiles': json['adFiles'] == null ? undefined : ((json['adFiles'] as Array<any>).map(SwbFileTOFromJSON)),
@@ -242,6 +250,7 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
         'link': value['link'],
         'creationDateTime': value['creationDateTime'] == null ? undefined : ((value['creationDateTime']).toISOString()),
         'expiryDate': value['expiryDate'] == null ? undefined : ((value['expiryDate']).toISOString().substring(0,10)),
+        'rentalDate': value['rentalDate'] == null ? undefined : ((value['rentalDate']).toISOString().substring(0,10)),
         'imagePreviewBase64': value['imagePreviewBase64'],
         'adImg': SwbImageTOToJSON(value['adImg']),
         'adFiles': value['adFiles'] == null ? undefined : ((value['adFiles'] as Array<any>).map(SwbFileTOToJSON)),

@@ -39,24 +39,25 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     @Override
     @Transactional
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
-    public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
+    public Page<AdTO> searchActiveAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
             final String order, final Pageable pageable,
             final Long adId) {
-        return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, true);
+        return searchAds(userId, searchTerm, categoryId, types, sortBy, order, pageable, adId, true);
     }
 
     @Override
     @Transactional
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
-    public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy,
+    public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
             final String order, final Pageable pageable,
             final Long adId) {
-        return searchAds(userId, searchTerm, categoryId, type, sortBy, order, pageable, adId, false);
+        return searchAds(userId, searchTerm, categoryId, types, sortBy, order, pageable, adId, false);
     }
 
     @SuppressWarnings({ "PMD.UseObjectForClearerAPI" })
-    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final AdType type, final String sortBy, final String order,
+    public Page<AdTO> searchAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
+            final String order,
             final Pageable pageable, final Long adId, final boolean isActive) {
 
         final CriteriaBuilder cb = entityManager.getCriteriaBuilder();
@@ -64,7 +65,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         // Main query
         final CriteriaQuery<Ad> cq = cb.createQuery(Ad.class);
         final Root<Ad> ad = cq.from(Ad.class);
-        final List<Predicate> predicates = buildPredicates(cb, ad, isActive, userId, searchTerm, categoryId, type, adId);
+        final List<Predicate> predicates = buildPredicates(cb, ad, isActive, userId, searchTerm, categoryId, types, adId);
         cq.where(predicates.toArray(new Predicate[0]));
 
         // Add sorting and order
@@ -85,7 +86,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         // Count query for total elements
         final CriteriaQuery<Long> countQuery = cb.createQuery(Long.class);
         final Root<Ad> countRoot = countQuery.from(Ad.class);
-        final List<Predicate> countPredicates = buildPredicates(cb, countRoot, isActive, userId, searchTerm, categoryId, type, adId);
+        final List<Predicate> countPredicates = buildPredicates(cb, countRoot, isActive, userId, searchTerm, categoryId, types, adId);
         countQuery.select(cb.count(countRoot)).where(countPredicates.toArray(new Predicate[0]));
         final Long total = entityManager.createQuery(countQuery).getSingleResult();
 
@@ -106,7 +107,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     }
 
     private List<Predicate> buildPredicates(final CriteriaBuilder cb, final Root<Ad> root, final boolean isActive, final String userId, final String searchTerm,
-            final Long categoryId, final AdType type, final Long adId) {
+            final Long categoryId, final List<AdType> types, final Long adId) {
         final List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(root.get("active"), isActive));
 
@@ -121,8 +122,13 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
         if (categoryId != null) {
             predicates.add(cb.equal(root.get("adCategory").get("id"), categoryId));
         }
-        if (type != null) {
-            predicates.add(cb.equal(root.get("adType"), type));
+        if (types != null && !types.isEmpty()) {
+            final CriteriaBuilder.In<AdType> inClause = cb.in(root.get("adType"));
+            for (final AdType type : types) {
+                inClause.value(type);
+            }
+            predicates.add(inClause);
+            // predicates.add(cb.equal(root.get("adType"), types));
         }
         if (adId != null) {
             predicates.add(cb.equal(root.get("id"), adId));

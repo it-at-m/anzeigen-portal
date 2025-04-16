@@ -98,7 +98,7 @@ export interface GetAdsRequest {
     userId?: string;
     searchTerm?: string;
     categoryId?: number;
-    type?: GetAdsTypeEnum;
+    type?: string;
     sortBy?: string;
     order?: string;
     page?: number;
@@ -1208,14 +1208,6 @@ export class DefaultApi extends runtime.BaseAPI {
 /**
  * @export
  */
-export const GetAdsTypeEnum = {
-    SEEK: 'SEEK',
-    OFFER: 'OFFER'
-} as const;
-export type GetAdsTypeEnum = typeof GetAdsTypeEnum[keyof typeof GetAdsTypeEnum];
-/**
- * @export
- */
 export const GetSettingSettingNameEnum = {
     MOTD: 'MOTD',
     MAX_SWB_IMAGE_SIZE: 'MAX_SWB_IMAGE_SIZE',
@@ -1227,7 +1219,8 @@ export const GetSettingSettingNameEnum = {
     MAX_PAGE_SIZE: 'MAX_PAGE_SIZE',
     DEFAULT_SORTING: 'DEFAULT_SORTING',
     DEFAULT_ORDERING: 'DEFAULT_ORDERING',
-    MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE'
+    MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE',
+    MAX_RENTAL_DATE_RANGE: 'MAX_RENTAL_DATE_RANGE'
 } as const;
 export type GetSettingSettingNameEnum = typeof GetSettingSettingNameEnum[keyof typeof GetSettingSettingNameEnum];
 /**

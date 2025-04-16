@@ -7,6 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
 public interface AdRepositoryCustom {
@@ -14,7 +16,7 @@ public interface AdRepositoryCustom {
     Page<AdTO> searchActiveAds(String userId,
             String searchTerm,
             Long categoryId,
-            AdType type,
+            List<AdType> type,
             String sortBy,
             String order,
             Pageable pageable,
@@ -24,7 +26,7 @@ public interface AdRepositoryCustom {
     Page<AdTO> searchDeactivatedAds(String userId,
             String searchTerm,
             Long categoryId,
-            AdType type,
+            List<AdType> type,
             String sortBy,
             String order,
             Pageable pageable,

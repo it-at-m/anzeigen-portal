@@ -9,6 +9,9 @@ public enum AdType {
     /*
      * Biete
      */
-    OFFER
-
+    OFFER,
+    /*
+     * Miete
+     */
+    RENTAL
 }

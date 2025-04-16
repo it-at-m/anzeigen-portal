@@ -15,15 +15,34 @@ export const useSettingStore = defineStore("settings", () => {
     isDirty.value = false;
   };
 
+  /**
+   * Overwrites a setting or creates a new entry
+   * @param setting to update or push to the array
+   */
   const setSetting = (setting: SettingTO) => {
     isDirty.value = true;
-    settings.value = settings.value.map((s) =>
-      s.settingName === setting.settingName ? setting : s
+
+    const index = settings.value.findIndex(
+      (s) => s.settingName === setting.settingName
     );
+
+    settings.value = settings.value =
+      index !== -1
+        ? settings.value.map((s) =>
+            s.settingName === setting.settingName ? setting : s
+          )
+        : [...settings.value, setting];
   };
 
+  /**
+   * Get a setting or return an empty new one if not exist
+   * @param settingName to get
+   */
   const getSetting = (settingName: SettingTOSettingNameEnum) =>
-    settings.value.find((setting) => setting.settingName === settingName);
+    settings.value.find((setting) => setting.settingName === settingName) || {
+      settingName: settingName,
+      id: settings.value.length,
+    };
 
   return {
     settings,

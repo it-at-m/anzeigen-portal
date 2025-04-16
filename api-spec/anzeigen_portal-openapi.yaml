@@ -300,9 +300,6 @@ paths:
           required: false
           schema:
             type: "string"
-            enum:
-              - "SEEK"
-              - "OFFER"
         - name: "sortBy"
           in: "query"
           required: false
@@ -553,6 +550,7 @@ paths:
               - "DEFAULT_SORTING"
               - "DEFAULT_ORDERING"
               - "MAX_ARCHIVE_DATE_RANGE"
+              - "MAX_RENTAL_DATE_RANGE"
       responses:
         "200":
           description: "OK"
@@ -680,6 +678,7 @@ components:
           enum:
             - "SEEK"
             - "OFFER"
+            - "RENTAL"
         active:
           type: "boolean"
         title:
@@ -699,6 +698,9 @@ components:
           type: "string"
           format: "date-time"
         expiryDate:
+          type: "string"
+          format: "date"
+        rentalDate:
           type: "string"
           format: "date"
         imagePreviewBase64:
@@ -740,6 +742,7 @@ components:
             - "DEFAULT_SORTING"
             - "DEFAULT_ORDERING"
             - "MAX_ARCHIVE_DATE_RANGE"
+            - "MAX_RENTAL_DATE_RANGE"
         numberValue:
           type: "integer"
           format: "int32"

@@ -8,8 +8,9 @@
   },
   "ad": {
     "type": {
-      "search": "Suche",
-      "offer": "Biete"
+      "seek": "Suche",
+      "offer": "Biete",
+      "rental": "Vermiete"
     },
     "adCreate": "Anzeige erstellen",
     "adEdit": "Anzeige bearbeiten",
@@ -40,6 +41,7 @@
     "detailsCard": {
       "title": "Details",
       "type": "Art",
+      "rentalDate": "Ausleihdauer bis",
       "category": "Kategorie",
       "creationDate": "Erstellungsdatum",
       "expiryDate": "Ablaufdatum",
@@ -85,16 +87,18 @@
     "ruleMsg": {
       "invalid": "Das Datum is nicht valide",
       "pastDate": "Das Datum darf nicht in der Vergangenheit liegen!",
-      "maxDate": "Das Datum is zu weit in der Zukunft!"
+      "maxDate": "Das Datum is zu weit in der Zukunft. |Die maximale Zeitspanne beträgt {count} Wochen."
     }
   },
   "commonAdInformation": {
     "titleLabel": "Titel",
     "descriptionLabel": "Beschreibung",
+    "rentalDate": "Ausleihdauer",
     "ruleMsg": {
       "description": "Bitte geben Sie eine Beschreibung mit maximal 1000 Zeichen ein.",
       "titleToLong": "Bitte kürzen Sie den Titel",
-      "title": "Bitte geben Sie einen Titel ein."
+      "title": "Bitte geben Sie einen Titel ein.",
+      "rentalDate": "Bitte geben Sie eine Ausleihdauer an."
     }
   },
   "optionalAdInformation": {
@@ -184,6 +188,10 @@
     "MAX_EXPIRY_DATE_RANGE": {
       "description": "Maximale Laufzeit in Wochen",
       "tooltip": "Maximale Laufzeit in Wochen"
+    },
+    "MAX_RENTAL_DATE_RANGE": {
+      "description": "Maximale Ausleihdauer in Wochen",
+      "tooltip": "Maximale Ausleihdauer in Wochen"
     }
   },
   "filterAdActive": {

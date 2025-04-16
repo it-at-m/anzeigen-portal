@@ -95,7 +95,7 @@
             >
               <v-col class="pa-0 pb-2 d-flex ga-2">
                 <ad-art-chip
-                  :is-offer="isOffer"
+                  :ad-type="adTo.adType"
                   :class="{ inactive: !adTo.active }"
                 />
                 <ad-view-count-chip
@@ -142,11 +142,6 @@ const dialogBus = useDialogEventBus();
 const { adTo } = defineProps<{
   adTo: DeepReadonly<AdTO>;
 }>();
-
-/**
- * Computes whether the ad is an offer based on its ad type.
- */
-const isOffer = computed(() => adTo.adType === "OFFER");
 
 /**
  * Computes whether the ad belongs to the current user based on the user ID.

@@ -1,26 +1,50 @@
 <template>
-  <v-radio-group
-    v-model="adTO.adType"
-    :disabled="disabled"
-    color="accent"
-    inline
-  >
-    <v-radio
-      :label="t('ad.type.offer')"
-      value="OFFER"
-    />
-    <v-radio
-      :label="t('ad.type.search')"
-      value="SEEK"
-    />
-  </v-radio-group>
+  <v-row>
+    <v-col
+      cols="12"
+      md="7"
+    >
+      <v-radio-group
+        v-model="adTO.adType"
+        :disabled="disabled"
+        color="accent"
+        hide-details="auto"
+        inline
+      >
+        <v-radio
+          :label="t('ad.type.offer')"
+          value="OFFER"
+        />
+        <v-radio
+          :label="t('ad.type.seek')"
+          value="SEEK"
+        />
+        <v-radio
+          :label="t('ad.type.rental')"
+          value="RENTAL"
+        />
+      </v-radio-group>
+    </v-col>
+    <v-col
+      v-if="adTO.adType === 'RENTAL'"
+      cols="12"
+      md="5"
+    >
+      <ad-date-selector
+        v-model="adTO.rentalDate"
+        :label="t('commonAdInformation.rentalDate')"
+        max-date-setting="MAX_RENTAL_DATE_RANGE"
+        :disabled="disabled"
+      />
+    </v-col>
+  </v-row>
   <v-text-field
     v-model="adTO.title"
     variant="outlined"
     density="compact"
     color="accent"
     :disabled="disabled"
-    class="mb-4"
+    class="my-4"
     hide-details="auto"
     :label="t('commonAdInformation.titleLabel')"
     :rules="[
@@ -84,6 +108,7 @@ import { useI18n } from "vue-i18n";
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
 import AdConditionSelector from "@/components/Ad/dialog/common/AdConditionSelector.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
+import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const { t } = useI18n();
