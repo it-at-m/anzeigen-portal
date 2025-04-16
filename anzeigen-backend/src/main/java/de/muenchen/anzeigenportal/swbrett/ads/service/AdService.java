@@ -110,10 +110,15 @@ public class AdService {
         if (adTO.getCreationDateTime() == null) {
             adTO.setCreationDateTime(LocalDateTime.now());
         }
+        if (adTO.getAdType() == AdType.RENTAL && adTO.getRentalDate() == null) {
+            final Integer setting = this.settingService.getSetting(SettingName.MAX_RENTAL_DATE_RANGE).getNumberValue();
+            adTO.setExpiryDate(LocalDate.now().plusWeeks(setting));
+        }
         if (adTO.getExpiryDate() == null) {
             final Integer setting = this.settingService.getSetting(SettingName.MAX_EXPIRY_DATE_RANGE).getNumberValue();
             adTO.setExpiryDate(LocalDate.now().plusWeeks(setting));
         }
+
 
         final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);
