@@ -144,11 +144,6 @@ const { adTo } = defineProps<{
 }>();
 
 /**
- * Computes whether the ad is an offer based on its ad type.
- */
-const isOffer = computed(() => adTo.adType === "OFFER");
-
-/**
  * Computes whether the ad belongs to the current user based on the user ID.
  */
 const belongsToCurrentUser = computed(

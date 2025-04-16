@@ -105,7 +105,6 @@ import type { AdTO } from "@/api/swbrett";
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { AdTOAdTypeEnum } from "@/api/swbrett";
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
 import AdConditionSelector from "@/components/Ad/dialog/common/AdConditionSelector.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
