@@ -45,6 +45,12 @@
         <!-- Release -->
         <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
 
+        <!-- Flyway maven plugin configuration for local stack database -->
+        <flyway.url>jdbc:postgresql://localhost:5432/postgres</flyway.url>
+        <flyway.user>admin</flyway.user>
+        <flyway.password>admin</flyway.password>
+        <flyway.locations>classpath:db/migration/schema,classpath:db/migration/testdata</flyway.locations>
+
         <!-- Utility -->
         <commons-collections4.version>4.4</commons-collections4.version>
         <commons-csv.version>1.14.0</commons-csv.version>
@@ -144,6 +150,14 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-database-postgresql</artifactId>
         </dependency>
         <dependency>
             <groupId>org.hibernate.orm</groupId>
@@ -465,6 +479,10 @@
                         </goals>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
             </plugin>
         </plugins>
     </build>

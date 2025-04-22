@@ -17,6 +17,11 @@ spring:
       return-body-on-create: true
   jpa:
     database: postgresql
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    locations:
+      - classpath:db/migration/schema
 
 server:
   error:
