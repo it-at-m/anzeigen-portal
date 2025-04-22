@@ -12,4 +12,6 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
 
     List<Subscription> findByAdCategory_Id(Long adCategory_id);
 
+    boolean deleteBySwbUser_IdAndAdCategory_Id(Long swbUser_id, Long adCategory_id);
+
 }
