@@ -173,9 +173,11 @@ const loadUser = async () => {
       swbUserTO: {
         displayName: userStore.getUser?.displayName,
         lhmObjectId: userStore.lhmObjectId,
+        email: userStore.getUser?.email,
       },
     });
   }
+
   if (findUserError.value) {
     // User does not have the proper authorities
     noPermission.value = true;
