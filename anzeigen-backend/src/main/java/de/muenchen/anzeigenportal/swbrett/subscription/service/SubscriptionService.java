@@ -2,6 +2,7 @@ package de.muenchen.anzeigenportal.swbrett.subscription.service;
 
 import de.muenchen.anzeigenportal.swbrett.ads.service.AdCategoryService;
 import de.muenchen.anzeigenportal.swbrett.subscription.model.Subscription;
+import de.muenchen.anzeigenportal.swbrett.subscription.model.SubscriptionTO;
 import de.muenchen.anzeigenportal.swbrett.subscription.repository.SubscriptionRepository;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
@@ -33,14 +34,14 @@ public class SubscriptionService {
         this.adCategoryService = adCategoryService;
     }
 
-    public Subscription createSubscription(Long categoryId) {
+    public SubscriptionTO createSubscription(Long categoryId) {
         final SwbUser currentUser = userService.getCurrentUser();
 
         final Optional<Subscription> existingSubscription = subscriptionRepository
                 .findBySwbUser_IdAndAdCategory_Id(currentUser.getId(), categoryId);
 
         if (existingSubscription.isPresent()) {
-            return existingSubscription.get();
+            return SubscriptionMapper.INSTANCE.toDTO(existingSubscription.get());
         }
 
         Subscription subscription = new Subscription();
@@ -48,7 +49,7 @@ public class SubscriptionService {
         subscription.setSwbUser(currentUser);
         subscription.setAdCategory(adCategoryService.getAdCategory(categoryId));
 
-        return subscriptionRepository.save(subscription);
+        return SubscriptionMapper.INSTANCE.toDTO(subscriptionRepository.save(subscription));
 
         // TODO: send E-Mail Notification?
     }
@@ -59,23 +60,31 @@ public class SubscriptionService {
         // TODO - fail silently anyway? - yes
     }
 
-    public List<Subscription> getAllSubscriptionOfCategory(Long categoryId) {
-        return subscriptionRepository.findByAdCategory_Id(categoryId);
+    public List<SubscriptionTO> getAllSubscriptionOfCategory(Long categoryId) {
+        return subscriptionRepository.findByAdCategory_Id(categoryId)
+                .stream()
+                .map(SubscriptionMapper.INSTANCE::toDTO)
+                .toList();
     }
 
-    public Subscription getUserSubscriptionForCategory(Long categoryId) {
+    public SubscriptionTO getUserSubscriptionForCategory(Long categoryId) {
         SwbUser currentUser = userService.getCurrentUser();
-        return subscriptionRepository.findBySwbUser_IdAndAdCategory_Id(currentUser.getId(), categoryId)
+
+        Subscription foundSubscription = subscriptionRepository.findBySwbUser_IdAndAdCategory_Id(currentUser.getId(), categoryId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        return SubscriptionMapper.INSTANCE.toDTO(foundSubscription);
     }
 
-    public List<Subscription> getAllSubscriptionOfUser() {
+    public List<SubscriptionTO> getAllSubscriptionOfUser() {
         final SwbUser currentUser = userService.getCurrentUser();
-        return subscriptionRepository.findBySwbUser_Id(currentUser.getId());
+        return subscriptionRepository.findBySwbUser_Id(currentUser.getId())
+                .stream()
+                .map(SubscriptionMapper.INSTANCE::toDTO)
+                .toList();
     }
 
     // TODO - used later
-    public List<Subscription> getAllSoonExpiringSubscripions() {
+    public List<SubscriptionTO> getAllSoonExpiringSubscripions() {
         // thought prozess: this will get called daily so we do not want to remind every subscriber daily after time threshold
         // to mitigate this issue we only get the subscriptions of a specific date
 
