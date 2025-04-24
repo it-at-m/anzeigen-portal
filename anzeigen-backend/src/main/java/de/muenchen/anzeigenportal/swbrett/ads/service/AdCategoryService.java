@@ -3,8 +3,10 @@ package de.muenchen.anzeigenportal.swbrett.ads.service;
 import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
 import de.muenchen.anzeigenportal.swbrett.ads.repository.AdCategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -22,7 +24,7 @@ public class AdCategoryService {
     }
 
     public AdCategory getAdCategory(final long id) {
-        return repository.getOne(id);
+        return repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Category not found"));
     }
 
     public AdCategory createAdCategory(final AdCategory adCategory) {
