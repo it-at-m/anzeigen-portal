@@ -1,12 +1,15 @@
 package de.muenchen.anzeigenportal.swbrett.subscription.service;
 
+import de.muenchen.anzeigenportal.swbrett.ads.model.AdCategory;
 import de.muenchen.anzeigenportal.swbrett.ads.service.AdCategoryService;
 import de.muenchen.anzeigenportal.swbrett.subscription.model.Subscription;
 import de.muenchen.anzeigenportal.swbrett.subscription.model.SubscriptionTO;
 import de.muenchen.anzeigenportal.swbrett.subscription.repository.SubscriptionRepository;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SubscriptionService {
@@ -26,7 +30,7 @@ public class SubscriptionService {
     private final AdCategoryService adCategoryService;
 
     static private final int MAXIMUM_EXPIRY_DAYS_SUBSCRIPTION = 30;
-    static private final int SOON_EXPIRY_REMINDER_DAYS = 3;
+    // static private final int SOON_EXPIRY_REMINDER_DAYS = 3;
 
     public SubscriptionTO createSubscription(final Long categoryId) {
         final SwbUser currentUser = userService.getCurrentUser();
@@ -38,33 +42,37 @@ public class SubscriptionService {
             return SubscriptionMapper.INSTANCE.toDTO(existingSubscription.get());
         }
 
-        Subscription subscription = new Subscription();
+        final AdCategory adCategory = adCategoryService.getAdCategory(categoryId);
+
+        final Subscription subscription = new Subscription();
         subscription.setSubscriptionDate(LocalDate.now());
         subscription.setSwbUser(currentUser);
-        subscription.setAdCategory(adCategoryService.getAdCategory(categoryId));
+        subscription.setAdCategory(adCategory);
 
-        return SubscriptionMapper.INSTANCE.toDTO(subscriptionRepository.save(subscription));
+        final Subscription savedSubscription = subscriptionRepository.save(subscription);
 
+        return SubscriptionMapper.INSTANCE.toDTO(savedSubscription);
         // TODO: send E-Mail Notification?
     }
 
-    public void deleteSubscription(Long subscriptionId) {
-        final boolean isDeleted = subscriptionRepository.deleteBySwbUser_IdAndAdCategory_Id(userService.getCurrentUser().getId(), subscriptionId);
-
+    @Transactional
+    public void deleteSubscription(final long subscriptionId) {
+        final Integer deleted = subscriptionRepository.deleteBySwbUser_IdAndAdCategory_Id(userService.getCurrentUser().getId(), subscriptionId);
+        log.debug(deleted.toString());
         // TODO - fail silently anyway? - yes
     }
 
-    public List<SubscriptionTO> getAllSubscriptionOfCategory(Long categoryId) {
+    public List<SubscriptionTO> getAllSubscriptionOfCategory(final Long categoryId) {
         return subscriptionRepository.findByAdCategory_Id(categoryId)
                 .stream()
                 .map(SubscriptionMapper.INSTANCE::toDTO)
                 .toList();
     }
 
-    public SubscriptionTO getUserSubscriptionForCategory(Long categoryId) {
-        SwbUser currentUser = userService.getCurrentUser();
+    public SubscriptionTO getUserSubscriptionForCategory(final Long categoryId) {
+        final SwbUser currentUser = userService.getCurrentUser();
 
-        Subscription foundSubscription = subscriptionRepository.findBySwbUser_IdAndAdCategory_Id(currentUser.getId(), categoryId)
+        final Subscription foundSubscription = subscriptionRepository.findBySwbUser_IdAndAdCategory_Id(currentUser.getId(), categoryId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         return SubscriptionMapper.INSTANCE.toDTO(foundSubscription);
     }
@@ -90,9 +98,5 @@ public class SubscriptionService {
         final LocalDate expiryDate = LocalDate.now().plusDays(MAXIMUM_EXPIRY_DAYS_SUBSCRIPTION);
         subscriptionRepository.deleteBySubscriptionDateAfter(expiryDate);
     }
-
-
-
-
 
 }
