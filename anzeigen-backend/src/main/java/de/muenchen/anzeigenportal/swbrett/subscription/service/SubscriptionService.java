@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class SubscriptionService {
 
     private final SubscriptionRepository subscriptionRepository;
@@ -27,14 +28,7 @@ public class SubscriptionService {
     static private final int MAXIMUM_EXPIRY_DAYS_SUBSCRIPTION = 30;
     static private final int SOON_EXPIRY_REMINDER_DAYS = 3;
 
-    @Autowired
-    public SubscriptionService(SubscriptionRepository subscriptionRepository, UserService userService, AdCategoryService adCategoryService) {
-        this.subscriptionRepository = subscriptionRepository;
-        this.userService = userService;
-        this.adCategoryService = adCategoryService;
-    }
-
-    public SubscriptionTO createSubscription(Long categoryId) {
+    public SubscriptionTO createSubscription(final Long categoryId) {
         final SwbUser currentUser = userService.getCurrentUser();
 
         final Optional<Subscription> existingSubscription = subscriptionRepository
