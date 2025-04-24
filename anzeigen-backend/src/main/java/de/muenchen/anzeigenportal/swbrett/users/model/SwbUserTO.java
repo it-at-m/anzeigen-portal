@@ -23,7 +23,6 @@ public class SwbUserTO {
      */
     private String displayName;
 
-
     private String email;
 
 }
