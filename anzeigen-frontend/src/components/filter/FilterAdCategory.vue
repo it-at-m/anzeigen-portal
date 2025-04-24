@@ -24,9 +24,10 @@
             {{ NO_CATEGORY.name }}
           </v-tab>
           <v-tab
-            v-for="category in categoriesStore.categories"
-            :key="category.id"
-            :value="category.id"
+            v-for="subscribedCategory in categoriesStore.subscribedCategories"
+            :key="subscribedCategory.category.id"
+            :value="subscribedCategory.category.id"
+            :text="subscribedCategory.category.name"
           >
             <template #prepend>
               <v-icon
@@ -34,7 +35,31 @@
                 icon="mdi-card-multiple"
               />
             </template>
-            {{ category.name }}
+            <template #append>
+              <v-btn
+                :icon="
+                  subscribedCategory.subscribed
+                    ? 'mdi-bell'
+                    : 'mdi-bell-outline'
+                "
+                density="compact"
+                variant="flat"
+                @click="
+                  subscribe(
+                    subscribedCategory.category.id!,
+                    subscribedCategory.subscribed
+                  )
+                "
+              >
+                <template #default>
+                  <v-icon
+                    color="accent"
+                    icon="mdi-bell-outline"
+                  />
+                  {{ subscribedCategory.subscribed }}
+                </template>
+              </v-btn>
+            </template>
           </v-tab>
         </v-tabs>
       </v-skeleton-loader>
@@ -48,12 +73,25 @@ import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
+import {
+  useCreateSubscription,
+  useDeleteSubscription,
+} from "@/composables/api/useSubscriptionsApi.ts";
+import { useUpdateSubscribtions } from "@/composables/updateCategories.ts";
 import { NO_CATEGORY, QUERY_NAME_CATEGORYID } from "@/Constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory";
 
 const { t } = useI18n();
 
 const categoriesStore = useCategoriesStore();
+
+const { call: deleteSubscription, error: deleteSubscriptionError } =
+  useDeleteSubscription();
+
+const { call: createSubscription, error: createSubscriptionError } =
+  useCreateSubscription();
+
+const updateSubscription = useUpdateSubscribtions();
 
 const categoryQuery = useRouteQuery(QUERY_NAME_CATEGORYID);
 
@@ -78,6 +116,16 @@ watch(selectedCategoryId, (newSelectedCategoryId) => {
   categoryQuery.value =
     newSelectedCategoryId === -1 ? null : newSelectedCategoryId.toString();
 });
+
+const subscribe = async (categoryId: number, subscribed: boolean) => {
+  if (!subscribed) {
+    await createSubscription({ body: categoryId });
+  } else {
+    await deleteSubscription({ categoryId });
+  }
+
+  await updateSubscription();
+};
 </script>
 
 <style scoped></style>

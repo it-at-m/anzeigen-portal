@@ -83,12 +83,16 @@ import { Levels } from "@/api/error.ts";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
+import { useGetSubscriptions } from "@/composables/api/useSubscriptionsApi.ts";
 import {
   useCreateUser,
   useFindUser,
   useUserInfo,
 } from "@/composables/api/useUserApi.ts";
-import { useUpdateCategories } from "@/composables/updateCategories.ts";
+import {
+  useUpdateCategories,
+  useUpdateSubscribtions,
+} from "@/composables/updateCategories.ts";
 import { useApi } from "@/composables/useApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
@@ -106,6 +110,7 @@ useTitle("Anzeigen Portal");
 
 const defaultQuery = useDefaultQuery();
 const updateCategories = useUpdateCategories();
+const updateSubscribtions = useUpdateSubscribtions();
 const updateSettings = useUpdateSettings();
 
 const settingStore = useSettingStore();
@@ -143,6 +148,9 @@ onMounted(async () => {
   }
   if (categoriesStore.isEmpty) {
     await updateCategories();
+  }
+  if (categoriesStore.isEmptySubscriptions) {
+    await updateSubscribtions();
   }
 });
 
