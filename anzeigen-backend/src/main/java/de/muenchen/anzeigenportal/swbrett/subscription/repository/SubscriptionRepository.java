@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@SuppressWarnings({ "PMD.MethodNamingConventions", "PMD.FormalParameterNamingConventions" })
 public interface SubscriptionRepository extends JpaRepository<Subscription, UUID> {
 
     List<Subscription> findBySwbUser_Id(Long swbUser_id);
@@ -16,7 +17,7 @@ public interface SubscriptionRepository extends JpaRepository<Subscription, UUID
 
     Optional<Subscription> findBySwbUser_IdAndAdCategory_Id(Long swbUser_id, Long adCategory_id);
 
-    boolean deleteBySwbUser_IdAndAdCategory_Id(Long swbUser_id, Long adCategory_id);
+    Integer deleteBySwbUser_IdAndAdCategory_Id(Long swbUser_id, long adCategory_id);
 
     boolean existsBySwbUser_IdAndAdCategory_Id(Long swbUser_id, Long adCategory_id);
 
