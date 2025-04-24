@@ -7,12 +7,17 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.io.Serial;
 import java.time.LocalDate;
 
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Entity(name = "t_subscription")
+@SuppressWarnings({ "PMD.NonSerializableClass" })
 public class Subscription extends BaseEntity {
+
+    @Serial
+    private static final long serialVersionUID = -8087031435105795319L;
 
     @Column(name = "subscriptionDate")
     private LocalDate subscriptionDate;
