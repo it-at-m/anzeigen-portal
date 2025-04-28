@@ -9,7 +9,7 @@ on:
 
 jobs:
   codeql:
-    uses: it-at-m/lhm_actions/action-templates/workflows/codeql.yml@7863642bb665a1d1994b2c2645db6e64a1a694ad # v1.0.9
+    uses: it-at-m/lhm_actions/action-templates/workflows/codeql.yml@e76e0bde64af98eb44ccd5b6e048ce5d82f4acc4 # v1.0.13
     with:
       analyze-java: true
       analyze-javascript-typescript-vue: true
