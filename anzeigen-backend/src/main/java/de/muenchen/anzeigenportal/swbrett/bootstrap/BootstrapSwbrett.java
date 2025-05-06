@@ -149,6 +149,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
             final SwbUser u = new SwbUser();
             u.setLhmObjectId("112061642");
             u.setDisplayName("Bugs Bunny");
+            u.setEmail("bugs@bunny.com");
             result.add(userService.saveOrGet(u));
         }
 
@@ -156,6 +157,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
             final SwbUser u = new SwbUser();
             u.setLhmObjectId("112061643");
             u.setDisplayName("Mr. Admin");
+            u.setEmail("mr@admin.com");
             result.add(userService.saveOrGet(u));
         }
 
@@ -163,12 +165,14 @@ public class BootstrapSwbrett implements CommandLineRunner {
             final SwbUser u = new SwbUser();
             u.setLhmObjectId("112061644");
             u.setDisplayName("Randall Random");
+            u.setEmail("randall@random.com");
             result.add(userService.saveOrGet(u));
         }
         {
             final SwbUser u = new SwbUser();
             u.setLhmObjectId("1234567");
             u.setDisplayName("testuser");
+            u.setEmail("test@user.com");
             result.add(userService.saveOrGet(u));
         }
 

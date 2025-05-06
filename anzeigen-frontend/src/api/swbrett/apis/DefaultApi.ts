@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -18,6 +19,7 @@ import type {
   AdTO,
   GetAds200Response,
   SettingTO,
+  SubscriptionTO,
   SwbFileTO,
   SwbImageSanitize,
   SwbImageTO,
@@ -33,6 +35,8 @@ import {
     GetAds200ResponseToJSON,
     SettingTOFromJSON,
     SettingTOToJSON,
+    SubscriptionTOFromJSON,
+    SubscriptionTOToJSON,
     SwbFileTOFromJSON,
     SwbFileTOToJSON,
     SwbImageSanitizeFromJSON,
@@ -61,6 +65,10 @@ export interface CreateUserRequest {
     swbUserTO: SwbUserTO;
 }
 
+export interface CreateUserSubscriptionRequest {
+    body: number;
+}
+
 export interface DeactivateAdRequest {
     id: number;
 }
@@ -79,6 +87,10 @@ export interface DeleteAdCategoryRequest {
 
 export interface DeleteSwbreadRequest {
     id: number;
+}
+
+export interface DeleteUserSubscriptionRequest {
+    categoryId: number;
 }
 
 export interface FindUserRequest {
@@ -143,6 +155,10 @@ export interface IncrementAdViewRequest {
 
 export interface IncrementViewRequest {
     id: number;
+}
+
+export interface IsUserSubscribedToCategoryRequest {
+    categoryId: number;
 }
 
 export interface SanitizeImageRequest {
@@ -318,6 +334,42 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * POST subscriptions
+     */
+    async createUserSubscriptionRaw(requestParameters: CreateUserSubscriptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscriptionTO>> {
+        if (requestParameters['body'] == null) {
+            throw new runtime.RequiredError(
+                'body',
+                'Required parameter "body" was null or undefined when calling createUserSubscription().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        headerParameters['Content-Type'] = 'application/json';
+
+        const response = await this.request({
+            path: `/subscriptions`,
+            method: 'POST',
+            headers: headerParameters,
+            query: queryParameters,
+            body: requestParameters['body'] as any,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SubscriptionTOFromJSON(jsonValue));
+    }
+
+    /**
+     * POST subscriptions
+     */
+    async createUserSubscription(requestParameters: CreateUserSubscriptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscriptionTO> {
+        const response = await this.createUserSubscriptionRaw(requestParameters, initOverrides);
+        return await response.value();
+    }
+
+    /**
      * PUT ads/deactivate/{id}
      */
     async deactivateAdRaw(requestParameters: DeactivateAdRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -475,6 +527,38 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async deleteSwbread(requestParameters: DeleteSwbreadRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.deleteSwbreadRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * DELETE subscriptions/{categoryId}
+     */
+    async deleteUserSubscriptionRaw(requestParameters: DeleteUserSubscriptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
+        if (requestParameters['categoryId'] == null) {
+            throw new runtime.RequiredError(
+                'categoryId',
+                'Required parameter "categoryId" was null or undefined when calling deleteUserSubscription().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/subscriptions/{categoryId}`.replace(`{${"categoryId"}}`, encodeURIComponent(String(requestParameters['categoryId']))),
+            method: 'DELETE',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.VoidApiResponse(response);
+    }
+
+    /**
+     * DELETE subscriptions/{categoryId}
+     */
+    async deleteUserSubscription(requestParameters: DeleteUserSubscriptionRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
+        await this.deleteUserSubscriptionRaw(requestParameters, initOverrides);
     }
 
     /**
@@ -935,6 +1019,32 @@ export class DefaultApi extends runtime.BaseAPI {
     }
 
     /**
+     * GET subscriptions
+     */
+    async getUserSubscriptionsRaw(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<Array<SubscriptionTO>>> {
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/subscriptions`,
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => jsonValue.map(SubscriptionTOFromJSON));
+    }
+
+    /**
+     * GET subscriptions
+     */
+    async getUserSubscriptions(initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<Array<SubscriptionTO>> {
+        const response = await this.getUserSubscriptionsRaw(initOverrides);
+        return await response.value();
+    }
+
+    /**
      * PUT swbreads/incrementView/{id}
      */
     async incrementAdViewRaw(requestParameters: IncrementAdViewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<void>> {
@@ -996,6 +1106,39 @@ export class DefaultApi extends runtime.BaseAPI {
      */
     async incrementView(requestParameters: IncrementViewRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<void> {
         await this.incrementViewRaw(requestParameters, initOverrides);
+    }
+
+    /**
+     * GET subscriptions/{categoryId}
+     */
+    async isUserSubscribedToCategoryRaw(requestParameters: IsUserSubscribedToCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<runtime.ApiResponse<SubscriptionTO>> {
+        if (requestParameters['categoryId'] == null) {
+            throw new runtime.RequiredError(
+                'categoryId',
+                'Required parameter "categoryId" was null or undefined when calling isUserSubscribedToCategory().'
+            );
+        }
+
+        const queryParameters: any = {};
+
+        const headerParameters: runtime.HTTPHeaders = {};
+
+        const response = await this.request({
+            path: `/subscriptions/{categoryId}`.replace(`{${"categoryId"}}`, encodeURIComponent(String(requestParameters['categoryId']))),
+            method: 'GET',
+            headers: headerParameters,
+            query: queryParameters,
+        }, initOverrides);
+
+        return new runtime.JSONApiResponse(response, (jsonValue) => SubscriptionTOFromJSON(jsonValue));
+    }
+
+    /**
+     * GET subscriptions/{categoryId}
+     */
+    async isUserSubscribedToCategory(requestParameters: IsUserSubscribedToCategoryRequest, initOverrides?: RequestInit | runtime.InitOverrideFunction): Promise<SubscriptionTO> {
+        const response = await this.isUserSubscribedToCategoryRaw(requestParameters, initOverrides);
+        return await response.value();
     }
 
     /**

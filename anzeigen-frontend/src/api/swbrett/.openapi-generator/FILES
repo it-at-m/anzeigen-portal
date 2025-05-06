@@ -6,6 +6,7 @@ models/AdTO.ts
 models/GetAds200Response.ts
 models/GetAds200ResponseSort.ts
 models/SettingTO.ts
+models/SubscriptionTO.ts
 models/SwbFileTO.ts
 models/SwbImageSanitize.ts
 models/SwbImageTO.ts

@@ -22,6 +22,10 @@ public class UserMapper {
             user.setDisplayName(userTO.getDisplayName());
         }
 
+        if (userTO.getEmail() != null) {
+            user.setEmail(userTO.getEmail());
+        }
+
         return user;
     }
 
@@ -38,6 +42,7 @@ public class UserMapper {
         userTO.setId(user.getId());
         userTO.setLhmObjectId(user.getLhmObjectId());
         userTO.setDisplayName(user.getDisplayName());
+        userTO.setEmail(user.getEmail());
 
         return userTO;
     }

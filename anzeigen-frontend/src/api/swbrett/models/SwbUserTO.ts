@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -36,6 +37,12 @@ export interface SwbUserTO {
      * @memberof SwbUserTO
      */
     displayName?: string;
+    /**
+     * 
+     * @type {string}
+     * @memberof SwbUserTO
+     */
+    email?: string;
 }
 
 /**
@@ -58,6 +65,7 @@ export function SwbUserTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'id': json['id'] == null ? undefined : json['id'],
         'lhmObjectId': json['lhmObjectId'] == null ? undefined : json['lhmObjectId'],
         'displayName': json['displayName'] == null ? undefined : json['displayName'],
+        'email': json['email'] == null ? undefined : json['email'],
     };
 }
 
@@ -75,6 +83,7 @@ export function SwbUserTOFromJSONTyped(json: any, ignoreDiscriminator: boolean):
         'id': value['id'],
         'lhmObjectId': value['lhmObjectId'],
         'displayName': value['displayName'],
+        'email': value['email'],
     };
 }
 
