@@ -61,4 +61,9 @@ public enum SettingName {
      * Maximale Ausleihzeit einer Anzeige in Wochen (NUMBER)
      */
     MAX_RENTAL_DATE_RANGE,
+
+    /**
+     * List of disallowed email domains when creating an ad
+     */
+    DISALLOWED_EMAIL_DOMAINS
 }
