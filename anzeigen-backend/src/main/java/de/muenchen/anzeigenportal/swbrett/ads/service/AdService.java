@@ -107,7 +107,7 @@ public class AdService {
         repository.save(ad);
     }
 
-    @SuppressWarnings( "PMD.CyclomaticComplexity")
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public AdTO createAd(final AdTO adTO) throws IOException {
         if (adTO.getEmail() != null && isEMailDomainDisallowed(adTO.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
