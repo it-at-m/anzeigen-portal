@@ -193,6 +193,10 @@
     "MAX_RENTAL_DATE_RANGE": {
       "description": "Maximale Ausleihdauer in Wochen",
       "tooltip": "Maximale Ausleihdauer in Wochen"
+    },
+    "DISALLOWED_EMAIL_DOMAINS": {
+      "description": "Gesperrte E-Mail Domains",
+      "tooltip": "Liste an E-Mail Domains, welche nicht erlaubt sind, getrennt durch Kommas"
     }
   },
   "filterAdActive": {
