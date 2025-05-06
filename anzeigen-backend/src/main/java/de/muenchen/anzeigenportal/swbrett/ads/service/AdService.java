@@ -107,6 +107,7 @@ public class AdService {
         repository.save(ad);
     }
 
+    @SuppressWarnings( "PMD.CyclomaticComplexity")
     public AdTO createAd(final AdTO adTO) throws IOException {
         if (adTO.getEmail() != null && isEMailDomainDisallowed(adTO.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
@@ -198,9 +199,9 @@ public class AdService {
         });
     }
 
-    public boolean isEMailDomainDisallowed(String email) {
-        String disallowedEmailDomains = settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS).getTextValue();
-        String emailDomain = email.substring(email.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
+    public boolean isEMailDomainDisallowed(final String email) {
+        final String disallowedEmailDomains = settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS).getTextValue();
+        final String emailDomain = email.substring(email.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
         return Arrays.stream(disallowedEmailDomains.split(","))
                 .anyMatch(disallowedEmailDomain -> emailDomain.equals(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
     }

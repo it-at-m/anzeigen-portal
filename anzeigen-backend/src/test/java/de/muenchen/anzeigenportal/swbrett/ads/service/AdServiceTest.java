@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AdServiceTest {
+class AdServiceTest {
 
     @Mock
     private SettingService settingService;
@@ -26,7 +26,7 @@ public class AdServiceTest {
     @BeforeEach
     void setUp() {
         // Mocking the getSetting method
-        SettingTO setting = new SettingTO();
+        final SettingTO setting = new SettingTO();
         setting.setTextValue("domain1.com,domain2.com,domain.com");
         when(settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS)).thenReturn(setting);
     }
