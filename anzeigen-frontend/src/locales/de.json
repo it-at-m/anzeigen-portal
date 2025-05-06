@@ -28,7 +28,7 @@
   "adList": {
     "noAdFound": {
       "title": "Es konnte keine Anzeige gefunden werden",
-      "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu\n      finden.",
+      "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu finden.",
       "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
     },
     "loadMore": "Mehr Ergebnisse laden"
@@ -111,6 +111,7 @@
     "ruleMsg": {
       "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
+      "invalidEmailDomain": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt.",
       "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
     }
   },
