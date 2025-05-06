@@ -14,6 +14,11 @@
               <number-value-setting :setting-name="settingName.settingName" />
             </template>
           </setting-with-description>
+          <setting-with-description setting-name="DISALLOWED_EMAIL_DOMAINS">
+            <template #default="settingName">
+              <text-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
           <setting-with-description setting-name="AGB_FILE">
             <template #default="settingName">
               <file-value-setting :setting-name="settingName.settingName" />
@@ -76,7 +81,7 @@
               color="accent"
               @click="reloadSettings"
             >
-              {{ t("generalSettings.reset") }}
+              {{ t("generalSettings.resetSettings") }}
             </v-btn>
             <v-btn
               variant="flat"

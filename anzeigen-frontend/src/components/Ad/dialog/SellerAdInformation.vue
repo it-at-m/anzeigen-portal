@@ -28,7 +28,7 @@
     :label="t('sellerAdInformation.labelEmail')"
     type="email"
     hide-details="auto"
-    :rules="[minOneContactRule, ruleEmail]"
+    :rules="[minOneContactRule, ruleEmail, ruleDisallowedEMailDomains]"
     :disabled="disabled"
     class="mb-4"
   />
@@ -42,6 +42,7 @@ import { useI18n } from "vue-i18n";
 
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
 import { EMPTY_ADTO_OBJECT } from "@/Constants";
+import { useSettingStore } from "@/stores/settings.ts";
 
 const { t } = useI18n();
 
@@ -50,6 +51,8 @@ const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 defineProps<{
   disabled?: boolean;
 }>();
+
+const settingStore = useSettingStore();
 
 const refPhone = useTemplateRef("refPhoneNumber");
 const refEmail = useTemplateRef("refEmail");
@@ -66,6 +69,26 @@ watch(
   }
 );
 
+const ruleDisallowedEMailDomains = (value: string) => {
+  const disallowedEmailsSetting = settingStore.getSetting(
+    "DISALLOWED_EMAIL_DOMAINS"
+  );
+
+  const emailDomain = value.split("@")[1].toLowerCase() || "";
+
+  const domainList =
+    disallowedEmailsSetting?.textValue?.toLocaleLowerCase().split(",") || [];
+
+  return (
+    !domainList.some(
+      (disallowedEmailDomain) => emailDomain === disallowedEmailDomain
+    ) ||
+    t("sellerAdInformation.ruleMsg.invalidEmailDomain", {
+      domains: domainList.toString(),
+    })
+  );
+};
+
 /**
  * Validation rule for email - do not ask me why it is so complicated
  * @param value the current input
@@ -75,7 +98,7 @@ const ruleEmail = (value: string) =>
   /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/.test(
     value
   ) ||
-  t("sellerAdInformation.invalidEmail");
+  t("sellerAdInformation.ruleMsg.invalidEmail");
 
 /**
  * Validation rule for phone number - includes the '+' at the start
@@ -84,7 +107,7 @@ const ruleEmail = (value: string) =>
 const rulePhoneNumber = (value: string) =>
   !value ||
   /^\+?\d* ?\/?\d*$/.test(value) ||
-  t("sellerAdInformation.invalidPhoneNumber");
+  t("sellerAdInformation.ruleMsg.invalidPhoneNumber");
 
 /**
  * Minimum one contact needs to be set - this can be email or phone number
@@ -92,5 +115,5 @@ const rulePhoneNumber = (value: string) =>
 const minOneContactRule = () =>
   !!adTO.value.email ||
   !!adTO.value.phone ||
-  t("sellerAdInformation.dutyField");
+  t("sellerAdInformation.ruleMsg.dutyField");
 </script>
