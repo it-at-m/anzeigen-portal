@@ -108,7 +108,7 @@ public class AdService {
     }
 
     public AdTO createAd(final AdTO adTO) throws IOException {
-        if (isEMailDisallowed(adTO.getEmail())) {
+        if (adTO.getEmail() != null && isEMailDomainDisallowed(adTO.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
         }
 
@@ -143,7 +143,7 @@ public class AdService {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
 
-        if (isEMailDisallowed(updatedAdTO.getEmail())) {
+        if (updatedAdTO.getEmail() != null && isEMailDomainDisallowed(updatedAdTO.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
         }
 
@@ -198,9 +198,11 @@ public class AdService {
         });
     }
 
-    private boolean isEMailDisallowed(String email) {
+    public boolean isEMailDomainDisallowed(String email) {
         String disallowedEmailDomains = settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS).getTextValue();
+        String emailDomain = email.substring(email.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
         return Arrays.stream(disallowedEmailDomains.split(","))
-                .anyMatch(disallowedEmailDomain -> email.toLowerCase(Locale.GERMAN).contains(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
+                .anyMatch(disallowedEmailDomain -> emailDomain.equals(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
     }
+
 }
