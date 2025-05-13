@@ -56,6 +56,7 @@ info:
     name: @project.artifactId@
     version: @project.version@
     description: @project.description@
+    application: Kleinanzeigen
   build:
     java.version: @java.version@
     spring-cloud.version: @spring-cloud-dependencies.version@
