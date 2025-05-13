@@ -25,6 +25,13 @@ changes:
       claimName: displayName
       addToUserInfo: true
       addToAccessToken: true
+  - addClientUserAttributeMapper:
+      clientId: local
+      name: lhmObjectID
+      userAttribute: lhmObjectID
+      claimName: lhmObjectID
+      addToUserInfo: true
+      addToAccessToken: true
 
   # Maps user client roles of current client into a claim "authorities"
   - addClientMapper:

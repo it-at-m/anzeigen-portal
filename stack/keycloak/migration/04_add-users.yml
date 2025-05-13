@@ -12,8 +12,6 @@ changes:
       attributes:
         user_name:
           - user
-        displayName:
-          - Anwender
   - addUser:
       name: admin
       lastName: administrator
@@ -24,11 +22,37 @@ changes:
       attributes:
         user_name:
           - admin
-        displayName:
-          - Administrator
   - updateUserPassword:
       name: user
       password: "user"
   - updateUserPassword:
       name: admin
       password: "admin"
+  - addUserAttribute:
+      realm: local_realm
+      name: admin
+      override: true
+      attributeName: displayName
+      attributeValues:
+        - Administrator
+  - addUserAttribute:
+      realm: local_realm
+      name: user
+      override: true
+      attributeName: displayName
+      attributeValues:
+        - Anwender
+  - addUserAttribute:
+      realm: local_realm
+      name: admin
+      override: true
+      attributeName: lhmObjectID
+      attributeValues:
+        - 0000001
+  - addUserAttribute:
+      realm: local_realm
+      name: user
+      override: true
+      attributeName: lhmObjectID
+      attributeValues:
+        - 0000002

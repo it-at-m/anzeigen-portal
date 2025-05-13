@@ -8,12 +8,6 @@ changes:
       id: local_realm
       unmanagedAttributePolicy: "ADMIN_EDIT"
 
-  - addRealmProfileAttribute:
-      realm: local_realm
-      name: displayName
-      displayName: $${profile.attributes.displayName}
-      multivalued: false
-
   - addClientScope:
       realm: local_realm
       name: openid
