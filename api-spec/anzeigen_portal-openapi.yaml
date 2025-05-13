@@ -559,6 +559,67 @@ paths:
             '*/*':
               schema:
                 $ref: "#/components/schemas/SettingTO"
+  /subscriptions:
+    get:
+      summary: "GET subscriptions"
+      operationId: "getUserSubscriptions"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/SubscriptionTO"
+    post:
+      summary: "POST subscriptions"
+      operationId: "createUserSubscription"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "integer"
+              format: "int64"
+        required: true
+      responses:
+        "201":
+          description: "Created"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubscriptionTO"
+  /subscriptions/{categoryId}:
+    get:
+      summary: "GET subscriptions/{categoryId}"
+      operationId: "isUserSubscribedToCategory"
+      parameters:
+        - name: "categoryId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/SubscriptionTO"
+    delete:
+      summary: "DELETE subscriptions/{categoryId}"
+      operationId: "deleteUserSubscription"
+      parameters:
+        - name: "categoryId"
+          in: "path"
+          required: true
+          schema:
+            type: "integer"
+            format: "int64"
+      responses:
+        "200":
+          description: "OK"
   /users/find:
     put:
       summary: "PUT users/find"
@@ -642,6 +703,8 @@ components:
         lhmObjectId:
           type: "string"
         displayName:
+          type: "string"
+        email:
           type: "string"
     SwbImageTO:
       type: "object"
@@ -754,6 +817,19 @@ components:
           type: "boolean"
         fileValue:
           $ref: "#/components/schemas/SwbFileTO"
+    SubscriptionTO:
+      type: "object"
+      properties:
+        id:
+          type: "string"
+          format: "uuid"
+        subscriptionDate:
+          type: "string"
+          format: "date"
+        swbUser:
+          $ref: "#/components/schemas/SwbUserTO"
+        adCategory:
+          $ref: "#/components/schemas/AdCategory"
   securitySchemes:
     spring_oauth:
       type: oauth2

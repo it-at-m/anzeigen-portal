@@ -46,6 +46,12 @@ public class UserService {
         return mapper.toSwbUserTO(savedUser);
     }
 
+    public SwbUser getCurrentUser() {
+        final Optional<SwbUser> user = repository.findByLhmObjectId(AuthUtils.getLhmObjectID());
+
+        return user.orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));
+    }
+
     public boolean isCurrentUser(final Long currentUserId) {
         final SwbUserTO currentUser = this.findUser(AuthUtils.getLhmObjectID())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Unauthenticated"));

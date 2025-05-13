@@ -30,4 +30,7 @@ public class SwbUser {
     @Column(name = "display_name", nullable = false)
     private String displayName;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
 }
