@@ -9,7 +9,10 @@ import org.springframework.security.access.prepost.PreAuthorize;
  * in the annotation e.g. {@link PreAuthorize}.
  */
 public enum AuthoritiesEnum {
+    @SuppressWarnings("PMD.FieldNamingConventions")
     anwender,
+
+    @SuppressWarnings("PMD.FieldNamingConventions")
     fachadmin,
     // add your authorities here and also add these new authorities to sso-authorisation.json.
 
