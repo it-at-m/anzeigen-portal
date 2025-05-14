@@ -7,6 +7,7 @@ export interface Info {
 export interface Application {
   name: string;
   version: string;
+  heading: string;
 }
 
 export function getInfo(): Promise<Info> {
