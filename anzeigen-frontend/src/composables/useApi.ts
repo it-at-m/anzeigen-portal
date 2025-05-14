@@ -5,6 +5,7 @@ import { provide } from "vue";
 
 import { getHeaders } from "@/api/fetch-utils";
 import { Configuration, DefaultApi } from "@/api/swbrett";
+import { BASE_PATH } from "@/Constants.ts";
 
 export const DEFAULT_API_KEY: InjectionKey<DefaultApi> = Symbol("defaultApi");
 
@@ -13,7 +14,7 @@ export const DEFAULT_API_KEY: InjectionKey<DefaultApi> = Symbol("defaultApi");
  */
 export const useApi = () => {
   const config = new Configuration({
-    basePath: "/api/backend-service",
+    basePath: BASE_PATH,
     credentials: "same-origin",
     headers: convertHeaders(getHeaders()),
   });
