@@ -80,7 +80,8 @@ export const SettingTOSettingNameEnum = {
     DEFAULT_SORTING: 'DEFAULT_SORTING',
     DEFAULT_ORDERING: 'DEFAULT_ORDERING',
     MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE',
-    MAX_RENTAL_DATE_RANGE: 'MAX_RENTAL_DATE_RANGE'
+    MAX_RENTAL_DATE_RANGE: 'MAX_RENTAL_DATE_RANGE',
+    DISALLOWED_EMAIL_DOMAINS: 'DISALLOWED_EMAIL_DOMAINS'
 } as const;
 export type SettingTOSettingNameEnum = typeof SettingTOSettingNameEnum[keyof typeof SettingTOSettingNameEnum];
 

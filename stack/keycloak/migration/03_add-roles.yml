@@ -1,0 +1,17 @@
+id: add roles
+author: Default
+realm: local_realm
+changes:
+  - addRole:
+      name: ANWENDER
+      description: Simple user role to access the application
+      clientRole: true
+      clientId: local
+      composite: false
+
+  - addRole:
+      name: FACHADMIN
+      description: Admin role to access the admin page and change settings
+      clientRole: true
+      clientId: local
+      composite: false

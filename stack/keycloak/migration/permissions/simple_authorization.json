@@ -1,0 +1,39 @@
+{
+  "allowRemoteResourceManagement": false,
+  "policyEnforcementMode": "ENFORCING",
+  "resources": [
+    {
+      "name": "ANWENDER",
+      "type": "local-backend-service",
+      "scopes": []
+    },
+    {
+      "name": "FACHADMIN",
+      "type": "local-backend-service",
+      "scopes": []
+    }
+  ],
+  "policies": [
+    {
+      "name": "permission_ANWENDER",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"ANWENDER\"]",
+        "applyPolicies": "[]"
+      }
+    },
+    {
+      "name": "permission_FACHADMIN",
+      "type": "resource",
+      "logic": "POSITIVE",
+      "decisionStrategy": "AFFIRMATIVE",
+      "config": {
+        "resources": "[\"FACHADMIN\"]",
+        "applyPolicies": "[]"
+      }
+    }
+  ],
+  "scopes": []
+}

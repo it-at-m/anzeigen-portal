@@ -1,7 +1,5 @@
 {
   "common": {
-    "titleFirst": "Schwarzes ",
-    "titleSecond": "Brett",
     "create": "Erstellen",
     "save": "Speichern",
     "delete": "Löschen"
@@ -28,7 +26,7 @@
   "adList": {
     "noAdFound": {
       "title": "Es konnte keine Anzeige gefunden werden",
-      "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu\n      finden.",
+      "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu finden.",
       "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
     },
     "loadMore": "Mehr Ergebnisse laden"
@@ -111,6 +109,7 @@
     "ruleMsg": {
       "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
+      "invalidEmailDomain": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt.",
       "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
     }
   },
@@ -192,6 +191,10 @@
     "MAX_RENTAL_DATE_RANGE": {
       "description": "Maximale Ausleihdauer in Wochen",
       "tooltip": "Maximale Ausleihdauer in Wochen"
+    },
+    "DISALLOWED_EMAIL_DOMAINS": {
+      "description": "Gesperrte E-Mail Domains",
+      "tooltip": "Liste an E-Mail Domains, welche nicht erlaubt sind, getrennt durch Kommas"
     }
   },
   "filterAdActive": {

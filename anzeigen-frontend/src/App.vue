@@ -24,11 +24,8 @@
                   }"
                 >
                   <v-toolbar-title class="font-weight-bold">
-                    <span class="text-white"
-                      >{{ t("common.titleFirst") }}
-                    </span>
-                    <span class="text-secondary">
-                      {{ t("common.titleSecond") }}
+                    <span class="text-white">
+                      {{ settingStore.applicationHeading }}
                     </span>
                   </v-toolbar-title>
                 </router-link>
@@ -77,12 +74,12 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 import { computed, onMounted, ref } from "vue";
-import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
+import { useGetAppInfo } from "@/composables/api/useSettingsApi.ts";
 import {
   useCreateUser,
   useFindUser,
@@ -97,8 +94,6 @@ import { API_ERROR_MSG, ROUTES_ADMIN, ROUTES_BOARD } from "@/Constants";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user.ts";
-
-const { t } = useI18n();
 
 useApi();
 
@@ -129,12 +124,25 @@ const {
 
 const { call: createUserCall, data: createUserData } = useCreateUser();
 
+const {
+  call: appInfoCall,
+  data: appInfoData,
+  error: appInfoError,
+} = useGetAppInfo();
+
 const currentUser = computed(() => findUserData.value || createUserData.value);
 
 /**
  * Initialize the stores
  */
 onMounted(async () => {
+  await appInfoCall();
+  if (appInfoError.value || !appInfoData.value?.application.heading) {
+    noPermission.value = true;
+  } else {
+    settingStore.applicationHeading = appInfoData.value.application.heading;
+  }
+
   if (!settingStore.isLoaded) {
     await updateSettings();
   }

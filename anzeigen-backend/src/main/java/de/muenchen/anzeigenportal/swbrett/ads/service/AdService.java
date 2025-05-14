@@ -107,7 +107,12 @@ public class AdService {
         repository.save(ad);
     }
 
+    @SuppressWarnings("PMD.CyclomaticComplexity")
     public AdTO createAd(final AdTO adTO) throws IOException {
+        if (adTO.getEmail() != null && isEMailDomainDisallowed(adTO.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
+        }
+
         if (adTO.getCreationDateTime() == null) {
             adTO.setCreationDateTime(LocalDateTime.now());
         }
@@ -137,6 +142,10 @@ public class AdService {
 
         if (!userService.isCurrentUser(ad.getSwbUser().getId())) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
+        }
+
+        if (updatedAdTO.getEmail() != null && isEMailDomainDisallowed(updatedAdTO.getEmail())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
         }
 
         final Ad updatedAd = mapper.toAd(updatedAdTO);
@@ -189,4 +198,12 @@ public class AdService {
             repository.save(ad);
         });
     }
+
+    public boolean isEMailDomainDisallowed(final String email) {
+        final String disallowedEmailDomains = settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS).getTextValue();
+        final String emailDomain = email.substring(email.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
+        return Arrays.stream(disallowedEmailDomains.split(","))
+                .anyMatch(disallowedEmailDomain -> emailDomain.equals(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
+    }
+
 }
