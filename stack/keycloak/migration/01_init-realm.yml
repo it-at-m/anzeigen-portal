@@ -4,6 +4,10 @@ changes:
   - addRealm:
       name: local_realm
 
+  - updateRealm:
+      id: local_realm
+      unmanagedAttributePolicy: "ADMIN_EDIT"
+
   - addClientScope:
       realm: local_realm
       name: openid

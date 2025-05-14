@@ -1,0 +1,58 @@
+id: add first user to work with keycloak
+author: Default
+realm: local_realm
+changes:
+  - addUser:
+      name: user
+      lastName: user
+      firstName: user
+      enabled: true
+      emailVerified: true
+      email: user@user.com
+      attributes:
+        user_name:
+          - user
+  - addUser:
+      name: admin
+      lastName: administrator
+      firstName: admin
+      enabled: true
+      emailVerified: true
+      email: admin@admin.com
+      attributes:
+        user_name:
+          - admin
+  - updateUserPassword:
+      name: user
+      password: "user"
+  - updateUserPassword:
+      name: admin
+      password: "admin"
+  - addUserAttribute:
+      realm: local_realm
+      name: admin
+      override: true
+      attributeName: displayName
+      attributeValues:
+        - Administrator
+  - addUserAttribute:
+      realm: local_realm
+      name: user
+      override: true
+      attributeName: displayName
+      attributeValues:
+        - Anwender
+  - addUserAttribute:
+      realm: local_realm
+      name: admin
+      override: true
+      attributeName: lhmObjectID
+      attributeValues:
+        - 0000001
+  - addUserAttribute:
+      realm: local_realm
+      name: user
+      override: true
+      attributeName: lhmObjectID
+      attributeValues:
+        - 0000002
