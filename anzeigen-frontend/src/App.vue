@@ -24,11 +24,8 @@
                   }"
                 >
                   <v-toolbar-title class="font-weight-bold">
-                    <span class="text-white"
-                      >{{ t("common.titleFirst") }}
-                    </span>
-                    <span class="text-secondary">
-                      {{ t("common.titleSecond") }}
+                    <span class="text-white">
+                      {{ settingStore.applicationHeading }}
                     </span>
                   </v-toolbar-title>
                 </router-link>
@@ -83,6 +80,7 @@ import { Levels } from "@/api/error.ts";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
+import { useGetAppInfo } from "@/composables/api/useSettingsApi.ts";
 import {
   useCreateUser,
   useFindUser,
@@ -129,12 +127,25 @@ const {
 
 const { call: createUserCall, data: createUserData } = useCreateUser();
 
+const {
+  call: appInfoCall,
+  data: appInfoData,
+  error: appInfoError,
+} = useGetAppInfo();
+
 const currentUser = computed(() => findUserData.value || createUserData.value);
 
 /**
  * Initialize the stores
  */
 onMounted(async () => {
+  await appInfoCall();
+  if (appInfoError.value || !appInfoData.value?.application.heading) {
+    noPermission.value = true;
+  } else {
+    settingStore.applicationHeading = appInfoData.value.application.heading;
+  }
+
   if (!settingStore.isLoaded) {
     await updateSettings();
   }
