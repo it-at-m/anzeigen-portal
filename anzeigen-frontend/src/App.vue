@@ -96,8 +96,6 @@ import { useCategoriesStore } from "@/stores/adcategory.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 import { useUserStore } from "@/stores/user.ts";
 
-const { t } = useI18n();
-
 useApi();
 
 useTitle("Anzeigen Portal");
