@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.anzeigen-portal</groupId>
     <artifactId>backend</artifactId>
-    <version>0.9.0</version>
+    <version>0.9.0-SNAPSHOT</version>
     <name>backend</name>
     <description>This is a basic bulletin board based on the reference architecture of it@M</description>
 
