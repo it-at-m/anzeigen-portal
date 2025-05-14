@@ -4,9 +4,9 @@ realm: local_realm
 changes:
   - assignRole:
       user: admin
-      role: FACHADMIN
+      role: fachadmin
       clientId: local
   - assignRole:
       user: user
-      role: ANWENDER
+      role: anwender
       clientId: local

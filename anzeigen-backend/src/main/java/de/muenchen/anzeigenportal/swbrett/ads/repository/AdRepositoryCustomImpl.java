@@ -48,7 +48,7 @@ public class AdRepositoryCustomImpl implements AdRepositoryCustom {
     @Override
     @Transactional
     @SuppressWarnings({ "PMD.UseObjectWithCaseConventions", "PMD.UseObjectForClearerAPI" })
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).fachadmin.name())")
     public Page<AdTO> searchDeactivatedAds(final String userId, final String searchTerm, final Long categoryId, final List<AdType> types, final String sortBy,
             final String order, final Pageable pageable,
             final Long adId) {

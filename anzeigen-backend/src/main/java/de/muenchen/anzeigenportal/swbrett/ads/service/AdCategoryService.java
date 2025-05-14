@@ -29,7 +29,7 @@ public class AdCategoryService {
         return repository.save(adCategory);
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).fachadmin.name())")
     public AdCategory saveAdCategory(final AdCategory adCategory) {
         if (adCategory.isStandard()) {
             getAdCategories().stream().forEach(cat -> {
@@ -40,7 +40,7 @@ public class AdCategoryService {
         return repository.save(adCategory);
     }
 
-    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).FACHADMIN.name())")
+    @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).fachadmin.name())")
     public void deleteAdCategory(final long id) {
         final AdCategory category = repository.getOne(id);
         final AdCategory standardCat = repository.findByStandardTrue();

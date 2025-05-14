@@ -3,34 +3,34 @@
   "policyEnforcementMode": "ENFORCING",
   "resources": [
     {
-      "name": "ANWENDER",
+      "name": "anwender",
       "type": "local-backend-service",
       "scopes": []
     },
     {
-      "name": "FACHADMIN",
+      "name": "fachadmin",
       "type": "local-backend-service",
       "scopes": []
     }
   ],
   "policies": [
     {
-      "name": "permission_ANWENDER",
+      "name": "permission_anwender",
       "type": "resource",
       "logic": "POSITIVE",
       "decisionStrategy": "AFFIRMATIVE",
       "config": {
-        "resources": "[\"ANWENDER\"]",
+        "resources": "[\"anwender\"]",
         "applyPolicies": "[]"
       }
     },
     {
-      "name": "permission_FACHADMIN",
+      "name": "permission_fachadmin",
       "type": "resource",
       "logic": "POSITIVE",
       "decisionStrategy": "AFFIRMATIVE",
       "config": {
-        "resources": "[\"FACHADMIN\"]",
+        "resources": "[\"fachadmin\"]",
         "applyPolicies": "[]"
       }
     }

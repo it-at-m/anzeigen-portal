@@ -39,7 +39,7 @@ export const TOO_MANY_FILES = (amount: string) =>
 /**
  * Other constants
  */
-export const ADMIN_AUTHORITIES = ["FACHADMIN"];
+export const ADMIN_AUTHORITIES = ["fachadmin"];
 export const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 export const ALLOWED_FILE_TYPES =
   "image/png, image/jpeg, image/jpg, application/pdf";

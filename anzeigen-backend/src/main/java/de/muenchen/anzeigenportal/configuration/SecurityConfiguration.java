@@ -45,7 +45,7 @@ public class SecurityConfiguration {
                         AntPathRequestMatcher.antMatcher("/actuator/metrics"))
                         .permitAll())
                 .authorizeHttpRequests((requests) -> requests.requestMatchers("/**")
-                        .hasAnyAuthority(AuthoritiesEnum.ANWENDER.name(), AuthoritiesEnum.FACHADMIN.name()))
+                        .hasAnyAuthority(AuthoritiesEnum.anwender.name(), AuthoritiesEnum.fachadmin.name()))
                 .oauth2ResourceServer(httpSecurityOAuth2ResourceServerConfigurer -> httpSecurityOAuth2ResourceServerConfigurer
                         .jwt(jwtConfigurer -> jwtConfigurer.jwtAuthenticationConverter(new JwtUserInfoAuthenticationConverter(
                                 new UserInfoAuthoritiesService(securityProperties.userInfoUri(), restTemplateBuilder)))));
