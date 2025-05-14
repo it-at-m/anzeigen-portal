@@ -74,7 +74,6 @@
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
 import { computed, onMounted, ref } from "vue";
-import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
