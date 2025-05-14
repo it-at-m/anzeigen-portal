@@ -1,9 +1,11 @@
+import type { Info } from "@/api/info-client.ts";
 import type {
   GetSettingRequest,
   SettingTO,
   UpdateSettingsRequest,
 } from "@/api/swbrett";
 
+import { getInfo } from "@/api/info-client.ts";
 import { useApiCall } from "@/composables/api/useApiCall.ts";
 import { ApiFactory } from "@/util/apiFactory.ts";
 
@@ -28,4 +30,9 @@ export const usePutSettings = () => {
   return useApiCall<UpdateSettingsRequest, SettingTO[]>((params) =>
     api.updateSettings(params)
   );
+};
+
+export const useGetAppInfo = () => {
+  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+  return useApiCall<void, Info>(() => getInfo());
 };
