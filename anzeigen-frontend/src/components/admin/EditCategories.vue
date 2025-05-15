@@ -1,6 +1,6 @@
 <template>
   <ad-display-card>
-    <template #title> Kategorien bearbeiten </template>
+    <template #title> {{ t("editCategories.title") }} </template>
     <template #text>
       <v-btn
         prepend-icon="mdi-plus"
@@ -9,7 +9,7 @@
         variant="tonal"
         @click="createDialog = true"
       >
-        Kategorie erstellen
+        {{ t("editCategories.createCategories.title") }}
       </v-btn>
       <v-dialog
         v-model="createDialog"
@@ -19,13 +19,13 @@
           <v-card
             :loading="createCategoryLoading"
             :disabled="createCategoryLoading"
-            title="Kategorie erstellen"
-            subtitle="Geben Sie einen Kategorienamen ein."
+            :title="t('editCategories.createCategories.title')"
+            :subtitle="t('editCategories.createCategories.subtitle')"
           >
             <template #text>
               <v-text-field
                 v-model="newCategoryName"
-                label="Kategoriename"
+                :label="t('editCategories.categoryName')"
                 variant="outlined"
                 :rules="[notEmptyRule]"
               />
@@ -34,7 +34,7 @@
               <v-btn
                 prepend-icon="mdi-window-close"
                 variant="outlined"
-                text="Abbrechen"
+                :text="t('common.cancel')"
                 @click="createDialog = false"
               />
               <v-btn
@@ -43,7 +43,7 @@
                 prepend-icon="mdi-content-save-outline"
                 @click="clickCreateCategory"
               >
-                <p>Erstellen</p>
+                <p>{{ t("common.create") }}</p>
               </v-btn>
             </template>
           </v-card>
@@ -64,6 +64,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import SingleCategoryEdit from "@/components/admin/SingleCategoryEdit.vue";
@@ -72,6 +73,8 @@ import { useCreateAdCategory } from "@/composables/api/useCategoriesApi.ts";
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
+
+const { t } = useI18n();
 
 const categoryStore = useCategoriesStore();
 

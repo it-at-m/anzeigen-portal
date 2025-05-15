@@ -19,7 +19,7 @@
             hide-details="auto"
             color="accent"
             class="mt-2"
-            label="Kategoriename"
+            :label="t('editCategories.categoryName')"
             :rules="[notEmptyRule]"
           />
         </v-col>
@@ -37,7 +37,7 @@
             :loading="updateCategoryLoading"
             @click="updateCategoryName"
           >
-            Speichern
+            {{ t("common.save") }}
           </v-btn>
         </v-col>
         <v-col
@@ -54,7 +54,7 @@
             :disabled="updateCategoryLoading"
             @click="reset"
           >
-            Zurücksetzen
+            {{ t("common.reset") }}
           </v-btn>
 
           <yes-no-dialog
@@ -75,7 +75,7 @@
                 prepend-icon="mdi-trash-can-outline"
                 @click="deleteDialog = true"
               >
-                Löschen
+                {{ t("common.delete") }}
               </v-btn>
             </template>
           </yes-no-dialog>
@@ -89,6 +89,7 @@
 import type { AdCategory } from "@/api/swbrett";
 
 import { computed, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
@@ -101,6 +102,8 @@ import { useSnackbar } from "@/composables/useSnackbar.ts";
 const { category } = defineProps<{
   category: AdCategory;
 }>();
+
+const { t } = useI18n();
 
 const deleteDialog = ref<boolean>(false);
 

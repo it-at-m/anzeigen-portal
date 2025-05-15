@@ -70,6 +70,10 @@ watch(
 );
 
 const ruleDisallowedEMailDomains = (value: string) => {
+  if (!value) {
+    return true;
+  }
+
   const disallowedEmailsSetting = settingStore.getSetting(
     "DISALLOWED_EMAIL_DOMAINS"
   );

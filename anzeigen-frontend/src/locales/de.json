@@ -2,7 +2,9 @@
   "common": {
     "create": "Erstellen",
     "save": "Speichern",
-    "delete": "Löschen"
+    "delete": "Löschen",
+    "reset": "Zurücksetzen",
+    "cancel": "Abbrechen"
   },
   "ad": {
     "type": {
@@ -201,5 +203,13 @@
     "title": "Inaktive / Aktive Anzeigen",
     "labelActive": "Aktive Anzeigen",
     "labelInactive": "Inaktive Anzeigen"
+  },
+  "editCategories": {
+    "title": "Kategorien bearbeiten",
+    "categoryName": "Kategoriename",
+    "createCategories": {
+      "title": "Kategorie erstellen",
+      "subtitle": "Geben Sie einen Kategorienamen ein."
+    }
   }
 }
