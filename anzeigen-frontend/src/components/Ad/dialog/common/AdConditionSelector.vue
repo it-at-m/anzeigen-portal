@@ -7,7 +7,6 @@
     density="compact"
     :label="t('adConditionSelector.placeholder')"
     color="accent"
-    :rules="[(value) => !!value || t('adConditionSelector.ruleMsg')]"
   />
 </template>
 

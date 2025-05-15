@@ -60,7 +60,7 @@
                   {{ useDateFormat(adDetails.rentalDate, DATE_DISPLAY_FORMAT) }}
                 </v-col>
               </v-row>
-              <v-row>
+              <v-row v-if="adDetails.condition">
                 <v-col class="py-0">
                   {{ t("adConditionSelector.placeholder") }}
                 </v-col>
