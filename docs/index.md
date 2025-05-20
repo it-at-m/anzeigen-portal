@@ -23,7 +23,7 @@ hero:
       text: ⤴ Contribute to the project
       link: https://refarch.oss.muenchen.de/contribute.html
 features:
-  - icon: 📱
+  - icon: 💻
     title: Frontend
     details: Add some interesting information here
     link: /frontend
