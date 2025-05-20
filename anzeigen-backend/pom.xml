@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.anzeigen-portal</groupId>
     <artifactId>backend</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1.0.1-SNAPSHOT</version>
     <name>anzeigen-backend</name>
     <description>This is a basic bulletin board based on the reference architecture of it@M</description>
     <url>https://github.com/it-at-m/anzeigen-portal</url>
@@ -45,7 +45,7 @@
         <maven-release-plugin.version>3.1.1</maven-release-plugin.version>
 
         <!-- Utility -->
-        <commons-collections4.version>4.4</commons-collections4.version>
+        <commons-collections4.version>4.5.0</commons-collections4.version>
         <commons-csv.version>1.14.0</commons-csv.version>
         <commons-io.version>2.19.0</commons-io.version>
         <commons-lang3.version>3.17.0</commons-lang3.version>
