@@ -97,8 +97,6 @@ import { useUserStore } from "@/stores/user.ts";
 
 useApi();
 
-useTitle("Anzeigen Portal");
-
 const defaultQuery = useDefaultQuery();
 const updateCategories = useUpdateCategories();
 const updateSettings = useUpdateSettings();
@@ -107,6 +105,8 @@ const settingStore = useSettingStore();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 const categoriesStore = useCategoriesStore();
+
+useTitle(settingStore.applicationHeading);
 
 const noPermission = ref<boolean>(false);
 
