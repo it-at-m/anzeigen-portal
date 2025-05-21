@@ -12,20 +12,20 @@ The following sections further describe the features, architecture and its invol
 Generally speaking this web application was heavily inspired by modern plattforms like eBay or Kleinanzeigen.
 It overs a very simple and easy way to publish and discover ads for selling, buying or renting items.
 
-Anzeigen Portal focuses on simplicity, offering a streamlined way to create and discover classified ads without handling payment processes. 
+Anzeigen Portal focuses on simplicity, offering a streamlined way to create and discover classified ads without handling payment processes.
 This web app provides an easy platform for users to offer or find items.
 
-When creating ads, users can include a title, category, description, images, and other attachments. 
-Contacting the seller is possible via an email address or phone number provided in the ad. 
-Ads automatically become inactive after a configurable period and are deleted after another set period. 
+When creating ads, users can include a title, category, description, images, and other attachments.
+Contacting the seller is possible via an email address or phone number provided in the ad.
+Ads automatically become inactive after a configurable period and are deleted after another set period.
 The ad creator can extend the ad's duration and modify any aspect of it at any time.
 
-Users browsing the ads can refine their search using categories, ad types, and text searches. 
+Users browsing the ads can refine their search using categories, ad types, and text searches.
 All details of an ad can be viewed on a dedicated detail page after selection.
 
-For site administration, there is an admin area where category names can be edited, new categories added, or old ones deleted. 
-Ads in a deleted category are automatically moved to a Standard category, which cannot be deleted. 
-Additionally, configurations regarding terms and conditions, privacy files, ad duration, and the size of attachments or title images can be managed. 
+For site administration, there is an admin area where category names can be edited, new categories added, or old ones deleted.
+Ads in a deleted category are automatically moved to a Standard category, which cannot be deleted.
+Additionally, configurations regarding terms and conditions, privacy files, ad duration, and the size of attachments or title images can be managed.
 An info message for all users can also be displayed on the homepage.
 
 ## Architecture
@@ -54,6 +54,7 @@ Besides that, it also handles cross-cutting concepts like authentication using a
 Further documentation can be found [here](https://refarch.oss.muenchen.de/gateway.html).
 
 ### Components
+
 This web-application consists of two components (frontend and backend).
 Further information on the structure can be found in the respective chapters.
 
