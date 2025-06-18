@@ -5,6 +5,7 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 const vitepressConfig = defineConfig({
   title: "Anzeigen Portal Docs",
   description: "Documentation for the Anzeigen Portal project",
+  base: "/anzeigen-portal/",
   head: [
     [
       "link",

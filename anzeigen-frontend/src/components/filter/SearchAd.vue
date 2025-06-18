@@ -28,8 +28,6 @@ const { t } = useI18n();
  */
 const searchValue = ref<string>();
 
-// TODO: do not constantly update the query upon keypress - maybe use a debouncer and search every 1-2s :D
-
 const searchQuery = useRouteQuery("searchTerm");
 
 /**
