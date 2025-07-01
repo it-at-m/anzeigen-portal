@@ -33,7 +33,7 @@
             />
           </template>
           <template #text>
-            {{ adDetails.description }}
+            {{ sanitizedDescription }}
           </template>
         </ad-display-card>
       </v-col>
@@ -183,7 +183,7 @@
 import type { AdTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
@@ -192,6 +192,7 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
+import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 import router from "@/plugins/router";
 
@@ -204,6 +205,10 @@ const { adDetails } = defineProps<{
 }>();
 
 const currentLink = computed(() => window.location.href);
+
+const sanitizedDescription = useSanitizedHtml(
+  toRef(adDetails.description || "")
+);
 
 /**
  * Navigates to the user page with the specified user ID.
