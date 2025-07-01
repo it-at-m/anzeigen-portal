@@ -36,19 +36,40 @@
               >
                 <search-ad />
               </v-col>
-              <v-col cols="2">
-                <router-link
-                  v-if="userStore.isAdmin"
-                  :to="{ name: ROUTES_ADMIN }"
-                >
-                  <v-toolbar-title class="font-weight-bold d-flex justify-end">
-                    <v-icon
-                      icon="mdi-cog"
-                      color="white"
-                    />
-                  </v-toolbar-title>
-                </router-link>
-                <v-spacer v-else />
+              <v-col cols="1">
+                <v-row justify="end">
+                  <v-col>
+                    <a
+                      href="https://wilma.muenchen.de/pages/gesamtpersonalrat"
+                      target="_blank"
+                    >
+                      <v-toolbar-title
+                        class="font-weight-bold d-flex justify-end"
+                      >
+                        <v-avatar
+                          size="36px"
+                          :image="gprLogo"
+                        />
+                      </v-toolbar-title>
+                    </a>
+                  </v-col>
+                  <v-col>
+                    <router-link
+                      v-if="userStore.isAdmin"
+                      :to="{ name: ROUTES_ADMIN }"
+                    >
+                      <v-toolbar-title
+                        class="font-weight-bold d-flex justify-end"
+                      >
+                        <v-icon
+                          icon="mdi-cog"
+                          color="white"
+                        />
+                      </v-toolbar-title>
+                    </router-link>
+                    <v-spacer v-else />
+                  </v-col>
+                </v-row>
               </v-col>
             </v-row>
           </v-col>
@@ -76,6 +97,7 @@ import { useTitle } from "@vueuse/core";
 import { computed, onMounted, ref } from "vue";
 
 import { Levels } from "@/api/error.ts";
+import gprLogo from "@/assets/GPR-Logo.jpg";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
