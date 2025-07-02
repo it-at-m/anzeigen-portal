@@ -76,7 +76,7 @@
                 class="two-line-clamp"
                 :class="{ inactive: !adTo.active }"
               >
-                {{ adTo.description }}
+                {{ sanitizedDescription }}
               </p>
             </v-row>
             <v-row
@@ -107,7 +107,6 @@
                   :class="{ inactive: !adTo.active }"
                 />
               </v-col>
-              <v-col cols="2"> </v-col>
             </v-row>
           </v-container>
         </v-col>
@@ -120,7 +119,7 @@
 import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 import { useRouter } from "vue-router";
 
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
@@ -130,6 +129,7 @@ import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
 import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/list/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus.ts";
+import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants.ts";
 import { useUserStore } from "@/stores/user.ts";
 
@@ -142,6 +142,8 @@ const dialogBus = useDialogEventBus();
 const { adTo } = defineProps<{
   adTo: DeepReadonly<AdTO>;
 }>();
+
+const sanitizedDescription = useSanitizedHtml(toRef(adTo.description || ""));
 
 /**
  * Computes whether the ad belongs to the current user based on the user ID.
