@@ -53,11 +53,8 @@
                       </v-toolbar-title>
                     </a>
                   </v-col>
-                  <v-col>
-                    <router-link
-                      v-if="userStore.isAdmin"
-                      :to="{ name: ROUTES_ADMIN }"
-                    >
+                  <v-col v-if="userStore.isAdmin">
+                    <router-link :to="{ name: ROUTES_ADMIN }">
                       <v-toolbar-title
                         class="font-weight-bold d-flex justify-end"
                       >
@@ -67,7 +64,6 @@
                         />
                       </v-toolbar-title>
                     </router-link>
-                    <v-spacer v-else />
                   </v-col>
                 </v-row>
               </v-col>
