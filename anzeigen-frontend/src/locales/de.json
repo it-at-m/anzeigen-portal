@@ -211,5 +211,12 @@
       "title": "Kategorie erstellen",
       "subtitle": "Geben Sie einen Kategorienamen ein."
     }
+  },
+  "adAgbAccept":{
+    "agbMessagePart1": "Ich bin mit den",
+    "termsOfUse": "Nutzungsbedingungen (AGB)",
+    "agbMessagePart2": "einverstanden. Das Schwarze Brett darf nur zu rein privaten Zwecken genutzt werden. Insbesondere Werbung kommerzieller Art ist nicht gestattet! Informationen zur Verarbeitung personenbezogener Daten enthalten die",
+    "dataProtectionInformation": "Datenschutzhinweise",
+    "agbMessagePart3": "."
   }
 }
