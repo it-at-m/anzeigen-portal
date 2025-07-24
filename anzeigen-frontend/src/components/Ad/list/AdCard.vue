@@ -62,7 +62,7 @@
                 class="d-flex justify-end"
               >
                 <ad-edit-button
-                  v-if="belongsToCurrentUser"
+                  v-if="canEdit"
                   is-edit
                   @click="clickedEdit"
                 />
@@ -146,10 +146,10 @@ const { adTo } = defineProps<{
 const sanitizedDescription = useSanitizedHtml(toRef(adTo.description || ""));
 
 /**
- * Computes whether the ad belongs to the current user based on the user ID.
+ * Computes whether the ad can be edited by the current user, either belongs to him, or user is admin.
  */
-const belongsToCurrentUser = computed(
-  () => adTo.swbUser?.id === userStore.userID
+const canEdit = computed(
+  () => adTo.swbUser?.id === userStore.userID || userStore.isAdmin
 );
 
 /**

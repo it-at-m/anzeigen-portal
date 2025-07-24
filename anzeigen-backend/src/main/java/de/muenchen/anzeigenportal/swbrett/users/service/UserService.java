@@ -1,6 +1,7 @@
 package de.muenchen.anzeigenportal.swbrett.users.service;
 
 import de.muenchen.anzeigenportal.security.AuthUtils;
+import de.muenchen.anzeigenportal.security.AuthoritiesEnum;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUser;
 import de.muenchen.anzeigenportal.swbrett.users.model.SwbUserTO;
 import de.muenchen.anzeigenportal.swbrett.users.repository.UserRepository;
@@ -53,5 +54,9 @@ public class UserService {
         log.debug("Current User: {}", currentUser.getId());
 
         return currentUser.getId().equals(currentUserId);
+    }
+
+    public boolean currentUserIsAdmin() {
+        return AuthUtils.getRoles().contains(AuthoritiesEnum.fachadmin);
     }
 }
