@@ -61,8 +61,8 @@
             v-else
             :model-value="deleteDialog"
             :loading="deleteCategoryLoading"
-            dialogtitle="Kategorie löschen"
-            dialogtext="Möchten Sie die Kategorie wirklich löschen?"
+            :dialogtitle="t('singleCategoryEdit.deleteConfirmationDialogTitle')"
+            :dialogtext="t('singleCategoryEdit.deleteConfirmationDialogText')"
             @yes="confirmedDeletion"
             @no="deleteDialog = false"
           >
@@ -132,7 +132,7 @@ const emit = defineEmits<{
 }>();
 
 const notEmptyRule = (value: string) =>
-  value.length !== 0 || "Der Name darf nicht leer sein!";
+  value.length !== 0 || t("singleCategoryEdit.notEmptyMessage");
 
 const updateCategoryName = async () => {
   if (category.id) {
@@ -148,7 +148,12 @@ const updateCategoryName = async () => {
   if (!createCategoryError.value) {
     snackbar.sendMessage({
       level: Levels.SUCCESS,
-      message: "Kategorie erfolgreich gespeichert.",
+      message: t("singleCategoryEdit.categoryChangeSuccess"),
+    });
+  } else {
+    snackbar.sendMessage({
+      level: Levels.WARNING,
+      message: t("singleCategoryEdit.categoryChangeError"),
     });
   }
 
@@ -165,12 +170,12 @@ const confirmedDeletion = async () => {
   if (deleteCategoryError.value) {
     snackbar.sendMessage({
       level: Levels.WARNING,
-      message: "Diese Kategorie konnte nicht gelöscht werden",
+      message: t("singleCategoryEdit.categoryDeleteError"),
     });
   } else {
     snackbar.sendMessage({
       level: Levels.SUCCESS,
-      message: "Kategorie erfolgreich gelöscht.",
+      message: t("singleCategoryEdit.categoryDeleteSuccess"),
     });
   }
 
