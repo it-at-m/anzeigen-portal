@@ -8,6 +8,8 @@ import {
   ROUTES_BOARD,
   ROUTES_MYBOARD,
 } from "@/Constants";
+import pinia from "@/plugins/pinia";
+import { useUserStore } from "@/stores/user.ts";
 import AdBoard from "@/views/AdBoard.vue";
 import AdDetailsView from "@/views/AdDetailsView.vue";
 import AdminBoard from "@/views/AdminBoard.vue";
@@ -63,5 +65,10 @@ const router = createRouter({
 /**
  * Admin navigation guard
  */
+router.beforeEach((to) => {
+  const userStore = useUserStore(pinia);
+  if (to.name === ROUTES_ADMIN && !userStore.isAdmin)
+    return { name: ROUTES_BOARD };
+});
 
 export default router;
