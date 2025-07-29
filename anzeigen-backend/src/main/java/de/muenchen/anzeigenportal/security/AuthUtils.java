@@ -8,7 +8,6 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Utilities for authentication data.
