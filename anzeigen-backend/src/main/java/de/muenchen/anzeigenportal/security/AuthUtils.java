@@ -51,7 +51,7 @@ public final class AuthUtils {
             List<AuthoritiesEnum> roles = new ArrayList<>();
             if (stringRoles != null) {
                 for (String role : stringRoles) {
-                    try{
+                    try {
                         AuthoritiesEnum rolleEnum = AuthoritiesEnum.valueOf(role);
                         roles.add(rolleEnum);
                     } catch (IllegalArgumentException e) {

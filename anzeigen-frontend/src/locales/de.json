@@ -215,7 +215,7 @@
       "notEmptyMessage": "Der Name darf nicht leer sein!"
     }
   },
-  "adAgbAccept":{
+  "adAgbAccept": {
     "agbMessagePart1": "Ich bin mit den",
     "termsOfUse": "Nutzungsbedingungen (AGB)",
     "agbMessagePart2": "einverstanden. Das Schwarze Brett darf nur zu rein privaten Zwecken genutzt werden. Insbesondere Werbung kommerzieller Art ist nicht gestattet! Informationen zur Verarbeitung personenbezogener Daten enthalten die",
