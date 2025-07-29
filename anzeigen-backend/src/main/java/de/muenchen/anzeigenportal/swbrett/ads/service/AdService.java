@@ -140,7 +140,7 @@ public class AdService {
     public AdTO updateAd(final long id, final AdTO updatedAdTO, HttpServletRequest request) throws IOException {
         final Ad ad = repository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, AD_NOT_FOUND));
 
-        if (!userService.isCurrentUser(ad.getSwbUser().getId())) {
+        if (!userService.isCurrentUser(ad.getSwbUser().getId()) && !userService.currentUserIsAdmin()) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Forbidden");
         }
 

@@ -17,7 +17,7 @@ export const useCategoriesStore = defineStore("category", () => {
    * @param payload new categories.
    */
   const setCategories = (payload: AdCategory[]) => {
-    categories.value = payload.sort((a, b) => {
+    categories.value = payload.slice().sort((a, b) => {
       if (a.name === undefined) return 1;
       if (b.name === undefined) return -1;
       return a.name.localeCompare(b.name);

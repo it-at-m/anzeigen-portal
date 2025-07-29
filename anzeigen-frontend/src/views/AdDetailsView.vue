@@ -29,6 +29,7 @@
           <ad-overview
             v-if="!getAdError && adDetails !== null"
             :ad-details="adDetails"
+            :ad-user="getUserData"
           />
           <ad-not-found v-else />
         </div>
@@ -48,9 +49,11 @@ import { useRouter } from "vue-router";
 import AdNotFound from "@/components/Ad/details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/details/AdOverview.vue";
 import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi";
+import { useGetUser } from "@/composables/api/useUserApi.ts";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useClearCacheEventBus } from "@/composables/useEventBus";
 import { ROUTES_BOARD } from "@/Constants";
+import { useUserStore } from "@/stores/user.ts";
 
 const clearCacheEventBus = useClearCacheEventBus();
 
@@ -59,12 +62,20 @@ const defaultQuery = useDefaultQuery();
 
 const router = useRouter();
 
+const userStore = useUserStore();
+
 const {
   call: getAdCall,
   data: getAdData,
   error: getAdError,
   loading: getAdLoading,
 } = useGetAd();
+
+const {
+  call: getUser,
+  data: getUserData,
+  loading: getUserLoading,
+} = useGetUser();
 
 const { call: incrementView } = useIncrementAdView();
 
@@ -73,7 +84,7 @@ const { call: incrementView } = useIncrementAdView();
  */
 const adDetails = ref<Readonly<AdTO> | null>(null);
 
-const loading = computed(() => getAdLoading.value);
+const loading = computed(() => getAdLoading.value || getUserLoading.value);
 
 /**
  * Uses Memoize to cache the results of the request for the details of a specific ad.
@@ -115,6 +126,12 @@ onMounted(() => {
  */
 const updateDisplayedAd = async (id: string) => {
   adDetails.value = (await getAd(parseInt(id))).value as AdTO;
+
+  if (userStore.isAdmin && adDetails.value.swbUser?.id) {
+    await getUser({
+      userId: adDetails.value.swbUser?.id,
+    });
+  }
 };
 
 /**

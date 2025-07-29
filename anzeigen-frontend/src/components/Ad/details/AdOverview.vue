@@ -144,6 +144,12 @@
               :label="adDetails.email"
             />
             <icon-text
+              v-if="adUser && adUser.displayName"
+              class="mb-2"
+              icon="account-tag"
+              :label="adUser.displayName"
+            />
+            <icon-text
               v-if="adDetails.swbUser?.id"
               icon="account"
               link
@@ -180,7 +186,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
 import { computed, toRef } from "vue";
@@ -202,6 +208,7 @@ const downloadFile = useDownloadFile();
 
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
+  adUser: Readonly<SwbUserTO> | null;
 }>();
 
 const currentLink = computed(() => window.location.href);

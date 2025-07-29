@@ -1,6 +1,7 @@
 import type {
   CreateUserRequest,
   FindUserRequest,
+  GetUserRequest,
   SwbUserTO,
 } from "@/api/swbrett";
 import type User from "@/types/User";
@@ -22,6 +23,14 @@ export const useFindUser = () => {
 
   return useApiCall<FindUserRequest, SwbUserTO>((params: FindUserRequest) =>
     api.findUser(params)
+  );
+};
+
+export const useGetUser = () => {
+  const api = ApiFactory.getInstance();
+
+  return useApiCall<GetUserRequest, SwbUserTO>((params: GetUserRequest) =>
+    api.getUser(params)
   );
 };
 
