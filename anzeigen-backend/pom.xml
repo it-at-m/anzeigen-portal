@@ -11,7 +11,7 @@
 
     <groupId>de.muenchen.anzeigen-portal</groupId>
     <artifactId>backend</artifactId>
-    <version>1.0.1-SNAPSHOT</version>
+    <version>1.1.0</version>
     <name>anzeigen-backend</name>
     <description>This is a basic bulletin board based on the reference architecture of it@M</description>
     <url>https://github.com/it-at-m/anzeigen-portal</url>
@@ -298,7 +298,7 @@
     <scm>
         <connection>scm:git:https://github.com/it-at-m/anzeigen-portal.git</connection>
         <developerConnection>scm:git:https://github.com/it-at-m/anzeigen-portal.git</developerConnection>
-        <tag>HEAD</tag>
+        <tag>backend-1.1.0</tag>
     </scm>
 
 
