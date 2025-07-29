@@ -47,12 +47,12 @@ public final class AuthUtils {
         if (authentication instanceof JwtAuthenticationToken jwtAuth) {
 
             @SuppressWarnings("unchecked")
-            List<String> stringRoles = (List<String>) jwtAuth.getTokenAttributes().getOrDefault(TOKEN_AUTHORITIES, List.of());
-            List<AuthoritiesEnum> roles = new ArrayList<>();
+            final List<String> stringRoles = (List<String>) jwtAuth.getTokenAttributes().getOrDefault(TOKEN_AUTHORITIES, List.of());
+            final List<AuthoritiesEnum> roles = new ArrayList<>();
             if (stringRoles != null) {
-                for (String role : stringRoles) {
+                for (final String role : stringRoles) {
                     try {
-                        AuthoritiesEnum rolleEnum = AuthoritiesEnum.valueOf(role);
+                        final AuthoritiesEnum rolleEnum = AuthoritiesEnum.valueOf(role);
                         roles.add(rolleEnum);
                     } catch (IllegalArgumentException e) {
                         log.warn(String.format("Could not map authority '%s' from sso to application ", role));
