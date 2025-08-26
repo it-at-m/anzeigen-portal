@@ -4,23 +4,31 @@ layout: home
 
 hero:
   name: "Anzeigen Portal"
-  text: "Starting page for anzeigen-portal documentation"
-  tagline: "This is the default template for writing documentation in RefArch applications"
+  text: "Documentation for the Anzeigen Project"
+  tagline: "Simple platform for selling and buying items."
   actions:
     - theme: brand
-      text: Example
-      link: /example
+      text: Overview
+      link: /overview
     - theme: alt
-      text: ⤴ External link
-      link: https://refarch.oss.muenchen.de
+      text: ⤴ API Gateway
+      link: https://refarch.oss.muenchen.de/gateway.html
+    - theme: alt
+      text: ⤴ CI/CD
+      link: https://github.com/it-at-m/lhm_actions/blob/main/docs/actions.md
+    - theme: alt
+      text: ⤴ Tools
+      link: https://refarch.oss.muenchen.de/tools.html
+    - theme: alt
+      text: ⤴ Contribute to the project
+      link: https://refarch.oss.muenchen.de/contribute.html
 features:
-  - icon: 1️⃣
-    title: Title 1
+  - icon: 💻
+    title: Frontend
     details: Add some interesting information here
-  - icon: 2️⃣
-    title: Title 2
+    link: /frontend
+  - icon: ⚙
+    title: Backend
     details: Add some interesting information here
-  - icon: 3️⃣
-    title: Title 3
-    details: Add some interesting information here
+    link: /backend
 ---
