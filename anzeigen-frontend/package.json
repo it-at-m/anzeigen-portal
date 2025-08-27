@@ -1,6 +1,6 @@
 {
   "name": "anzeigen-portal",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "type": "module",
   "private": true,
   "engines": {
