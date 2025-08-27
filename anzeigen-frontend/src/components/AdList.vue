@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading">
+  <div>
     <ad-card
       v-for="ad in adStore.listOfAds"
       :key="ad.id"
@@ -32,7 +32,7 @@
   />
   <div class="d-flex justify-center mt-2">
     <v-btn
-      v-if="!ads?.last && !loading"
+      v-if="!adStore.meta.last && !loading"
       color="accent"
       @click="getMoreAds"
     >
