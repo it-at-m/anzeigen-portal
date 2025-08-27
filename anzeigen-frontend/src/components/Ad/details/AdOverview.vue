@@ -149,14 +149,19 @@
               icon="account-tag"
               :label="adUser.displayName"
             />
-            <icon-text
-              v-if="adDetails.swbUser?.id"
-              icon="account"
-              link
-              class="cursor-pointer mb-2"
-              :label="t('adOverview.contactCard.account')"
-              @click="routeToUser(adDetails.swbUser.id!)"
-            />
+            <router-link
+              :to="{
+                name: ROUTES_BOARD,
+                query: { userId: adDetails.swbUser?.id },
+              }"
+            >
+              <icon-text
+                v-if="adDetails.swbUser?.id"
+                icon="account"
+                link
+                :label="t('adOverview.contactCard.account')"
+              />
+            </router-link>
           </template>
         </ad-display-card>
       </v-col>
@@ -200,7 +205,6 @@ import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
-import router from "@/plugins/router";
 
 const { t } = useI18n();
 
@@ -216,19 +220,6 @@ const currentLink = computed(() => window.location.href);
 const sanitizedDescription = useSanitizedHtml(
   toRef(adDetails.description || "")
 );
-
-/**
- * Navigates to the user page with the specified user ID.
- * @param id - The ID of the user.
- */
-const routeToUser = (id: number) => {
-  router.push({
-    name: ROUTES_BOARD,
-    query: {
-      userId: id,
-    },
-  });
-};
 </script>
 
 <style scoped>

@@ -13,23 +13,30 @@
             class="h-100 d-flex align-content-center"
             :class="{ inactive: !adTo.active }"
           >
-            <v-img
-              v-if="adTo.imagePreviewBase64"
-              rounded
-              cover
-              max-height="200"
-              :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adTo.imagePreviewBase64"
-              class="cursor-pointer"
-              @click="routeTo"
-            />
-            <v-icon
-              v-else
-              class="w-100 h-100 rounded"
-              style="background-color: #eeeeee"
-              icon="mdi-camera"
-              color="accent"
-              size="164"
-            />
+            <router-link
+              :to="{
+                name: ROUTES_AD,
+                query: { id: adTo.id },
+              }"
+              class="w-100 remove-a-tag-styling"
+            >
+              <v-img
+                v-if="adTo.imagePreviewBase64"
+                rounded
+                cover
+                max-height="200"
+                :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adTo.imagePreviewBase64"
+                class="cursor-pointer"
+              />
+              <v-icon
+                v-else
+                class="w-100 h-100 rounded"
+                style="background-color: #eeeeee"
+                icon="mdi-camera"
+                color="accent"
+                size="164"
+              />
+            </router-link>
           </div>
         </v-col>
         <v-col
@@ -45,24 +52,31 @@
             >
               <v-col
                 cols="12"
-                sm="7"
-                md="8"
-                class="cursor-pointer"
+                :sm="canEdit ? 7 : 12"
+                :md="canEdit ? 8 : 12"
+                class="pa-0"
                 :class="{ inactive: !adTo.active }"
-                @click="routeTo"
               >
-                <p class="text-h5 text-truncate">
-                  {{ adTo.title }}
-                </p>
+                <router-link
+                  :to="{
+                    name: ROUTES_AD,
+                    query: { id: adTo.id },
+                  }"
+                  class="w-100 remove-a-tag-styling"
+                >
+                  <p class="text-h5 text-truncate">
+                    {{ adTo.title }}
+                  </p>
+                </router-link>
               </v-col>
               <v-col
+                v-if="canEdit"
                 cols="6"
                 sm="5"
                 md="4"
                 class="d-flex justify-end"
               >
                 <ad-edit-button
-                  v-if="canEdit"
                   is-edit
                   @click="clickedEdit"
                 />
@@ -120,7 +134,6 @@ import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
 import { computed, toRef } from "vue";
-import { useRouter } from "vue-router";
 
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdArtChip from "@/components/Ad/list/AdArtChip.vue";
@@ -132,8 +145,6 @@ import { useDialogEventBus } from "@/composables/useEventBus.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants.ts";
 import { useUserStore } from "@/stores/user.ts";
-
-const router = useRouter();
 
 const userStore = useUserStore();
 
@@ -153,13 +164,6 @@ const canEdit = computed(
 );
 
 /**
- * Routes the ad details page with the current clicked ad.
- */
-const routeTo = () => {
-  router.push({ name: ROUTES_AD, query: { id: adTo.id } });
-};
-
-/**
  * Emits an event to edit the ad when clicked.
  */
 const clickedEdit = () => {
@@ -177,5 +181,10 @@ const clickedEdit = () => {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2; /* Number of lines to be displayed */
   overflow: hidden;
+}
+
+.remove-a-tag-styling {
+  text-decoration: none;
+  color: inherit;
 }
 </style>

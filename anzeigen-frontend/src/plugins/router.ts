@@ -54,11 +54,14 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior() {
-    return {
-      top: 0,
-      left: 0,
-    };
+  scrollBehavior(to, from, savedPosition) {
+    const scrollPositionTop = savedPosition ? savedPosition?.top : 0;
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ left: 0, top: scrollPositionTop });
+      }, 500);
+    });
   },
 });
 

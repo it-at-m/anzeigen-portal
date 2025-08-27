@@ -4,7 +4,7 @@ info:
   description: "anzeigen_portal API"
   version: "1.0.0"
 servers:
-  - url: "http://localhost:39146"
+  - url: "http://localhost:8087"
 paths:
   /categories/{id}:
     put:
