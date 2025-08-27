@@ -32,7 +32,7 @@
   />
   <div class="d-flex justify-center mt-2">
     <v-btn
-      v-if="!adStore.meta.last && !loading"
+      v-if="!adStore.meta?.last && !loading"
       color="accent"
       @click="getMoreAds"
     >
