@@ -159,6 +159,7 @@ onMounted(async () => {
     noPermission.value = true;
   } else {
     settingStore.applicationHeading = appInfoData.value.application.heading;
+    useTitle(settingStore.applicationHeading);
   }
 
   if (!settingStore.isLoaded) {
