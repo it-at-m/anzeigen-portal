@@ -50,33 +50,33 @@
               justify="space-between"
               no-gutters
             >
-              <router-link
-                :to="{
-                  name: ROUTES_AD,
-                  query: { id: adTo.id },
-                }"
-                class="w-100 remove-a-tag-styling"
+              <v-col
+                cols="12"
+                :sm="canEdit ? 7 : 12"
+                :md="canEdit ? 8 : 12"
+                class="pa-0"
+                :class="{ inactive: !adTo.active }"
               >
-                <v-col
-                  cols="12"
-                  sm="7"
-                  md="8"
-                  class="pa-0"
-                  :class="{ inactive: !adTo.active }"
+                <router-link
+                  :to="{
+                    name: ROUTES_AD,
+                    query: { id: adTo.id },
+                  }"
+                  class="w-100 remove-a-tag-styling"
                 >
                   <p class="text-h5 text-truncate">
                     {{ adTo.title }}
                   </p>
-                </v-col>
-              </router-link>
+                </router-link>
+              </v-col>
               <v-col
+                v-if="canEdit"
                 cols="6"
                 sm="5"
                 md="4"
                 class="d-flex justify-end"
               >
                 <ad-edit-button
-                  v-if="canEdit"
                   is-edit
                   @click="clickedEdit"
                 />
