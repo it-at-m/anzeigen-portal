@@ -204,8 +204,7 @@ import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
-import { DATE_DISPLAY_FORMAT, ROUTES_AD, ROUTES_BOARD } from "@/Constants";
-import router from "@/plugins/router";
+import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 
 const { t } = useI18n();
 

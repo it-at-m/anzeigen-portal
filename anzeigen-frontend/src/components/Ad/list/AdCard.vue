@@ -134,7 +134,6 @@ import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
 import { computed, toRef } from "vue";
-import { useRouter } from "vue-router";
 
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdArtChip from "@/components/Ad/list/AdArtChip.vue";
@@ -146,8 +145,6 @@ import { useDialogEventBus } from "@/composables/useEventBus.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants.ts";
 import { useUserStore } from "@/stores/user.ts";
-
-const router = useRouter();
 
 const userStore = useUserStore();
 
