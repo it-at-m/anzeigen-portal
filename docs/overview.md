@@ -48,10 +48,10 @@ flowchart LR
 
 ### API Gateway
 
-The API gateway is not included in this project and is a ready-to-use component, which can be found [here](https://github.com/it-at-m/refarch).
+The API gateway is not included in this project. A ready-to-use component is available in the [refarch GitHub repository](https://github.com/it-at-m/refarch).
 It manages all requests and routes them to the respective development components like frontend and backend.
 Besides that, it also handles cross-cutting concepts like authentication using a SSO, which is mandatory for this application!
-Further documentation can be found [here](https://refarch.oss.muenchen.de/gateway.html).
+Further documentation can be found [refarch GitHub documentation](https://refarch.oss.muenchen.de/gateway.html).
 
 ### Components
 
