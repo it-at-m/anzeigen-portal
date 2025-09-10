@@ -41,6 +41,7 @@
                 variant="elevated"
                 color="accent"
                 prepend-icon="mdi-content-save-outline"
+                :disabled="isEmptyNewCategoryName"
                 @click="clickCreateCategory"
               >
                 <p>{{ t("common.create") }}</p>
@@ -63,7 +64,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
@@ -92,8 +93,12 @@ const {
   error: createCategoryError,
 } = useCreateAdCategory();
 
+const isEmptyNewCategoryName = computed(
+  () => newCategoryName.value.length === 0
+);
+
 const notEmptyRule = (value: string) =>
-  value.length !== 0 || "Der Name darf nicht leer sein!";
+  value.length !== 0 || t("editCategories.createCategories.notEmptyMessage");
 
 const clickCreateCategory = async () => {
   await createCategory({
@@ -106,7 +111,12 @@ const clickCreateCategory = async () => {
   if (!createCategoryError.value) {
     snackbar.sendMessage({
       level: Levels.SUCCESS,
-      message: "Kategorie erfolgreich erstellt.",
+      message: t("editCategories.createCategories.success"),
+    });
+  } else {
+    snackbar.sendMessage({
+      level: Levels.WARNING,
+      message: t("editCategories.createCategories.error"),
     });
   }
 

@@ -7,24 +7,21 @@
   >
     <template #label>
       <p>
-        Ich bin mit den
+        {{ t("adAgbAccept.agbMessagePart1") }}
         <a
+          href="#"
           class="text-decoration-underline link-color"
           @click="clickedFileDownload('AGB_FILE')"
-        >
-          Nutzungsbedingungen (AGB)
+          >{{ t("adAgbAccept.termsOfUse") }}
         </a>
-        einverstanden. Das Schwarze Brett darf nur zu rein privaten Zwecken
-        genutzt werden. Insbesondere Werbung kommerzieller Art ist nicht
-        gestattet! Informationen zur Verarbeitung personenbezogener Daten
-        enthalten die
+        {{ t("adAgbAccept.agbMessagePart2") }}
         <a
+          href="#"
           class="text-decoration-underline link-color"
           @click="clickedFileDownload('DATENSCHUTZHINWEISE_FILE')"
         >
-          Datenschutzhinweise
-        </a>
-        .
+          {{ t("adAgbAccept.dataProtectionInformation") }} </a
+        >{{ t("adAgbAccept.agbMessagePart3") }}
       </p>
     </template>
   </v-checkbox>
@@ -33,11 +30,15 @@
 <script setup lang="ts">
 import type { SettingTOSettingNameEnum } from "@/api/swbrett";
 
+import { useI18n } from "vue-i18n";
+
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 
 const settingStore = useSettingStore();
 const downloadFile = useDownloadFile();
+
+const { t } = useI18n();
 
 /**
  * Value if checkbox is checked
@@ -52,10 +53,13 @@ defineProps<{
 }>();
 
 const clickedFileDownload = (settingName: SettingTOSettingNameEnum) => {
+  console.debug("test");
   const setting = settingStore.getSetting(settingName);
   if (setting?.fileValue?.id) {
     downloadFile(setting?.fileValue?.id);
+    console.debug("test2");
   }
+  console.debug("test3");
 };
 </script>
 

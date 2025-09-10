@@ -20,7 +20,7 @@ services:
 
   # see https://event-driven.io/en/automatically_connect_pgadmin_to_database/
   pg-admin:
-    image: dpage/pgadmin4:9.0.0@sha256:1b2f1ecb93ed2c20530703f77acdfa0da8c2470a4e17044504057cea2d6b4fac
+    image: dpage/pgadmin4:9.4.0@sha256:6b1c0db09695758c72abcd5160b7c4cc6d0847ab0c90a2403bdbf951f0defb5a
     environment:
       - PGADMIN_DEFAULT_EMAIL=admin@admin.com
       - PGADMIN_DEFAULT_PASSWORD=admin
@@ -42,7 +42,7 @@ services:
     entrypoint: /bin/sh -c "chmod 600 /pgadmin4/pgpass; /entrypoint.sh;" # see https://www.postgresql.org/docs/current/libpq-pgpass.html#LIBPQ-PGPASS (last paragraph)
 
   keycloak:
-    image: keycloak/keycloak:26.1.5@sha256:be6a86215213145bfb4fb3e2b3ab982a806d00262655abdcf3ffa6a38d241c7c
+    image: keycloak/keycloak:26.2.5@sha256:4883630ef9db14031cde3e60700c9a9a8eaf1b5c24db1589d6a2d43de38ba2a9
     command:
       - start-dev
     environment:
@@ -90,18 +90,18 @@ services:
       - ALLOWED_ORIGINS_PUBLIC=http://localhost:*
       - ALLOWED_ORIGINS_CLIENTS=http://localhost:*
       - SPRING_CLOUD_GATEWAY_ROUTES_0_ID=sso
-      - SPRING_CLOUD_GATEWAY_ROUTES_0_URI=http://kubernetes.docker.internal:8100/
+      - SPRING_CLOUD_GATEWAY_ROUTES_0_URI=http://keycloak:8100/
       - SPRING_CLOUD_GATEWAY_ROUTES_0_PREDICATES_0=Path=/api/sso/userinfo
       - SPRING_CLOUD_GATEWAY_ROUTES_0_FILTERS_0=RewritePath=/api/sso/userinfo, /auth/realms/local_realm/protocol/openid-connect/userinfo
       - SPRING_CLOUD_GATEWAY_ROUTES_1_ID=backend
-      - SPRING_CLOUD_GATEWAY_ROUTES_1_URI=http://host.docker.internal:39146/
+      - SPRING_CLOUD_GATEWAY_ROUTES_1_URI=http://host.docker.internal:8087/
       - SPRING_CLOUD_GATEWAY_ROUTES_1_PREDICATES_0=Path=/api/backend-service/**
       - SPRING_CLOUD_GATEWAY_ROUTES_1_FILTERS_0=RewritePath=/api/backend-service/(?<urlsegments>.*), /$\{urlsegments}
       - SPRING_CLOUD_GATEWAY_ROUTES_2_ID=frontend
       - SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://host.docker.internal:8081/
       - SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0=Path=/**
       - SPRING_PROFILES_ACTIVE=hazelcast-local
-      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://kubernetes.docker.internal:8100/auth/realms/local_realm
+      - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8100/auth/realms/local_realm
       - SPRING_SECURITY_OAUTH2_CLIENT_PROVIDER_SSO_ISSUERURI=$${spring.security.oauth2.resourceserver.jwt.issuer-uri}
       - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_PROVIDER=sso
       - SPRING_SECURITY_OAUTH2_CLIENT_REGISTRATION_SSO_CLIENTID=local

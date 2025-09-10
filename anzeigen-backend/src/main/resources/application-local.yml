@@ -1,5 +1,5 @@
 server:
-  port: 39146
+  port: 8087
 spring:
   # Spring JPA
   jpa:
@@ -29,7 +29,7 @@ spring:
 # Define the local keycloak configuration here
 # Deduplication-only property
 sso:
-  url: http://kubernetes.docker.internal:8100
+  url: http://keycloak:8100
   realm: local_realm
   client: local
 
@@ -37,3 +37,7 @@ security:
   # possible values: none, all, changing (With changing, only changing requests such as POST, PUT, DELETE are logged)
   requestLogging: all
   userInfoUri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
+
+info:
+  application:
+    heading: Localshop

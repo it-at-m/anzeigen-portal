@@ -33,7 +33,7 @@
             />
           </template>
           <template #text>
-            {{ adDetails.description }}
+            {{ sanitizedDescription }}
           </template>
         </ad-display-card>
       </v-col>
@@ -144,13 +144,24 @@
               :label="adDetails.email"
             />
             <icon-text
-              v-if="adDetails.swbUser?.id"
-              icon="account"
-              link
-              class="cursor-pointer mb-2"
-              :label="t('adOverview.contactCard.account')"
-              @click="routeToUser(adDetails.swbUser.id!)"
+              v-if="adUser && adUser.displayName"
+              class="mb-2"
+              icon="account-tag"
+              :label="adUser.displayName"
             />
+            <router-link
+              :to="{
+                name: ROUTES_BOARD,
+                query: { userId: adDetails.swbUser?.id },
+              }"
+            >
+              <icon-text
+                v-if="adDetails.swbUser?.id"
+                icon="account"
+                link
+                :label="t('adOverview.contactCard.account')"
+              />
+            </router-link>
           </template>
         </ad-display-card>
       </v-col>
@@ -180,10 +191,10 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
@@ -192,8 +203,8 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
+import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
-import router from "@/plugins/router";
 
 const { t } = useI18n();
 
@@ -201,22 +212,14 @@ const downloadFile = useDownloadFile();
 
 const { adDetails } = defineProps<{
   adDetails: Readonly<AdTO>;
+  adUser: Readonly<SwbUserTO> | null;
 }>();
 
 const currentLink = computed(() => window.location.href);
 
-/**
- * Navigates to the user page with the specified user ID.
- * @param id - The ID of the user.
- */
-const routeToUser = (id: number) => {
-  router.push({
-    name: ROUTES_BOARD,
-    query: {
-      userId: id,
-    },
-  });
-};
+const sanitizedDescription = useSanitizedHtml(
+  toRef(adDetails.description || "")
+);
 </script>
 
 <style scoped>

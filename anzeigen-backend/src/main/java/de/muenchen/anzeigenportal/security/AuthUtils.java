@@ -6,6 +6,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Utilities for authentication data.
  */
@@ -16,6 +19,7 @@ public final class AuthUtils {
 
     private static final String TOKEN_USER_NAME = "user_name";
     private static final String TOKEN_LHM_OBJECT_ID = "lhmObjectID";
+    private static final String TOKEN_AUTHORITIES = "authorities";
 
     private AuthUtils() {
     }
@@ -35,6 +39,28 @@ public final class AuthUtils {
             log.debug("User not authenticated");
             return NAME_UNAUTHENTICATED_USER;
         }
+    }
+
+    public static List<AuthoritiesEnum> getRoles() {
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+
+            @SuppressWarnings("unchecked")
+            final List<String> stringRoles = (List<String>) jwtAuth.getTokenAttributes().getOrDefault(TOKEN_AUTHORITIES, List.of());
+            final List<AuthoritiesEnum> roles = new ArrayList<>();
+            if (stringRoles != null) {
+                for (final String role : stringRoles) {
+                    try {
+                        final AuthoritiesEnum rolleEnum = AuthoritiesEnum.valueOf(role);
+                        roles.add(rolleEnum);
+                    } catch (IllegalArgumentException e) {
+                        log.warn(String.format("Could not map authority '%s' from sso to application ", role));
+                    }
+                }
+            }
+            return roles;
+        }
+        return new ArrayList<>();
     }
 
     /**

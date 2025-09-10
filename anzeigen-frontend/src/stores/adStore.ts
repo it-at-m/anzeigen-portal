@@ -14,7 +14,7 @@ export const useAdStore = defineStore("ad", () => {
   const listOfAds = ref<DeepReadonly<AdTO[]>>([]);
 
   /**
-   * Meta information of newest ads. This currently has no use - but you nether know.
+   * Meta information of newest ads.
    */
   const meta = ref();
 
