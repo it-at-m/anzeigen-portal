@@ -3,8 +3,9 @@ import { withMermaid } from "vitepress-plugin-mermaid";
 
 // https://vitepress.dev/reference/site-config
 const vitepressConfig = defineConfig({
-  title: "RefArch Docs Template",
-  description: "Documentation template from the RefArch Templates",
+  title: "Anzeigen Portal Docs",
+  description: "Documentation for the Anzeigen Portal project",
+  base: "/anzeigen-portal/",
   head: [
     [
       "link",
@@ -22,21 +23,21 @@ const vitepressConfig = defineConfig({
       {
         text: "Docs",
         items: [
-          { text: "Example", link: "/example" },
-          { text: "External link", link: "https://refarch.oss.muenchen.de" },
+          { text: "Frontend", link: "/frontend" },
+          { text: "Backend", link: "/backend" },
         ],
       },
     ],
     sidebar: [
-      { text: "Example", link: "/example" },
-      { text: "External link", link: "https://refarch.oss.muenchen.de" },
+      { text: "Frontend", link: "/frontend" },
+      { text: "Backend", link: "/backend" },
     ],
     socialLinks: [
-      { icon: "github", link: "https://github.com/it-at-m/refarch-templates" },
+      { icon: "github", link: "https://github.com/it-at-m/anzeigen-portal" },
     ],
     editLink: {
       pattern:
-        "https://github.com/it-at-m/refarch-templates/blob/main/docs/:path",
+        "https://github.com/it-at-m/anzeigen-portal/blob/main/docs/:path",
       text: "View this page on GitHub",
     },
     footer: {
