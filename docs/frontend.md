@@ -34,19 +34,20 @@ Additionally, this folder contains functions for requesting:
 ### Components
 
 This folder contains all components created in Vue.js for the web application.
-All components are divided into general categories based on their usage. 
-At the top level, we have the `AdDialog` for creating new ads or editing existing ones, and the `AdList` for displaying ads found through a search query. 
+All components are divided into general categories based on their usage.
+At the top level, we have the `AdDialog` for creating new ads or editing existing ones, and the `AdList` for displaying ads found through a search query.
 Additionally, there is the `AdNavBar`, which primarily includes all filter and sorting options, and the `SnackbarQueue` for displaying messages to the end user.
 
-For the navigation bar, all individual components are located in the `Filter` folder. 
+For the navigation bar, all individual components are located in the `Filter` folder.
 The `common` folder contains general components such as a simple YesNoDialog or the AccountCard.
 
-For the admin page (`admin`), the settings options are divided into individual components. 
-It is noteworthy that a new system setting can be easily added by updating the OpenApi specification and adding a "Row" in `GeneralSettings`. 
-You only need to choose the type of setting - File, Number, TextSelect, or Text. 
+For the admin page (`admin`), the settings options are divided into individual components.
+It is noteworthy that a new system setting can be easily added by updating the OpenApi specification and adding a "Row" in `GeneralSettings`.
+You only need to choose the type of setting - File, Number, TextSelect, or Text.
 Currently, there is no component for a Boolean setting, as it has not been required so far.
 
 All components related to an ad are further divided into three display modes:
+
 - **Details**: Detailed view showing all possible parameters and specified options.
 - **Dialog**: Editable fields for creating and editing an ad.
 - **List**: Reduced view showing only the most necessary information within a list.
@@ -91,9 +92,9 @@ This also includes the ability to dynamically change the language throughout the
 
 ### Stores
 
-This web application utilizes state management through Pinia Store. 
-All used stores are located in different files. 
-The stores provide various access methods to the data contained within them. 
+This web application utilizes state management through Pinia Store.
+All used stores are located in different files.
+The stores provide various access methods to the data contained within them.
 Some stores are populated with data in "special" ways - this includes, for example, the ads themselves.
 
 ### Types
@@ -102,12 +103,13 @@ This folder contains "custom types," i.e., TypeScript classes or interfaces that
 
 ### Util
 
-Functionalities that are needed in multiple places are outsourced to this folder. 
+Functionalities that are needed in multiple places are outsourced to this folder.
 Specifically for this application, a mapping for the sorting dropdown is stored here.
 
 ### Views
 
 The views are the individual pages that can be directly accessed in the web application via a path.
+
 - **AdminPage (/admin)**: Describes the admin page with options for adjusting categories and other system settings.
 - **BoardPage (/)**: Essentially the homepage, which includes the listing of ads and general sorting options for them.
 - **DetailsPage (/ad)**: Shows the detailed information of an ad with a large display of the image and contact information.
