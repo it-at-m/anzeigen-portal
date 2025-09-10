@@ -46,14 +46,15 @@
       "creationDate": "Erstellungsdatum",
       "expiryDate": "Ablaufdatum",
       "views": "Aufrufe",
-      "directLink": "Direkter Link"
+      "directLink": "Link dieser Anzeige",
+      "additionalLink" : "Zusätzlicher Link"
     },
     "contactCard": {
       "title": "Kontakt",
-      "account": "weiter Anzeigen dieses Nutzers"
+      "account": "Weitere Anzeigen dieses Nutzers"
     },
     "additionalInformationCard": {
-      "title": "Weiter Informationen"
+      "title": "Weitere Informationen"
     }
   },
   "adCategorySelector": {

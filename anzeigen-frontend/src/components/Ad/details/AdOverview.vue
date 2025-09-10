@@ -107,6 +107,17 @@
                 </v-col>
                 <v-col class="py-0"> {{ adDetails.views }} </v-col>
               </v-row>
+              <v-row v-if="adDetails.link">
+                <v-col class="py-0">
+                  {{ t("adOverview.detailsCard.additionalLink") }}
+                </v-col>
+                <v-col class="py-0">
+                  <icon-text
+                    :label="adDetails.link"
+                    :href="adDetails.link"
+                  />
+                </v-col>
+              </v-row>
               <v-row>
                 <v-col class="py-0">
                   {{ t("adOverview.detailsCard.directLink") }}
@@ -171,9 +182,9 @@
         lg="6"
       >
         <ad-display-card>
-          <template #subtitle>{{
-            t("adOverview.additionalInformationCard.title")
-          }}</template>
+          <template #subtitle>
+            {{ t("adOverview.additionalInformationCard.title") }}
+          </template>
           <template #text>
             <icon-text
               v-for="i in adDetails.adFiles"
