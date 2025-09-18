@@ -47,7 +47,7 @@
       "expiryDate": "Ablaufdatum",
       "views": "Aufrufe",
       "directLink": "Link dieser Anzeige",
-      "additionalLink" : "Zusätzlicher Link"
+      "additionalLink": "Zusätzlicher Link"
     },
     "contactCard": {
       "title": "Kontakt",
