@@ -90,7 +90,7 @@
 
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 
 import { Levels } from "@/api/error.ts";
 import gprLogo from "@/assets/GPR-Logo.jpg";
@@ -153,6 +153,12 @@ const currentUser = computed(() => findUserData.value || createUserData.value);
 /**
  * Initialize the stores
  */
+onBeforeMount(async () => {
+  if (!settingStore.isLoaded) {
+    await updateSettings();
+  }
+});
+
 onMounted(async () => {
   await appInfoCall();
   if (appInfoError.value || !appInfoData.value?.application.heading) {
@@ -162,9 +168,6 @@ onMounted(async () => {
     useTitle(settingStore.applicationHeading);
   }
 
-  if (!settingStore.isLoaded) {
-    await updateSettings();
-  }
   if (!userStore.userID) {
     await loadUser();
   }
