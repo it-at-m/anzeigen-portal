@@ -44,7 +44,7 @@ export const NO_CATEGORY = { id: -1, name: "Alle", standard: true };
 export const ALLOWED_FILE_TYPES =
   "image/png, image/jpeg, image/jpg, application/pdf";
 export const ALLOWED_IMAGE_TYPES = "image/png, image/jpeg, image/jpg";
-export const AD_MAX_TITLE_LENGTH = 40;
+export const AD_MAX_TITLE_LENGTH = 100;
 export const DATE_DISPLAY_FORMAT = "DD.MM.YYYY"; // use this in conjunction with useDateFormat
 export const PREVIEW_IMAGE_FILE_URI_PREFIX = "data:image/jpeg;base64,";
 export const APPLICATION_HEADING = "Kleinanzeigen";
