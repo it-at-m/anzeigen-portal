@@ -22,6 +22,7 @@ import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants";
+import { useSettingStore } from "@/stores/settings.ts";
 import {
   isValidOrderSelection,
   sortingOrderSelections,
@@ -36,6 +37,8 @@ const orderByQuery = useRouteQuery(QUERY_NAME_SORTBY);
  * Internal state of the current selected sorting criteria.
  */
 const sortingCriteria = ref<CriteriaValue>({ criteria: "title", order: "asc" });
+
+const settingStore = useSettingStore();
 
 /**
  * Initializes sorting criteria from the query parameters when the component is mounted.
@@ -65,5 +68,27 @@ onMounted(() => {
 watch(sortingCriteria, (newSortingCriteria) => {
   orderQuery.value = newSortingCriteria.order;
   orderByQuery.value = newSortingCriteria.criteria;
+});
+
+/**
+ * Watches for changes in setting store and updates the corresponding query parameters.
+ */
+watch(settingStore, (newSettingStore) => {
+  orderQuery.value =
+    newSettingStore.getSetting("DEFAULT_ORDERING").textValue ?? null;
+  orderByQuery.value =
+    newSettingStore.getSetting("DEFAULT_SORTING").textValue ?? null;
+});
+
+/**
+ * Watches for changes in query parameter and updates the corresponding sorting criteria.
+ */
+watch([orderByQuery, orderQuery], ([newOrderByQuery, newOrderQuery]) => {
+  if (newOrderByQuery?.valueOf()) {
+    sortingCriteria.value = {
+      criteria: newOrderByQuery,
+      order: newOrderQuery,
+    } as CriteriaValue;
+  }
 });
 </script>
