@@ -126,7 +126,6 @@ public class ImageService {
         return resized;
     }
 
-
     private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -136,19 +135,19 @@ public class ImageService {
     }
 
     private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
-        double radians = Math.toRadians(degrees);
-        int w = img.getWidth();
-        int h = img.getHeight();
+        final double radians = Math.toRadians(degrees);
+        final int w = img.getWidth();
+        final int h = img.getHeight();
 
-        AffineTransform transform = new AffineTransform();
+        final AffineTransform transform = new AffineTransform();
         transform.rotate(radians, 0, 0);
 
-        Rectangle bounds = new Rectangle(0, 0, w, h);
-        Shape transformedBounds = transform.createTransformedShape(bounds);
-        Rectangle rect = transformedBounds.getBounds();
+        final Rectangle bounds = new Rectangle(0, 0, w, h);
+        final Shape transformedBounds = transform.createTransformedShape(bounds);
+        final Rectangle rect = transformedBounds.getBounds();
 
-        BufferedImage rotated = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g2d = rotated.createGraphics();
+        final BufferedImage rotated = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_RGB);
+        final Graphics2D g2d = rotated.createGraphics();
 
         g2d.translate(-rect.x, -rect.y);
         g2d.rotate(radians, 0, 0);
@@ -158,18 +157,21 @@ public class ImageService {
         return rotated;
     }
 
-
     private int getExifRotation(final byte[] imageBytes) {
         try (ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes)) {
-            Metadata metadata = ImageMetadataReader.readMetadata(bais);
-            ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+            final Metadata metadata = ImageMetadataReader.readMetadata(bais);
+            final ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
             if (dir != null && dir.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
-                int orientation = dir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+                final int orientation = dir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
                 switch (orientation) {
-                    case 3:  return 180;
-                    case 6:  return 90;
-                    case 8:  return 270;
-                    default: return 0;
+                case 3:
+                    return 180;
+                case 6:
+                    return 90;
+                case 8:
+                    return 270;
+                default:
+                    return 0;
                 }
             }
         } catch (Exception ignored) {
