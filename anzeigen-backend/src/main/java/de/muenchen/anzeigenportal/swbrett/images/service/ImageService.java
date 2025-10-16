@@ -15,6 +15,7 @@ import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -134,15 +135,26 @@ public class ImageService {
         return baos.toByteArray();
     }
 
-
     private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
-        final int w = img.getWidth();
-        final int h = img.getHeight();
-        final BufferedImage rotated = new BufferedImage(w, h, img.getType());
-        final Graphics2D g2d = rotated.createGraphics();
-        g2d.rotate(Math.toRadians(degrees), (double) w / 2, (double) h / 2);
-        g2d.drawImage(img, null, 0, 0);
+        double radians = Math.toRadians(degrees);
+        int w = img.getWidth();
+        int h = img.getHeight();
+
+        AffineTransform transform = new AffineTransform();
+        transform.rotate(radians, 0, 0);
+
+        Rectangle bounds = new Rectangle(0, 0, w, h);
+        Shape transformedBounds = transform.createTransformedShape(bounds);
+        Rectangle rect = transformedBounds.getBounds();
+
+        BufferedImage rotated = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = rotated.createGraphics();
+
+        g2d.translate(-rect.x, -rect.y);
+        g2d.rotate(radians, 0, 0);
+        g2d.drawImage(img, 0, 0, null);
         g2d.dispose();
+
         return rotated;
     }
 
