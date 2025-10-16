@@ -20,6 +20,10 @@ import { useDebounceFn } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute } from "vue-router";
+
+import { ROUTES_BOARD } from "@/Constants.ts";
+import router from "@/plugins/router.ts";
 
 const { t } = useI18n();
 
@@ -29,6 +33,8 @@ const { t } = useI18n();
 const searchValue = ref<string>();
 
 const searchQuery = useRouteQuery("searchTerm");
+
+const route = useRoute();
 
 /**
  * Initializes search value from the query parameter when the component is mounted.
@@ -54,6 +60,9 @@ const debouncedSearch = useDebounceFn(
  * Updates the search query parameter based on the current search value.
  */
 const search = () => {
+  if (route.name != ROUTES_BOARD) {
+    router.push({ name: ROUTES_BOARD });
+  }
   searchQuery.value = searchValue.value ?? null;
 };
 </script>
