@@ -3,6 +3,8 @@ package de.muenchen.anzeigenportal.swbrett.images.controller;
 import java.io.IOException;
 import java.util.Base64;
 
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.MetadataException;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageSanitize;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
@@ -36,7 +38,7 @@ public class ImageController {
 
         try {
             ba = this.service.sanitizeImage(ba);
-        } catch (IOException e) {
+        } catch (IOException | ImageProcessingException | MetadataException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Could not sanitize image", e);
         }
 

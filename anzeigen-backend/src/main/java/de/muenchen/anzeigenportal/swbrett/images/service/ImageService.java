@@ -2,17 +2,21 @@ package de.muenchen.anzeigenportal.swbrett.images.service;
 
 import javax.imageio.ImageIO;
 
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.MetadataException;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -71,7 +75,7 @@ public class ImageService {
      * </li>
      * </ul>
      */
-    public byte[] sanitizeImage(final byte[] userProvidedImage) throws IOException {
+    public byte[] sanitizeImage(final byte[] userProvidedImage) throws IOException, ImageProcessingException, MetadataException {
 
         // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
         // (The JRE image processing ignores it, and thus the images may turn out rotated.)
@@ -157,24 +161,18 @@ public class ImageService {
         return rotated;
     }
 
-    private int getExifRotation(final byte[] imageBytes) {
-        try (ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes)) {
-            final Metadata metadata = ImageMetadataReader.readMetadata(bais);
-            final ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
-            if (dir != null && dir.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
-                final int orientation = dir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
-                switch (orientation) {
-                case 3:
-                    return 180;
-                case 6:
-                    return 90;
-                case 8:
-                    return 270;
-                default:
-                    return 0;
-                }
-            }
-        } catch (Exception ignored) {
+    private int getExifRotation(final byte[] imageBytes) throws ImageProcessingException, IOException, MetadataException {
+        ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+        final Metadata metadata = ImageMetadataReader.readMetadata(bais);
+        final ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+        if (dir != null && dir.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
+            final int orientation = dir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+            return switch (orientation) {
+            case 3 -> 180;
+            case 6 -> 90;
+            case 8 -> 270;
+            default -> 0;
+            };
         }
         return 0;
     }
