@@ -10,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -122,6 +125,16 @@ public class ImageService {
         return resized;
     }
 
+
+    private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        final BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        convertedImage.createGraphics().drawImage(image, 0, 0, null);
+        ImageIO.write(convertedImage, "png", baos); // Verwenden von PNG als Standardformat
+        return baos.toByteArray();
+    }
+
+
     private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
         final int w = img.getWidth();
         final int h = img.getHeight();
@@ -133,18 +146,22 @@ public class ImageService {
         return rotated;
     }
 
-    private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        final BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-        convertedImage.createGraphics().drawImage(image, 0, 0, null);
-        ImageIO.write(convertedImage, "png", baos); // Verwenden von PNG als Standardformat
-        return baos.toByteArray();
-    }
 
-    // Dummy-Funktion: Implementiere den EXIF-Reader hier oder verwende eine Bibliothek wie MetadataExtractor
     private int getExifRotation(final byte[] imageBytes) {
-        log.debug(String.valueOf(imageBytes.length));
-        // Lese EXIF-Metadaten und gib den Winkel der Rotation zurück
-        return 0; // Beispiel: 0 für keine Rotation, 90, 180, 270 für andere Fälle
+        try (ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes)) {
+            Metadata metadata = ImageMetadataReader.readMetadata(bais);
+            ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+            if (dir != null && dir.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
+                int orientation = dir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+                switch (orientation) {
+                    case 3:  return 180;
+                    case 6:  return 90;
+                    case 8:  return 270;
+                    default: return 0;
+                }
+            }
+        } catch (Exception ignored) {
+        }
+        return 0;
     }
 }
