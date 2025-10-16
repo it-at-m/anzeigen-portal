@@ -106,6 +106,7 @@ import {
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
 import { useApi } from "@/composables/useApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
+import { useSettingsUpdatedEventBus } from "@/composables/useEventBus.ts";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
 import { useUpdateSettings } from "@/composables/useUpdateSettings.ts";
 import { API_ERROR_MSG, ROUTES_ADMIN, ROUTES_BOARD } from "@/Constants";
@@ -123,6 +124,7 @@ const settingStore = useSettingStore();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 const categoriesStore = useCategoriesStore();
+const settingsUpdatedEventBus = useSettingsUpdatedEventBus();
 
 useTitle(settingStore.applicationHeading);
 
@@ -156,6 +158,8 @@ const currentUser = computed(() => findUserData.value || createUserData.value);
 onBeforeMount(async () => {
   if (!settingStore.isLoaded) {
     await updateSettings();
+
+    settingsUpdatedEventBus.emit();
   }
 });
 
