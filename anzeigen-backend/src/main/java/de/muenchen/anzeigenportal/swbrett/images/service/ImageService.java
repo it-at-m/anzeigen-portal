@@ -10,13 +10,11 @@ import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.drew.imaging.ImageMetadataReader;
 import com.drew.metadata.Metadata;
 import com.drew.metadata.exif.ExifIFD0Directory;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -162,7 +160,7 @@ public class ImageService {
     }
 
     private int getExifRotation(final byte[] imageBytes) throws ImageProcessingException, IOException, MetadataException {
-        ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+        final ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
         final Metadata metadata = ImageMetadataReader.readMetadata(bais);
         final ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
         if (dir != null && dir.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
