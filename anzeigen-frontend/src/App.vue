@@ -90,7 +90,7 @@
 
 <script setup lang="ts">
 import { useTitle } from "@vueuse/core";
-import { computed, onMounted, ref } from "vue";
+import { computed, onBeforeMount, onMounted, ref } from "vue";
 
 import { Levels } from "@/api/error.ts";
 import gprLogo from "@/assets/GPR-Logo.jpg";
@@ -106,6 +106,7 @@ import {
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
 import { useApi } from "@/composables/useApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
+import { useSettingsUpdatedEventBus } from "@/composables/useEventBus.ts";
 import { useSnackbar } from "@/composables/useSnackbar.ts";
 import { useUpdateSettings } from "@/composables/useUpdateSettings.ts";
 import { API_ERROR_MSG, ROUTES_ADMIN, ROUTES_BOARD } from "@/Constants";
@@ -123,6 +124,7 @@ const settingStore = useSettingStore();
 const userStore = useUserStore();
 const snackbar = useSnackbar();
 const categoriesStore = useCategoriesStore();
+const settingsUpdatedEventBus = useSettingsUpdatedEventBus();
 
 useTitle(settingStore.applicationHeading);
 
@@ -153,6 +155,14 @@ const currentUser = computed(() => findUserData.value || createUserData.value);
 /**
  * Initialize the stores
  */
+onBeforeMount(async () => {
+  if (!settingStore.isLoaded) {
+    await updateSettings();
+
+    settingsUpdatedEventBus.emit();
+  }
+});
+
 onMounted(async () => {
   await appInfoCall();
   if (appInfoError.value || !appInfoData.value?.application.heading) {
@@ -162,9 +172,6 @@ onMounted(async () => {
     useTitle(settingStore.applicationHeading);
   }
 
-  if (!settingStore.isLoaded) {
-    await updateSettings();
-  }
   if (!userStore.userID) {
     await loadUser();
   }

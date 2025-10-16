@@ -74,7 +74,7 @@ const updateAdListEventBus = useUpdateAdListEventBus();
  * Initializes the store with ads
  */
 onMounted(async () => {
-  if (adStore.isEmpty) {
+  if (adStore.isEmpty && Object.keys(route.query).length != 0) {
     await getAdPage(false);
   }
 });

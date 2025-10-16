@@ -2,6 +2,8 @@ package de.muenchen.anzeigenportal.swbrett.images.service;
 
 import javax.imageio.ImageIO;
 
+import com.drew.imaging.ImageProcessingException;
+import com.drew.metadata.MetadataException;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
@@ -10,8 +12,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.drew.imaging.ImageMetadataReader;
+import com.drew.metadata.Metadata;
+import com.drew.metadata.exif.ExifIFD0Directory;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -67,7 +73,7 @@ public class ImageService {
      * </li>
      * </ul>
      */
-    public byte[] sanitizeImage(final byte[] userProvidedImage) throws IOException {
+    public byte[] sanitizeImage(final byte[] userProvidedImage) throws IOException, ImageProcessingException, MetadataException {
 
         // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
         // (The JRE image processing ignores it, and thus the images may turn out rotated.)
@@ -122,17 +128,6 @@ public class ImageService {
         return resized;
     }
 
-    private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
-        final int w = img.getWidth();
-        final int h = img.getHeight();
-        final BufferedImage rotated = new BufferedImage(w, h, img.getType());
-        final Graphics2D g2d = rotated.createGraphics();
-        g2d.rotate(Math.toRadians(degrees), (double) w / 2, (double) h / 2);
-        g2d.drawImage(img, null, 0, 0);
-        g2d.dispose();
-        return rotated;
-    }
-
     private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         final BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
@@ -141,10 +136,42 @@ public class ImageService {
         return baos.toByteArray();
     }
 
-    // Dummy-Funktion: Implementiere den EXIF-Reader hier oder verwende eine Bibliothek wie MetadataExtractor
-    private int getExifRotation(final byte[] imageBytes) {
-        log.debug(String.valueOf(imageBytes.length));
-        // Lese EXIF-Metadaten und gib den Winkel der Rotation zurück
-        return 0; // Beispiel: 0 für keine Rotation, 90, 180, 270 für andere Fälle
+    private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
+        final double radians = Math.toRadians(degrees);
+        final int w = img.getWidth();
+        final int h = img.getHeight();
+
+        final AffineTransform transform = new AffineTransform();
+        transform.rotate(radians, 0, 0);
+
+        final Rectangle bounds = new Rectangle(0, 0, w, h);
+        final Shape transformedBounds = transform.createTransformedShape(bounds);
+        final Rectangle rect = transformedBounds.getBounds();
+
+        final BufferedImage rotated = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_RGB);
+        final Graphics2D g2d = rotated.createGraphics();
+
+        g2d.translate(-rect.x, -rect.y);
+        g2d.rotate(radians, 0, 0);
+        g2d.drawImage(img, 0, 0, null);
+        g2d.dispose();
+
+        return rotated;
+    }
+
+    private int getExifRotation(final byte[] imageBytes) throws ImageProcessingException, IOException, MetadataException {
+        final ByteArrayInputStream bais = new ByteArrayInputStream(imageBytes);
+        final Metadata metadata = ImageMetadataReader.readMetadata(bais);
+        final ExifIFD0Directory dir = metadata.getFirstDirectoryOfType(ExifIFD0Directory.class);
+        if (dir != null && dir.containsTag(ExifIFD0Directory.TAG_ORIENTATION)) {
+            final int orientation = dir.getInt(ExifIFD0Directory.TAG_ORIENTATION);
+            return switch (orientation) {
+            case 3 -> 180;
+            case 6 -> 90;
+            case 8 -> 270;
+            default -> 0;
+            };
+        }
+        return 0;
     }
 }
