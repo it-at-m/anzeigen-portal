@@ -6,9 +6,11 @@ declare module "*.vue" {
   export default component;
 }
 
-interface ImportMetaEnv {
+export interface ImportMetaEnv {
   readonly VITE_AD2IMAGE_URL: string;
   readonly VITE_APPSWITCHER_SERVER_URL: string;
+  readonly VITE_APP_VARIANT: "swb" | "gbr";
+  readonly VITE_BASE_PATH: string;
 }
 
 interface ImportMeta {
