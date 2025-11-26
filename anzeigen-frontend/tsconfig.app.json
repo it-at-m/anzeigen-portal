@@ -5,6 +5,7 @@
     "composite": true,
     "baseUrl": ".",
     "paths": {
+      "@variants/*": ["./src/variants/swb/*", "./src/variants/gbr/*"],
       "@/*": ["./src/*"]
     },
     "forceConsistentCasingInFileNames": true
