@@ -251,6 +251,24 @@ Use ``--mode <variant>`` to start the server for a specific variant:
 npm run dev -- --mode appA  # start App A
 npm run dev -- --mode appB  # start App B
 ```
-
-Alternatively, set ``VITE_APP_VARIANT`` in your shell before running the dev command. 
+Alternatively, set ``VITE_APP_VARIANT`` in your shell before running the dev command.
 Vite picks it up via the environment.
+
+### Variant switching at deployment time
+
+Both variants remain in the Docker image after the multi‑build. 
+During local development it makes sense to access them via their respective sub‑paths so that you can switch quickly. 
+For deployment, you can, however, serve one variant at the root URL while keeping the other hidden. 
+This is achieved by a rewrite in the API gateway: the catch‑all route (``Path=/**``) receives a ``RewritePath`` filter that forwards all requests to the desired sub‑path. 
+An example for the ``appA`` variant looks like this:
+```properties
+SPRING_CLOUD_GATEWAY_ROUTES_2_ID=frontend
+SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://host.docker.internal:8081/
+SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0=Path=/**
+SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0=RewritePath=/(?<path>.*), /appA/${path}
+```
+As a result ``http://localhost:8083/`` serves the built ``appA`` application even though its Vite base path remains ``/appA/``. 
+To switch to the other variant you only change the prefix in the gateway configuration. 
+API calls should continue to use absolute paths so they are not affected by the rewrite.
+
+
