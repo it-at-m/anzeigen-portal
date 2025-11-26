@@ -14,5 +14,4 @@
 
 <script setup lang="ts">
 import emblem from "@/assets/GPR-Logo.jpg";
-import ServiceAvatar from "@/variants/gbr/components/service-avatar.vue";
 </script>
