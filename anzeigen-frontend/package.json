@@ -7,9 +7,10 @@
     "node": ">=20 <=22"
   },
   "scripts": {
-    "dev": "vite",
+    "dev:swb": "vite --mode swb",
+    "dev:gbr": "vite --mode gbr",
     "test": "vitest run",
-    "build": "vite build",
+    "build": "vite build --mode swb && vite build --mode gbr",
     "preview": "vite preview",
     "lint": "prettier . --check && eslint . && vue-tsc -p tsconfig.app.json --noEmit --skipLibCheck --composite false",
     "fix": "prettier . --write && eslint . --fix",
