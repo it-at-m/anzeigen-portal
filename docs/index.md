@@ -25,10 +25,10 @@ hero:
 features:
   - icon: 💻
     title: Frontend
-    details: Add some interesting information here
+    details: Component structure, Multi build, API Calls
     link: /frontend
   - icon: ⚙
     title: Backend
-    details: Add some interesting information here
+    details: Standard, not optimized backend
     link: /backend
 ---

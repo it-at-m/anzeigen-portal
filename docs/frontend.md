@@ -113,3 +113,175 @@ The views are the individual pages that can be directly accessed in the web appl
 - **AdminPage (/admin)**: Describes the admin page with options for adjusting categories and other system settings.
 - **BoardPage (/)**: Essentially the homepage, which includes the listing of ads and general sorting options for them.
 - **DetailsPage (/ad)**: Shows the detailed information of an ad with a large display of the image and contact information.
+
+## Multi‑Build Variants
+
+The project supports building different variants of the frontend from the same code base.
+This was useful because two products shared most functionality but had minor differences (for example, App A vs. App B).
+Each variant ended up in its own subfolder under dist and could be served via its own base path.
+
+### Environment Files
+
+Separate .env files were created for each variant.
+Vite loads them based on the build mode.
+Each file defines at least `VITE_APP_VARIANT`:
+
+```test
+# .env.appA
+VITE_APP_VARIANT=appA
+
+# .env.appB
+VITE_APP_VARIANT=appB
+```
+
+Other environment variables like `VITE_AD2IMAGE_URL` could also be overridden.
+The variant flag determines output paths and which files are used for variant‑specific components.
+Folder names are therefore bound to the variants name.
+
+## Vite Configuration
+
+`vite.config.ts` exports a function that derives settings based on the current mode and environment variables.
+Key steps included:
+
+- `loadEnv(mode, process.cwd(), '')` was used to read the `.env.<mode>` file and cast it to an `ImportMetaEnv` type so TypeScript knows the variable names.
+- The variant name was extracted from `VITE_APP_VARIANT`, falling back to the mode name. From this value variantDir `(./src/variants/<variant>)`, outDir `(dist/<variant>)` and basePath `(/<variant>/)` were derived.
+- Aliases were defined: `@` points to src and `@variants` points to the current variant directory. Vite then resolves `@variants/components/...` to the correct variant directory.
+- ''emptyOutDir'' was disabled so that multiple builds could write into dist without removing each other.
+
+The resulting configuration looked like this:
+
+```ts
+import { defineConfig, loadEnv } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vuetify from 'vite-plugin-vuetify';
+
+export default defineConfig(({ mode }) => {
+    const env = loadEnv(mode, process.cwd(), '') as ImportMetaEnv;
+    const variant = env.VITE_APP_VARIANT || (mode as 'appA' | 'appB');
+
+    return {
+        base: env.VITE_BASE_PATH || `/${variant}/`,
+        plugins: [vue(), vuetify()],
+        resolve: {
+            alias: {
+                "@variants": fileURLToPath(
+                    new URL(`./src/variants/${variant}`, import.meta.url)
+                ),
+                "@": fileURLToPath(new URL("./src", import.meta.url)),
+            },
+            ...
+        },
+        build: {
+            outDir: `dist/${variant}`,
+            emptyOutDir: false,
+            minify: true,
+        },
+        ...
+    };
+});
+```
+
+### Package Scripts
+
+To `build` both variants in one command, modify the build script in `package.json` to call Vite twice:
+
+```json
+"scripts": {
+    "build": "vite build --mode appA && vite build --mode appB",
+    "dev:appA": "vite --mode appA",
+    ...
+}
+```
+
+CI pipelines that rely on the build script name do not need to change.
+
+### Variant‑Specific Components
+
+Most code is shared across variants. For differences, place files under `src/variants/<variant>`.
+In shared components, import the variant‑specific version using the alias:
+
+```html
+<script
+  setup
+  lang="ts"
+>
+  import AdPriceSelection from "@variants/components/VariantSpecificComponent.vue";
+
+  // ...
+</script>
+```
+
+For example, if App B should not allow price entry, create `src/variants/appB/components/VariantSpecificComponent.vue` with a stub that always emits `0`.
+A simple implementation uses v‑model and emits update:modelValue in onMounted:
+
+```html
+<script
+  setup
+  lang="ts"
+>
+  import { onMounted } from "vue";
+
+  const props = defineProps<{ modelValue: number | null }>();
+  const emit = defineEmits<{ (e: "update:modelValue", value: number): void }>();
+
+  onMounted(() => {
+    if (props.modelValue !== 0) {
+      emit("update:modelValue", 0);
+    }
+  });
+</script>
+<template></template>
+```
+
+If only a small section differs, extract it into its own component or composable.
+Keep the larger parent component in `src/components` and inject the variant‑dependent part via the alias.
+This avoids duplicating entire files.
+
+### TypeScript and ESLint
+
+Because TypeScript and ESLint do not know about Vite aliases, add them to tsconfig.app.json:
+
+```json
+"compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+        "@/*": ["./src/*"],
+        "@variants/*": ["./src/variants/appA/*", "./src/variants/appB/*"]
+    }
+}
+```
+
+List each variant folder so the tools can resolve imports for any variant.
+This prevents import/no-unresolved errors.
+
+### Running the Dev Server
+
+By default, npm run dev uses the dev script defined in `package.json`.
+Use `--mode <variant>` to start the server for a specific variant:
+
+```shell
+npm run dev -- --mode appA  # start App A
+npm run dev -- --mode appB  # start App B
+```
+
+Alternatively, set `VITE_APP_VARIANT` in your shell before running the dev command.
+Vite picks it up via the environment.
+
+### Variant switching at deployment time
+
+Both variants remain in the Docker image after the multi‑build.
+During local development it makes sense to access them via their respective sub‑paths so that you can switch quickly.
+For deployment, you can, however, serve one variant at the root URL while keeping the other hidden.
+This is achieved by a rewrite in the API gateway: the catch‑all route (`Path=/**`) receives a `RewritePath` filter that forwards all requests to the desired sub‑path.
+An example for the `appA` variant looks like this:
+
+```properties
+SPRING_CLOUD_GATEWAY_ROUTES_2_ID=frontend
+SPRING_CLOUD_GATEWAY_ROUTES_2_URI=http://host.docker.internal:8081/
+SPRING_CLOUD_GATEWAY_ROUTES_2_PREDICATES_0=Path=/**
+SPRING_CLOUD_GATEWAY_ROUTES_2_FILTERS_0=RewritePath=/(?<path>.*), /appA/${path}
+```
+
+As a result `http://localhost:8083/` serves the built `appA` application even though its Vite base path remains `/appA/`.
+To switch to the other variant you only change the prefix in the gateway configuration.
+API calls should continue to use absolute paths so they are not affected by the rewrite.
