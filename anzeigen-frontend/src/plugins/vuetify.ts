@@ -6,6 +6,12 @@ import { createVuetify } from "vuetify";
 
 export default createVuetify({
   theme: {
+    defaultTheme: "light",
+    variations: {
+      colors: ["primary", "secondary", "accent"],
+      lighten: 3,
+      darken: 3,
+    },
     themes: theme,
   },
 });
