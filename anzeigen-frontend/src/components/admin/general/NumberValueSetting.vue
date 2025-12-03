@@ -15,7 +15,6 @@
 import type { SettingTOSettingNameEnum } from "@/api/swbrett";
 
 import { computed } from "vue";
-import { VNumberInput } from "vuetify/labs/components";
 
 import { useSettingStore } from "@/stores/settings.ts";
 

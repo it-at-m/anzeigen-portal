@@ -17,7 +17,6 @@
 import type { SnackbarMessage } from "@/types/SnackbarMessage";
 
 import { ref } from "vue";
-import { VSnackbarQueue } from "vuetify/labs/VSnackbarQueue";
 
 import { Levels } from "@/api/error";
 import { snackbarBus } from "@/composables/useSnackbar";
