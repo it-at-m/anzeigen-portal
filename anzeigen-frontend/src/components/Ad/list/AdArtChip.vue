@@ -1,8 +1,6 @@
 <template>
-  <v-chip
-    variant="tonal"
-    color="accent"
-    :prepend-icon="computedIcon"
+  <ad-chip
+    :icon="computedIcon"
     :text="t(`ad.type.${adType!.toLocaleLowerCase()}`)"
   />
 </template>
@@ -12,6 +10,8 @@ import type { AdTOAdTypeEnum } from "@/api/swbrett";
 
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
+
+import AdChip from "@/components/common/AdChip.vue";
 
 const { t } = useI18n();
 const { adType } = defineProps<{
