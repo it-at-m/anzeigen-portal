@@ -9,6 +9,8 @@
         <v-tabs
           v-model="selectedCategoryId"
           class="w-100"
+          color="accent"
+          selected-class="bg-colored"
           direction="vertical"
         >
           <v-tab
@@ -16,12 +18,9 @@
             :value="NO_CATEGORY.id"
           >
             <template #prepend>
-              <v-icon
-                color="accent"
-                icon="mdi-check-all"
-              />
+              <v-icon icon="mdi-check-all" />
             </template>
-            {{ NO_CATEGORY.name }}
+            <span class="text-primary">{{ NO_CATEGORY.name }}</span>
           </v-tab>
           <v-tab
             v-for="category in categoriesStore.categories"
@@ -29,12 +28,9 @@
             :value="category.id"
           >
             <template #prepend>
-              <v-icon
-                color="accent"
-                icon="mdi-card-multiple"
-              />
+              <v-icon icon="mdi-card-multiple-outline" />
             </template>
-            {{ category.name }}
+            <span class="text-primary">{{ category.name }}</span>
           </v-tab>
         </v-tabs>
       </v-skeleton-loader>
@@ -80,4 +76,8 @@ watch(selectedCategoryId, (newSelectedCategoryId) => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.bg-colored {
+  background-color: rgba(var(--v-theme-secondary), 0.5) !important;
+}
+</style>
