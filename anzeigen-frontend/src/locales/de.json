@@ -109,6 +109,7 @@
   "sellerAdInformation": {
     "labelPhone": "Telefonnummer",
     "labelEmail": "E-Mail Adresse",
+    "dateSelectorTooltip": "Ablaufdatum der Anzeige, nach welcher diese inaktiv geschaltet wird.",
     "ruleMsg": {
       "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
