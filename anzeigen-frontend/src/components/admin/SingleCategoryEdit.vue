@@ -49,7 +49,7 @@
             v-if="isEdited"
             variant="outlined"
             prepend-icon="mdi-undo-variant"
-            color="accent"
+            color="accent-darken-1"
             class="w-100"
             :disabled="updateCategoryLoading"
             @click="reset"
@@ -185,4 +185,8 @@ const confirmedDeletion = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.v-btn--variant-flat .v-btn__overlay {
+  opacity: 100% !important;
+}
+</style>
