@@ -6,6 +6,7 @@
     class="mb-4"
     hide-details="auto"
     multiple
+    color="accent"
     :accept="ALLOWED_FILE_TYPES"
     :clearable="false"
     variant="outlined"
