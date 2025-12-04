@@ -7,8 +7,8 @@
     "node": ">=20 <=22"
   },
   "scripts": {
-    "dev:swb": "vite --mode swb",
-    "dev:gbr": "vite --mode gbr",
+    "dev:swb": "vite --mode swb --port 8081",
+    "dev:gbr": "vite --mode gbr --port 8082",
     "test": "vitest run",
     "build": "vite build --mode swb && vite build --mode gbr",
     "preview": "vite preview",
