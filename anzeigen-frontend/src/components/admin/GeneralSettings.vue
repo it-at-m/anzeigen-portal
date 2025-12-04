@@ -78,7 +78,7 @@
               variant="outlined"
               prepend-icon="mdi-undo-variant"
               :disabled="!settingStore.isDirty || updateSettingsLoading"
-              color="accent"
+              color="accent-darken-1"
               @click="reloadSettings"
             >
               {{ t("generalSettings.resetSettings") }}
