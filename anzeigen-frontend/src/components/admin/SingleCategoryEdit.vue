@@ -26,13 +26,14 @@
         <v-col
           cols="6"
           md="2"
-          align-self="end"
+          class="mt-2"
         >
           <v-btn
+            id="save-btn"
             variant="flat"
             prepend-icon="mdi-content-save"
             color="accent"
-            class="w-100"
+            class="w-100 h-100"
             :disabled="!isEdited || updateCategoryLoading"
             :loading="updateCategoryLoading"
             @click="updateCategoryName"
@@ -43,14 +44,14 @@
         <v-col
           cols="6"
           md="2"
-          align-self="end"
+          class="mt-2"
         >
           <v-btn
             v-if="isEdited"
             variant="outlined"
             prepend-icon="mdi-undo-variant"
             color="accent-darken-1"
-            class="w-100"
+            class="w-100 h-100"
             :disabled="updateCategoryLoading"
             @click="reset"
           >
@@ -71,7 +72,7 @@
                 variant="outlined"
                 color="error"
                 :disabled="category.standard"
-                class="w-100"
+                class="w-100 h-100"
                 prepend-icon="mdi-trash-can-outline"
                 @click="deleteDialog = true"
               >
@@ -186,7 +187,7 @@ const confirmedDeletion = async () => {
 </script>
 
 <style scoped>
-.v-btn--variant-flat .v-btn__overlay {
-  opacity: 100% !important;
+#save-btn.v-btn--disabled.v-btn {
+  opacity: 50% !important;
 }
 </style>
