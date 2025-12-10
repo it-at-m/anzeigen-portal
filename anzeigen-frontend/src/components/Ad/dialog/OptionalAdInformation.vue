@@ -15,6 +15,7 @@
     prepend-icon="mdi-link"
     :label="t('optionalAdInformation.label')"
     hide-details="auto"
+    color="accent"
     type="url"
     :disabled="disabled"
     :rules="[() => true, ruleLink]"

@@ -6,7 +6,7 @@
         prepend-icon="mdi-plus"
         color="accent"
         class="ml-4"
-        variant="tonal"
+        variant="flat"
         @click="createDialog = true"
       >
         {{ t("editCategories.createCategories.title") }}

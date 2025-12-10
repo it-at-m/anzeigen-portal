@@ -1,13 +1,13 @@
 <template>
   <p
     v-if="toGiveAway"
-    class="text-h5 text-accent font-weight-bold"
+    class="text-h5 font-weight-bold"
   >
     {{ t("ad.priceOptions.toGiveAway") }}
   </p>
   <p
     v-else
-    class="text-h5 text-accent font-weight-bold"
+    class="text-h5 font-weight-bold"
   >
     {{ Math.abs(price) }}€ {{ appendixTag }}
   </p>

@@ -1,14 +1,14 @@
 <template>
-  <v-chip
-    variant="tonal"
-    :prepend-icon="computedIcon"
-    color="accent"
+  <ad-chip
     :text="views.toString()"
+    :icon="computedIcon"
   />
 </template>
 
 <script setup lang="ts">
 import { computed } from "vue";
+
+import AdChip from "@/components/common/AdChip.vue";
 
 const { views = 0 } = defineProps<{
   views: number;

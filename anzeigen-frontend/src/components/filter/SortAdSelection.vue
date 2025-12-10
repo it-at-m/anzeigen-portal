@@ -94,3 +94,5 @@ watch([orderByQuery, orderQuery], ([newOrderByQuery, newOrderQuery]) => {
   }
 });
 </script>
+
+<style></style>

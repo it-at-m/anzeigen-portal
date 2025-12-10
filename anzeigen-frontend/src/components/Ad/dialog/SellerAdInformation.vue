@@ -1,10 +1,20 @@
 <template>
-  <ad-date-selector
-    v-model="adTO.expiryDate"
-    max-date-setting="MAX_EXPIRY_DATE_RANGE"
-    :disabled="disabled"
-    class="mb-4"
-  />
+  <v-tooltip
+    color="accent"
+    :text="t('sellerAdInformation.dateSelectorTooltip')"
+    location="top"
+    close-delay="200"
+  >
+    <template #activator="{ props }">
+      <ad-date-selector
+        v-bind="props"
+        v-model="adTO.expiryDate"
+        max-date-setting="MAX_EXPIRY_DATE_RANGE"
+        :disabled="disabled"
+        class="mb-4"
+      />
+    </template>
+  </v-tooltip>
   <v-text-field
     ref="refPhoneNumber"
     v-model="adTO.phone"

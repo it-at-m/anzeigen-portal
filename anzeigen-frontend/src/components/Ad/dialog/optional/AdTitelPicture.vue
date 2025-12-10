@@ -8,6 +8,7 @@
     :disabled="disabled"
     :loading="sanitizeImgLoading"
     prepend-icon="mdi-panorama-outline"
+    color="accent"
     :model-value="computedPicture"
     @update:model-value="uploadPicture"
     @click:clear="clearFile"
