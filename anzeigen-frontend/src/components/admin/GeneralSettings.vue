@@ -78,12 +78,13 @@
               variant="outlined"
               prepend-icon="mdi-undo-variant"
               :disabled="!settingStore.isDirty || updateSettingsLoading"
-              color="accent"
+              color="accent-darken-1"
               @click="reloadSettings"
             >
               {{ t("generalSettings.resetSettings") }}
             </v-btn>
             <v-btn
+              id="save-btn"
               variant="flat"
               :disabled="!settingStore.isDirty"
               prepend-icon="mdi-content-save"
@@ -161,4 +162,8 @@ const saveSettings = async () => {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+#save-btn.v-btn--disabled.v-btn {
+  opacity: 50% !important;
+}
+</style>

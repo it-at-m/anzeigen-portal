@@ -1,6 +1,7 @@
 <template>
   <v-btn
     color="accent"
+    variant="flat"
     :prepend-icon="computedIcon"
     :text="computedText"
     @click="click"
