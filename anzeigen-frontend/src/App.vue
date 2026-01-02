@@ -25,7 +25,7 @@
                 >
                   <v-toolbar-title class="font-weight-bold">
                     <span class="text-white">
-                      {{ settingStore.applicationHeading }}
+                      {{ t(`app.heading`) }}
                     </span>
                   </v-toolbar-title>
                 </router-link>
@@ -80,6 +80,7 @@
 import ServiceAvatar from "@variants/components/service-avatar.vue";
 import { useTitle } from "@vueuse/core";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
+import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
@@ -104,6 +105,8 @@ import { useUserStore } from "@/stores/user.ts";
 
 useApi();
 
+const { t } = useI18n();
+
 const defaultQuery = useDefaultQuery();
 const updateCategories = useUpdateCategories();
 const updateSettings = useUpdateSettings();
@@ -114,7 +117,7 @@ const snackbar = useSnackbar();
 const categoriesStore = useCategoriesStore();
 const settingsUpdatedEventBus = useSettingsUpdatedEventBus();
 
-useTitle(settingStore.applicationHeading);
+useTitle(t(`app.heading`));
 
 const noPermission = ref<boolean>(false);
 
@@ -157,7 +160,6 @@ onMounted(async () => {
     noPermission.value = true;
   } else {
     settingStore.applicationHeading = appInfoData.value.application.heading;
-    useTitle(settingStore.applicationHeading);
   }
 
   if (!userStore.userID) {

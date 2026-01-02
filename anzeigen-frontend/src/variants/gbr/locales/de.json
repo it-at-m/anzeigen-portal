@@ -1,4 +1,7 @@
 {
+  "app": {
+    "heading": "Gebrauchtwarenbörse"
+  },
   "adDialog": {
     "sellerInformation": "Kontakt Informationen"
   }

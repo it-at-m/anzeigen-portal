@@ -6,6 +6,9 @@
     "reset": "Zurücksetzen",
     "cancel": "Abbrechen"
   },
+  "app": {
+    "heading": "Localshop"
+  },
   "ad": {
     "type": {
       "seek": "Suche",
