@@ -94,12 +94,16 @@ const ruleDisallowedEMailDomains = (value: string) => {
     disallowedEmailsSetting?.textValue?.toLocaleLowerCase().split(",") || [];
 
   return (
-    !domainList.some(
-      (disallowedEmailDomain) => emailDomain === disallowedEmailDomain
-    ) ||
-    t("sellerAdInformation.ruleMsg.invalidEmailDomain", {
-      domains: domainList.toString(),
-    })
+    disallowedEmailsSetting.flagValue !=
+      domainList.some(
+        (disallowedEmailDomain) => emailDomain === disallowedEmailDomain
+      ) ||
+    t(
+      `sellerAdInformation.ruleMsg.invalidEmailDomain.${disallowedEmailsSetting.flagValue}`,
+      {
+        domains: domainList.toString(),
+      }
+    )
   );
 };
 

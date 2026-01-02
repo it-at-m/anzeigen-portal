@@ -116,7 +116,10 @@
     "ruleMsg": {
       "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
-      "invalidEmailDomain": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt.",
+      "invalidEmailDomain":  {
+        "false": "Nur E-Mail Adressen mit: '{domains}' sind erlaubt.",
+        "true": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt."
+      },
       "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
     }
   },
@@ -135,6 +138,7 @@
   "generalSettings": {
     "generalSettings": "Allgemeine Einstellungen",
     "paging": "Paging",
+    "email": "E-Mail",
     "ads": "Anzeigen",
     "system": "System",
     "resetSettings": "Änderungen verwerfen",
@@ -200,8 +204,13 @@
       "tooltip": "Maximale Ausleihdauer in Wochen"
     },
     "DISALLOWED_EMAIL_DOMAINS": {
-      "description": "Gesperrte E-Mail Domains",
-      "tooltip": "Liste an E-Mail Domains, welche nicht erlaubt sind, getrennt durch Kommas"
+      "description": "E-Mail Domains",
+      "tooltip": "Liste an E-Mail Domains, welche erlaubt oder nicht erlaubt werden, getrennt durch Kommas",
+      "switch": {
+        "description": "Blacklisting / E-Mail Whitelisting",
+        "tooltip": "Blacklisted (verbietet) oder Whitelisted (erzwingt) die Liste an E-Mail Domains",
+        "text": "Sperr-Liste (Blacklist) / Zulassen-Liste (Whitelist)"
+      }
     }
   },
   "filterAdActive": {
