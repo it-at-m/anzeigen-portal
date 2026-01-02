@@ -5,7 +5,7 @@ import { createI18n } from "vue-i18n";
 import de from "@/locales/de.json";
 
 // Variante anhand der Environment-Variable oder des Build-Modes
-const VARIANT = import.meta.env.VITE_APP_VARIANT as "gbr" | "swb" | undefined;
+//const VARIANT = import.meta.env.VITE_APP_VARIANT as "gbr" | "swb" | undefined;
 
 // Alle verfügbaren Überschreibungen im Variantenordner laden (falls vorhanden)
 const variantOverrides = import.meta.glob("@variants/locales/*.json", {
@@ -25,15 +25,18 @@ export type SupportedLocale = (typeof supportedLocales)[number];
 
 export const defaultLocale: SupportedLocale = "de";
 
-const loadedLanguages: SupportedLocale[] = [defaultLocale];
+//const loadedLanguages: SupportedLocale[] = [defaultLocale];
 
 type MessageSchema = typeof de;
 
 // load variant overrides (if any)
-const variantLocales = import.meta.glob("@variants/locales/*.json", {
-  eager: true,
-  import: "default",
-}) as Record<string, any>;
+const variantLocales = import.meta.glob<Record<string, unknown>>(
+  "@variants/locales/*.json",
+  {
+    eager: true,
+    import: "default",
+  }
+);
 
 function getVariantOverrides(locale: string) {
   const entry = Object.keys(variantLocales).find((p) =>
@@ -58,7 +61,7 @@ if (Object.keys(overrides).length > 0) {
 export default i18n;
 
 const setI18nLanguage = (locale: SupportedLocale) => {
-  (i18n.global.locale as any).value = locale;
+  (i18n.global.locale as unknown as { value: SupportedLocale }).value = locale;
   document.documentElement.setAttribute("lang", locale);
 };
 
