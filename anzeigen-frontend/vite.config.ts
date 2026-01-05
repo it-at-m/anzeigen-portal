@@ -10,12 +10,13 @@ import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
 import { ImportMetaEnv } from "./env";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
   const env = loadEnv(mode, process.cwd(), "") as unknown as ImportMetaEnv;
   const variant = env.VITE_APP_VARIANT || (mode as "swb" | "gbr");
+  const isDev = command === "serve";
 
   return {
-    base: env.VITE_BASE_PATH || `/${variant}/`,
+    base: isDev ? `/${variant}/` : `/`,
     plugins: [
       vue({
         template: { transformAssetUrls },
@@ -47,6 +48,10 @@ export default defineConfig(({ mode }) => {
       headers: {
         "x-frame-options": "SAMEORIGIN", // required to use devtools behind proxy (e.g. API Gateway)
       },
+    },
+    preview: {
+      port: 8084,
+      root: "dist",
     },
     resolve: {
       alias: {
