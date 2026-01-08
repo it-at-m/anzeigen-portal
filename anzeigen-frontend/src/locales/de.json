@@ -116,7 +116,11 @@
     "ruleMsg": {
       "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
-      "invalidEmailDomain": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt.",
+      "requiredEmail": "Die E-Mail Adresse wird benötigt.",
+      "invalidEmailDomain": {
+        "false": "Nur E-Mail Adressen mit: '{domains}' sind erlaubt.",
+        "true": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt."
+      },
       "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
     }
   },
@@ -135,6 +139,7 @@
   "generalSettings": {
     "generalSettings": "Allgemeine Einstellungen",
     "paging": "Paging",
+    "email": "E-Mail",
     "ads": "Anzeigen",
     "system": "System",
     "resetSettings": "Änderungen verwerfen",
@@ -200,8 +205,13 @@
       "tooltip": "Maximale Ausleihdauer in Wochen"
     },
     "DISALLOWED_EMAIL_DOMAINS": {
-      "description": "Gesperrte E-Mail Domains",
-      "tooltip": "Liste an E-Mail Domains, welche nicht erlaubt sind, getrennt durch Kommas"
+      "description": "E-Mail Domains",
+      "tooltip": "Liste an E-Mail Domains, welche erlaubt oder nicht erlaubt werden, getrennt durch Kommas",
+      "switch": {
+        "description": "Blacklisting / E-Mail Whitelisting",
+        "tooltip": "Blacklisted (verbietet) oder Whitelisted (erzwingt) die Liste an E-Mail Domains",
+        "text": "Sperr-Liste (Blacklist) / Zulassen-Liste (Whitelist)"
+      }
     }
   },
   "filterAdActive": {
@@ -223,7 +233,7 @@
   "adAgbAccept": {
     "agbMessagePart1": "Ich bin mit den",
     "termsOfUse": "Nutzungsbedingungen (AGB)",
-    "agbMessagePart2": "einverstanden. Das Schwarze Brett darf nur zu rein privaten Zwecken genutzt werden. Insbesondere Werbung kommerzieller Art ist nicht gestattet! Informationen zur Verarbeitung personenbezogener Daten enthalten die",
+    "agbMessagePart2": "einverstanden. Informationen zur Verarbeitung personenbezogener Daten enthalten die",
     "dataProtectionInformation": "Datenschutzhinweise",
     "agbMessagePart3": "."
   },

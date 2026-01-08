@@ -1,15 +1,15 @@
 import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
+import { OVERRIDES } from "@variants/config";
+
 export const BASE_PATH = "/api/backend-service";
 
 export const ROUTES_BOARD = "board";
 export const ROUTES_MYBOARD = "myboard";
 export const ROUTES_AD = "ad";
 export const ROUTES_ADMIN = "admin";
-export const ROUTES_GETSTARTED = "getstarted";
 
 export const AD2IMAGE_URL = import.meta.env.VITE_AD2IMAGE_URL;
-export const APPSWITCHER_URL = import.meta.env.VITE_APPSWITCHER_URL;
 
 export const ROUTER_TYPE = "hash";
 
@@ -48,7 +48,6 @@ export const ALLOWED_IMAGE_TYPES = "image/png, image/jpeg, image/jpg";
 export const AD_MAX_TITLE_LENGTH = 100;
 export const DATE_DISPLAY_FORMAT = "DD.MM.YYYY"; // use this in conjunction with useDateFormat
 export const PREVIEW_IMAGE_FILE_URI_PREFIX = "data:image/jpeg;base64,";
-export const APPLICATION_HEADING = "Kleinanzeigen";
 
 export const QUERY_NAME_ORDER = "order";
 export const QUERY_NAME_SORTBY = "sortBy";
@@ -63,3 +62,14 @@ export const EMPTY_ADTO_OBJECT = {
   adFiles: [],
   price: 1,
 } as AdTO;
+
+/**
+ * Configuration-Option which may change in variants
+ */
+export const BASE_CONFIG = {
+  IS_EMAIL_MANDITORY: false,
+} as const;
+
+export type Config = typeof BASE_CONFIG;
+
+export const CONFIG: Config = { ...BASE_CONFIG, ...OVERRIDES };

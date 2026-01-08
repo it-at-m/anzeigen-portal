@@ -3,12 +3,8 @@ import type { SettingTO, SettingTOSettingNameEnum } from "@/api/swbrett";
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
-import { APPLICATION_HEADING } from "@/Constants.ts";
-
 export const useSettingStore = defineStore("settings", () => {
   const settings = ref<SettingTO[]>([]);
-
-  const applicationHeading = ref<string>(APPLICATION_HEADING);
 
   const isDirty = ref<boolean>(false);
 
@@ -55,6 +51,5 @@ export const useSettingStore = defineStore("settings", () => {
     getSetting,
     setSetting,
     isDirty,
-    applicationHeading,
   };
 });

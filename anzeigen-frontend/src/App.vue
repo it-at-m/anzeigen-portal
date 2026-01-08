@@ -158,8 +158,6 @@ onMounted(async () => {
   await appInfoCall();
   if (appInfoError.value || !appInfoData.value?.application.heading) {
     noPermission.value = true;
-  } else {
-    settingStore.applicationHeading = appInfoData.value.application.heading;
   }
 
   if (!userStore.userID) {

@@ -14,11 +14,6 @@
               <number-value-setting :setting-name="settingName.settingName" />
             </template>
           </setting-with-description>
-          <setting-with-description setting-name="DISALLOWED_EMAIL_DOMAINS">
-            <template #default="settingName">
-              <text-value-setting :setting-name="settingName.settingName" />
-            </template>
-          </setting-with-description>
           <setting-with-description setting-name="AGB_FILE">
             <template #default="settingName">
               <file-value-setting :setting-name="settingName.settingName" />
@@ -27,6 +22,27 @@
           <setting-with-description setting-name="DATENSCHUTZHINWEISE_FILE">
             <template #default="settingName">
               <file-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+        </template>
+      </ad-display-card>
+      <ad-display-card>
+        <template #subtitle>{{ t("generalSettings.email") }}</template>
+        <template #text>
+          <setting-with-description setting-name="DISALLOWED_EMAIL_DOMAINS">
+            <template #default="settingName">
+              <text-value-setting :setting-name="settingName.settingName" />
+            </template>
+          </setting-with-description>
+          <setting-with-description
+            setting-name="DISALLOWED_EMAIL_DOMAINS"
+            alt-text-index="switch"
+          >
+            <template #default="settingName">
+              <bool-value-setting
+                :setting-name="settingName.settingName"
+                :setting-label="settingName.altSettingText"
+              />
             </template>
           </setting-with-description>
         </template>
@@ -107,6 +123,7 @@ import type { SettingTO, SettingTOSettingNameEnum } from "@/api/swbrett";
 import { useI18n } from "vue-i18n";
 
 import { Levels } from "@/api/error.ts";
+import BoolValueSetting from "@/components/admin/general/BoolValueSetting.vue";
 import FileValueSetting from "@/components/admin/general/FileValueSetting.vue";
 import NumberValueSetting from "@/components/admin/general/NumberValueSetting.vue";
 import SettingWithDescription from "@/components/admin/general/SettingWithDescription.vue";
