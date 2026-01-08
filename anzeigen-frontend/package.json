@@ -1,6 +1,6 @@
 {
   "name": "anzeigen-portal",
-  "version": "3.1.0",
+  "version": "2.2.0",
   "type": "module",
   "private": true,
   "engines": {
@@ -11,7 +11,8 @@
     "dev:gbr": "vite --mode gbr --port 8082",
     "test": "vitest run",
     "build": "vite build --mode swb && vite build --mode gbr",
-    "preview": "vite preview",
+    "preview:swb": "vite preview --mode swb --port 8081",
+    "preview:gbr": "vite preview --mode gbr --port 8082",
     "lint": "prettier . --check && eslint . && vue-tsc -p tsconfig.app.json --noEmit --skipLibCheck --composite false",
     "fix": "prettier . --write && eslint . --fix",
     "api-gen": "openapi-generator-cli generate"
@@ -27,7 +28,7 @@
     "vue": "3.5.26",
     "vue-i18n": "11.1.12",
     "vue-router": "4.5.1",
-    "vuetify": "3.11.5",
+    "vuetify": "3.11.6",
     "axios": "1.9.0"
   },
   "devDependencies": {

@@ -105,7 +105,8 @@ services:
 
       - SPRING_CLOUD_GATEWAY_ROUTES_3_ID=frontend
       - SPRING_CLOUD_GATEWAY_ROUTES_3_URI=http://host.docker.internal:8081/
-      - SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0=Path=/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_3_PREDICATES_0=Path=/swb/**
+      - SPRING_CLOUD_GATEWAY_ROUTES_3_FILTERS_0=RewritePath=/swb/(?<urlsegments>.*), /swb/$\{urlsegments}
 
       - SPRING_PROFILES_ACTIVE=hazelcast-local
       - SPRING_SECURITY_OAUTH2_RESOURCESERVER_JWT_ISSUERURI=http://keycloak:8100/auth/realms/local_realm
