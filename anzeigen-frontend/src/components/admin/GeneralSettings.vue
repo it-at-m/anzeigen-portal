@@ -29,13 +29,13 @@
       <ad-display-card>
         <template #subtitle>{{ t("generalSettings.email") }}</template>
         <template #text>
-          <setting-with-description setting-name="DISALLOWED_EMAIL_DOMAINS">
+          <setting-with-description setting-name="EMAIL_DOMAIN_LIST">
             <template #default="settingName">
               <text-value-setting :setting-name="settingName.settingName" />
             </template>
           </setting-with-description>
           <setting-with-description
-            setting-name="DISALLOWED_EMAIL_DOMAINS"
+            setting-name="EMAIL_DOMAIN_LIST"
             alt-text-index="switch"
           >
             <template #default="settingName">

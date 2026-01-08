@@ -1,3 +1,4 @@
+/* tslint:disable */
 /* eslint-disable */
 /**
  * anzeigen_portal API
@@ -81,7 +82,7 @@ export const SettingTOSettingNameEnum = {
     DEFAULT_ORDERING: 'DEFAULT_ORDERING',
     MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE',
     MAX_RENTAL_DATE_RANGE: 'MAX_RENTAL_DATE_RANGE',
-    DISALLOWED_EMAIL_DOMAINS: 'DISALLOWED_EMAIL_DOMAINS'
+    EMAIL_DOMAIN_LIST: 'EMAIL_DOMAIN_LIST'
 } as const;
 export type SettingTOSettingNameEnum = typeof SettingTOSettingNameEnum[keyof typeof SettingTOSettingNameEnum];
 

@@ -89,9 +89,7 @@ const ruleDisallowedEMailDomains = (value: string) => {
     return true;
   }
 
-  const disallowedEmailsSetting = settingStore.getSetting(
-    "DISALLOWED_EMAIL_DOMAINS"
-  );
+  const disallowedEmailsSetting = settingStore.getSetting("EMAIL_DOMAIN_LIST");
 
   const emailDomain = value.split("@")[1].toLowerCase() || "";
 

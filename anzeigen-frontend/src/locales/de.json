@@ -204,7 +204,7 @@
       "description": "Maximale Ausleihdauer in Wochen",
       "tooltip": "Maximale Ausleihdauer in Wochen"
     },
-    "DISALLOWED_EMAIL_DOMAINS": {
+    "EMAIL_DOMAIN_LIST": {
       "description": "E-Mail Domains",
       "tooltip": "Liste an E-Mail Domains, welche erlaubt oder nicht erlaubt werden, getrennt durch Kommas",
       "switch": {

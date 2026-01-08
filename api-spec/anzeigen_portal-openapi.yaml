@@ -551,7 +551,7 @@ paths:
               - "DEFAULT_ORDERING"
               - "MAX_ARCHIVE_DATE_RANGE"
               - "MAX_RENTAL_DATE_RANGE"
-              - "DISALLOWED_EMAIL_DOMAINS"
+              - "EMAIL_DOMAIN_LIST"
       responses:
         "200":
           description: "OK"
@@ -664,6 +664,16 @@ components:
           format: "int32"
         fileBase64:
           type: "string"
+    Address:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        street:
+          type: "string"
+        postalCode:
+          type: "string"
     AdTO:
       type: "object"
       properties:
@@ -723,6 +733,8 @@ components:
             - "GOOD"
             - "OKAY"
             - "DEFECTIVE"
+        address:
+          $ref: "#/components/schemas/Address"
     SettingTO:
       type: "object"
       properties:
@@ -744,7 +756,7 @@ components:
             - "DEFAULT_ORDERING"
             - "MAX_ARCHIVE_DATE_RANGE"
             - "MAX_RENTAL_DATE_RANGE"
-            - "DISALLOWED_EMAIL_DOMAINS"
+            - "EMAIL_DOMAIN_LIST"
         numberValue:
           type: "integer"
           format: "int32"
