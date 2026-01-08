@@ -116,6 +116,7 @@
     "ruleMsg": {
       "invalidPhoneNumber": "Die Telefonnummer ist ungültig",
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
+      "requiredEmail": "Die E-Mail Adresse wird benötigt.",
       "invalidEmailDomain":  {
         "false": "Nur E-Mail Adressen mit: '{domains}' sind erlaubt.",
         "true": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt."

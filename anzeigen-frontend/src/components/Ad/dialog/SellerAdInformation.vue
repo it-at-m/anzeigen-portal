@@ -38,7 +38,12 @@
     :label="t('sellerAdInformation.labelEmail')"
     type="email"
     hide-details="auto"
-    :rules="[minOneContactRule, ruleEmail, ruleDisallowedEMailDomains]"
+    :rules="[
+      minOneContactRule,
+      ruleEmail,
+      ruleDisallowedEMailDomains,
+      emailRequiredRule,
+    ]"
     :disabled="disabled"
     class="mb-4"
   />
@@ -51,7 +56,7 @@ import { useTemplateRef, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
-import { EMPTY_ADTO_OBJECT } from "@/Constants";
+import { CONFIG, EMPTY_ADTO_OBJECT } from "@/Constants";
 import { useSettingStore } from "@/stores/settings.ts";
 
 const { t } = useI18n();
@@ -131,7 +136,13 @@ const rulePhoneNumber = (value: string) =>
  * Minimum one contact needs to be set - this can be email or phone number
  */
 const minOneContactRule = () =>
+  CONFIG.IS_EMAIL_MANDITORY ||
   !!adTO.value.email ||
   !!adTO.value.phone ||
   t("sellerAdInformation.ruleMsg.dutyField");
+
+const emailRequiredRule = () =>
+  !CONFIG.IS_EMAIL_MANDITORY ||
+  !!adTO.value.email ||
+  t("sellerAdInformation.ruleMsg.requiredEmail");
 </script>
