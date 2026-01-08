@@ -97,17 +97,19 @@
     v-model="adTO.price!"
     :disabled="disabled"
   />
+  <address-selection />
 </template>
 
 <script setup lang="ts">
 import type { AdTO } from "@/api/swbrett";
 
+import AdPriceSelection from "@variants/components/ad/dialog/common/AdPriceSelection.vue";
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
 import AdConditionSelector from "@/components/Ad/dialog/common/AdConditionSelector.vue";
-import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
+import AddressSelection from "@/components/Ad/dialog/common/AddressSelection.vue";
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
 import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
 

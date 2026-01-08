@@ -204,12 +204,12 @@
 <script setup lang="ts">
 import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
+import AdPrice from "@variants/components/ad/list/AdPrice.vue";
 import { useDateFormat } from "@vueuse/shared";
 import { computed, toRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
-import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";

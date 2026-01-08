@@ -133,13 +133,13 @@
 import type { AdTO } from "@/api/swbrett";
 import type { DeepReadonly } from "vue";
 
+import AdPrice from "@variants/components/ad/list/AdPrice.vue";
 import { computed, toRef } from "vue";
 
 import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
 import AdArtChip from "@/components/Ad/list/AdArtChip.vue";
 import AdCategoryChip from "@/components/Ad/list/AdCategoryChip.vue";
 import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
-import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/list/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
