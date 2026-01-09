@@ -183,3 +183,4 @@ nbdist/
 *.njsproj
 *.sln
 *.sw?
+/.run/
