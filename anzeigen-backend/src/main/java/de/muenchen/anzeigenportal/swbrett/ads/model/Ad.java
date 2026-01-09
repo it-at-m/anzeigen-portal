@@ -114,4 +114,8 @@ public class Ad {
         this.imagePreview = Arrays.copyOf(imagePreview, imagePreview.length);
     }
 
+    @Setter
+    @Embedded
+    private Address address;
+
 }

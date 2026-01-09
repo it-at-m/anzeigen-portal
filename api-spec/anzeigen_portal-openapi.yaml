@@ -667,9 +667,6 @@ components:
     Address:
       type: "object"
       properties:
-        id:
-          type: "integer"
-          format: "int64"
         street:
           type: "string"
         postalCode:
