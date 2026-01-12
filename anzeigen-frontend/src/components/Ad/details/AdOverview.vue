@@ -143,6 +143,12 @@
           <template #subtitle>{{ t("adOverview.contactCard.title") }}</template>
           <template #text>
             <icon-text
+              v-if="adDetails.address?.street && adDetails.address?.postalCode"
+              class="mb-2"
+              icon="map-marker-outline"
+              :label="combinedAddress"
+            />
+            <icon-text
               v-if="adDetails.phone"
               class="mb-2"
               icon="phone"
@@ -230,6 +236,10 @@ const currentLink = computed(() => window.location.href);
 
 const sanitizedDescription = useSanitizedHtml(
   toRef(adDetails.description || "")
+);
+
+const combinedAddress = computed(
+  () => adDetails.address?.street + ", " + adDetails.address?.postalCode
 );
 </script>
 

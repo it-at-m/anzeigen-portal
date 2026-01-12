@@ -1,4 +1,4 @@
-import type { AdTO, SwbUserTO } from "@/api/swbrett";
+import type { Address, AdTO, SwbUserTO } from "@/api/swbrett";
 
 import { OVERRIDES } from "@variants/config";
 
@@ -61,6 +61,7 @@ export const EMPTY_ADTO_OBJECT = {
   swbUser: {} as SwbUserTO,
   adFiles: [],
   price: 1,
+  address: {} as Address,
 } as AdTO;
 
 /**
@@ -68,6 +69,7 @@ export const EMPTY_ADTO_OBJECT = {
  */
 export const BASE_CONFIG = {
   IS_EMAIL_MANDITORY: false,
+  IS_ADDRESS_MANDETORY: false,
 } as const;
 
 export type Config = typeof BASE_CONFIG;

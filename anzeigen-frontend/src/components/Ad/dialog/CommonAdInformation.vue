@@ -97,7 +97,7 @@
     v-model="adTO.price!"
     :disabled="disabled"
   />
-  <address-selection />
+  <address-selection v-model="adTO.address" />
 </template>
 
 <script setup lang="ts">
