@@ -203,9 +203,14 @@ public class AdService {
     public boolean isEMailDomainDisallowed(final String emailToCheck) {
         final SettingTO emailSettings = settingService.getSetting(SettingName.EMAIL_DOMAIN_LIST);
         final String emailDomainList = emailSettings.getTextValue();
+
+        if (emailSettings.getFlagValue() == null || emailDomainList.isEmpty()) {
+            return false;
+        }
+
         final String emailDomainToCheck = emailToCheck.substring(emailToCheck.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
 
-        return !emailSettings.getFlagValue() ^ Arrays.stream(emailDomainList.split(","))
+        return emailSettings.getFlagValue() ^ Arrays.stream(emailDomainList.split(","))
                 .anyMatch(disallowedEmailDomain -> emailDomainToCheck.equals(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
     }
 
