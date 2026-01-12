@@ -46,6 +46,7 @@ public class AdMapper {
         ad.setViews(adTO.getViews());
         ad.setCondition(adTO.getCondition());
         ad.setRentalDate(adTO.getRentalDate());
+        ad.setAddress(adTO.getAddress());
 
         // map Base64 to byte[]
         if (adTO.getImagePreviewBase64() != null) {
@@ -86,6 +87,7 @@ public class AdMapper {
         adTO.setViews(ad.getViews());
         adTO.setCondition(ad.getCondition());
         adTO.setRentalDate(ad.getRentalDate());
+        adTO.setAddress(ad.getAddress());
 
         // map byte[] to Base64
         if (ad.getImagePreview() != null) {

@@ -133,7 +133,7 @@ public class BootstrapSwbrett implements CommandLineRunner {
         settingService.createSetting(maxArchiveRange);
 
         final SettingTO disallowedEMailDomains = new SettingTO();
-        disallowedEMailDomains.setSettingName(SettingName.DISALLOWED_EMAIL_DOMAINS);
+        disallowedEMailDomains.setSettingName(SettingName.EMAIL_DOMAIN_LIST);
         disallowedEMailDomains.setTextValue("");
         settingService.createSetting(disallowedEMailDomains);
 

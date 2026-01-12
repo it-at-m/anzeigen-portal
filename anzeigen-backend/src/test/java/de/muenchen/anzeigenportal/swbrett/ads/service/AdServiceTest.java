@@ -33,7 +33,7 @@ class AdServiceTest {
         // Mocking the getSetting method
         final SettingTO setting = new SettingTO();
         setting.setTextValue("domain1.com,domain2.com,domain.com");
-        when(settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS)).thenReturn(setting);
+        when(settingService.getSetting(SettingName.EMAIL_DOMAIN_LIST)).thenReturn(setting);
 
         // Test cases where the email should be disallowed
         assertTrue(adService.isEMailDomainDisallowed("example@domain1.com"));
@@ -50,7 +50,7 @@ class AdServiceTest {
         // Mocking the getSetting method
         final SettingTO setting = new SettingTO();
         setting.setTextValue("");
-        when(settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS)).thenReturn(setting);
+        when(settingService.getSetting(SettingName.EMAIL_DOMAIN_LIST)).thenReturn(setting);
 
         // Test cases where the email should be allowed
         assertFalse(adService.isEMailDomainDisallowed("example@domain.com"));

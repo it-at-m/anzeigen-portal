@@ -11,6 +11,7 @@ import de.muenchen.anzeigenportal.swbrett.images.model.SwbImage;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageResizeService;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
+import de.muenchen.anzeigenportal.swbrett.settings.model.SettingTO;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
 import de.muenchen.anzeigenportal.swbrett.users.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -199,11 +200,13 @@ public class AdService {
         });
     }
 
-    public boolean isEMailDomainDisallowed(final String email) {
-        final String disallowedEmailDomains = settingService.getSetting(SettingName.DISALLOWED_EMAIL_DOMAINS).getTextValue();
-        final String emailDomain = email.substring(email.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
-        return Arrays.stream(disallowedEmailDomains.split(","))
-                .anyMatch(disallowedEmailDomain -> emailDomain.equals(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
+    public boolean isEMailDomainDisallowed(final String emailToCheck) {
+        final SettingTO emailSettings = settingService.getSetting(SettingName.EMAIL_DOMAIN_LIST);
+        final String emailDomainList = emailSettings.getTextValue();
+        final String emailDomainToCheck = emailToCheck.substring(emailToCheck.indexOf('@') + 1).toLowerCase(Locale.GERMAN);
+
+        return !emailSettings.getFlagValue() ^ Arrays.stream(emailDomainList.split(","))
+                .anyMatch(disallowedEmailDomain -> emailDomainToCheck.equals(disallowedEmailDomain.toLowerCase(Locale.GERMAN)));
     }
 
 }
