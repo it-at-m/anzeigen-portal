@@ -9,6 +9,7 @@
         <v-container>
           <v-btn
             color="accent"
+            variant="flat"
             @click="back"
           >
             Zurück
