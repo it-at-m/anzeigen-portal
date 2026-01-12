@@ -97,7 +97,7 @@ const ruleDisallowedEMailDomains = (value: string) => {
     disallowedEmailsSetting?.textValue?.toLocaleLowerCase().split(",") || [];
 
   return (
-    disallowedEmailsSetting.flagValue !=
+    !disallowedEmailsSetting.flagValue !=
       domainList.some(
         (disallowedEmailDomain) => emailDomain === disallowedEmailDomain
       ) ||

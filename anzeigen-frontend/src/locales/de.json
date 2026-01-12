@@ -118,8 +118,8 @@
       "invalidEmail": "Die E-Mail Adresse ist nicht valide",
       "requiredEmail": "Die E-Mail Adresse wird benötigt.",
       "invalidEmailDomain": {
-        "false": "Nur E-Mail Adressen mit: '{domains}' sind erlaubt.",
-        "true": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt."
+        "true": "Nur E-Mail Adressen mit: '{domains}' sind erlaubt.",
+        "false": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt."
       },
       "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
     }
