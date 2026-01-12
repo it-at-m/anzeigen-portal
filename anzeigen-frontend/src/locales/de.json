@@ -245,5 +245,10 @@
     "notEmptyMessage": "Der Name darf nicht leer sein!",
     "deleteConfirmationDialogTitle": "Kategorie löschen",
     "deleteConfirmationDialogText": "Möchten Sie die Kategorie wirklich löschen?"
+  },
+  "versionDisplay": {
+    "heading": "Versionsnummer",
+    "backend":"Backend Version",
+    "frontend": "Frontend Version"
   }
 }
