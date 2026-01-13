@@ -67,12 +67,19 @@ export const EMPTY_ADTO_OBJECT = {
 /**
  * Configuration-Option which may change in variants
  */
-export const BASE_CONFIG = {
-  IS_EMAIL_MANDATORY: false,
-  IS_ADDRESS_MANDATORY: false,
-  SHOW_PRICE: false,
-} as const;
 
-export type Config = typeof BASE_CONFIG;
+export const FEATURES = [
+  "IS_EMAIL_MANDATORY",
+  "IS_ADDRESS_MANDATORY",
+  "SHOW_PRICE",
+] as const;
+
+export type FeatureKey = (typeof FEATURES)[number];
+
+export type Config = Readonly<Record<FeatureKey, boolean>>;
+
+export const BASE_CONFIG: Config = Object.fromEntries(
+  FEATURES.map((f) => [f, false])
+) as Config;
 
 export const CONFIG: Config = { ...BASE_CONFIG, ...OVERRIDES };
