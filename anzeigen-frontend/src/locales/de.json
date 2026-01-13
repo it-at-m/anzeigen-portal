@@ -248,7 +248,7 @@
   },
   "versionDisplay": {
     "heading": "Versionsnummer",
-    "backend":"Backend Version",
+    "backend": "Backend Version",
     "frontend": "Frontend Version"
   }
 }
