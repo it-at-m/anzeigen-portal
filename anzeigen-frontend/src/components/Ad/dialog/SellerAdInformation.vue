@@ -134,13 +134,13 @@ const rulePhoneNumber = (value: string) =>
  * Minimum one contact needs to be set - this can be email or phone number
  */
 const minOneContactRule = () =>
-  CONFIG.IS_EMAIL_MANDITORY ||
+  CONFIG.IS_EMAIL_MANDATORY ||
   !!adTO.value.email ||
   !!adTO.value.phone ||
   t("sellerAdInformation.ruleMsg.dutyField");
 
 const emailRequiredRule = () =>
-  !CONFIG.IS_EMAIL_MANDITORY ||
+  !CONFIG.IS_EMAIL_MANDATORY ||
   !!adTO.value.email ||
   t("sellerAdInformation.ruleMsg.requiredEmail");
 </script>

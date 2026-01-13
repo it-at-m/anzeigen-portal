@@ -28,7 +28,7 @@
           </template>
           <template #subtitle>
             <ad-price
-              v-if="adDetails.price"
+              v-if="CONFIG.SHOW_PRICE && adDetails.price"
               :price="adDetails.price"
             />
           </template>
@@ -210,18 +210,18 @@
 <script setup lang="ts">
 import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
-import AdPrice from "@variants/components/ad/list/AdPrice.vue";
 import { useDateFormat } from "@vueuse/shared";
 import { computed, toRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
+import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
-import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
+import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 
 const { t } = useI18n();
 

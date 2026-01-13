@@ -68,8 +68,9 @@ export const EMPTY_ADTO_OBJECT = {
  * Configuration-Option which may change in variants
  */
 export const BASE_CONFIG = {
-  IS_EMAIL_MANDITORY: false,
-  IS_ADDRESS_MANDETORY: false,
+  IS_EMAIL_MANDATORY: false,
+  IS_ADDRESS_MANDATORY: false,
+  SHOW_PRICE: false,
 } as const;
 
 export type Config = typeof BASE_CONFIG;

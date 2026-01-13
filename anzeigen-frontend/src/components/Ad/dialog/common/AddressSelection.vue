@@ -40,7 +40,7 @@ const emit = defineEmits<{
 }>();
 
 const addressFieldNotEmptyRule = (value: string) =>
-  !CONFIG.IS_ADDRESS_MANDETORY || !!value || "Address field is empty";
+  !CONFIG.IS_ADDRESS_MANDATORY || !!value || "Address field is empty";
 
 const updatedStreet = (value: string) => {
   emit("update:modelValue", { ...modelValue, street: value });
