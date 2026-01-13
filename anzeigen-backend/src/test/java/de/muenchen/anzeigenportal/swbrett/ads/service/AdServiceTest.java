@@ -33,6 +33,7 @@ class AdServiceTest {
         // Mocking the getSetting method
         final SettingTO setting = new SettingTO();
         setting.setTextValue("domain1.com,domain2.com,domain.com");
+        setting.setFlagValue(false);
         when(settingService.getSetting(SettingName.EMAIL_DOMAIN_LIST)).thenReturn(setting);
 
         // Test cases where the email should be disallowed

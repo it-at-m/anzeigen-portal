@@ -15,7 +15,6 @@ import lombok.Setter;
 @Embeddable
 public class Address {
 
-
     @Setter
     @Column(name = "street")
     private String street;
