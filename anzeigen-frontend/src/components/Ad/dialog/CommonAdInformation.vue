@@ -78,7 +78,6 @@
       />
     </v-col>
   </v-row>
-
   <v-textarea
     v-model="adTO.description"
     variant="outlined"
@@ -94,9 +93,11 @@
     ]"
   />
   <ad-price-selection
+    v-if="CONFIG.SHOW_PRICE"
     v-model="adTO.price!"
     :disabled="disabled"
   />
+  <address-selection v-model="adTO.address" />
 </template>
 
 <script setup lang="ts">
@@ -107,9 +108,10 @@ import { useI18n } from "vue-i18n";
 
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
 import AdConditionSelector from "@/components/Ad/dialog/common/AdConditionSelector.vue";
+import AddressSelection from "@/components/Ad/dialog/common/AddressSelection.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
-import { AD_MAX_TITLE_LENGTH, EMPTY_ADTO_OBJECT } from "@/Constants";
+import { AD_MAX_TITLE_LENGTH, CONFIG, EMPTY_ADTO_OBJECT } from "@/Constants";
 
 const { t } = useI18n();
 const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });

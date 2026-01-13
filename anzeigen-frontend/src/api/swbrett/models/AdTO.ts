@@ -12,6 +12,13 @@
  */
 
 import { mapValues } from '../runtime';
+import type { Address } from './Address';
+import {
+    AddressFromJSON,
+    AddressFromJSONTyped,
+    AddressToJSON,
+    AddressToJSONTyped,
+} from './Address';
 import type { SwbImageTO } from './SwbImageTO';
 import {
     SwbImageTOFromJSON,
@@ -161,6 +168,12 @@ export interface AdTO {
      * @memberof AdTO
      */
     condition?: AdTOConditionEnum;
+    /**
+     * 
+     * @type {Address}
+     * @memberof AdTO
+     */
+    address?: Address;
 }
 
 
@@ -223,6 +236,7 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
         'adFiles': json['adFiles'] == null ? undefined : ((json['adFiles'] as Array<any>).map(SwbFileTOFromJSON)),
         'views': json['views'] == null ? undefined : json['views'],
         'condition': json['condition'] == null ? undefined : json['condition'],
+        'address': json['address'] == null ? undefined : AddressFromJSON(json['address']),
     };
 }
 
@@ -256,6 +270,7 @@ export function AdTOFromJSONTyped(json: any, ignoreDiscriminator: boolean): AdTO
         'adFiles': value['adFiles'] == null ? undefined : ((value['adFiles'] as Array<any>).map(SwbFileTOToJSON)),
         'views': value['views'],
         'condition': value['condition'],
+        'address': AddressToJSON(value['address']),
     };
 }
 

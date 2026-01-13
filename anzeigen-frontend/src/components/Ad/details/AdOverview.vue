@@ -28,7 +28,7 @@
           </template>
           <template #subtitle>
             <ad-price
-              v-if="adDetails.price"
+              v-if="CONFIG.SHOW_PRICE && adDetails.price"
               :price="adDetails.price"
             />
           </template>
@@ -143,6 +143,12 @@
           <template #subtitle>{{ t("adOverview.contactCard.title") }}</template>
           <template #text>
             <icon-text
+              v-if="adDetails.address?.street && adDetails.address?.postalCode"
+              class="mb-2"
+              icon="map-marker-outline"
+              :label="combinedAddress"
+            />
+            <icon-text
               v-if="adDetails.phone"
               class="mb-2"
               icon="phone"
@@ -215,7 +221,7 @@ import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
-import { DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
+import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 
 const { t } = useI18n();
 
@@ -230,6 +236,10 @@ const currentLink = computed(() => window.location.href);
 
 const sanitizedDescription = useSanitizedHtml(
   toRef(adDetails.description || "")
+);
+
+const combinedAddress = computed(
+  () => adDetails.address?.street + ", " + adDetails.address?.postalCode
 );
 </script>
 

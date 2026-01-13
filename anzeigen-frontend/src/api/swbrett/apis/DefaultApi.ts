@@ -1221,7 +1221,7 @@ export const GetSettingSettingNameEnum = {
     DEFAULT_ORDERING: 'DEFAULT_ORDERING',
     MAX_ARCHIVE_DATE_RANGE: 'MAX_ARCHIVE_DATE_RANGE',
     MAX_RENTAL_DATE_RANGE: 'MAX_RENTAL_DATE_RANGE',
-    DISALLOWED_EMAIL_DOMAINS: 'DISALLOWED_EMAIL_DOMAINS'
+    EMAIL_DOMAIN_LIST: 'EMAIL_DOMAIN_LIST'
 } as const;
 export type GetSettingSettingNameEnum = typeof GetSettingSettingNameEnum[keyof typeof GetSettingSettingNameEnum];
 /**

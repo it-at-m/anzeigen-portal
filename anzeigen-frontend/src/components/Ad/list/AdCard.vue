@@ -98,6 +98,7 @@
               align="start"
             >
               <ad-price
+                v-if="CONFIG.SHOW_PRICE"
                 :price="adTo.price!"
                 :class="{ inactive: !adTo.active }"
               />
@@ -143,7 +144,11 @@ import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/list/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus.ts";
 import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
-import { PREVIEW_IMAGE_FILE_URI_PREFIX, ROUTES_AD } from "@/Constants.ts";
+import {
+  CONFIG,
+  PREVIEW_IMAGE_FILE_URI_PREFIX,
+  ROUTES_AD,
+} from "@/Constants.ts";
 import { useUserStore } from "@/stores/user.ts";
 
 const userStore = useUserStore();

@@ -11,5 +11,10 @@
     "agbMessagePart2": "einverstanden.  Die Gebrauchtwarenbörse darf nur zu rein dienstlichen Zwecken genutzt werden. Informationen zur Verarbeitung personenbezogener Daten enthalten die",
     "dataProtectionInformation": "Datenschutzhinweise",
     "agbMessagePart3": "."
+  },
+  "sellerAdInformation": {
+    "ruleMsg": {
+      "requiredEmail": "Bitte geben Ihre {domains} E-Mail Adresse und optional eine Telefonnummer an."
+    }
   }
 }

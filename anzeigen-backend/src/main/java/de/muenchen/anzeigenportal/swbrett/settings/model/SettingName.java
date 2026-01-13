@@ -65,5 +65,5 @@ public enum SettingName {
     /**
      * List of disallowed email domains when creating an ad
      */
-    DISALLOWED_EMAIL_DOMAINS
+    EMAIL_DOMAIN_LIST
 }

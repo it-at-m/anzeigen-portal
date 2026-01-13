@@ -59,4 +59,6 @@ public class AdTO {
 
     private AdCondition condition;
 
+    private Address address;
+
 }

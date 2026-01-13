@@ -110,6 +110,10 @@ public class Ad {
     @Column(name = "condition", nullable = true)
     private AdCondition condition;
 
+    @Setter
+    @Embedded
+    private Address address;
+
     public void setImagePreview(final byte[] imagePreview) {
         this.imagePreview = Arrays.copyOf(imagePreview, imagePreview.length);
     }

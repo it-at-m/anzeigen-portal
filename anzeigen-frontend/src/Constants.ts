@@ -1,4 +1,4 @@
-import type { AdTO, SwbUserTO } from "@/api/swbrett";
+import type { Address, AdTO, SwbUserTO } from "@/api/swbrett";
 
 import { OVERRIDES } from "@variants/config";
 
@@ -61,15 +61,25 @@ export const EMPTY_ADTO_OBJECT = {
   swbUser: {} as SwbUserTO,
   adFiles: [],
   price: 1,
+  address: {} as Address,
 } as AdTO;
 
 /**
  * Configuration-Option which may change in variants
  */
-export const BASE_CONFIG = {
-  IS_EMAIL_MANDITORY: false,
-} as const;
 
-export type Config = typeof BASE_CONFIG;
+export const FEATURES = [
+  "IS_EMAIL_MANDATORY",
+  "IS_ADDRESS_MANDATORY",
+  "SHOW_PRICE",
+] as const;
+
+export type FeatureKey = (typeof FEATURES)[number];
+
+export type Config = Readonly<Record<FeatureKey, boolean>>;
+
+export const BASE_CONFIG: Config = Object.fromEntries(
+  FEATURES.map((f) => [f, false])
+) as Config;
 
 export const CONFIG: Config = { ...BASE_CONFIG, ...OVERRIDES };

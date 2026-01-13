@@ -1,1 +1,3 @@
-export const OVERRIDES = {} as const;
+export const OVERRIDES = {
+  SHOW_PRICE: true,
+} as const;

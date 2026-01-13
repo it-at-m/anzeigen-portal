@@ -72,6 +72,8 @@ const settingStore = useSettingStore();
 const refPhone = useTemplateRef("refPhoneNumber");
 const refEmail = useTemplateRef("refEmail");
 
+const emailSetting = settingStore.getSetting("EMAIL_DOMAIN_LIST");
+
 /**
  * Watches the input for phone number / email and triggers the validation again.
  * This needs to be done, otherwise one input can retain its error state
@@ -89,22 +91,18 @@ const ruleDisallowedEMailDomains = (value: string) => {
     return true;
   }
 
-  const disallowedEmailsSetting = settingStore.getSetting(
-    "DISALLOWED_EMAIL_DOMAINS"
-  );
-
   const emailDomain = value.split("@")[1].toLowerCase() || "";
 
   const domainList =
-    disallowedEmailsSetting?.textValue?.toLocaleLowerCase().split(",") || [];
+    emailSetting?.textValue?.toLocaleLowerCase().split(",") || [];
 
   return (
-    disallowedEmailsSetting.flagValue !=
+    !emailSetting.flagValue !=
       domainList.some(
         (disallowedEmailDomain) => emailDomain === disallowedEmailDomain
       ) ||
     t(
-      `sellerAdInformation.ruleMsg.invalidEmailDomain.${disallowedEmailsSetting.flagValue}`,
+      `sellerAdInformation.ruleMsg.invalidEmailDomain.${emailSetting.flagValue}`,
       {
         domains: domainList.toString(),
       }
@@ -136,13 +134,15 @@ const rulePhoneNumber = (value: string) =>
  * Minimum one contact needs to be set - this can be email or phone number
  */
 const minOneContactRule = () =>
-  CONFIG.IS_EMAIL_MANDITORY ||
+  CONFIG.IS_EMAIL_MANDATORY ||
   !!adTO.value.email ||
   !!adTO.value.phone ||
   t("sellerAdInformation.ruleMsg.dutyField");
 
 const emailRequiredRule = () =>
-  !CONFIG.IS_EMAIL_MANDITORY ||
+  !CONFIG.IS_EMAIL_MANDATORY ||
   !!adTO.value.email ||
-  t("sellerAdInformation.ruleMsg.requiredEmail");
+  t("sellerAdInformation.ruleMsg.requiredEmail", {
+    domains: emailSetting.flagValue ? emailSetting.textValue?.toString() : "",
+  });
 </script>
