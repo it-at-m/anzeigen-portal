@@ -2,6 +2,11 @@
   "app": {
     "heading": "Gebrauchtwarenbörse"
   },
+  "ad": {
+    "type": {
+      "rental": "Verleihe"
+    }
+  },
   "adDialog": {
     "sellerInformation": "Kontakt Informationen"
   },
