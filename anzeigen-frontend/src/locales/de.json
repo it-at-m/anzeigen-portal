@@ -26,7 +26,11 @@
   "adDialog": {
     "generalInformation": "Allgemeine Informationen",
     "additionalInformation": "Weitere Informationen",
-    "sellerInformation": "Verkäufer Informationen"
+    "sellerInformation": "Verkäufer Informationen",
+    "deleteDialog": {
+      "title": "Anzeige löschen",
+      "text": "Möchten Sie die Anzeige wirklich löschen?"
+    }
   },
   "adList": {
     "noAdFound": {

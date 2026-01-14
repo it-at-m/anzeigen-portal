@@ -58,16 +58,16 @@
       </v-card-text>
       <v-card-actions class="px-4 mb-1">
         <yes-no-dialog
-          v-if="!isAdCreate"
+          v-if="!isAdCreate && adTo.active"
           :model-value="deleteDialog"
-          dialogtitle="Anzeige löschen"
-          dialogtext="Möchten Sie die Anzeige wirklich löschen?"
+          :dialogtitle="t(`adDialog.deleteDialog.title`)"
+          :dialogtext="t(`adDialog.deleteDialog.title`)"
           @yes="confirmedDeletion"
           @no="deleteDialog = false"
         >
           <template #default>
             <v-btn
-              variant="elevated"
+              variant="flat"
               color="error"
               prepend-icon="mdi-trash-can-outline"
               :disabled="loading"
@@ -81,7 +81,7 @@
         <v-btn
           prepend-icon="mdi-window-close"
           variant="outlined"
-          text="Abbrechen"
+          :text="t(`common.cancel`)"
           :disabled="loading"
           @click="close"
         />
