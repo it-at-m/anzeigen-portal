@@ -7,7 +7,7 @@
     :disabled="disabled"
     class="my-4"
     hide-details="auto"
-    label="Straße und Hausnummer"
+    :label="t(`addressSelection.street`)"
     :rules="[addressFieldNotEmptyRule]"
     @update:model-value="updatedStreet"
   />
@@ -19,7 +19,7 @@
     :disabled="disabled"
     class="my-4"
     hide-details="auto"
-    label="Ort und PLZ"
+    :label="t(`addressSelection.postalCode`)"
     :rules="[addressFieldNotEmptyRule]"
     @update:model-value="updatedPostalCode"
   />
@@ -28,7 +28,11 @@
 <script setup lang="ts">
 import type { Address } from "@/api/swbrett";
 
+import { useI18n } from "vue-i18n";
+
 import { CONFIG } from "@/Constants.ts";
+
+const { t } = useI18n();
 
 const { modelValue } = defineProps<{
   disabled?: boolean;
@@ -40,7 +44,9 @@ const emit = defineEmits<{
 }>();
 
 const addressFieldNotEmptyRule = (value: string) =>
-  !CONFIG.IS_ADDRESS_MANDATORY || !!value || "Address field is empty";
+  !CONFIG.IS_ADDRESS_MANDATORY ||
+  !!value ||
+  t("sellerAdInformation.ruleMsg.addressFields");
 
 const updatedStreet = (value: string) => {
   emit("update:modelValue", { ...modelValue, street: value });
