@@ -61,7 +61,7 @@
           v-if="!isAdCreate && adTo.active"
           :model-value="deleteDialog"
           :dialogtitle="t(`adDialog.deleteDialog.title`)"
-          :dialogtext="t(`adDialog.deleteDialog.title`)"
+          :dialogtext="t(`adDialog.deleteDialog.text`)"
           @yes="confirmedDeletion"
           @no="deleteDialog = false"
         >
