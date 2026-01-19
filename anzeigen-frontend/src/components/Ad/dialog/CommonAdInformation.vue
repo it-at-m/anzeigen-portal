@@ -78,20 +78,9 @@
       />
     </v-col>
   </v-row>
-  <ad-description-editor />
-  <v-textarea
+  <ad-description-editor
     v-model="adTO.description"
-    variant="outlined"
-    density="compact"
-    color="accent"
-    :label="t('commonAdInformation.descriptionLabel')"
-    class="my-4"
-    hide-details="auto"
-    max-rows="3"
-    :disabled="disabled"
-    :rules="[
-      (value) => !!value || t('commonAdInformation.ruleMsg.description'),
-    ]"
+    disabled
   />
   <ad-price-selection
     v-if="CONFIG.SHOW_PRICE"
@@ -120,7 +109,7 @@ const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 const price = defineModel<number>("price", { default: 1 });
 
-defineProps<{
+const { disabled } = defineProps<{
   disabled?: boolean;
 }>();
 

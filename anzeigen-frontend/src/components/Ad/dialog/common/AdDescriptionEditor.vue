@@ -1,22 +1,26 @@
 <template>
-  <quilly-editor
-    ref="editor"
-    v-model="content"
-    :options="options"
-    @blur="saveContent"
-  />
+  <div>
+    <quilly-editor
+      ref="editor"
+      v-model="modelValue"
+      :options="options"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
 import Quill from "quill";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import { QuillyEditor } from "vue-quilly";
 
 import "quill/dist/quill.snow.css";
 
+const modelValue = defineModel<string>();
+const { disabled } = defineProps<{
+  disabled?: boolean;
+}>();
+
 const editor = ref<InstanceType<typeof QuillyEditor>>();
-const content = ref("<p>Hello Quilly!</p>");
-let quill: Quill | undefined;
 
 const options = {
   theme: "snow",
@@ -24,35 +28,78 @@ const options = {
   modules: {
     toolbar: [
       ["bold", "italic", "underline"],
-      [{ header: [1, 2, false] }],
+      [{ header: [2, 3, false] }],
       [{ list: "ordered" }, { list: "bullet" }],
     ],
   },
 };
 
+let quill: Quill | undefined;
+
 onMounted(() => {
   quill = editor.value?.initialize(Quill);
-
-  const container = quill?.root.closest(".ql-container") as HTMLElement | null;
-  const toolbar = container?.previousElementSibling as HTMLElement | null;
-
-  // Rounded (Vuetify Utilities)
-  container?.classList.add("rounded-b", "v-input");
-  toolbar?.classList.add("rounded-t");
-
-  // Vuetify-like border & background
-  const borderColor = "rgba(var(--v-theme-on-surface), 0.38)";
-  const bgColor = "rgb(var(--v-theme-surface))";
-
-  //container?.style.setProperty("border-color", borderColor);
-  toolbar?.style.setProperty("border-color", borderColor);
-
-  container?.style.setProperty("background-color", bgColor);
 });
 
-const saveContent = (quillInstance: Quill) => {
-  console.log(quillInstance);
-};
+watch(
+  () => disabled,
+  () => {
+    if (disabled) {
+      quill?.disable();
+    } else {
+      quill?.enable();
+    }
+  }
+);
 </script>
 
-<style></style>
+<style scoped>
+:deep(.ql-editor) {
+  height: 150px;
+}
+
+:deep(.ql-toolbar) {
+  border-top-left-radius: var(--border-radius);
+  border-top-right-radius: var(--border-radius);
+}
+
+.ql-container {
+  border-bottom-left-radius: var(--border-radius);
+  border-bottom-right-radius: var(--border-radius);
+}
+
+.border-test {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  background-color: rgb(var(--v-theme-surface));
+  border-radius: var(--border-radius);
+}
+
+/* Grundzustand: 1px Outline */
+.border-test::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.38);
+  pointer-events: none;
+  box-sizing: border-box;
+}
+
+/* Hover (optional, Vuetify-like) */
+.border-test:hover::before {
+  border-color: rgba(var(--v-theme-on-surface), 0.6);
+}
+
+/* Fokus: 2px Accent-Ring, abgerundet, ON TOP */
+.border-test:focus-within::after {
+  content: "";
+  position: absolute;
+  inset: -1px; /* zentriert den 2px Ring */
+  border-radius: calc(var(--border-radius) + 1px);
+  border: 2px solid rgb(var(--v-theme-accent));
+  pointer-events: none;
+  box-sizing: border-box;
+}
+</style>
