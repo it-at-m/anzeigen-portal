@@ -25,7 +25,7 @@
     "@vueuse/router": "11.3.0",
     "axios": "1.9.0",
     "pinia": "2.3.1",
-    "quill": "^2.0.3",
+    "quill": "^2.0.2",
     "roboto-fontface": "0.10.0",
     "vue": "3.5.26",
     "vue-i18n": "11.1.12",
