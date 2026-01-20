@@ -8,23 +8,22 @@ class HtmlSanitizerUtilTest {
 
     @Test
     void shouldRemoveScriptsAndStylesAndKeepAllowedTags() {
-        String input = """
-            <p>Hallo <strong style="color:red">Welt</strong></p>
-            <script>alert('xss')</script>
-            <ol>
-              <li data-list="bullet">Feature</li>
-            </ol>
-            """;
+        final String input = """
+                <p>Hallo <strong style="color:red">Welt</strong></p>
+                <script>alert('xss')</script>
+                <ol>
+                  <li data-list="bullet">Feature</li>
+                </ol>
+                """;
 
-        String expected = """
-            <p>Hallo Welt</p>
-            
-            <ol><li>Feature</li></ol>
-            """.trim();
+        final String expected = """
+                <p>Hallo Welt</p>
 
-        String result = HtmlSanitizerUtil.sanitize(input).trim();
+                <ol><li>Feature</li></ol>
+                """.trim();
+
+        final String result = HtmlSanitizerUtil.sanitize(input).trim();
 
         assertEquals(expected, result);
     }
 }
-

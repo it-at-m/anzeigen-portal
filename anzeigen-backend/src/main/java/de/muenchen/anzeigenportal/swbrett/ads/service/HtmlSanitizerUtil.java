@@ -2,9 +2,8 @@ package de.muenchen.anzeigenportal.swbrett.ads.service;
 
 import org.owasp.html.HtmlPolicyBuilder;
 import org.owasp.html.PolicyFactory;
-import org.owasp.shim.*;
 
-public class HtmlSanitizerUtil {
+public final class HtmlSanitizerUtil {
 
     private static final PolicyFactory POLICY = new HtmlPolicyBuilder()
             // Text formatting
@@ -20,7 +19,10 @@ public class HtmlSanitizerUtil {
             //.disallowElements("script", "style")
             .toFactory();
 
-    public static String sanitize(String htmlToSanitize) {
+    private HtmlSanitizerUtil() {
+    }
+
+    public static String sanitize(final String htmlToSanitize) {
         if (htmlToSanitize == null || htmlToSanitize.isBlank()) {
             return "";
         }

@@ -33,6 +33,7 @@
             />
           </template>
           <template #text>
+            <!-- eslint-disable-next-line vue/no-v-html -->
             <span v-html="adDetails.description" />
           </template>
         </ad-display-card>
