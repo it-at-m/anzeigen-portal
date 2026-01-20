@@ -26,7 +26,11 @@
   "adDialog": {
     "generalInformation": "Allgemeine Informationen",
     "additionalInformation": "Weitere Informationen",
-    "sellerInformation": "Verkäufer Informationen"
+    "sellerInformation": "Verkäufer Informationen",
+    "deleteDialog": {
+      "title": "Anzeige löschen",
+      "text": "Möchten Sie die Anzeige wirklich löschen?"
+    }
   },
   "adList": {
     "noAdFound": {
@@ -121,8 +125,13 @@
         "true": "Nur E-Mail Adressen mit: '{domains}' sind erlaubt.",
         "false": "E-Mail Adressen mit: '{domains}' sind nicht erlaubt."
       },
-      "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an."
+      "dutyField": "Bitte geben Sie eine Telefonnummer und/oder (private) E-Mail-Adresse an.",
+      "addressFields": "Bitte geben Sie ihre Adresse an."
     }
+  },
+  "addressSelection": {
+    "street": "Straße und Hausnummer",
+    "postalCode": "PLZ und Ort"
   },
   "filterAdCategory": {
     "title": "Nach Kategorie stöbern"
