@@ -80,6 +80,7 @@
   </v-row>
   <ad-description-editor
     v-model="adTO.description"
+    class="mb-4"
     disabled
   />
   <ad-price-selection
