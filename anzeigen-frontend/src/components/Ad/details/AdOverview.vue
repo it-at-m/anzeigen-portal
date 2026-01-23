@@ -33,7 +33,8 @@
             />
           </template>
           <template #text>
-            {{ sanitizedDescription }}
+            <!-- eslint-disable-next-line vue/no-v-html -->
+            <span v-html="adDetails.description" />
           </template>
         </ad-display-card>
       </v-col>
@@ -113,6 +114,7 @@
                 </v-col>
                 <v-col class="py-0">
                   <icon-text
+                    class="link-text"
                     :label="adDetails.link"
                     :href="adDetails.link"
                   />
@@ -211,7 +213,7 @@
 import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
-import { computed, toRef } from "vue";
+import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
@@ -220,7 +222,6 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
-import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 
 const { t } = useI18n();
@@ -234,10 +235,6 @@ const { adDetails } = defineProps<{
 
 const currentLink = computed(() => window.location.href);
 
-const sanitizedDescription = useSanitizedHtml(
-  toRef(adDetails.description || "")
-);
-
 const combinedAddress = computed(
   () => adDetails.address?.street + ", " + adDetails.address?.postalCode
 );
@@ -246,5 +243,16 @@ const combinedAddress = computed(
 <style scoped>
 .image-background-color {
   background-color: #eeeeee;
+}
+
+:deep(li[data-list]) {
+  list-style-position: inside;
+}
+
+.link-text {
+  max-width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 </style>
