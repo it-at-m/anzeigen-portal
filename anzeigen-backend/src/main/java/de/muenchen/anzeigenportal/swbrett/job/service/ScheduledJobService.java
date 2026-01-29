@@ -6,8 +6,6 @@ import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -27,7 +25,7 @@ public class ScheduledJobService {
     @Autowired
     private AdRepository adRepository;
 
-    @Scheduled(cron =  "${scheduled.deactivateAds}")
+    @Scheduled(cron = "${scheduled.deactivateAds}")
     public void deactivateExpiredAds() {
 
         final LocalDate limit;
@@ -45,7 +43,7 @@ public class ScheduledJobService {
         });
     }
 
-    @Scheduled(cron =  "${scheduled.deleteDeactivatedAds}")
+    @Scheduled(cron = "${scheduled.deleteDeactivatedAds}")
     public void deleteDeactivatedAdsAfterDateRange() {
 
         final LocalDate limit;
