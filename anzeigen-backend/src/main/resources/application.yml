@@ -65,3 +65,7 @@ security:
   # possible values: none, all, changing (With changing, only changing requests such as POST, PUT, DELETE are logged)
   requestLogging: all
   userInfoUri: ${sso.url}/auth/realms/${sso.realm}/protocol/openid-connect/userinfo
+
+scheduled:
+  deactivateAds: 0 0 1 * * *
+  deleteDeactivatedAds: 0 0 2 * * *
