@@ -4,8 +4,8 @@ import de.muenchen.anzeigenportal.swbrett.ads.model.Ad;
 import de.muenchen.anzeigenportal.swbrett.ads.repository.AdRepository;
 import de.muenchen.anzeigenportal.swbrett.settings.model.SettingName;
 import de.muenchen.anzeigenportal.swbrett.settings.service.SettingService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,12 +15,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ScheduledJobService {
-
-    private static final Logger LOG = LoggerFactory.getLogger(ScheduledJobService.class);
-
-    private final static String EVERY_DAY_1_AM = "0 0 1 * * *"; // second minute hour day-of-month month day-of-week
-    private final static String EVERY_DAY_2_AM = "0 0 2 * * *";
 
     @Autowired
     private SettingService settingService;
@@ -28,43 +25,37 @@ public class ScheduledJobService {
     @Autowired
     private AdRepository adRepository;
 
-    // Nur zum Testen: Alle 20 Sekunden (0:00, 0:20, 0:40):
-    //@Scheduled(cron = "0/20 * * * * *")
-
-    @Scheduled(cron = EVERY_DAY_1_AM)
+    @Scheduled(cron = "${scheduled.deactivateAds}")
     public void deactivateExpiredAds() {
 
         final LocalDate limit;
 
         limit = LocalDate.now();
 
-        LOG.debug("Deactivate active ads that expired before " + limit);
+        log.debug("Deactivate active ads that expired before {}", limit);
 
         final List<Ad> expiredAds = adRepository.findByExpiryDateBeforeAndActive(limit, true);
 
-        expiredAds.stream().forEach(ad -> {
-            LOG.debug("Deactivating ad " + ad.getId() + " (expired " + ad.getExpiryDate() + ")");
+        expiredAds.forEach(ad -> {
+            log.debug("Deactivating ad {} (expired {})", ad.getId(), ad.getExpiryDate());
             ad.setActive(false);
             adRepository.save(ad);
         });
     }
 
-    // Nur zum Testen: Alle 20 Sekunden (0:10, 0:30, 0:50):
-    //@Scheduled(cron = "10/20 * * * * *")
-
-    @Scheduled(cron = EVERY_DAY_2_AM)
+    @Scheduled(cron = "${scheduled.deleteDeactivatedAds}")
     public void deleteDeactivatedAdsAfterDateRange() {
 
         final LocalDate limit;
         final Integer maxArchiveDateRange = settingService.getSetting(SettingName.MAX_ARCHIVE_DATE_RANGE).getNumberValue();
         limit = LocalDate.now().minusWeeks(maxArchiveDateRange);
 
-        LOG.debug("Delete inactive ads that expired before " + limit);
+        log.debug("Delete inactive ads that expired before {}", limit);
 
         final List<Ad> deactivatedAdsAfterDateRange = adRepository.findByExpiryDateBeforeAndActive(limit, false);
 
         deactivatedAdsAfterDateRange.stream().forEach(ad -> {
-            LOG.debug("Deleting ad " + ad.getId() + " (expired " + ad.getExpiryDate() + ")");
+            log.debug("Deleting ad {} (expired {})", ad.getId(), ad.getExpiryDate());
             adRepository.delete(ad);
         });
     }

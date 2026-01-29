@@ -1,6 +1,6 @@
 <template>
   <a
-    href="https://www.muenchen.de/"
+    href="https://wilma.muenchen.de/workspaces/staedtische-gebrauchtwarenboerse-gewaboe/apps/content/inhalt"
     target="_blank"
   >
     <v-toolbar-title class="font-weight-bold d-flex justify-end">
