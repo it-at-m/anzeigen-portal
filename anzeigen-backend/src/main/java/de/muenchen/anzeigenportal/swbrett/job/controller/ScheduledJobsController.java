@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class ScheduledJobsController {
 
-    private ScheduledJobService scheduledJobService;
+    private final ScheduledJobService scheduledJobService;
 
     @PreAuthorize("hasAuthority(T(de.muenchen.anzeigenportal.security.AuthoritiesEnum).fachadmin.name())")
     @PostMapping("/deactivateAds")
