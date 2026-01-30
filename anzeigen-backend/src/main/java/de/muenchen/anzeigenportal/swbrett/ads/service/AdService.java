@@ -126,6 +126,9 @@ public class AdService {
             adTO.setExpiryDate(LocalDate.now().plusWeeks(setting));
         }
 
+        // Sanitize description of any scripts or styles
+        adTO.setDescription(HtmlSanitizerUtil.sanitize(adTO.getDescription()));
+
         final Ad ad = mapper.toAd(adTO);
         validationService.validate(ad);
 
@@ -148,6 +151,9 @@ public class AdService {
         if (updatedAdTO.getEmail() != null && isEMailDomainDisallowed(updatedAdTO.getEmail())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "EMail not allowed");
         }
+
+        // Sanitize description of any scripts or styles
+        updatedAdTO.setDescription(HtmlSanitizerUtil.sanitize(updatedAdTO.getDescription()));
 
         final Ad updatedAd = mapper.toAd(updatedAdTO);
         validationService.validate(updatedAd);

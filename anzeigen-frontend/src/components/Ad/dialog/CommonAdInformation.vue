@@ -54,7 +54,7 @@
         t('commonAdInformation.ruleMsg.titleToLong'),
     ]"
   />
-  <v-row>
+  <v-row class="mb-2">
     <v-col
       cols="12"
       md="6"
@@ -78,19 +78,10 @@
       />
     </v-col>
   </v-row>
-  <v-textarea
+  <ad-description-editor
     v-model="adTO.description"
-    variant="outlined"
-    density="compact"
-    color="accent"
-    :label="t('commonAdInformation.descriptionLabel')"
-    class="my-4"
-    hide-details="auto"
-    max-rows="3"
-    :disabled="disabled"
-    :rules="[
-      (value) => !!value || t('commonAdInformation.ruleMsg.description'),
-    ]"
+    class="mb-4"
+    disabled
   />
   <ad-price-selection
     v-if="CONFIG.SHOW_PRICE"
@@ -108,6 +99,7 @@ import { useI18n } from "vue-i18n";
 
 import AdCategorySelector from "@/components/Ad/dialog/common/AdCategorySelector.vue";
 import AdConditionSelector from "@/components/Ad/dialog/common/AdConditionSelector.vue";
+import AdDescriptionEditor from "@/components/Ad/dialog/common/AdDescriptionEditor.vue";
 import AddressSelection from "@/components/Ad/dialog/common/AddressSelection.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
@@ -118,7 +110,7 @@ const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
 
 const price = defineModel<number>("price", { default: 1 });
 
-defineProps<{
+const { disabled } = defineProps<{
   disabled?: boolean;
 }>();
 
