@@ -52,36 +52,35 @@ public final class AuthUtils {
      */
     public List<AuthoritiesEnum> getRoles() {
 
-        Authentication authentication =
-                SecurityContextHolder.getContext().getAuthentication();
+        final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        if (!(authentication instanceof JwtAuthenticationToken jwtAuth)) {
+        if (!(authentication instanceof final JwtAuthenticationToken jwtAuth)) {
             return List.of();
         }
 
-        Map<String, Object> claims = jwtAuth.getTokenAttributes();
+        final Map<String, Object> claims = jwtAuth.getTokenAttributes();
 
-        Object resourceAccessObj = claims.get("resource_access");
-        if (!(resourceAccessObj instanceof Map<?, ?> resourceAccess)) {
+        final Object resourceAccessObj = claims.get("resource_access");
+        if (!(resourceAccessObj instanceof final Map<?, ?> resourceAccess)) {
             log.debug("Resource access not set");
             return List.of();
         }
 
-        Object clientObj = resourceAccess.get(ssoProperties.client());
-        if (!(clientObj instanceof Map<?, ?> clientMap)) {
+        final Object clientObj = resourceAccess.get(ssoProperties.client());
+        if (!(clientObj instanceof final Map<?, ?> clientMap)) {
             log.debug("Client object not set");
             return List.of();
         }
 
-        Object rolesObj = clientMap.get("roles");
-        if (!(rolesObj instanceof List<?> rawRoles)) {
+        final Object rolesObj = clientMap.get("roles");
+        if (!(rolesObj instanceof final List<?> rawRoles)) {
             log.debug("Roles not set");
             return List.of();
         }
 
-        List<AuthoritiesEnum> result = new ArrayList<>();
+        final List<AuthoritiesEnum> result = new ArrayList<>();
 
-        for (Object r : rawRoles) {
+        for (final Object r : rawRoles) {
             if (r instanceof String role) {
                 try {
                     result.add(AuthoritiesEnum.valueOf(role));
@@ -93,7 +92,6 @@ public final class AuthUtils {
 
         return result;
     }
-
 
     /**
      * Extracts the user name from the existing Spring Security Context via
