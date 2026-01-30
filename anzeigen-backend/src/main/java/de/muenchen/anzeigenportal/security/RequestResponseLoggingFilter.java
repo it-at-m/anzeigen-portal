@@ -15,6 +15,7 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Component;
@@ -25,9 +26,11 @@ import org.springframework.stereotype.Component;
 @Component
 @Order(1)
 @Slf4j
-@RequiredArgsConstructor
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 @ToString
 public class RequestResponseLoggingFilter implements Filter {
+
+    private final AuthUtils authUtils;
 
     private static final String REQUEST_LOGGING_MODE_ALL = "all";
 
@@ -61,7 +64,7 @@ public class RequestResponseLoggingFilter implements Filter {
         final HttpServletResponse httpResponse = (HttpServletResponse) response;
         if (checkForLogging(httpRequest)) {
             log.info("User {} executed {} on URI {} with http status {}",
-                    AuthUtils.getUsername(),
+                    authUtils.getUsername(),
                     httpRequest.getMethod(),
                     httpRequest.getRequestURI(),
                     httpResponse.getStatus());

@@ -1,10 +1,13 @@
 package de.muenchen.anzeigenportal.security;
 
+import de.muenchen.anzeigenportal.configuration.SSOProperties;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,9 +16,13 @@ import java.util.List;
  * Utilities for authentication data.
  */
 @Slf4j
+@Service
+@RequiredArgsConstructor
 public final class AuthUtils {
 
-    public static final String NAME_UNAUTHENTICATED_USER = "unauthenticated";
+    private final SSOProperties ssoProperties;
+
+    private static final String NAME_UNAUTHENTICATED_USER = "unauthenticated";
 
     private static final String TOKEN_USER_NAME = "user_name";
     private static final String TOKEN_LHM_OBJECT_ID = "lhmObjectID";
@@ -30,7 +37,7 @@ public final class AuthUtils {
      *
      * @return the username or an "unauthenticated" if no {@link Authentication} exists
      */
-    public static String getLhmObjectID() {
+    public String getLhmObjectID() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken jwtAuth) {
             log.debug("User authenticated: {}", jwtAuth.getTokenAttributes().getOrDefault(TOKEN_LHM_OBJECT_ID, null));
@@ -44,6 +51,7 @@ public final class AuthUtils {
     public static List<AuthoritiesEnum> getRoles() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken jwtAuth) {
+    public List<AuthoritiesEnum> getRoles() {
 
             @SuppressWarnings("unchecked")
             final List<String> stringRoles = (List<String>) jwtAuth.getTokenAttributes().getOrDefault(TOKEN_AUTHORITIES, List.of());
@@ -69,7 +77,7 @@ public final class AuthUtils {
      *
      * @return the username or an "unauthenticated" if no {@link Authentication} exists
      */
-    public static String getUsername() {
+    public String getUsername() {
         final Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication instanceof JwtAuthenticationToken) {
             final JwtAuthenticationToken jwtAuth = (JwtAuthenticationToken) authentication;
