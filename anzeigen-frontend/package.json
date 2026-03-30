@@ -29,6 +29,7 @@
     "vue": "3.5.31",
     "vue-i18n": "11.1.12",
     "vue-router": "4.5.1",
+    "vue-quilly": "1.1.6",
     "vuetify": "3.12.4"
   },
   "devDependencies": {
