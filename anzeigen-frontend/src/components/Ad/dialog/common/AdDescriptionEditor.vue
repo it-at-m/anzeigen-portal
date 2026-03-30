@@ -28,7 +28,6 @@ const options = {
   modules: {
     toolbar: [
       ["bold", "italic", "underline"],
-      [{ header: [2, 3, false] }],
       [{ list: "ordered" }, { list: "bullet" }],
     ],
   },

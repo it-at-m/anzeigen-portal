@@ -8,10 +8,9 @@ public final class HtmlSanitizerUtil {
     private static final PolicyFactory POLICY = new HtmlPolicyBuilder()
             // Text formatting
             .allowElements("strong", "em", "u")
-            // Headings
-            .allowElements("h2", "h3")
             // Structure
             .allowElements("p", "ol", "ul", "li")
+            // allow list differentiator from delta-type
             .allowAttributes("data-list").onElements("li")
             // No attributes allowed at all
             .disallowElements("script", "style")
