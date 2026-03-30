@@ -17,9 +17,9 @@ class HtmlSanitizerUtilTest {
                 """;
 
         final String expected = """
-                <p>Hallo Welt</p>
+                <p>Hallo <strong>Welt</strong></p>
 
-                <ol><li>Feature</li></ol>
+                <ol><li data-list="bullet">Feature</li></ol>
                 """.trim();
 
         final String result = HtmlSanitizerUtil.sanitize(input).trim();
