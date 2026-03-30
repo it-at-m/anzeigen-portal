@@ -26,11 +26,10 @@
     "pinia": "2.3.1",
     "@dotwee/quill": "2.0.7",
     "roboto-fontface": "0.10.0",
-    "vue": "3.5.30",
+    "vue": "3.5.31",
     "vue-i18n": "11.1.12",
-    "vue-quilly": "^1.1.6",
     "vue-router": "4.5.1",
-    "vuetify": "3.11.9"
+    "vuetify": "3.12.4"
   },
   "devDependencies": {
     "@muenchen/prettier-codeformat": "1.0.2",
