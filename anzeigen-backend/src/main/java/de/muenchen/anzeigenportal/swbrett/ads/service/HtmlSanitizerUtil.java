@@ -7,11 +7,12 @@ public final class HtmlSanitizerUtil {
 
     private static final PolicyFactory POLICY = new HtmlPolicyBuilder()
             // Text formatting
-            .allowElements("b", "i", "u")
+            .allowElements("strong", "em", "u")
             // Headings
             .allowElements("h2", "h3")
             // Structure
             .allowElements("p", "ol", "ul", "li")
+            .allowAttributes("data-list").onElements("li")
             // No attributes allowed at all
             .disallowElements("script", "style")
             .disallowAttributes("style", "class").globally()

@@ -245,8 +245,20 @@ const combinedAddress = computed(
   background-color: #eeeeee;
 }
 
+:deep(ol li[data-list="bullet"]) {
+  list-style-type: disc;
+}
+
+:deep(ol li[data-list="ordered"]) {
+  list-style-type: decimal;
+}
+
 :deep(li[data-list]) {
   list-style-position: inside;
+}
+
+:deep(li[data-list] > .ql-ui) {
+  display: none;
 }
 
 .link-text {
