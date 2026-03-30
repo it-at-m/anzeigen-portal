@@ -1,12 +1,24 @@
 import type { SortingOrder } from "@/types/SortingOrderCriteria.ts";
 
+import { CONFIG } from "@/Constants.ts";
+
 /**
  * A list of predefined sorting options for selection.
  */
 export const sortingOrderSelections = [
   { title: "Titel (alphabetisch)", value: { criteria: "title", order: "asc" } },
-  { title: "Preis aufsteigend", value: { criteria: "price", order: "asc" } },
-  { title: "Preis absteigend", value: { criteria: "price", order: "desc" } },
+  ...(CONFIG.SHOW_PRICE
+    ? [
+        {
+          title: "Preis aufsteigend",
+          value: { criteria: "price", order: "asc" },
+        },
+        {
+          title: "Preis absteigend",
+          value: { criteria: "price", order: "desc" },
+        },
+      ]
+    : []),
   {
     title: "Erstellungsdatum aufsteigend",
     value: { criteria: "creationDateTime", order: "asc" },

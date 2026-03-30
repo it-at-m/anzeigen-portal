@@ -22,7 +22,7 @@
         </appender>
 
         <!-- Logger -->
-        <logger name="de.muenchen.anzeigen-portal"
+        <logger name="de.muenchen.anzeigenportal"
                 level="debug"
                 additivity="false">
             <appender-ref ref="STDOUT" />
