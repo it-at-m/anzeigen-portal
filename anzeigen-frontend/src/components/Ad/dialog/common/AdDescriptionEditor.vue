@@ -9,11 +9,11 @@
 </template>
 
 <script setup lang="ts">
-import Quill from "quill";
+import "@dotwee/quill/dist/quill.snow.css";
+
+import Quill from "@dotwee/quill";
 import { onMounted, ref, watch } from "vue";
 import { QuillyEditor } from "vue-quilly";
-
-import "quill/dist/quill.snow.css";
 
 const modelValue = defineModel<string>();
 const { disabled } = defineProps<{
