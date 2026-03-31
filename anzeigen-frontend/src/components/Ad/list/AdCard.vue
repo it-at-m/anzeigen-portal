@@ -143,7 +143,7 @@ import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
 import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/list/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus.ts";
-import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
+import { usePlainTextFromHtml } from "@/composables/useSanitizedHtml.ts";
 import {
   CONFIG,
   PREVIEW_IMAGE_FILE_URI_PREFIX,
@@ -159,7 +159,9 @@ const { adTo } = defineProps<{
   adTo: DeepReadonly<AdTO>;
 }>();
 
-const sanitizedDescription = useSanitizedHtml(toRef(adTo.description || ""));
+const sanitizedDescription = usePlainTextFromHtml(
+  toRef(adTo.description || "")
+);
 
 /**
  * Computes whether the ad can be edited by the current user, either belongs to him, or user is admin.

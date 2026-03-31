@@ -245,14 +245,39 @@ const combinedAddress = computed(
   background-color: #eeeeee;
 }
 
+:deep(li.ql-indent-1) {
+  margin-left: 3em;
+}
+:deep(li.ql-indent-2) {
+  margin-left: 6em;
+}
+:deep(li.ql-indent-3) {
+  margin-left: 9em;
+}
+:deep(li.ql-indent-4) {
+  margin-left: 12em;
+}
+:deep(li.ql-indent-5) {
+  margin-left: 15em;
+}
+:deep(li.ql-indent-6) {
+  margin-left: 18em;
+}
+:deep(li.ql-indent-7) {
+  margin-left: 21em;
+}
+:deep(li.ql-indent-8) {
+  margin-left: 24em;
+}
+:deep(li.ql-indent-9) {
+  margin-left: 27em;
+}
 :deep(ol li[data-list="bullet"]) {
   list-style-type: disc;
 }
-
 :deep(ol li[data-list="ordered"]) {
   list-style-type: decimal;
 }
-
 :deep(li[data-list]) {
   list-style-position: inside;
 }
