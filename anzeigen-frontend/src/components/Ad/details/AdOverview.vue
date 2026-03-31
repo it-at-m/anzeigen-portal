@@ -114,7 +114,6 @@
                 </v-col>
                 <v-col class="py-0">
                   <icon-text
-                    class="link-text"
                     :label="adDetails.link"
                     :href="adDetails.link"
                   />
@@ -213,7 +212,7 @@
 import type { AdTO, SwbUserTO } from "@/api/swbrett";
 
 import { useDateFormat } from "@vueuse/shared";
-import { computed } from "vue";
+import { computed, toRef } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdImageDisplay from "@/components/Ad/details/AdImageDisplay.vue";
@@ -222,6 +221,7 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
+import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 
 const { t } = useI18n();
@@ -235,6 +235,10 @@ const { adDetails } = defineProps<{
 
 const currentLink = computed(() => window.location.href);
 
+const sanitizedDescription = useSanitizedHtml(
+  toRef(adDetails.description || "")
+);
+
 const combinedAddress = computed(
   () => adDetails.address?.street + ", " + adDetails.address?.postalCode
 );
@@ -243,53 +247,5 @@ const combinedAddress = computed(
 <style scoped>
 .image-background-color {
   background-color: #eeeeee;
-}
-
-:deep(li.ql-indent-1) {
-  margin-left: 3em;
-}
-:deep(li.ql-indent-2) {
-  margin-left: 6em;
-}
-:deep(li.ql-indent-3) {
-  margin-left: 9em;
-}
-:deep(li.ql-indent-4) {
-  margin-left: 12em;
-}
-:deep(li.ql-indent-5) {
-  margin-left: 15em;
-}
-:deep(li.ql-indent-6) {
-  margin-left: 18em;
-}
-:deep(li.ql-indent-7) {
-  margin-left: 21em;
-}
-:deep(li.ql-indent-8) {
-  margin-left: 24em;
-}
-:deep(li.ql-indent-9) {
-  margin-left: 27em;
-}
-:deep(ol li[data-list="bullet"]) {
-  list-style-type: disc;
-}
-:deep(ol li[data-list="ordered"]) {
-  list-style-type: decimal;
-}
-:deep(li[data-list]) {
-  list-style-position: inside;
-}
-
-:deep(li[data-list] > .ql-ui) {
-  display: none;
-}
-
-.link-text {
-  max-width: 90%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 </style>
