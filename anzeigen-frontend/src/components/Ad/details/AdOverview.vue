@@ -221,7 +221,6 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
-import { useSanitizedHtml } from "@/composables/useSanitizedHtml.ts";
 import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
 
 const { t } = useI18n();
@@ -234,10 +233,6 @@ const { adDetails } = defineProps<{
 }>();
 
 const currentLink = computed(() => window.location.href);
-
-const sanitizedDescription = useSanitizedHtml(
-  toRef(adDetails.description || "")
-);
 
 const combinedAddress = computed(
   () => adDetails.address?.street + ", " + adDetails.address?.postalCode
