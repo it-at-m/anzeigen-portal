@@ -114,7 +114,6 @@
                 </v-col>
                 <v-col class="py-0">
                   <icon-text
-                    class="link-text"
                     :label="adDetails.link"
                     :href="adDetails.link"
                   />
@@ -243,28 +242,5 @@ const combinedAddress = computed(
 <style scoped>
 .image-background-color {
   background-color: #eeeeee;
-}
-
-:deep(ol li[data-list="bullet"]) {
-  list-style-type: disc;
-}
-
-:deep(ol li[data-list="ordered"]) {
-  list-style-type: decimal;
-}
-
-:deep(li[data-list]) {
-  list-style-position: inside;
-}
-
-:deep(li[data-list] > .ql-ui) {
-  display: none;
-}
-
-.link-text {
-  max-width: 90%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 </style>
