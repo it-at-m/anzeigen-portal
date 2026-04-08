@@ -52,7 +52,7 @@
         <commons-text.version>1.14.0</commons-text.version>
         <commons-validator.version>1.10.1</commons-validator.version>
         <mapstruct.version>1.6.3</mapstruct.version>
-        <refarch-tools.version>1.2.0</refarch-tools.version>
+        <refarch-tools.version>1.2.2</refarch-tools.version>
         <owasp-java-html-sanitizer.version>20260102.1</owasp-java-html-sanitizer.version>
 
         <!-- Additional required dependencies -->
