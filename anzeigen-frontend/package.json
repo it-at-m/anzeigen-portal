@@ -55,6 +55,6 @@
     "vue-tsc": "2.2.12"
   },
   "overrides": {
-    "quill": "npm:@dotwee/quill@2.0.7"
+    "quill": "npm:@dotwee/quill@2.0.9"
   }
 }
