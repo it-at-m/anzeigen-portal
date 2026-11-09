@@ -9,6 +9,7 @@ import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.repository.ImageRepository;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
+import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,88 +76,99 @@ public class ImageService {
      */
     public byte[] sanitizeImage(final byte[] userProvidedImage) throws IOException, ImageProcessingException, MetadataException {
 
-        // Use https://www.javaxt.com/javaxt-core/io/Image to process EXIF metadata.
-        // (The JRE image processing ignores it, and thus the images may turn out rotated.)
-
         BufferedImage image = ImageIO.read(new ByteArrayInputStream(userProvidedImage));
+        if (image == null) {
+            throw new IOException("Could not read image data");
+        }
 
-        // Schritt 1: Verkleinere das Bild einmal, wenn es zu groß ist.
         final int currentSize = userProvidedImage.length;
         if (currentSize > MAX_SIZE) {
             double scale = Math.sqrt((double) MAX_SIZE / currentSize);
             if (scale > IMAGE_SCALE) {
                 scale = IMAGE_SCALE;
             }
-            image = resizeImage(image, scale);
+
+            int newWidth = (int) (image.getWidth() * scale);
+
+            BufferedImage oldImage = image;
+            image = Scalr.resize(image, Scalr.Method.SPEED, Scalr.Mode.FIT_EXACT, newWidth);
+            oldImage.flush();
         }
 
-        // Schritt 2: Lese EXIF-Metadaten und rotiere das Bild falls notwendig
-        // (Hier verwenden wir eine externe Bibliothek wie MetadataExtractor)
-        final int rotation = getExifRotation(userProvidedImage); // Methode, die die Rotation aus EXIF liest
+        final int rotation = getExifRotation(userProvidedImage);
         if (rotation != 0) {
-            image = rotateImage(image, rotation);
+            BufferedImage oldImage = image;
+            image = rotateImageWithScalr(image, rotation);
+            oldImage.flush();
         }
 
-        // Schritt 3: Verkleinern, bis die Dateigröße passt
-        // TODO - while schleife hier besser
-        byte[] ba;
-        for (;;) {
-            ba = bufferedImageToByteArray(image);
+        byte[] ba = null;
+        int maxIterations = 5;
+        int iteration = 0;
+
+        while (iteration < maxIterations) {
+            ba = bufferedImageToJpgByteArray(image);
 
             if (ba.length <= MAX_SIZE) {
                 break;
             }
 
+            // Skalierungsfaktor berechnen
             double scale = Math.sqrt((double) MAX_SIZE / ba.length);
             if (scale > IMAGE_SCALE) {
                 scale = IMAGE_SCALE;
             }
-            image = resizeImage(image, scale);
+
+            int newWidth = (int) (image.getWidth() * scale);
+            if (newWidth <= 10) break;
+
+            BufferedImage oldImage = image;
+            image = Scalr.resize(image, Scalr.Method.SPEED, Scalr.Mode.FIT_EXACT, newWidth);
+            oldImage.flush();
+
+            iteration++;
+        }
+
+        if (image != null) {
+            image.flush();
         }
 
         return ba;
     }
 
-    private BufferedImage resizeImage(final BufferedImage originalImage, final double scale) {
-        final int newWidth = (int) (originalImage.getWidth() * scale);
-        final int newHeight = (int) (originalImage.getHeight() * scale);
-        final Image tmp = originalImage.getScaledInstance(newWidth, newHeight, Image.SCALE_SMOOTH);
-        final BufferedImage resized = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_RGB);
-        final Graphics2D g2d = resized.createGraphics();
-        g2d.drawImage(tmp, 0, 0, null);
-        g2d.dispose();
-        return resized;
+    /**
+     * Ersetzt die alte rotateImage-Methode mit AffineTransform.
+     * Nutzt stattdessen die robuste Scalr-Bibliothek.
+     */
+    private BufferedImage rotateImageWithScalr(final BufferedImage img, final int degrees) {
+        return switch (degrees) {
+            case 90 -> Scalr.rotate(img, Scalr.Rotation.CW_90);
+            case 180 -> Scalr.rotate(img, Scalr.Rotation.CW_180);
+            case 270 -> Scalr.rotate(img, Scalr.Rotation.CW_270);
+            default -> img; // Falls Winkel unerwartet, Bild unverändert zurückgeben
+        };
     }
 
-    private byte[] bufferedImageToByteArray(final BufferedImage image) throws IOException {
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+    /**
+     * Ersetzt die alte bufferedImageToByteArray-Methode.
+     * Speichert zwingend als JPG und löst Probleme mit transparenten PNGs (Alphakanal).
+     */
+    private byte[] bufferedImageToJpgByteArray(final BufferedImage image) throws IOException {
+        // TYPE_INT_RGB entfernt den Transparenzkanal.
         final BufferedImage convertedImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
-        convertedImage.createGraphics().drawImage(image, 0, 0, null);
-        ImageIO.write(convertedImage, "png", baos); // Verwenden von PNG als Standardformat
-        return baos.toByteArray();
-    }
+        final Graphics2D g2d = convertedImage.createGraphics();
 
-    private BufferedImage rotateImage(final BufferedImage img, final int degrees) {
-        final double radians = Math.toRadians(degrees);
-        final int w = img.getWidth();
-        final int h = img.getHeight();
-
-        final AffineTransform transform = new AffineTransform();
-        transform.rotate(radians, 0, 0);
-
-        final Rectangle bounds = new Rectangle(0, 0, w, h);
-        final Shape transformedBounds = transform.createTransformedShape(bounds);
-        final Rectangle rect = transformedBounds.getBounds();
-
-        final BufferedImage rotated = new BufferedImage(rect.width, rect.height, BufferedImage.TYPE_INT_RGB);
-        final Graphics2D g2d = rotated.createGraphics();
-
-        g2d.translate(-rect.x, -rect.y);
-        g2d.rotate(radians, 0, 0);
-        g2d.drawImage(img, 0, 0, null);
+        // WICHTIG: Zeichne einen weißen Hintergrund.
+        // Wenn du ein transparentes PNG in ein JPG wandelst, wird der Hintergrund sonst oft eklig pink oder schwarz.
+        g2d.drawImage(image, 0, 0, Color.WHITE, null);
         g2d.dispose();
 
-        return rotated;
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(convertedImage, "jpg", baos); // Als JPG speichern!
+
+        convertedImage.flush(); // Speichermanagement
+
+        return baos.toByteArray();
     }
 
     private int getExifRotation(final byte[] imageBytes) throws ImageProcessingException, IOException, MetadataException {

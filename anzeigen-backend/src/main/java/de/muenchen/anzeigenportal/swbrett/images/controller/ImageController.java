@@ -5,6 +5,7 @@ import java.util.Base64;
 
 import com.drew.imaging.ImageProcessingException;
 import com.drew.metadata.MetadataException;
+import de.muenchen.anzeigenportal.configuration.nfcconverter.SkipNfc;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageSanitize;
 import de.muenchen.anzeigenportal.swbrett.images.model.SwbImageTO;
 import de.muenchen.anzeigenportal.swbrett.images.service.ImageService;
@@ -30,6 +31,7 @@ public class ImageController {
     /**
      * @see ImageService#sanitizeImage(byte[])
      */
+    @SkipNfc
     @PostMapping(value = "/sanitize", produces = MediaType.TEXT_PLAIN_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public String sanitizeImage(@RequestBody final SwbImageSanitize imageSanitize) {

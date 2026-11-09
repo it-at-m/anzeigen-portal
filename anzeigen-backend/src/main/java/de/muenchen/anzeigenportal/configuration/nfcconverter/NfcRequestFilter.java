@@ -12,8 +12,12 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerExecutionChain;
+import org.springframework.web.servlet.HandlerMapping;
 
 /**
  * <p>
@@ -50,6 +54,33 @@ public class NfcRequestFilter extends OncePerRequestFilter {
     public static final String CONTENTTYPES_PROPERTY = "contentTypes";
 
     private final Set<String> contentTypes = new HashSet<>();
+
+    @Autowired
+    @Qualifier("requestMappingHandlerMapping")
+    private HandlerMapping handlerMapping;
+
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+        try {
+            HandlerExecutionChain handlerChain = handlerMapping.getHandler(request);
+
+            if (handlerChain != null && handlerChain.getHandler() instanceof HandlerMethod) {
+                HandlerMethod handlerMethod = (HandlerMethod) handlerChain.getHandler();
+
+                boolean hasSkipAnnotation = handlerMethod.hasMethodAnnotation(SkipNfc.class) ||
+                        handlerMethod.getBeanType().isAnnotationPresent(SkipNfc.class);
+
+                if (hasSkipAnnotation) {
+                    log.debug("Skipping NFC conversion because @SkipNfc annotation was found on handler: {}", handlerMethod.getMethod().getName());
+                    return true;
+                }
+            }
+        } catch (Exception e) {
+            log.warn("Could not determine handler for request to check for @SkipNfc. Proceeding with NFC filter.", e);
+        }
+
+        return false;
+    }
 
     /**
      * @return The property <em>contentTypes</em>
@@ -93,5 +124,6 @@ public class NfcRequestFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
         }
     }
+
 
 }
