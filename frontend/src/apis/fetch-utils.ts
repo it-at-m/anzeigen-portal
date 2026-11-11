@@ -1,4 +1,4 @@
-import { ApiError, Levels } from "@/api/ApiError";
+import { ApiError, Levels } from "@/apis/ApiError.ts";
 
 /**
  * Returns a default GET-Config for fetch

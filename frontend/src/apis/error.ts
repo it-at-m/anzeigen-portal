@@ -1,14 +1,9 @@
-export const enum Levels {
-  SUCCESS = "success",
-  INFO = "info",
-  WARNING = "warning",
-  ERROR = "error",
-}
+import { STATUS_INDICATORS } from "@/constants.ts";
 
 export class ApiError extends Error {
   level: string;
   constructor({
-    level = Levels.ERROR,
+    level = STATUS_INDICATORS.ERROR,
     message = "Ein unbekannter Fehler ist aufgetreten, bitte den Administrator informieren.",
   }: {
     level?: string;
@@ -20,7 +15,7 @@ export class ApiError extends Error {
     // Retains the correct stack trace for the point at which the error was triggered
     this.stack = new Error().stack;
 
-    // User-defined information
+    // Specific information
     this.level = level;
     this.message = message;
   }

@@ -1,5 +1,5 @@
-import { defaultResponseHandler, getConfig } from "@/api/fetch-utils";
-import { BASE_PATH } from "@/Constants.ts";
+import { defaultResponseHandler, getConfig } from "@/apis/fetch-utils.ts";
+import { BASE_PATH } from "@/constants.ts";
 
 export interface Info {
   application: Application;
