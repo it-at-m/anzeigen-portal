@@ -33,11 +33,11 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { computed, ref } from "vue";
+import { definePage } from "vue-router/experimental";
 
-import { Levels } from "@/api/error";
 import AdDialog from "@/components/AdDialog.vue";
 import AdList from "@/components/AdList.vue";
 import AdNavBar from "@/components/AdNavBar.vue";
@@ -45,19 +45,24 @@ import {
   useCreateAd,
   useDeactivateAd,
   useUpdateAd,
-} from "@/composables/api/useAdApi";
+} from "@/composables/api/useAdApi.ts";
 import {
   useSnackbarEventBus,
   useUpdateAdListEventBus,
-} from "@/composables/useEventBus";
+} from "@/composables/useEventBus.ts";
 import {
   API_ERROR_MSG,
   CREATE_AD_SUCCESS,
   DELETE_AD_SUCCESS,
+  STATUS_INDICATORS,
   UPDATE_AD_SUCCESS,
-} from "@/Constants";
+} from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
-import { useUserStore } from "@/stores/user";
+import { useUserInfoStore } from "@/stores/userinfo.ts";
+
+definePage({
+  alias: ["/myboard"],
+});
 
 const dialog = ref<boolean>(false);
 
@@ -65,7 +70,7 @@ const updateAdListEventBus = useUpdateAdListEventBus();
 
 const snackbarEventBus = useSnackbarEventBus();
 
-const userStore = useUserStore();
+const userStore = useUserInfoStore();
 
 const settingStore = useSettingStore();
 
@@ -145,9 +150,12 @@ const createAdClick = async (createdAd: AdTO) => {
  */
 const finalHandler = (message: string) => {
   if (error.value) {
-    snackbarEventBus.emit({ message: API_ERROR_MSG, level: Levels.ERROR });
+    snackbarEventBus.emit({
+      message: API_ERROR_MSG,
+      level: STATUS_INDICATORS.ERROR,
+    });
   } else {
-    snackbarEventBus.emit({ message, level: Levels.SUCCESS });
+    snackbarEventBus.emit({ message, level: STATUS_INDICATORS.SUCCESS });
     updateAdListEventBus.emit();
     dialog.value = false;
   }

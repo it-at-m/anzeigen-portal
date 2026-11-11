@@ -1,17 +1,28 @@
-import type { Address, AdTO, SwbUserTO } from "@/api/swbrett";
+import type {
+  Address,
+  AdTO,
+  SwbUserTO,
+} from "@/apis/generated/anzeigen-backend";
 
 import { OVERRIDES } from "@variants/config";
 
 export const BASE_PATH = "/api/backend-service";
 
-export const ROUTES_BOARD = "board";
-export const ROUTES_MYBOARD = "myboard";
-export const ROUTES_AD = "ad";
-export const ROUTES_ADMIN = "admin";
+export const ROUTES_BOARD = "/board";
+export const ROUTES_MYBOARD = "/myboard";
+export const ROUTES_AD = "/ad/";
+export const ROUTES_ADMIN = "/admin";
 
 export const AD2IMAGE_URL = import.meta.env.VITE_AD2IMAGE_URL;
+export const APPSWITCHER_URL = import.meta.env.VITE_APPSWITCHER_URL;
+export const BASE_API_PATH = import.meta.env.VITE_BASE_API_PATH;
 
-export const ROUTER_TYPE = "hash";
+export const enum STATUS_INDICATORS {
+  SUCCESS = "success",
+  INFO = "info",
+  WARNING = "warning",
+  ERROR = "error",
+}
 
 /**
  * EventBus Identifiers

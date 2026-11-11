@@ -40,7 +40,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { useMemoize } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
@@ -49,12 +49,13 @@ import { useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/details/AdOverview.vue";
-import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi";
+import { useGetAd, useIncrementAdView } from "@/composables/api/useAdApi.ts";
 import { useGetUser } from "@/composables/api/useUserApi.ts";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
-import { useClearCacheEventBus } from "@/composables/useEventBus";
-import { ROUTES_BOARD } from "@/Constants";
-import { useUserStore } from "@/stores/user.ts";
+import { useClearCacheEventBus } from "@/composables/useEventBus.ts";
+import useHasAnyRole from "@/composables/useHasAnyRole.ts";
+import { ROUTES_BOARD } from "@/constants.ts";
+import { Role } from "@/types/Role.ts";
 
 const clearCacheEventBus = useClearCacheEventBus();
 
@@ -62,8 +63,7 @@ const idQuery = useRouteQuery("id");
 const defaultQuery = useDefaultQuery();
 
 const router = useRouter();
-
-const userStore = useUserStore();
+const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
 
 const {
   call: getAdCall,
@@ -103,7 +103,7 @@ clearCacheEventBus.on(() => getAd.clear());
  * Watches the `idQuery` for changes, increments the view count and fetches the new ad accordingly.
  */
 watch(idQuery, (newId) => {
-  if (newId !== null) {
+  if (newId) {
     incrementView({ id: parseInt(newId.toString()) });
 
     updateDisplayedAd(newId.toString() || "1");
@@ -128,7 +128,7 @@ onMounted(() => {
 const updateDisplayedAd = async (id: string) => {
   adDetails.value = (await getAd(parseInt(id))).value as AdTO;
 
-  if (userStore.isAdmin && adDetails.value.swbUser?.id) {
+  if (hasAdminRole.value && adDetails.value.swbUser?.id) {
     await getUser({
       userId: adDetails.value.swbUser?.id,
     });
