@@ -1,10 +1,9 @@
-import type { SettingTO } from "@/api/swbrett";
+import type { SettingTO } from "@/apis/generated/anzeigen-backend";
 
-import { Levels } from "@/api/error.ts";
 import { useGetSettings } from "@/composables/api/useSettingsApi.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
-import { API_ERROR_MSG } from "@/Constants.ts";
+import { API_ERROR_MSG, STATUS_INDICATORS } from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const {
   call: getSettings,
@@ -16,16 +15,16 @@ const {
  * Loads the categories and stores them
  */
 export const useUpdateSettings = () => {
-  const snackbar = useSnackbar();
+  const snackbar = useSnackbarStore();
   const settingStore = useSettingStore();
 
   return async () => {
     await getSettings();
 
     if (settingsError.value) {
-      snackbar.sendMessage({
-        level: Levels.ERROR,
-        message: API_ERROR_MSG,
+      snackbar.push({
+        color: STATUS_INDICATORS.ERROR,
+        text: API_ERROR_MSG,
       });
       return;
     }

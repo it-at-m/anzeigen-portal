@@ -1,11 +1,11 @@
-import type { HTTPHeaders } from "@/api/swbrett";
+import type { HTTPHeaders } from "@/apis/generated/anzeigen-backend";
 import type { InjectionKey } from "vue";
 
 import { provide } from "vue";
 
-import { getHeaders } from "@/api/fetch-utils";
-import { Configuration, DefaultApi } from "@/api/swbrett";
-import { BASE_PATH } from "@/Constants.ts";
+import { getHeaders } from "@/apis/fetch-utils.ts";
+import { Configuration, DefaultApi } from "@/apis/generated/anzeigen-backend";
+import { BASE_PATH } from "@/constants.ts";
 
 export const DEFAULT_API_KEY: InjectionKey<DefaultApi> = Symbol("defaultApi");
 

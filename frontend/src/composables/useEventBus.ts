@@ -1,4 +1,4 @@
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 import type { SnackbarMessage } from "@/types/SnackbarMessage";
 
 import { useEventBus } from "@vueuse/core";
@@ -9,7 +9,7 @@ import {
   EV_SETTINGS_UPDATED,
   EV_SNACKBAR,
   EV_UPDATE_AD_LIST,
-} from "@/Constants";
+} from "@/constants.ts";
 
 /**
  * Composes all event buses as composables.

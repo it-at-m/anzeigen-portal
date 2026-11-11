@@ -1,10 +1,9 @@
-import type { AdCategory } from "@/api/swbrett";
+import type { AdCategory } from "@/apis/generated/anzeigen-backend";
 
-import { Levels } from "@/api/error.ts";
 import { useGetCategories } from "@/composables/api/useCategoriesApi.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
-import { API_ERROR_MSG } from "@/Constants.ts";
+import { API_ERROR_MSG, STATUS_INDICATORS } from "@/constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const {
   call: getCategories,
@@ -16,7 +15,7 @@ const {
  * Loads the categories and stores them
  */
 export const useUpdateCategories = () => {
-  const snackbar = useSnackbar();
+  const snackbar = useSnackbarStore();
   const categoriesStore = useCategoriesStore();
 
   return async () => {
@@ -25,9 +24,9 @@ export const useUpdateCategories = () => {
 
     // Error handling: show a snackbar if the API call fails.
     if (categoryError.value) {
-      snackbar.sendMessage({
-        level: Levels.ERROR,
-        message: API_ERROR_MSG,
+      snackbar.push({
+        color: STATUS_INDICATORS.ERROR,
+        text: API_ERROR_MSG,
       });
     }
 

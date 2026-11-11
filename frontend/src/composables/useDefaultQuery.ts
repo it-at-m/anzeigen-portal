@@ -1,6 +1,6 @@
 import { computed } from "vue";
 
-import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants.ts";
+import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 
 export const useDefaultQuery = () => {
