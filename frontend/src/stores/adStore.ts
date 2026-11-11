@@ -1,4 +1,7 @@
-import type { AdTO, GetAds200Response } from "@/api/swbrett";
+import type {
+  AdTO,
+  GetAds200Response,
+} from "@/apis/generated/anzeigen-backend";
 import type { DeepReadonly } from "vue";
 
 import { defineStore } from "pinia";

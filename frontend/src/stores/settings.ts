@@ -1,4 +1,7 @@
-import type { SettingTO, SettingTOSettingNameEnum } from "@/api/swbrett";
+import type {
+  SettingTO,
+  SettingTOSettingNameEnum,
+} from "@/apis/generated/anzeigen-backend";
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";

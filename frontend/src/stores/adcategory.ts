@@ -1,4 +1,4 @@
-import type { AdCategory } from "@/api/swbrett";
+import type { AdCategory } from "@/apis/generated/anzeigen-backend";
 
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
