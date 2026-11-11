@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTOSettingNameEnum } from "@/api/swbrett";
+import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
 import { computed } from "vue";
 
@@ -44,15 +44,15 @@ const computedFile = computed(() => {
 });
 
 const updateFile = (files: File | File[] | undefined) => {
-  if (!files) {
+  const file = Array.isArray(files) ? files[0] : files;
+
+  if (!file) {
     settingStore.setSetting({
       ...computedSetting.value,
       fileValue: undefined,
     });
     return;
   }
-
-  const file = Array.isArray(files) ? files[0] : files;
 
   const reader = new FileReader();
   reader.onloadend = function () {

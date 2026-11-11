@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTOSettingNameEnum } from "@/api/swbrett";
+import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";

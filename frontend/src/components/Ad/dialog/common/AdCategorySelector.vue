@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory } from "@/api/swbrett";
+import type { AdCategory } from "@/apis/generated/anzeigen-backend";
 
 import { useI18n } from "vue-i18n";
 

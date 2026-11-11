@@ -8,12 +8,12 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { onMounted } from "vue";
 
 import { useGetAdImage } from "@/composables/api/useFilesApi";
-import { PREVIEW_IMAGE_FILE_URI_PREFIX } from "@/Constants";
+import { PREVIEW_IMAGE_FILE_URI_PREFIX } from "@/constants.ts";
 
 const { call: getAdImage, data: adImageData } = useGetAdImage();
 

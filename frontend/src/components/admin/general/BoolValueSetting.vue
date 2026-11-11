@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTOSettingNameEnum } from "@/api/swbrett";
+import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
 import { computed } from "vue";
 
@@ -19,7 +19,7 @@ import { useSettingStore } from "@/stores/settings.ts";
 
 const settingStore = useSettingStore();
 
-const { settingName, settingLabel } = defineProps<{
+const { settingName, settingLabel = undefined } = defineProps<{
   settingName: SettingTOSettingNameEnum;
   settingLabel?: string;
 }>();

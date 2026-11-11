@@ -131,27 +131,33 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 import type { DeepReadonly } from "vue";
 
 import { computed, toRef } from "vue";
 
-import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
+import {
+  AdTOFromJSONTyped,
+  AdTOToJSONTyped,
+} from "@/apis/generated/anzeigen-backend";
 import AdArtChip from "@/components/Ad/list/AdArtChip.vue";
 import AdCategoryChip from "@/components/Ad/list/AdCategoryChip.vue";
 import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
 import AdPrice from "@/components/Ad/list/AdPrice.vue";
 import AdViewCountChip from "@/components/Ad/list/AdViewCountChip.vue";
 import { useDialogEventBus } from "@/composables/useEventBus.ts";
+import useHasAnyRole from "@/composables/useHasAnyRole.ts";
 import { usePlainTextFromHtml } from "@/composables/useSanitizedHtml.ts";
 import {
   CONFIG,
   PREVIEW_IMAGE_FILE_URI_PREFIX,
   ROUTES_AD,
-} from "@/Constants.ts";
-import { useUserStore } from "@/stores/user.ts";
+} from "@/constants.ts";
+import { useUserInfoStore } from "@/stores/userinfo.ts";
+import { Role } from "@/types/Role.ts";
 
-const userStore = useUserStore();
+const userStore = useUserInfoStore();
+const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
 
 const dialogBus = useDialogEventBus();
 
@@ -167,7 +173,7 @@ const sanitizedDescription = usePlainTextFromHtml(
  * Computes whether the ad can be edited by the current user, either belongs to him, or user is admin.
  */
 const canEdit = computed(
-  () => adTo.swbUser?.id === userStore.userID || userStore.isAdmin
+  () => adTo.swbUser?.id === userStore.userID || hasAdminRole.value
 );
 
 /**

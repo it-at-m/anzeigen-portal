@@ -2,14 +2,16 @@
   <v-card
     flat
     class="mb-4"
-    :title="userStore.getUser?.displayName"
+    :title="userStore.userInfo?.displayName"
     :loading="loading"
     :disabled="loading"
     subtitle="Hier geht es zu Ihren Anzeigen"
     @click="routeTo"
   >
     <template #prepend>
-      <ad2-image-avatar username="vorname nachname" />
+      <ad2-image-avatar
+        :username="userStore.userInfo?.preferred_username || ''"
+      />
     </template>
   </v-card>
 </template>
@@ -19,12 +21,12 @@ import { useRouter } from "vue-router";
 
 import Ad2ImageAvatar from "@/components/common/Ad2ImageAvatar.vue";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
-import { ROUTES_MYBOARD } from "@/Constants";
-import { useUserStore } from "@/stores/user";
+import { ROUTES_MYBOARD } from "@/constants.ts";
+import { useUserInfoStore } from "@/stores/userinfo.ts";
 
 const router = useRouter();
 
-const userStore = useUserStore();
+const userStore = useUserInfoStore();
 
 const defaultQuery = useDefaultQuery();
 
@@ -37,7 +39,7 @@ const { loading = false } = defineProps<{
  */
 const routeTo = () => {
   router.push({
-    name: ROUTES_MYBOARD,
+    path: ROUTES_MYBOARD,
     query: defaultQuery.value,
   });
 };

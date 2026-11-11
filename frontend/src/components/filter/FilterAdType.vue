@@ -32,9 +32,9 @@ import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { AdTOAdTypeEnum } from "@/api/swbrett";
+import { AdTOAdTypeEnum } from "@/apis/generated/anzeigen-backend";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { QUERY_NAME_TYPE } from "@/Constants";
+import { QUERY_NAME_TYPE } from "@/constants.ts";
 
 const { t } = useI18n();
 /**

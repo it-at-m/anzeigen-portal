@@ -101,7 +101,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";

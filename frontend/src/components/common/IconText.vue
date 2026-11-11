@@ -16,7 +16,11 @@
 </template>
 
 <script setup lang="ts">
-const { link = false } = defineProps<{
+const {
+  link = false,
+  href = undefined,
+  icon = undefined,
+} = defineProps<{
   link?: boolean;
   label: string;
   href?: string;

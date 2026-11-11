@@ -42,7 +42,7 @@
 </template>
 
 <script setup lang="ts">
-import type { GetAdsRequest } from "@/api/swbrett";
+import type { GetAdsRequest } from "@/apis/generated/anzeigen-backend";
 
 import { computed, onMounted, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -53,9 +53,11 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useGetAds } from "@/composables/api/useAdApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useUpdateAdListEventBus } from "@/composables/useEventBus";
-import { ROUTES_BOARD, ROUTES_MYBOARD } from "@/Constants";
+import useHasAnyRole from "@/composables/useHasAnyRole.ts";
+import { ROUTES_BOARD, ROUTES_MYBOARD } from "@/constants.ts";
 import { useAdStore } from "@/stores/adStore";
-import { useUserStore } from "@/stores/user";
+import { useUserInfoStore } from "@/stores/userinfo.ts";
+import { Role } from "@/types/Role.ts";
 
 const { t } = useI18n();
 
@@ -66,7 +68,8 @@ const { data: ads, call: getAds, loading } = useGetAds();
 
 const adStore = useAdStore();
 
-const userStore = useUserStore();
+const userStore = useUserInfoStore();
+const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 
@@ -94,7 +97,7 @@ const updateUrl = computed(() => [route.name, route.path]);
 /**
  * Reactive route.name
  */
-const routeName = computed(() => route.name);
+const routePath = computed(() => route.path);
 
 /**
  * Triggers refresh of ad list after changes in url
@@ -121,16 +124,17 @@ const getAdPage = async (isNextPage: boolean) => {
     ...route.query,
   };
 
+  // TODO - this can now be corrected as it can be whitelisted
   // Not proud of this conversion - workaround for https://github.com/it-at-m/refarch/blob/00be5e8a4462ed93f8d32a6593a0d162d24da865/refarch-gateway/src/main/java/de/muenchen/refarch/gateway/filter/GlobalRequestParameterPollutionFilter.java
   if (requestQuery.type) {
     requestQuery.type = requestQuery.type.toString();
   }
 
-  if (!userStore.isAdmin) {
+  if (!hasAdminRole) {
     requestQuery.isActive = true;
   }
 
-  if (routeName.value === ROUTES_MYBOARD) {
+  if (routePath.value === ROUTES_MYBOARD) {
     requestQuery.userId = userStore.userID?.toString();
   }
 

@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-import "@dotwee/quill/dist/quill.snow.css";
+import "@mirohq/quill/dist/quill.snow.css";
 
-import Quill from "@dotwee/quill";
+import Quill from "@mirohq/quill";
 import { onMounted, ref, watch } from "vue";
 import { QuillyEditor } from "vue-quilly";
 
@@ -36,6 +36,7 @@ const options = {
 let quill: Quill | undefined;
 
 onMounted(() => {
+  // @ts-expect-error: vue-quilly expects the original type, but quilly is not supported anymore...
   quill = editor.value?.initialize(Quill);
 });
 

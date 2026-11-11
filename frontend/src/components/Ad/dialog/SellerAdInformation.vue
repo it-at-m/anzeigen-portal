@@ -50,18 +50,20 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { useTemplateRef, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
-import { CONFIG, EMPTY_ADTO_OBJECT } from "@/Constants";
+import { CONFIG, EMPTY_ADTO_OBJECT } from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 
 const { t } = useI18n();
 
-const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
+const adTO = defineModel<AdTO>({
+  default: () => structuredClone(EMPTY_ADTO_OBJECT),
+});
 
 defineProps<{
   disabled?: boolean;
@@ -91,7 +93,7 @@ const ruleDisallowedEMailDomains = (value: string) => {
     return true;
   }
 
-  const emailDomain = value.split("@")[1].toLowerCase() || "";
+  const emailDomain = value.split("@")[1]?.toLowerCase() || "";
 
   const domainList =
     emailSetting?.textValue?.toLocaleLowerCase().split(",") || [];

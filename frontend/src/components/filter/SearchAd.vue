@@ -22,7 +22,7 @@ import { onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 
-import { ROUTES_BOARD } from "@/Constants.ts";
+import { ROUTES_BOARD } from "@/constants.ts";
 import router from "@/plugins/router.ts";
 
 const { t } = useI18n();

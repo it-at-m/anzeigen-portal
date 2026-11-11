@@ -30,14 +30,14 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTOSettingNameEnum } from "@/api/swbrett";
+import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
 
-const { settingName, altTextIndex } = defineProps<{
+const { settingName, altTextIndex = undefined } = defineProps<{
   settingName: SettingTOSettingNameEnum;
 
   /**

@@ -118,11 +118,13 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTO, SettingTOSettingNameEnum } from "@/api/swbrett";
+import type {
+  SettingTO,
+  SettingTOSettingNameEnum,
+} from "@/apis/generated/anzeigen-backend";
 
 import { useI18n } from "vue-i18n";
 
-import { Levels } from "@/api/error.ts";
 import BoolValueSetting from "@/components/admin/general/BoolValueSetting.vue";
 import FileValueSetting from "@/components/admin/general/FileValueSetting.vue";
 import NumberValueSetting from "@/components/admin/general/NumberValueSetting.vue";
@@ -131,15 +133,16 @@ import TextSelectValueSetting from "@/components/admin/general/TextSelectValueSe
 import TextValueSetting from "@/components/admin/general/TextValueSetting.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { usePutSettings } from "@/composables/api/useSettingsApi.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
 import { useUpdateSettings } from "@/composables/useUpdateSettings.ts";
+import { STATUS_INDICATORS } from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const reloadSettings = useUpdateSettings();
 
 const settingStore = useSettingStore();
 
-const snackbar = useSnackbar();
+const snackbar = useSnackbarStore();
 
 const { t } = useI18n();
 
@@ -164,14 +167,14 @@ const saveSettings = async () => {
   });
 
   if (updateSettingsError.value) {
-    snackbar.sendMessage({
-      level: Levels.WARNING,
-      message: "Fehler beim Speichern der Einstellungen.",
+    snackbar.push({
+      color: STATUS_INDICATORS.WARNING,
+      text: "Fehler beim Speichern der Einstellungen.",
     });
   } else {
-    snackbar.sendMessage({
-      level: Levels.SUCCESS,
-      message: "Einstellungen wurden erfolgreich gespeichert.",
+    snackbar.push({
+      color: STATUS_INDICATORS.SUCCESS,
+      text: "Einstellungen wurden erfolgreich gespeichert.",
     });
   }
 

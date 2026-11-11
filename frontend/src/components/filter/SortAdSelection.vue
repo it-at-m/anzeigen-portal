@@ -22,7 +22,7 @@ import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useSettingsUpdatedEventBus } from "@/composables/useEventBus.ts";
-import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/Constants";
+import { QUERY_NAME_ORDER, QUERY_NAME_SORTBY } from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
 import {
   isValidOrderSelection,

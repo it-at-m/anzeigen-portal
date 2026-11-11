@@ -14,7 +14,7 @@
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { AdTOConditionEnum } from "@/api/swbrett";
+import { AdTOConditionEnum } from "@/apis/generated/anzeigen-backend";
 
 const { t } = useI18n();
 

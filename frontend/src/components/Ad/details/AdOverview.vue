@@ -209,7 +209,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO, SwbUserTO } from "@/api/swbrett";
+import type { AdTO, SwbUserTO } from "@/apis/generated/anzeigen-backend";
 
 import { useDateFormat } from "@vueuse/shared";
 import { computed } from "vue";
@@ -221,7 +221,7 @@ import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import IconText from "@/components/common/IconText.vue";
 import { useDownloadFile } from "@/composables/useDownloadFile.ts";
-import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/Constants";
+import { CONFIG, DATE_DISPLAY_FORMAT, ROUTES_BOARD } from "@/constants.ts";
 
 const { t } = useI18n();
 

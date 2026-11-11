@@ -67,19 +67,19 @@
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { Levels } from "@/api/error.ts";
 import SingleCategoryEdit from "@/components/admin/SingleCategoryEdit.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import { useCreateAdCategory } from "@/composables/api/useCategoriesApi.ts";
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
+import { STATUS_INDICATORS } from "@/constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const { t } = useI18n();
 
 const categoryStore = useCategoriesStore();
 
-const snackbar = useSnackbar();
+const snackbar = useSnackbarStore();
 
 const createDialog = ref<boolean>(false);
 
@@ -109,14 +109,14 @@ const clickCreateCategory = async () => {
   });
 
   if (!createCategoryError.value) {
-    snackbar.sendMessage({
-      level: Levels.SUCCESS,
-      message: t("editCategories.createCategories.success"),
+    snackbar.push({
+      color: STATUS_INDICATORS.SUCCESS,
+      text: t("editCategories.createCategories.success"),
     });
   } else {
-    snackbar.sendMessage({
-      level: Levels.WARNING,
-      message: t("editCategories.createCategories.error"),
+    snackbar.push({
+      color: STATUS_INDICATORS.WARNING,
+      text: t("editCategories.createCategories.error"),
     });
   }
 

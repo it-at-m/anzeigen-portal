@@ -42,7 +42,7 @@ import { useI18n } from "vue-i18n";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
-import { ROUTES_BOARD } from "@/Constants";
+import { ROUTES_BOARD } from "@/constants.ts";
 
 const { t } = useI18n();
 

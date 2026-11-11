@@ -7,8 +7,9 @@
       <span
         v-if="text"
         class="text-primary"
-        >{{ text }}</span
       >
+        {{ text }}
+      </span>
     </template>
     <template #prepend>
       <v-icon

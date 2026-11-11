@@ -25,7 +25,7 @@ import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { QUERY_IS_ACTIVE } from "@/Constants.ts";
+import { QUERY_IS_ACTIVE } from "@/constants.ts";
 
 const { t } = useI18n();
 

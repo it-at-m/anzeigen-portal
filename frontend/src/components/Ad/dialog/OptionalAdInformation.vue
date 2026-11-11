@@ -23,17 +23,19 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { useI18n } from "vue-i18n";
 
 import AdFilesUpload from "@/components/Ad/dialog/optional/AdFilesUpload.vue";
 import AdTitelPicture from "@/components/Ad/dialog/optional/AdTitelPicture.vue";
-import { EMPTY_ADTO_OBJECT } from "@/Constants";
+import { EMPTY_ADTO_OBJECT } from "@/constants.ts";
 
 const { t } = useI18n();
 
-const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
+const adTO = defineModel<AdTO>({
+  default: () => structuredClone(EMPTY_ADTO_OBJECT),
+});
 
 defineProps<{
   disabled?: boolean;

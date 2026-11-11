@@ -9,7 +9,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 
-import { DefaultLhmAvatarService } from "@/api/ad2image-avatar-client.ts";
+import { DefaultLhmAvatarService } from "@/apis/ad2image-avatar-client.ts.ts";
 
 const {
   username,

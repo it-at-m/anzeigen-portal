@@ -16,20 +16,20 @@
 </template>
 
 <script setup lang="ts">
-import type { SwbImageTO } from "@/api/swbrett";
+import type { SwbImageTO } from "@/apis/generated/anzeigen-backend";
 
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { Levels } from "@/api/error.ts";
 import { useSanitizeImage } from "@/composables/api/useFilesApi.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
 import {
   ALLOWED_IMAGE_TYPES,
   FILE_SIZE_TO_BIG,
   FILE_TYPE_INCORRECT,
-} from "@/Constants.ts";
+  STATUS_INDICATORS,
+} from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const { t } = useI18n();
 
@@ -37,7 +37,7 @@ const settingStore = useSettingStore();
 const maxImageSize =
   settingStore.getSetting("MAX_SWB_IMAGE_SIZE")?.numberValue || 1;
 
-const snackbar = useSnackbar();
+const snackbar = useSnackbarStore();
 
 const {
   call: sanitizeImg,
@@ -82,9 +82,9 @@ const uploadPicture = async (files: File[] | File) => {
   }
 
   if (file.size > maxImageSize * 1024 * 1024) {
-    snackbar.sendMessage({
-      level: Levels.WARNING,
-      message: FILE_SIZE_TO_BIG(maxImageSize.toString()),
+    snackbar.push({
+      color: STATUS_INDICATORS.WARNING,
+      text: FILE_SIZE_TO_BIG(maxImageSize.toString()),
     });
     return;
   }
@@ -101,9 +101,9 @@ const uploadPicture = async (files: File[] | File) => {
     });
 
     if (sanitizeImgError.value || !sanitizeImgData.value) {
-      snackbar.sendMessage({
-        level: Levels.WARNING,
-        message: FILE_TYPE_INCORRECT,
+      snackbar.push({
+        color: STATUS_INDICATORS.WARNING,
+        text: FILE_TYPE_INCORRECT,
       });
       return;
     }

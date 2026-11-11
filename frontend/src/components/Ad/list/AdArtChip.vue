@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTOAdTypeEnum } from "@/api/swbrett";
+import type { AdTOAdTypeEnum } from "@/apis/generated/anzeigen-backend";
 
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
@@ -14,7 +14,7 @@ import { useI18n } from "vue-i18n";
 import AdChip from "@/components/common/AdChip.vue";
 
 const { t } = useI18n();
-const { adType } = defineProps<{
+const { adType = undefined } = defineProps<{
   adType?: AdTOAdTypeEnum;
 }>();
 

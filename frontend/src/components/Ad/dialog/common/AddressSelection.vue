@@ -26,11 +26,11 @@
 </template>
 
 <script setup lang="ts">
-import type { Address } from "@/api/swbrett";
+import type { Address } from "@/apis/generated/anzeigen-backend";
 
 import { useI18n } from "vue-i18n";
 
-import { CONFIG } from "@/Constants.ts";
+import { CONFIG } from "@/constants.ts";
 
 const { t } = useI18n();
 

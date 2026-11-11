@@ -6,7 +6,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory } from "@/api/swbrett";
+import type { AdCategory } from "@/apis/generated/anzeigen-backend";
 
 import AdChip from "@/components/common/AdChip.vue";
 

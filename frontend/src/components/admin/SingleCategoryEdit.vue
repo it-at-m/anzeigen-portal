@@ -87,18 +87,18 @@
 </template>
 
 <script setup lang="ts">
-import type { AdCategory } from "@/api/swbrett";
+import type { AdCategory } from "@/apis/generated/anzeigen-backend";
 
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { Levels } from "@/api/error.ts";
 import YesNoDialog from "@/components/common/YesNoDialog.vue";
 import {
   useDeleteAdCategory,
   useUpdateAdCategory,
 } from "@/composables/api/useCategoriesApi.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
+import { STATUS_INDICATORS } from "@/constants.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 
 const { category } = defineProps<{
   category: AdCategory;
@@ -108,7 +108,7 @@ const { t } = useI18n();
 
 const deleteDialog = ref<boolean>(false);
 
-const snackbar = useSnackbar();
+const snackbar = useSnackbarStore();
 
 const name = ref<string | undefined>(category.name);
 
@@ -147,14 +147,14 @@ const updateCategoryName = async () => {
   }
 
   if (!createCategoryError.value) {
-    snackbar.sendMessage({
-      level: Levels.SUCCESS,
-      message: t("singleCategoryEdit.categoryChangeSuccess"),
+    snackbar.push({
+      color: STATUS_INDICATORS.SUCCESS,
+      text: t("singleCategoryEdit.categoryChangeSuccess"),
     });
   } else {
-    snackbar.sendMessage({
-      level: Levels.WARNING,
-      message: t("singleCategoryEdit.categoryChangeError"),
+    snackbar.push({
+      color: STATUS_INDICATORS.WARNING,
+      text: t("singleCategoryEdit.categoryChangeError"),
     });
   }
 
@@ -169,14 +169,14 @@ const confirmedDeletion = async () => {
   }
 
   if (deleteCategoryError.value) {
-    snackbar.sendMessage({
-      level: Levels.WARNING,
-      message: t("singleCategoryEdit.categoryDeleteError"),
+    snackbar.push({
+      color: STATUS_INDICATORS.WARNING,
+      text: t("singleCategoryEdit.categoryDeleteError"),
     });
   } else {
-    snackbar.sendMessage({
-      level: Levels.SUCCESS,
-      message: t("singleCategoryEdit.categoryDeleteSuccess"),
+    snackbar.push({
+      color: STATUS_INDICATORS.SUCCESS,
+      text: t("singleCategoryEdit.categoryDeleteSuccess"),
     });
   }
 

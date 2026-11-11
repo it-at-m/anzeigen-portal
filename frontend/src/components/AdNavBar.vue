@@ -13,7 +13,7 @@
     />
     <filter-ad-category v-if="!isMyBoard" />
     <filter-ad-type />
-    <filter-ad-active v-if="userStore.isAdmin" />
+    <filter-ad-active v-if="hasAdminRole" />
   </ad-display-sheet>
 
   <sort-ad-selection />
@@ -24,7 +24,10 @@ import { useRouteQuery } from "@vueuse/router";
 import { computed } from "vue";
 import { useRoute } from "vue-router";
 
-import { AdTOFromJSONTyped, AdTOToJSONTyped } from "@/api/swbrett";
+import {
+  AdTOFromJSONTyped,
+  AdTOToJSONTyped,
+} from "@/apis/generated/anzeigen-backend";
 import AdEditButton from "@/components/Ad/list/AdEditButton.vue";
 import AccountCard from "@/components/common/AccountCard.vue";
 import AdDisplaySheet from "@/components/common/AdDisplaySheet.vue";
@@ -35,24 +38,28 @@ import SortAdSelection from "@/components/filter/SortAdSelection.vue";
 import UserFilter from "@/components/filter/UserFilter.vue";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useDialogEventBus } from "@/composables/useEventBus";
+import useHasAnyRole from "@/composables/useHasAnyRole.ts";
 import {
   EMPTY_ADTO_OBJECT,
   QUERY_NAME_USERID,
   ROUTES_BOARD,
   ROUTES_MYBOARD,
-} from "@/Constants";
+} from "@/constants.ts";
 import router from "@/plugins/router";
-import { useUserStore } from "@/stores/user";
+import { useUserInfoStore } from "@/stores/userinfo.ts";
+import { Role } from "@/types/Role.ts";
 
 const dialogBus = useDialogEventBus();
-const userStore = useUserStore();
+const userStore = useUserInfoStore();
 const defaultQuery = useDefaultQuery();
 
 const userQuery = useRouteQuery(QUERY_NAME_USERID);
+const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
 
 const route = useRoute();
 
-const isMyBoard = computed(() => route.name === ROUTES_MYBOARD);
+// TODO: change maybe to a query param or sth else
+const isMyBoard = computed(() => route.path === ROUTES_MYBOARD);
 
 const triggerDialog = () => {
   dialogBus.emit(AdTOFromJSONTyped(AdTOToJSONTyped(EMPTY_ADTO_OBJECT), false));

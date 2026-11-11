@@ -56,7 +56,10 @@
                 :disabled="!modelValue"
                 @click="clear"
               >
-                <v-icon v-if="modelValue"> mdi-close </v-icon>
+                <v-icon
+                  v-if="modelValue"
+                  :icon="mdiClose"
+                />
               </v-btn>
             </template>
           </v-text-field>
@@ -69,6 +72,7 @@
 <script setup lang="ts">
 import type { VInput } from "vuetify/components";
 
+import { mdiClose } from "@mdi/js";
 import { computed, onMounted, ref, watch } from "vue";
 
 /**
@@ -101,16 +105,16 @@ const {
   label = "",
   rules = [],
 } = defineProps<{
-  readonly: boolean;
-  hideDetails: boolean;
-  dense: boolean;
-  filled: boolean;
-  outlined: boolean;
-  clearable: boolean;
-  persistentHint: boolean;
-  hint: string;
-  label: string;
-  rules: ValidationRules;
+  readonly?: boolean;
+  hideDetails?: boolean;
+  dense?: boolean;
+  filled?: boolean;
+  outlined?: boolean;
+  clearable?: boolean;
+  persistentHint?: boolean;
+  hint?: string;
+  label?: string;
+  rules?: ValidationRules;
 }>();
 
 const day = ref<string | null>(null);

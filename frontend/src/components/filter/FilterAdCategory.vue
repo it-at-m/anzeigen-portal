@@ -18,7 +18,7 @@
             :value="NO_CATEGORY.id"
           >
             <template #prepend>
-              <v-icon icon="mdi-check-all" />
+              <v-icon :icon="mdiCheckAll" />
             </template>
             <span class="text-primary">{{ NO_CATEGORY.name }}</span>
           </v-tab>
@@ -28,7 +28,7 @@
             :value="category.id"
           >
             <template #prepend>
-              <v-icon icon="mdi-card-multiple-outline" />
+              <v-icon :icon="mdiCardMultipleOutline" />
             </template>
             <span class="text-primary">{{ category.name }}</span>
           </v-tab>
@@ -39,12 +39,13 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCardMultipleOutline, mdiCheckAll } from "@mdi/js";
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
-import { NO_CATEGORY, QUERY_NAME_CATEGORYID } from "@/Constants.ts";
+import { NO_CATEGORY, QUERY_NAME_CATEGORYID } from "@/constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory";
 
 const { t } = useI18n();

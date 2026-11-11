@@ -11,7 +11,7 @@ import { computed } from "vue";
 import AdChip from "@/components/common/AdChip.vue";
 
 const { views = 0 } = defineProps<{
-  views: number;
+  views?: number;
 }>();
 
 /**

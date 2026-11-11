@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import type { SettingTOSettingNameEnum } from "@/api/swbrett";
+import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
 import { useDebounceFn } from "@vueuse/core";
 import { computed } from "vue";

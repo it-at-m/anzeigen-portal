@@ -92,7 +92,7 @@
 </template>
 
 <script setup lang="ts">
-import type { AdTO } from "@/api/swbrett";
+import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { ref, watch } from "vue";
 import { useI18n } from "vue-i18n";
@@ -103,10 +103,12 @@ import AdDescriptionEditor from "@/components/Ad/dialog/common/AdDescriptionEdit
 import AddressSelection from "@/components/Ad/dialog/common/AddressSelection.vue";
 import AdPriceSelection from "@/components/Ad/dialog/common/AdPriceSelection.vue";
 import AdDateSelector from "@/components/Ad/dialog/seller/AdDateSelector.vue";
-import { AD_MAX_TITLE_LENGTH, CONFIG, EMPTY_ADTO_OBJECT } from "@/Constants";
+import { AD_MAX_TITLE_LENGTH, CONFIG, EMPTY_ADTO_OBJECT } from "@/constants.ts";
 
 const { t } = useI18n();
-const adTO = defineModel<AdTO>({ default: EMPTY_ADTO_OBJECT });
+const adTO = defineModel<AdTO>({
+  default: () => structuredClone(EMPTY_ADTO_OBJECT),
+});
 
 const price = defineModel<number>("price", { default: 1 });
 
