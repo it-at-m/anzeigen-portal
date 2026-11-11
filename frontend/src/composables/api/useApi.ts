@@ -1,3 +1,5 @@
+import type { Ref } from "vue";
+
 import { readonly, ref } from "vue";
 
 /**
@@ -7,7 +9,7 @@ import { readonly, ref } from "vue";
  * @param apiMethod - The API method to be called.
  * @returns An object containing the state of the API call and a method to execute the call.
  */
-export function useApiCall<TRequest, TResponse = void>(
+export function useApi<TRequest, TResponse = void>(
   apiMethod: (params: TRequest) => Promise<TResponse>
 ) {
   const loadingInternal = ref(false);
@@ -16,7 +18,7 @@ export function useApiCall<TRequest, TResponse = void>(
 
   const loading = readonly(loadingInternal);
   const error = readonly(errorInternal);
-  const data = readonly(dataInternal);
+  const data = readonly(dataInternal) as Readonly<Ref<TResponse>>;
 
   /**
    * Executes the API method and updates the state accordingly.

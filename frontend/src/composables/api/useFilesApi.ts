@@ -4,31 +4,32 @@ import type {
   SanitizeImageRequest,
   SwbFileTO,
   SwbImageTO,
-} from "@/api/swbrett";
+} from "@/apis/generated/anzeigen-backend";
 
-import { useApiCall } from "@/composables/api/useApiCall";
+import { DefaultApi } from "@/apis/generated/anzeigen-backend";
+import { useApi } from "@/composables/api/useApi.ts";
 import { ApiFactory } from "@/util/apiFactory.ts";
 
 export const useGetAdImage = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<GetImageRequest, SwbImageTO>((params: GetImageRequest) =>
+  return useApi<GetImageRequest, SwbImageTO>((params: GetImageRequest) =>
     api.getImage(params)
   );
 };
 
 export const useGetFile = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<GetFileRequest, SwbFileTO>((params: GetFileRequest) =>
+  return useApi<GetFileRequest, SwbFileTO>((params: GetFileRequest) =>
     api.getFile(params)
   );
 };
 
 export const useSanitizeImage = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<SanitizeImageRequest, string>(
-    (params: SanitizeImageRequest) => api.sanitizeImage(params)
+  return useApi<SanitizeImageRequest, string>((params: SanitizeImageRequest) =>
+    api.sanitizeImage(params)
   );
 };

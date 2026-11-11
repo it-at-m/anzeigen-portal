@@ -1,38 +1,39 @@
-import type { Info } from "@/api/info-client.ts";
 import type {
   GetSettingRequest,
   SettingTO,
   UpdateSettingsRequest,
-} from "@/api/swbrett";
+} from "@/apis/generated/anzeigen-backend";
+import type { Info } from "@/apis/info-client.ts";
 
-import { getInfo } from "@/api/info-client.ts";
-import { useApiCall } from "@/composables/api/useApiCall.ts";
+import { DefaultApi } from "@/apis/generated/anzeigen-backend";
+import { getInfo } from "@/apis/info-client.ts";
+import { useApi } from "@/composables/api/useApi.ts";
 import { ApiFactory } from "@/util/apiFactory.ts";
 
 export const useGetSetting = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<GetSettingRequest, SettingTO>((params) =>
+  return useApi<GetSettingRequest, SettingTO>((params) =>
     api.getSetting(params)
   );
 };
 
 export const useGetSettings = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  return useApiCall<void, SettingTO[]>(() => api.getSettings());
+  return useApi<void, SettingTO[]>(() => api.getSettings());
 };
 
 export const usePutSettings = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<UpdateSettingsRequest, SettingTO[]>((params) =>
+  return useApi<UpdateSettingsRequest, SettingTO[]>((params) =>
     api.updateSettings(params)
   );
 };
 
 export const useGetAppInfo = () => {
   // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  return useApiCall<void, Info>(() => getInfo());
+  return useApi<void, Info>(() => getInfo());
 };

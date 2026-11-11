@@ -3,38 +3,32 @@ import type {
   FindUserRequest,
   GetUserRequest,
   SwbUserTO,
-} from "@/api/swbrett";
-import type User from "@/types/User";
+} from "@/apis/generated/anzeigen-backend";
 
-import { getUser } from "@/api/user-client";
-import { useApiCall } from "@/composables/api/useApiCall";
+import { DefaultApi } from "@/apis/generated/anzeigen-backend";
+import { useApi } from "@/composables/api/useApi.ts";
 import { ApiFactory } from "@/util/apiFactory.ts";
 
 export const useCreateUser = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<CreateUserRequest, SwbUserTO>((params: CreateUserRequest) =>
+  return useApi<CreateUserRequest, SwbUserTO>((params: CreateUserRequest) =>
     api.createUser(params)
   );
 };
 
 export const useFindUser = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<FindUserRequest, SwbUserTO>((params: FindUserRequest) =>
+  return useApi<FindUserRequest, SwbUserTO>((params: FindUserRequest) =>
     api.findUser(params)
   );
 };
 
 export const useGetUser = () => {
-  const api = ApiFactory.getInstance();
+  const api = ApiFactory.getInstance(DefaultApi);
 
-  return useApiCall<GetUserRequest, SwbUserTO>((params: GetUserRequest) =>
+  return useApi<GetUserRequest, SwbUserTO>((params: GetUserRequest) =>
     api.getUser(params)
   );
-};
-
-export const useUserInfo = () => {
-  // eslint-disable-next-line @typescript-eslint/no-invalid-void-type
-  return useApiCall<void, User>(() => getUser());
 };
