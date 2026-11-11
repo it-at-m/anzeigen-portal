@@ -1,4 +1,4 @@
-import type { SwbFileTO } from "@/api/swbrett";
+import type { SwbFileTO } from "@/apis/generated/anzeigen-backend";
 
 export const swbFileToFile = (swbFile: File) => {
   return new File(

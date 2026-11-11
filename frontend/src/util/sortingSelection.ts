@@ -1,6 +1,6 @@
 import type { SortingOrder } from "@/types/SortingOrderCriteria.ts";
 
-import { CONFIG } from "@/Constants.ts";
+import { CONFIG } from "@/constants.ts";
 
 /**
  * A list of predefined sorting options for selection.
