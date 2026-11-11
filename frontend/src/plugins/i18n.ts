@@ -1,92 +1,54 @@
-// src/plugins/i18n.ts
-import { nextTick } from "vue";
+import type { DateTimeOptions } from "vue-i18n";
+
 import { createI18n } from "vue-i18n";
+import { de as deVuetify } from "vuetify/locale";
 
-import de from "@/locales/de.json";
+import deApp from "@/locales/de.json";
 
-// Variante anhand der Environment-Variable oder des Build-Modes
-//const VARIANT = import.meta.env.VITE_APP_VARIANT as "gbr" | "swb" | undefined;
+type MessageSchema = typeof deApp;
+type Locales = "de";
 
-// Alle verfügbaren Überschreibungen im Variantenordner laden (falls vorhanden)
-const variantOverrides = import.meta.glob("@variants/locales/*.json", {
-  eager: true,
-  import: "default",
-}) as Record<string, Record<string, unknown>>;
-
-function resolveVariantMessages(locale: string): Record<string, unknown> {
-  const match = Object.keys(variantOverrides).find((p) =>
-    p.endsWith(`/${locale}.json`)
-  );
-  return match ? variantOverrides[match] : {};
-}
-
-export const supportedLocales = ["deDe"];
-export type SupportedLocale = (typeof supportedLocales)[number];
-
-export const defaultLocale: SupportedLocale = "de";
-
-//const loadedLanguages: SupportedLocale[] = [defaultLocale];
-
-type MessageSchema = typeof de;
-
-// load variant overrides (if any)
-const variantLocales = import.meta.glob<Record<string, unknown>>(
-  "@variants/locales/*.json",
-  {
-    eager: true,
-    import: "default",
-  }
-);
-
-function getVariantOverrides(locale: string) {
-  const entry = Object.keys(variantLocales).find((p) =>
-    p.endsWith(`/${locale}.json`)
-  );
-  return entry ? variantLocales[entry] : {};
-}
-
-const i18n = createI18n<[MessageSchema], SupportedLocale>({
-  locale: defaultLocale,
-  fallbackLocale: defaultLocale,
-  messages: {
-    de,
+const messages = {
+  de: {
+    $vuetify: {
+      ...deVuetify,
+    },
+    ...deApp,
   },
+};
+
+const datetimeFormats: Record<Locales, Record<string, DateTimeOptions>> = {
+  de: {
+    // TT.MM.JJJJ
+    short: {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    },
+    // TT.MM.JJJJ HH24:MM
+    long: {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+    },
+    // TT.MM.JJJJ HH24:MM:SS
+    timestamp: {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    },
+  },
+};
+
+export default createI18n<[MessageSchema], Locales>({
+  legacy: false,
+  locale: "de",
+  fallbackLocale: "de",
+  messages,
+  datetimeFormats,
 });
-
-const overrides = getVariantOverrides("de");
-if (Object.keys(overrides).length > 0) {
-  i18n.global.mergeLocaleMessage("de", overrides);
-}
-
-export default i18n;
-
-const setI18nLanguage = (locale: SupportedLocale) => {
-  (i18n.global.locale as unknown as { value: SupportedLocale }).value = locale;
-  document.documentElement.setAttribute("lang", locale);
-};
-
-/**
- * load another language on demand - language needs to be registered
- * @param locale one of the registered languages
- */
-export const loadLanguage = async (locale: SupportedLocale) => {
-  if (!supportedLocales.includes(locale)) {
-    throw new Error("Language not supported");
-  }
-  // any typecast needed because typescript does not know composition mode of i18n is used
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  if ((i18n.global.locale as any).value === locale) {
-    return nextTick();
-  }
-
-  if (i18n.global.availableLocales.includes(locale)) {
-    setI18nLanguage(locale);
-    return nextTick();
-  }
-  const messagesModule = await import(`@/locales/${locale}.json`);
-  const baseMessages = messagesModule.default as MessageSchema;
-  const overrides = resolveVariantMessages(locale) as Partial<MessageSchema>;
-  i18n.global.setLocaleMessage(locale, { ...baseMessages, ...overrides });
-  setI18nLanguage(locale);
-  return nextTick();
-};
