@@ -1,13 +1,31 @@
 {
   "extends": "@vue/tsconfig/tsconfig.dom.json",
-  "include": ["env.d.ts", "src/**/*.ts", "src/**/*.vue"],
+  "include": [
+    "vite-env.d.ts",
+    "declarations.d.ts",
+    "router.d.ts",
+    "route-map.d.ts",
+    "src/**/*.ts",
+    "src/**/*.vue"
+  ],
+  "exclude": ["test/**/*"],
   "compilerOptions": {
-    "composite": true,
+    /* Build */
+    "types": [
+      "vite/client",
+      "unplugin-fonts/client",
+      "@intlify/unplugin-vue-i18n/messages"
+    ],
     "baseUrl": ".",
     "paths": {
-      "@variants/*": ["./src/variants/swb/*", "./src/variants/gbr/*"],
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@variants/*": ["./src/variants/swb/*", "./src/variants/gbr/*"]
     },
-    "forceConsistentCasingInFileNames": true
+    "allowArbitraryExtensions": true,
+    "composite": true,
+    "tsBuildInfoFile": "./cache/tsconfig.app.tsbuildinfo",
+
+    /* Lint */
+    "noUncheckedIndexedAccess": true
   }
 }

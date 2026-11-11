@@ -1,41 +1,66 @@
-// Plugins
+import { dirname, resolve } from "node:path";
 import { fileURLToPath, URL } from "node:url";
 
+import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite";
 import vue from "@vitejs/plugin-vue";
-import ViteFonts from "unplugin-fonts/vite";
+import UnpluginFonts from "unplugin-fonts/vite";
 import { defineConfig, loadEnv } from "vite";
 import vueDevTools from "vite-plugin-vue-devtools";
 import vuetify, { transformAssetUrls } from "vite-plugin-vuetify";
+import VueRouter from "vue-router/vite";
 
-import { ImportMetaEnv } from "./env";
+import { EncodeBracketsPlugin, extendRoute } from "./encode-brackets-plugin.ts";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ command, mode }) => {
-  const env = loadEnv(mode, process.cwd(), "") as unknown as ImportMetaEnv;
+  const env = loadEnv(mode, process.cwd(), "") as Record<string, string> &
+    ImportMetaEnv;
   const variant = env.VITE_APP_VARIANT || (mode as "swb" | "gbr");
-  const isDev = command === "serve";
+  const isDevelopment = command === "serve";
 
   return {
-    base: isDev ? `/${variant}/` : `/`,
+    base: isDevelopment ? `/${variant}/` : "/",
     plugins: [
+      VueRouter({
+        routesFolder: {
+          src: "src/routes",
+        },
+        dts: "./route-map.d.ts",
+        ...(isDevelopment && { extendRoute }),
+      }),
       vue({
         template: { transformAssetUrls },
         features: {
-          optionsAPI: false,
+          optionsAPI: isDevelopment,
         },
       }),
       vuetify(),
-      vueDevTools(),
-      ViteFonts({
-        google: {
+      UnpluginFonts({
+        inlineFontFace: true,
+        fontsource: {
           families: [
             {
               name: "Roboto",
-              styles: "wght@100;300;400;500;700;900",
+              weights: [100, 300, 400, 500, 700, 900],
+              subset: "latin",
+              fallback: {
+                category: "sans-serif",
+              },
             },
           ],
         },
       }),
+      vueDevTools(),
+      VueI18nPlugin({
+        include: resolve(
+          dirname(fileURLToPath(import.meta.url)),
+          "./src/locales/*.json"
+        ),
+      }),
+      {
+        ...EncodeBracketsPlugin(),
+        apply: "serve", // Ensures plugin is only applied during serve, see https://vite.dev/guide/using-plugins#conditional-application
+      },
     ],
     server: {
       host: true,

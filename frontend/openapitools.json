@@ -2,16 +2,18 @@
   "$schema": "./node_modules/@openapitools/openapi-generator-cli/config.schema.json",
   "spaces": 2,
   "generator-cli": {
-    "version": "7.9.0",
+    "version": "7.25.0",
     "generators": {
-      "typescript-fetch": {
+      "backend": {
         "generatorName": "typescript-fetch",
-        "glob": "../api-spec/anzeigen_portal-openapi.yaml",
-        "output": "./src/api/swbrett",
+        "glob": "../backend/api-spec/*.yaml",
+        "output": "#{cwd}/src/apis/generated/#{name}",
         "additionalProperties": {
           "supportsES6": true,
           "enumPropertyNaming": "UPPERCASE",
-          "typescriptThreePlus": true
+          "disallowAdditionalPropertiesIfNotPresent": false,
+          "useSingleRequestParameter": true,
+          "validationAttributes": true
         }
       }
     }

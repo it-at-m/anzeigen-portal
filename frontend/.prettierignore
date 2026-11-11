@@ -1,5 +1,6 @@
+# Used for Prettier and ESLint
 dist
 target
 node_modules
-# generated source
-src/api/swbrett
+route-map.d.ts
+src/apis/generated/*/**
