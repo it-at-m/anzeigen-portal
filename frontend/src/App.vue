@@ -1,7 +1,9 @@
 <template>
   <v-app>
     <the-snackbar-queue />
-    <no-permison-dialog :activator="noPermission" />
+    <no-permison-dialog
+      :activator="!hasGeneralPermissions && !!userInfoStore.userInfo"
+    />
     <v-app-bar color="primary">
       <v-container class="ad-max-width">
         <v-row
@@ -41,7 +43,7 @@
                   <v-col>
                     <service-avatar />
                   </v-col>
-                  <v-col v-if="userStore.isAdmin">
+                  <v-col v-if="hasAdminPrivileges">
                     <router-link :to="{ name: ROUTES_ADMIN }">
                       <v-toolbar-title
                         class="font-weight-bold d-flex justify-end"
@@ -82,26 +84,23 @@ import { useTitle } from "@vueuse/core";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
-import { Levels } from "@/api/error.ts";
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
 import TheSnackbarQueue from "@/components/TheSnackbarQueue.vue";
 import { useGetAppInfo } from "@/composables/api/useSettingsApi.ts";
-import {
-  useCreateUser,
-  useFindUser,
-  useUserInfo,
-} from "@/composables/api/useUserApi.ts";
+import { useCreateUser, useFindUser } from "@/composables/api/useUserApi.ts";
 import { useUpdateCategories } from "@/composables/updateCategories.ts";
 import { useApi } from "@/composables/useApi";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useSettingsUpdatedEventBus } from "@/composables/useEventBus.ts";
-import { useSnackbar } from "@/composables/useSnackbar.ts";
+import useHasAnyRole from "@/composables/useHasAnyRole.ts";
 import { useUpdateSettings } from "@/composables/useUpdateSettings.ts";
-import { API_ERROR_MSG, ROUTES_ADMIN, ROUTES_BOARD } from "@/Constants";
+import { ROUTES_ADMIN, ROUTES_BOARD, STATUS_INDICATORS } from "@/constants.ts";
 import { useCategoriesStore } from "@/stores/adcategory.ts";
 import { useSettingStore } from "@/stores/settings.ts";
-import { useUserStore } from "@/stores/user.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
+import { useUserInfoStore } from "@/stores/userinfo.ts";
+import { Role } from "@/types/Role.ts";
 
 useApi();
 
@@ -112,20 +111,17 @@ const updateCategories = useUpdateCategories();
 const updateSettings = useUpdateSettings();
 
 const settingStore = useSettingStore();
-const userStore = useUserStore();
-const snackbar = useSnackbar();
+const userInfoStore = useUserInfoStore();
+const snackbar = useSnackbarStore();
 const categoriesStore = useCategoriesStore();
 const settingsUpdatedEventBus = useSettingsUpdatedEventBus();
+
+const hasAdminPrivileges = useHasAnyRole(Role.FACHADMIN);
+const hasGeneralPermissions = useHasAnyRole([Role.FACHADMIN, Role.ANWENDER]);
 
 useTitle(t(`app.heading`));
 
 const noPermission = ref<boolean>(false);
-
-const {
-  call: userInfoCall,
-  data: userInfoData,
-  error: userInfoError,
-} = useUserInfo();
 
 const {
   call: findUserCall,
@@ -160,7 +156,7 @@ onMounted(async () => {
     noPermission.value = true;
   }
 
-  if (!userStore.userID) {
+  if (!userInfoStore.userID) {
     await loadUser();
   }
   if (categoriesStore.isEmpty) {
@@ -173,44 +169,39 @@ onMounted(async () => {
  * If no user exists a new one will be created.
  */
 const loadUser = async () => {
-  // userinfo call
-  await userInfoCall();
-  if (userInfoError.value) {
-    snackbar.sendMessage({
-      level: Levels.ERROR,
-      message: API_ERROR_MSG,
-    });
+  if (!userInfoStore.userInfo && !userInfoStore.lhmObjectId) {
+    // TODO: snackbar error
     return;
   }
 
-  // save into store
-  userStore.setUser(JSON.parse(JSON.stringify(userInfoData.value)));
-
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  await findUserCall({ swbUserFind: { lhmObjectID: userStore.lhmObjectId! } });
+  await findUserCall({
+    swbUserFind: { lhmObjectID: userInfoStore.lhmObjectId },
+  });
 
   if (findUserData.value?.id === undefined) {
     // no user was found - therefore create a new one
     await createUserCall({
       swbUserTO: {
-        displayName: userStore.getUser?.displayName,
-        lhmObjectId: userStore.lhmObjectId,
+        displayName: userInfoStore.userInfo?.displayName,
+        lhmObjectId: userInfoStore.lhmObjectId,
       },
     });
   }
   if (findUserError.value) {
     // User does not have the proper authorities
     noPermission.value = true;
-    snackbar.reset();
+    snackbar.clear();
     return;
   }
 
-  snackbar.sendMessage({
-    level: findUserData.value?.id ? Levels.INFO : Levels.SUCCESS,
-    message: `Willkommen ${findUserData.value?.id ? "zurück" : ""} ${currentUser.value?.displayName || userInfoData.value?.displayName}.`,
+  snackbar.push({
+    color: findUserData.value?.id
+      ? STATUS_INDICATORS.INFO
+      : STATUS_INDICATORS.SUCCESS,
+    text: `Willkommen ${findUserData.value?.id ? "zurück" : ""} ${currentUser.value?.displayName || userInfoStore.userInfo?.displayName}.`,
   });
 
-  userStore.setUserId(currentUser.value?.id || -1);
+  userInfoStore.setUserId(currentUser.value?.id || -1);
 };
 </script>
 
