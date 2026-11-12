@@ -6,7 +6,7 @@
     color="accent"
     hide-details="auto"
     type="date"
-    prepend-icon="mdi-calendar-range"
+    :prepend-icon="mdiCalendarOutline"
     :disabled="disabled"
     :rules="[isDate, isMinDate, isMaxDate]"
     @update:model-value="valueChanged"
@@ -16,6 +16,7 @@
 <script setup lang="ts">
 import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
+import { mdiCalendarOutline } from "@mdi/js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 

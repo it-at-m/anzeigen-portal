@@ -21,7 +21,7 @@
     density="compact"
     variant="outlined"
     color="accent"
-    prepend-icon="mdi-phone-outline"
+    :prepend-icon="mdiPhoneOutline"
     :label="t('sellerAdInformation.labelPhone')"
     hide-details="auto"
     :rules="[minOneContactRule, rulePhoneNumber]"
@@ -34,7 +34,7 @@
     variant="outlined"
     density="compact"
     color="accent"
-    prepend-icon="mdi-email-outline"
+    :prepend-icon="mdiEmailOutline"
     :label="t('sellerAdInformation.labelEmail')"
     type="email"
     hide-details="auto"
@@ -52,6 +52,7 @@
 <script setup lang="ts">
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
+import { mdiEmailOutline, mdiPhoneOutline } from "@mdi/js";
 import { useTemplateRef, watch } from "vue";
 import { useI18n } from "vue-i18n";
 

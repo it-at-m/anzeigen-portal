@@ -92,7 +92,7 @@
             <v-btn
               class="mr-2"
               variant="outlined"
-              prepend-icon="mdi-undo-variant"
+              :prepend-icon="mdiUndoVariant"
               :disabled="!settingStore.isDirty || updateSettingsLoading"
               color="accent-darken-1"
               @click="reloadSettings"
@@ -103,7 +103,7 @@
               id="save-btn"
               variant="flat"
               :disabled="!settingStore.isDirty"
-              prepend-icon="mdi-content-save"
+              :prepend-icon="mdiContentSave"
               color="accent"
               :loading="updateSettingsLoading"
               @click="saveSettings"
@@ -123,6 +123,7 @@ import type {
   SettingTOSettingNameEnum,
 } from "@/apis/generated/anzeigen-backend";
 
+import { mdiContentSave, mdiUndoVariant } from "@mdi/js";
 import { useI18n } from "vue-i18n";
 
 import BoolValueSetting from "@/components/admin/general/BoolValueSetting.vue";

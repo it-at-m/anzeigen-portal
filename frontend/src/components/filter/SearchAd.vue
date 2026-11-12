@@ -7,7 +7,7 @@
     hide-details
     :label="t('searchAd.label')"
     clearable
-    prepend-inner-icon="mdi-magnify"
+    :prepend-inner-icon="mdiMagnify"
     theme="dark"
     @keyup="debouncedSearch"
     @keyup.enter="search"
@@ -16,6 +16,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiMagnify } from "@mdi/js";
 import { useDebounceFn } from "@vueuse/core";
 import { useRouteQuery } from "@vueuse/router";
 import { onMounted, ref } from "vue";

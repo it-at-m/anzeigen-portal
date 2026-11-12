@@ -18,7 +18,7 @@
         <template #append-inner>
           <v-icon
             class="mr-2"
-            icon="mdi-currency-eur"
+            :icon="mdiCurrencyEur"
           />
         </template>
       </v-number-input>
@@ -42,6 +42,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCurrencyEur } from "@mdi/js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 

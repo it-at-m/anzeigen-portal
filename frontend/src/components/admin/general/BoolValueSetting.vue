@@ -1,6 +1,6 @@
 <template>
   <v-switch
-    prepend-icon="mdi-tune-variant"
+    :prepend-icon="mdiTuneVariant"
     color="accent"
     :label="computedSettingText"
     hide-details
@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
+import { mdiTuneVariant } from "@mdi/js";
 import { computed } from "vue";
 
 import { useSettingStore } from "@/stores/settings.ts";

@@ -1,6 +1,6 @@
 <template>
   <v-number-input
-    prepend-icon="mdi-numeric"
+    :prepend-icon="mdiNumeric"
     variant="outlined"
     hide-details="auto"
     density="compact"
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
+import { mdiNumeric } from "@mdi/js";
 import { computed } from "vue";
 
 import { useSettingStore } from "@/stores/settings.ts";

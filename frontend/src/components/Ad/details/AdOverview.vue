@@ -6,17 +6,27 @@
           class="pa-2 d-flex justify-center"
           style="max-height: 500px"
         >
-          <ad-image-display
-            v-if="adDetails.imagePreviewBase64"
-            :ad-details="adDetails"
-          />
-          <v-icon
-            v-else
-            class="w-100 h-100 rounded image-background-color"
-            icon="mdi-camera"
-            color="accent"
-            size="196"
-          />
+          <div
+            TODO
+            -
+            bg
+            color
+            noch
+            anpassen
+            class="bg-background w-100 h-100 d-flex justify-center align-center"
+          >
+            <ad-image-display
+              v-if="adDetails.imagePreviewBase64"
+              :ad-details="adDetails"
+            />
+            <v-icon
+              v-else
+              class="w-100 h-100 rounded"
+              :icon="mdiCamera"
+              color="accent"
+              size="196"
+            />
+          </div>
         </ad-display-sheet>
       </v-col>
     </v-row>
@@ -146,25 +156,25 @@
             <icon-text
               v-if="adDetails.address?.street && adDetails.address?.postalCode"
               class="mb-2"
-              icon="map-marker-outline"
+              :icon="mdiMapMarkerOutline"
               :label="combinedAddress"
             />
             <icon-text
               v-if="adDetails.phone"
               class="mb-2"
-              icon="phone"
+              :icon="mdiPhone"
               :label="adDetails.phone"
             />
             <icon-text
               v-if="adDetails.email"
               class="mb-2"
-              icon="email"
+              :icon="mdiEmail"
               :label="adDetails.email"
             />
             <icon-text
               v-if="adUser && adUser.displayName"
               class="mb-2"
-              icon="account-tag"
+              :icon="mdiAccountTag"
               :label="adUser.displayName"
             />
             <router-link
@@ -175,7 +185,7 @@
             >
               <icon-text
                 v-if="adDetails.swbUser?.id"
-                icon="account"
+                :icon="mdiAccount"
                 link
                 :label="t('adOverview.contactCard.account')"
               />
@@ -198,7 +208,7 @@
               :key="i.id"
               class="mb-2 cursor-pointer"
               :label="i.name!"
-              icon="link-variant"
+              :icon="mdiLinkVariant"
               @click="downloadFile(i.id!)"
             />
           </template>
@@ -211,6 +221,15 @@
 <script setup lang="ts">
 import type { AdTO, SwbUserTO } from "@/apis/generated/anzeigen-backend";
 
+import {
+  mdiAccount,
+  mdiAccountTag,
+  mdiCamera,
+  mdiEmail,
+  mdiLinkVariant,
+  mdiMapMarkerOutline,
+  mdiPhone,
+} from "@mdi/js";
 import { useDateFormat } from "@vueuse/shared";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";

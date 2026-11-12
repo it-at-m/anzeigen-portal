@@ -7,7 +7,7 @@
     :accept="ALLOWED_IMAGE_TYPES"
     :disabled="disabled"
     :loading="sanitizeImgLoading"
-    prepend-icon="mdi-panorama-outline"
+    :prepend-icon="mdiPanoramaOutline"
     color="accent"
     :model-value="computedPicture"
     @update:model-value="uploadPicture"
@@ -18,6 +18,7 @@
 <script setup lang="ts">
 import type { SwbImageTO } from "@/apis/generated/anzeigen-backend";
 
+import { mdiPanoramaOutline } from "@mdi/js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 

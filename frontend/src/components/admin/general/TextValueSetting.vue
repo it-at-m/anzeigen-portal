@@ -1,6 +1,6 @@
 <template>
   <v-text-field
-    prepend-icon="mdi-text"
+    :prepend-icon="mdiText"
     density="compact"
     hide-details="auto"
     variant="outlined"
@@ -14,6 +14,7 @@
 <script setup lang="ts">
 import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
+import { mdiText } from "@mdi/js";
 import { useDebounceFn } from "@vueuse/core";
 import { computed } from "vue";
 

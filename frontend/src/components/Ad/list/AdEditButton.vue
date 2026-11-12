@@ -2,13 +2,14 @@
   <v-btn
     color="accent"
     variant="flat"
-    :prepend-icon="computedIcon"
+    :prepend-icon="isEdit ? mdiPencil : mdiPlus"
     :text="computedText"
     @click="click"
   />
 </template>
 
 <script setup lang="ts">
+import { mdiPencil, mdiPlus } from "@mdi/js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -28,11 +29,6 @@ const { isEdit = false } = defineProps<{
 const computedText = computed(() =>
   isEdit ? t("ad.adEdit") : t("ad.adCreate")
 );
-
-/**
- * Computes the icon based on whether the component is in edit mode or not.
- */
-const computedIcon = computed(() => (isEdit ? "mdi-pencil" : "mdi-plus"));
 
 /**
  * Emits a "click" event when the action is triggered.

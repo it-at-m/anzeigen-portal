@@ -5,7 +5,7 @@
       <v-btn
         variant="tonal"
         color="accent"
-        prepend-icon="mdi-window-close"
+        :prepend-icon="mdiWindowClose"
         @click="emit('click')"
       >
         Auswahl zurücksetzen
@@ -15,6 +15,8 @@
 </template>
 
 <script setup lang="ts">
+import { mdiWindowClose } from "@mdi/js";
+
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
 
 const emit = defineEmits<{

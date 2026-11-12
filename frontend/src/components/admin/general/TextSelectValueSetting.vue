@@ -1,6 +1,6 @@
 <template>
   <v-select
-    prepend-icon="mdi-form-select"
+    :prepend-icon="mdiFormSelect"
     :model-value="computedSetting?.textValue"
     :label="settingName"
     hide-details
@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import type { SettingTOSettingNameEnum } from "@/apis/generated/anzeigen-backend";
 
+import { mdiFormSelect } from "@mdi/js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 

@@ -8,6 +8,12 @@
 <script setup lang="ts">
 import type { AdTOAdTypeEnum } from "@/apis/generated/anzeigen-backend";
 
+import {
+  mdiBinoculars,
+  mdiFileSign,
+  mdiHandExtendedOutline,
+  mdiHelp,
+} from "@mdi/js";
 import { computed } from "vue";
 import { useI18n } from "vue-i18n";
 
@@ -24,13 +30,13 @@ const { adType = undefined } = defineProps<{
 const computedIcon = computed(() => {
   switch (adType) {
     case "OFFER":
-      return "mdi-hand-extended-outline";
+      return mdiHandExtendedOutline;
     case "SEEK":
-      return "mdi-binoculars";
+      return mdiBinoculars;
     case "RENTAL":
-      return "mdi-file-sign";
+      return mdiFileSign;
     default:
-      return "mdi-help";
+      return mdiHelp;
   }
 });
 //  adType != null ?  :

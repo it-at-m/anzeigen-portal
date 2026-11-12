@@ -49,7 +49,7 @@
                         class="font-weight-bold d-flex justify-end"
                       >
                         <v-icon
-                          icon="mdi-cog"
+                          :icon="mdiCog"
                           color="white"
                         />
                       </v-toolbar-title>
@@ -79,6 +79,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiCog } from "@mdi/js";
 import ServiceAvatar from "@variants/components/service-avatar.vue";
 import { useTitle } from "@vueuse/core";
 import { computed, onBeforeMount, onMounted, ref } from "vue";

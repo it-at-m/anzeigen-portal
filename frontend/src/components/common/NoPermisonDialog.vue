@@ -11,7 +11,7 @@
               <v-col>
                 <v-icon
                   size="256"
-                  icon="mdi-emoticon-sad-outline"
+                  :icon="mdiEmoticonSadOutline"
                   color="red"
                 />
               </v-col>
@@ -47,6 +47,8 @@
 </template>
 
 <script setup lang="ts">
+import { mdiEmoticonSadOutline } from "@mdi/js";
+
 import router from "@/plugins/router.ts";
 
 defineProps<{

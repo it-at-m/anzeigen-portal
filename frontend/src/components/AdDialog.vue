@@ -69,7 +69,7 @@
             <v-btn
               variant="flat"
               color="error"
-              prepend-icon="mdi-trash-can-outline"
+              :prepend-icon="mdiTrashCanOutline"
               :disabled="loading"
               @click="deleteDialog = true"
             >
@@ -79,7 +79,7 @@
         </yes-no-dialog>
         <v-spacer />
         <v-btn
-          prepend-icon="mdi-window-close"
+          :prepend-icon="mdiWindowClose"
           variant="outlined"
           :text="t(`common.cancel`)"
           :disabled="loading"
@@ -89,7 +89,7 @@
           :disabled="!form || loading"
           variant="elevated"
           color="accent"
-          prepend-icon="mdi-content-save-outline"
+          :prepend-icon="mdiContentSaveOutline"
           @click="writeAd"
         >
           <p v-if="isAdCreate">{{ t("common.create") }}</p>
@@ -103,6 +103,11 @@
 <script setup lang="ts">
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
+import {
+  mdiContentSaveOutline,
+  mdiTrashCanOutline,
+  mdiWindowClose,
+} from "@mdi/js";
 import { ref } from "vue";
 import { useI18n } from "vue-i18n";
 

@@ -12,7 +12,7 @@
     v-model="adTO.link"
     variant="outlined"
     density="compact"
-    prepend-icon="mdi-link"
+    :prepend-icon="mdiLink"
     :label="t('optionalAdInformation.label')"
     hide-details="auto"
     color="accent"
@@ -25,6 +25,7 @@
 <script setup lang="ts">
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
+import { mdiLink } from "@mdi/js";
 import { useI18n } from "vue-i18n";
 
 import AdFilesUpload from "@/components/Ad/dialog/optional/AdFilesUpload.vue";

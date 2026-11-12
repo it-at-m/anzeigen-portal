@@ -4,7 +4,7 @@
       v-if="isMobile"
       extended
       variant="flat"
-      icon="mdi-plus"
+      :icon="mdiPlus"
       size="64"
       color="accent"
       app
@@ -14,7 +14,7 @@
       v-else
       extended
       variant="flat"
-      prepend-icon="mdi-plus"
+      :prepend-icon="mdiPlus"
       text="Anzeige erstellen"
       color="accent"
       app
@@ -24,6 +24,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiPlus } from "@mdi/js";
 import { breakpointsVuetifyV3, useBreakpoints } from "@vueuse/core";
 
 const breakpoints = useBreakpoints(breakpointsVuetifyV3);

@@ -9,7 +9,7 @@
           <v-icon
             class="w-100 h-100"
             style="background-color: #eeeeee"
-            icon="mdi-file-cancel"
+            :icon="mdiFileCancel"
             color="accent"
             size="196"
           />
@@ -37,6 +37,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiFileCancel } from "@mdi/js";
 import { useI18n } from "vue-i18n";
 
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";

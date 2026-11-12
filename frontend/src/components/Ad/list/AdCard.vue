@@ -16,7 +16,7 @@
             <router-link
               :to="{
                 name: ROUTES_AD,
-                query: { id: adTo.id },
+                params: { id: adTo.id! },
               }"
               class="w-100 remove-a-tag-styling"
             >
@@ -32,7 +32,7 @@
                 v-else
                 class="w-100 h-100 rounded"
                 style="background-color: #eeeeee"
-                icon="mdi-camera"
+                :icon="mdiCamera"
                 color="accent"
                 size="164"
               />
@@ -60,7 +60,7 @@
                 <router-link
                   :to="{
                     name: ROUTES_AD,
-                    query: { id: adTo.id },
+                    params: { id: adTo.id! },
                   }"
                   class="w-100 remove-a-tag-styling"
                 >
@@ -134,6 +134,7 @@
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
 import type { DeepReadonly } from "vue";
 
+import { mdiCamera } from "@mdi/js";
 import { computed, toRef } from "vue";
 
 import {

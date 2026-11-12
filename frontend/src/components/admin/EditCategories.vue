@@ -3,7 +3,7 @@
     <template #title> {{ t("editCategories.title") }} </template>
     <template #text>
       <v-btn
-        prepend-icon="mdi-plus"
+        :prepend-icon="mdiPlus"
         color="accent"
         class="ml-4"
         variant="flat"
@@ -32,7 +32,7 @@
             </template>
             <template #actions>
               <v-btn
-                prepend-icon="mdi-window-close"
+                :prepend-icon="mdiWindowClose"
                 variant="outlined"
                 :text="t('common.cancel')"
                 @click="createDialog = false"
@@ -40,7 +40,7 @@
               <v-btn
                 variant="elevated"
                 color="accent"
-                prepend-icon="mdi-content-save-outline"
+                :prepend-icon="mdiContentSaveOutline"
                 :disabled="isEmptyNewCategoryName"
                 @click="clickCreateCategory"
               >
@@ -64,6 +64,7 @@
 </template>
 
 <script setup lang="ts">
+import { mdiContentSaveOutline, mdiPlus, mdiWindowClose } from "@mdi/js";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 

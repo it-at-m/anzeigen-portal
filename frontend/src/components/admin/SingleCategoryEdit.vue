@@ -31,7 +31,7 @@
           <v-btn
             id="save-btn"
             variant="flat"
-            prepend-icon="mdi-content-save"
+            :prepend-icon="mdiContentSave"
             color="accent"
             class="w-100 h-100"
             :disabled="!isEdited || updateCategoryLoading"
@@ -49,7 +49,7 @@
           <v-btn
             v-if="isEdited"
             variant="outlined"
-            prepend-icon="mdi-undo-variant"
+            :prepend-icon="mdiUndoVariant"
             color="accent-darken-1"
             class="w-100 h-100"
             :disabled="updateCategoryLoading"
@@ -73,7 +73,7 @@
                 color="error"
                 :disabled="category.standard"
                 class="w-100 h-100"
-                prepend-icon="mdi-trash-can-outline"
+                :prepend-icon="mdiTrashCanOutline"
                 @click="deleteDialog = true"
               >
                 {{ t("common.delete") }}
@@ -89,6 +89,7 @@
 <script setup lang="ts">
 import type { AdCategory } from "@/apis/generated/anzeigen-backend";
 
+import { mdiContentSave, mdiTrashCanOutline, mdiUndoVariant } from "@mdi/js";
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 
