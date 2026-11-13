@@ -3,7 +3,7 @@
     href="https://wilma.muenchen.de/pages/gesamtpersonalrat"
     target="_blank"
   >
-    <v-toolbar-title class="font-weight-bold d-flex justify-end">
+    <v-toolbar-title class="d-flex justify-end align-center">
       <v-avatar
         size="36px"
         :image="emblem"
