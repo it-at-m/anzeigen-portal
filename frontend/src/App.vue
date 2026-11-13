@@ -38,24 +38,29 @@
               >
                 <search-ad />
               </v-col>
-              <v-col cols="1">
-                <v-row justify="end">
-                  <v-col>
-                    <service-avatar />
-                  </v-col>
-                  <v-col v-if="hasAdminPrivileges">
-                    <router-link :to="{ name: ROUTES_ADMIN }">
-                      <v-toolbar-title
-                        class="font-weight-bold d-flex justify-end"
-                      >
-                        <v-icon
-                          :icon="mdiCog"
-                          color="white"
-                        />
-                      </v-toolbar-title>
-                    </router-link>
-                  </v-col>
-                </v-row>
+              <v-col cols="auto">
+                <div class="w-100 d-flex align-center justify-end">
+                  <service-avatar />
+                  <v-icon-btn
+                    v-if="hasAdminPrivileges"
+                    v-tooltip:bottom="
+                      route.name === ROUTES_ADMIN
+                        ? 'Einstellungen verlassen'
+                        : 'Einstellungen öffnen'
+                    "
+                    size="x-large"
+                    class="ml-2 pa-0"
+                    :icon="
+                      route.name === ROUTES_ADMIN ? mdiArrowULeftTop : mdiCog
+                    "
+                    variant="plain"
+                    @click="
+                      route.name === ROUTES_ADMIN
+                        ? router.back()
+                        : router.push({ name: ROUTES_ADMIN })
+                    "
+                  />
+                </div>
               </v-col>
             </v-row>
           </v-col>
@@ -79,11 +84,12 @@
 </template>
 
 <script setup lang="ts">
-import { mdiCog } from "@mdi/js";
+import { mdiArrowULeftTop, mdiCog } from "@mdi/js";
 import ServiceAvatar from "@variants/components/service-avatar.vue";
 import { useTitle } from "@vueuse/core";
 import { computed, onBeforeMount, onMounted, ref } from "vue";
 import { useI18n } from "vue-i18n";
+import { useRoute, useRouter } from "vue-router";
 
 import NoPermisonDialog from "@/components/common/NoPermisonDialog.vue";
 import SearchAd from "@/components/filter/SearchAd.vue";
@@ -121,6 +127,8 @@ const hasAdminPrivileges = useHasAnyRole(Role.FACHADMIN);
 const hasGeneralPermissions = useHasAnyRole([Role.FACHADMIN, Role.ANWENDER]);
 
 useTitle(t(`app.heading`));
+const router = useRouter();
+const route = useRoute();
 
 const noPermission = ref<boolean>(false);
 
@@ -209,5 +217,15 @@ const loadUser = async () => {
 <style>
 .ad-max-width {
   max-width: 2000px !important;
+}
+
+/* Sanfte Drehung um 90 Grad beim Hovern */
+.spin-on-hover {
+  transition: transform 0.4s ease-in-out;
+}
+
+/* Der v-btn hover-state triggert das innere Icon */
+.v-btn:hover .spin-on-hover {
+  transform: rotate(90deg);
 }
 </style>

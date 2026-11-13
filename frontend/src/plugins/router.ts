@@ -6,7 +6,11 @@ import {
 } from "vue-router/auto-routes";
 
 import { hasAnyRole } from "@/composables/useHasAnyRole";
-import { STATUS_INDICATORS } from "@/constants.ts";
+import {
+  ROUTES_BOARD,
+  ROUTES_MYBOARD,
+  STATUS_INDICATORS,
+} from "@/constants.ts";
 import board from "@/routes/board.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserInfoStore } from "@/stores/userinfo";
@@ -14,7 +18,7 @@ import { useUserInfoStore } from "@/stores/userinfo";
 const routes = [
   ...fileBasedRoutes,
   {
-    path: "/myboard",
+    path: ROUTES_MYBOARD,
     name: "board",
     component: board,
   },
@@ -22,7 +26,7 @@ const routes = [
     path: "/:catchAll(.*)*",
     redirect: () => {
       return {
-        path: "/board",
+        path: ROUTES_BOARD,
         query: {
           order: "asc",
           sortBy: "title",
