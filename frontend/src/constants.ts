@@ -28,7 +28,6 @@ export const enum STATUS_INDICATORS {
  * EventBus Identifiers
  */
 export const EV_EDIT_AD_DIALOG = "eventbus-dialog";
-export const EV_SNACKBAR = "eventbus-snackbar";
 export const EV_CLEAR_CACHE = "eventBus-clear-cache";
 export const EV_UPDATE_AD_LIST = "eventBus-update-ad-list";
 export const EV_SETTINGS_UPDATED = "eventBus-settings-updated";

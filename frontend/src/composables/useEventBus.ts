@@ -1,5 +1,4 @@
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
-import type { SnackbarMessage } from "@/types/SnackbarMessage";
 
 import { useEventBus } from "@vueuse/core";
 
@@ -7,17 +6,12 @@ import {
   EV_CLEAR_CACHE,
   EV_EDIT_AD_DIALOG,
   EV_SETTINGS_UPDATED,
-  EV_SNACKBAR,
   EV_UPDATE_AD_LIST,
 } from "@/constants.ts";
 
 /**
  * Composes all event buses as composables.
  */
-
-export const useSnackbarEventBus = () =>
-  useEventBus<SnackbarMessage>(EV_SNACKBAR);
-
 export const useClearCacheEventBus = () => useEventBus(EV_CLEAR_CACHE);
 
 export const useDialogEventBus = () => useEventBus<AdTO>(EV_EDIT_AD_DIALOG);

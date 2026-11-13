@@ -36,7 +36,6 @@
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { computed, ref } from "vue";
-import { definePage } from "vue-router/experimental";
 
 import AdDialog from "@/components/AdDialog.vue";
 import AdList from "@/components/AdList.vue";
@@ -46,10 +45,7 @@ import {
   useDeactivateAd,
   useUpdateAd,
 } from "@/composables/api/useAdApi.ts";
-import {
-  useSnackbarEventBus,
-  useUpdateAdListEventBus,
-} from "@/composables/useEventBus.ts";
+import { useUpdateAdListEventBus } from "@/composables/useEventBus.ts";
 import {
   API_ERROR_MSG,
   CREATE_AD_SUCCESS,
@@ -58,13 +54,14 @@ import {
   UPDATE_AD_SUCCESS,
 } from "@/constants.ts";
 import { useSettingStore } from "@/stores/settings.ts";
+import { useSnackbarStore } from "@/stores/snackbar.ts";
 import { useUserInfoStore } from "@/stores/userinfo.ts";
 
 const dialog = ref<boolean>(false);
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 
-const snackbarEventBus = useSnackbarEventBus();
+const snackbar = useSnackbarStore();
 
 const userStore = useUserInfoStore();
 
@@ -146,12 +143,12 @@ const createAdClick = async (createdAd: AdTO) => {
  */
 const finalHandler = (message: string) => {
   if (error.value) {
-    snackbarEventBus.emit({
-      message: API_ERROR_MSG,
-      level: STATUS_INDICATORS.ERROR,
+    snackbar.push({
+      text: API_ERROR_MSG,
+      color: STATUS_INDICATORS.ERROR,
     });
   } else {
-    snackbarEventBus.emit({ message, level: STATUS_INDICATORS.SUCCESS });
+    snackbar.push({ text: message, color: STATUS_INDICATORS.SUCCESS });
     updateAdListEventBus.emit();
     dialog.value = false;
   }
