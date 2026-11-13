@@ -4,126 +4,84 @@
     width="100%"
   >
     <v-container class="w-100 mx-0 ad-max-width">
-      <v-row no-gutters>
+      <v-row>
         <v-col
           cols="12"
           sm="3"
         >
-          <div
-            class="h-100 d-flex align-content-center"
+          <router-link
+            :to="{
+              name: ROUTES_AD,
+              params: { id: adTo.id! },
+            }"
+            class="w-100 h-100 d-flex align-center justify-center rounded bg-grey-lighten-3 overflow-hidden remove-a-tag-styling"
             :class="{ inactive: !adTo.active }"
           >
+            <v-img
+              v-if="adTo.imagePreviewBase64"
+              class="w-100 h-100 cursor-pointer"
+              max-height="164"
+              cover
+              :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adTo.imagePreviewBase64"
+            />
+            <v-icon
+              v-else
+              :icon="mdiCamera"
+              color="accent"
+              size="164"
+            />
+          </router-link>
+        </v-col>
+        <v-col
+          cols="12"
+          sm="9"
+          class="d-flex flex-column"
+        >
+          <div class="d-flex justify-space-between align-start w-100">
             <router-link
               :to="{
                 name: ROUTES_AD,
                 params: { id: adTo.id! },
               }"
-              class="w-100 remove-a-tag-styling"
+              class="w-100 remove-a-tag-styling text-headline-small text-truncate pr-4"
+              :class="{ inactive: !adTo.active }"
             >
-              <v-img
-                v-if="adTo.imagePreviewBase64"
-                rounded
-                cover
-                max-height="200"
-                :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adTo.imagePreviewBase64"
-                class="cursor-pointer"
-              />
-              <v-icon
-                v-else
-                class="w-100 h-100 rounded"
-                style="background-color: #eeeeee"
-                :icon="mdiCamera"
-                color="accent"
-                size="164"
-              />
+              {{ adTo.title }}
             </router-link>
+
+            <ad-edit-button
+              v-if="canEdit"
+              is-edit
+              class="flex-shrink-0"
+              @click="clickedEdit"
+            />
           </div>
-        </v-col>
-        <v-col
-          cols="12"
-          sm="9"
-        >
-          <v-container class="d-flex flex-column py-1 fill-height">
-            <v-row
-              class="w-100"
-              align="start"
-              justify="space-between"
-              no-gutters
-            >
-              <v-col
-                cols="12"
-                :sm="canEdit ? 7 : 12"
-                :md="canEdit ? 8 : 12"
-                class="pa-0"
-                :class="{ inactive: !adTo.active }"
-              >
-                <router-link
-                  :to="{
-                    name: ROUTES_AD,
-                    params: { id: adTo.id! },
-                  }"
-                  class="w-100 remove-a-tag-styling"
-                >
-                  <p class="text-h5 text-truncate">
-                    {{ adTo.title }}
-                  </p>
-                </router-link>
-              </v-col>
-              <v-col
-                v-if="canEdit"
-                cols="6"
-                sm="5"
-                md="4"
-                class="d-flex justify-end"
-              >
-                <ad-edit-button
-                  is-edit
-                  @click="clickedEdit"
-                />
-              </v-col>
-            </v-row>
-            <v-row
-              class="w-100"
-              align="start"
-            >
-              <p
-                class="two-line-clamp"
-                :class="{ inactive: !adTo.active }"
-              >
-                {{ sanitizedDescription }}
-              </p>
-            </v-row>
-            <v-row
-              class="w-100"
-              align="start"
-            >
-              <ad-price
-                v-if="CONFIG.SHOW_PRICE"
-                :price="adTo.price!"
-                :class="{ inactive: !adTo.active }"
-              />
-            </v-row>
-            <v-row
-              class="w-100"
-              align="end"
-              justify="space-between"
-            >
-              <v-col class="pa-0 pb-2 d-flex ga-2">
-                <ad-art-chip
-                  :ad-type="adTo.adType"
-                  :class="{ inactive: !adTo.active }"
-                />
-                <ad-view-count-chip
-                  :views="adTo.views!"
-                  :class="{ inactive: !adTo.active }"
-                />
-                <ad-category-chip
-                  :category="adTo.adCategory!"
-                  :class="{ inactive: !adTo.active }"
-                />
-              </v-col>
-            </v-row>
-          </v-container>
+          <p
+            class="two-line-clamp mt-2 mb-0"
+            :class="{ inactive: !adTo.active }"
+          >
+            {{ sanitizedDescription }}
+          </p>
+          <ad-price
+            v-if="CONFIG.SHOW_PRICE"
+            :price="adTo.price!"
+            class="mt-auto"
+            :class="{ inactive: !adTo.active }"
+          />
+          <div class="mt-0 d-flex ga-2 pt-2 w-100">
+            <ad-art-chip
+              :ad-type="adTo.adType"
+              :class="{ inactive: !adTo.active }"
+            />
+            <ad-view-count-chip
+              :views="adTo.views!"
+              :class="{ inactive: !adTo.active }"
+            />
+            <ad-category-chip
+              :category="adTo.adCategory!"
+              :class="{ inactive: !adTo.active }"
+            />
+          </div>
         </v-col>
       </v-row>
     </v-container>

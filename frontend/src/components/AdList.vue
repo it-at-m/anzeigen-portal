@@ -1,12 +1,10 @@
 <template>
-  <div>
-    <ad-card
-      v-for="ad in adStore.listOfAds"
-      :key="ad.id"
-      :ad-to="ad"
-      class="mb-4"
-    />
-  </div>
+  <ad-card
+    v-for="ad in adStore.listOfAds"
+    :key="ad.id"
+    :ad-to="ad"
+    class="mb-4"
+  />
   <ad-display-card
     v-if="adStore.isEmpty && !loading"
     class="mb-4"
