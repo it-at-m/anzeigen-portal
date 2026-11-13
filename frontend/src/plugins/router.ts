@@ -7,11 +7,17 @@ import {
 
 import { hasAnyRole } from "@/composables/useHasAnyRole";
 import { STATUS_INDICATORS } from "@/constants.ts";
+import board from "@/routes/board.vue";
 import { useSnackbarStore } from "@/stores/snackbar";
 import { useUserInfoStore } from "@/stores/userinfo";
 
 const routes = [
   ...fileBasedRoutes,
+  {
+    path: "/myboard",
+    name: "board",
+    component: board,
+  },
   {
     path: "/:catchAll(.*)*",
     redirect: () => {

@@ -60,10 +60,6 @@ import {
 import { useSettingStore } from "@/stores/settings.ts";
 import { useUserInfoStore } from "@/stores/userinfo.ts";
 
-definePage({
-  alias: ["/myboard"],
-});
-
 const dialog = ref<boolean>(false);
 
 const updateAdListEventBus = useUpdateAdListEventBus();

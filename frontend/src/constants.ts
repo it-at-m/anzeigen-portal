@@ -10,7 +10,7 @@ export const BASE_PATH = "/api/backend-service";
 
 export const ROUTES_BOARD = "/board";
 export const ROUTES_MYBOARD = "/myboard";
-export const ROUTES_AD = "/ad/";
+export const ROUTES_AD = "/ad/[id]";
 export const ROUTES_ADMIN = "/admin";
 
 export const AD2IMAGE_URL = import.meta.env.VITE_AD2IMAGE_URL;

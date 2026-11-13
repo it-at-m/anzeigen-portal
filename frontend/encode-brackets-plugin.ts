@@ -4,7 +4,7 @@ import type { Plugin } from "vite";
 import type { EditableTreeNode } from "vue-router/unplugin";
 
 /**
- * This plugin ensures parameterized file-based routes (e.g. files like index.vue) are handled correctly through API gateway
+ * This plugin ensures parameterized file-based routes (e.g. files like [id].vue) are handled correctly through API gateway
  * when developing locally.
  * The plugin URL encodes brackets in the URL because API gateway (Netty webserver) cannot process brackets directly.
  * Currently, there are some issues open for Vite.js:
@@ -16,42 +16,28 @@ import type { EditableTreeNode } from "vue-router/unplugin";
 export function EncodeBracketsPlugin(): Plugin {
   return {
     name: "vite-plugin-apigateway-bracket-fix",
-    enforce: "pre",
+    enforce: "pre", // Ensures plugin is executed before Vite core plugins, see https://vite.dev/guide/using-plugins#enforcing-plugin-ordering
 
-    async resolveId(source, importer, options) {
+    // catch imports with encoded brackets and return them
+    resolveId(source) {
       if (source.includes("%5B") || source.includes("%5D")) {
-        // 1. Für den Vite-Resolver decodieren, damit die echte Datei gesucht wird
-        const decodedSource = source
-          .replace(/%5B/gi, "[")
-          .replace(/%5D/gi, "]");
-
-        // 2. Vite den echten Pfad auflösen lassen. Vite registriert das Modul intern
-        // und wendet später automatisch den konfigurierten `base`-Pfad an.
-        const resolved = await this.resolve(decodedSource, importer, {
-          skipSelf: true,
-          ...options,
-        });
-
-        if (resolved) {
-          // 3. Den gefundenen Systempfad mit encodierten Brackets zurückgeben.
-          return {
-            ...resolved,
-            id: resolved.id.replace(/\[/g, "%5B").replace(/\]/g, "%5D"),
-          };
-        }
+        return source;
       }
       return null;
     },
 
+    // load source from accepted filepath (resolveId) and return file from decoded filepath
     async load(id) {
       if (id.includes("%5B") || id.includes("%5D")) {
-        // id ist hier ein absoluter OS-Pfad. Für fs.readFile decodieren.
         const realPath = id.replace(/%5B/gi, "[").replace(/%5D/gi, "]");
 
         try {
+          // let vite watch changes on this file
           this.addWatchFile(realPath);
+
           return await fs.readFile(realPath, "utf-8");
-        } catch (err) {
+        } catch {
+          // eslint-disable-next-line no-console
           console.error(
             "vite-plugin-apigateway-bracket-fix: Could not load file: ",
             realPath
@@ -64,6 +50,7 @@ export function EncodeBracketsPlugin(): Plugin {
 }
 
 export function extendRoute(route: EditableTreeNode): PromiseLike<void> | void {
+  // Encode path in order to request with encoded symbols
   if (route.components) {
     for (const [viewName, componentPath] of route.components.entries()) {
       if (componentPath.includes("[") || componentPath.includes("]")) {
