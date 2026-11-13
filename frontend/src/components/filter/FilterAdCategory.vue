@@ -16,22 +16,18 @@
           <v-tab
             :key="NO_CATEGORY.id"
             :value="NO_CATEGORY.id"
-          >
-            <template #prepend>
-              <v-icon :icon="mdiCheckAll" />
-            </template>
-            <span class="text-primary">{{ NO_CATEGORY.name }}</span>
-          </v-tab>
+            :prepend-icon="mdiCheckAll"
+            :text="NO_CATEGORY.name"
+            class="text-body-large text-primary"
+          />
           <v-tab
             v-for="category in categoriesStore.categories"
             :key="category.id"
             :value="category.id"
-          >
-            <template #prepend>
-              <v-icon :icon="mdiCardMultipleOutline" />
-            </template>
-            <span class="text-primary">{{ category.name }}</span>
-          </v-tab>
+            :prepend-icon="mdiCardMultipleOutline"
+            :text="category.name"
+            class="text-body-large text-primary"
+          />
         </v-tabs>
       </v-skeleton-loader>
     </template>
