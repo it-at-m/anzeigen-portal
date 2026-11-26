@@ -3,7 +3,7 @@
     <v-icon
       v-if="icon"
       color="accent"
-      :icon="'mdi-' + icon"
+      :icon="icon"
       class="mr-1"
     />
     <a

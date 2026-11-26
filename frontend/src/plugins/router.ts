@@ -39,6 +39,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
+  // I know this is deprecated but the function replacing it, is still experimental and this should not be necessary as we should replace the ad-list with sth which does not scroll the entire page!
+  scrollBehavior(to, from, savedPosition) {
+    const scrollPositionTop = savedPosition ? savedPosition?.top : 0;
+
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({ left: 0, top: scrollPositionTop });
+      }, 500);
+    });
+  },
 });
 
 router.beforeEach(async (to, from) => {

@@ -1,7 +1,7 @@
 <template>
   <v-img
     max-height="500"
-    class="rounded image-background-color"
+    rounded
     :lazy-src="PREVIEW_IMAGE_FILE_URI_PREFIX + adDetails.imagePreviewBase64"
     :src="PREVIEW_IMAGE_FILE_URI_PREFIX + adImageData?.imageBase64"
   />
@@ -30,5 +30,3 @@ onMounted(async () => {
   }
 });
 </script>
-
-<style scoped></style>

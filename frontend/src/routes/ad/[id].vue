@@ -7,13 +7,15 @@
         xl="8"
       >
         <v-container>
-          <v-btn
-            color="accent"
-            variant="flat"
-            @click="back"
-          >
-            Zurück
-          </v-btn>
+          <v-row>
+            <v-btn
+              color="accent"
+              variant="flat"
+              @click="back"
+            >
+              Zurück
+            </v-btn>
+          </v-row>
         </v-container>
         <div
           v-if="loading"
@@ -43,9 +45,8 @@
 import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { useMemoize } from "@vueuse/core";
-import { useRouteQuery } from "@vueuse/router";
 import { computed, onMounted, ref, watch } from "vue";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/details/AdNotFound.vue";
 import AdOverview from "@/components/Ad/details/AdOverview.vue";
@@ -54,16 +55,18 @@ import { useGetUser } from "@/composables/api/useUserApi.ts";
 import { useDefaultQuery } from "@/composables/useDefaultQuery.ts";
 import { useClearCacheEventBus } from "@/composables/useEventBus.ts";
 import useHasAnyRole from "@/composables/useHasAnyRole.ts";
-import { ROUTES_BOARD } from "@/constants.ts";
+import { ROUTES_AD, ROUTES_BOARD } from "@/constants.ts";
 import { Role } from "@/types/Role.ts";
 
 const clearCacheEventBus = useClearCacheEventBus();
 
-const idQuery = useRouteQuery("id");
 const defaultQuery = useDefaultQuery();
 
 const router = useRouter();
 const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
+const route = useRoute(ROUTES_AD);
+
+const idQuery = computed(() => route.params.id);
 
 const {
   call: getAdCall,
@@ -117,7 +120,7 @@ onMounted(() => {
   if (idQuery.value) {
     incrementView({ id: parseInt(idQuery.value.toString()) });
 
-    updateDisplayedAd(idQuery.value?.toString());
+    updateDisplayedAd(idQuery.value);
   }
 });
 

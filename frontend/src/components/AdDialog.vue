@@ -4,15 +4,10 @@
     persistent
     max-width="900px"
   >
-    <v-card :loading="loading">
-      <v-card-title>
-        <v-container class="mx-0 ad-max-width">
-          <v-row>
-            <p v-if="isAdCreate">{{ t("ad.adCreate") }}</p>
-            <p v-else>{{ t("ad.adEdit") }}</p>
-          </v-row>
-        </v-container>
-      </v-card-title>
+    <v-card
+      :loading="loading"
+      :title="isAdCreate ? t('ad.adCreate') : t('ad.adEdit')"
+    >
       <v-card-text :disabled="loading">
         <v-form v-model="form">
           <ad-display-card>
@@ -56,7 +51,7 @@
           </ad-display-card>
         </v-form>
       </v-card-text>
-      <v-card-actions class="px-4 mb-1">
+      <v-card-actions class="px-10 mb-4">
         <yes-no-dialog
           v-if="!isAdCreate && adTo.active"
           :model-value="deleteDialog"
