@@ -91,7 +91,9 @@ export const useUserInfoStore = defineStore("userInfo", () => {
       return;
     }
 
-    const currentUser = findUserData.value || createUserData.value;
+    const currentUser = findUserData.value?.id
+      ? findUserData.value
+      : createUserData.value;
     setUserId(currentUser?.id || -1);
 
     snackbarStore.push({
