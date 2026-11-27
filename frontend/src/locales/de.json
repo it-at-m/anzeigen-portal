@@ -38,7 +38,8 @@
       "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu finden.",
       "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
     },
-    "loadMore": "Mehr Ergebnisse laden"
+    "loadMore": "Mehr Ergebnisse laden",
+    "noMoreAds": "Keine weiteren Anzeigen vorhanden."
   },
   "adNotFound": {
     "title": "Es konnte keine Anzeige gefunden werden",

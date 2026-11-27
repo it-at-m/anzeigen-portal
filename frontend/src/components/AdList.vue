@@ -1,18 +1,38 @@
 <template>
-  <ad-card
-    v-for="ad in adStore.listOfAds"
-    :key="ad.id"
-    :ad-to="ad"
-    class="mb-4"
-  />
+  <v-infinite-scroll
+    v-if="!adStore.isEmpty"
+    ref="infiniteScroll"
+    :class="{ 'board-sidebar-sticky': mdAndUp }"
+    height="calc(100dvh - 100px)"
+    @load="onLoad"
+  >
+    <ad-card
+      v-for="ad in adStore.listOfAds"
+      :key="ad.id"
+      :ad-to="ad"
+      class="mb-4"
+    />
+
+    <template #loading>
+      <v-skeleton-loader
+        class="w-100"
+        type="heading, sentences, list-item-avatar"
+      />
+    </template>
+
+    <template #empty>
+      <div class="text-body-medium text-medium-emphasis py-2">
+        {{ t("adList.noMoreAds") }}
+      </div>
+    </template>
+  </v-infinite-scroll>
+
   <ad-display-card
-    v-if="adStore.isEmpty && !loading"
+    v-else-if="!loading"
     class="mb-4"
   >
-    <template #title> {{ t("adList.noAdFound.title") }} </template>
-    <template #subtitle>
-      {{ t("adList.noAdFound.subTitle") }}
-    </template>
+    <template #title>{{ t("adList.noAdFound.title") }}</template>
+    <template #subtitle>{{ t("adList.noAdFound.subTitle") }}</template>
     <template #text>
       <router-link
         :to="{
@@ -24,27 +44,21 @@
       </router-link>
     </template>
   </ad-display-card>
+
   <v-skeleton-loader
-    v-if="loading"
+    v-else
     type="heading, sentences, list-item-avatar"
   />
-  <div class="d-flex justify-center mt-2">
-    <v-btn
-      v-if="!adStore.meta?.last && !loading"
-      color="accent"
-      @click="getMoreAds"
-    >
-      {{ t("adList.loadMore") }}
-    </v-btn>
-  </div>
 </template>
 
 <script setup lang="ts">
 import type { GetAdsRequest } from "@/apis/generated/anzeigen-backend";
+import type { VInfiniteScroll } from "vuetify/components";
 
-import { computed, onMounted, watch } from "vue";
+import { computed, onMounted, useTemplateRef, watch } from "vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
+import { useDisplay } from "vuetify/framework";
 
 import AdCard from "@/components/Ad/list/AdCard.vue";
 import AdDisplayCard from "@/components/common/AdDisplayCard.vue";
@@ -68,6 +82,7 @@ const adStore = useAdStore();
 
 const userStore = useUserInfoStore();
 const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
+const { mdAndUp } = useDisplay();
 
 const updateAdListEventBus = useUpdateAdListEventBus();
 
@@ -104,11 +119,24 @@ watch(updateUrl, async () => {
   await getAdPage(false);
 });
 
-/**
- * Get the next page via getAdPage
- */
-const getMoreAds = () => {
-  getAdPage(true);
+interface InfiniteScrollLoadEvent {
+  done: (status: "ok" | "empty" | "error") => void;
+}
+
+const infiniteScroll = useTemplateRef<VInfiniteScroll>("infiniteScroll");
+
+const onLoad = async ({ done }: InfiniteScrollLoadEvent) => {
+  if (adStore.meta?.last) {
+    done("empty");
+    return;
+  }
+
+  try {
+    await getAdPage(true);
+    done(adStore.meta?.last ? "empty" : "ok");
+  } catch {
+    done("error");
+  }
 };
 
 /**
@@ -141,7 +169,20 @@ const getAdPage = async (isNextPage: boolean) => {
   if (ads.value) {
     adStore.addNewAds(ads.value, isNextPage);
   }
+
+  if (!isNextPage) {
+    infiniteScroll.value?.reset("end");
+  }
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.board-sidebar-sticky {
+  --sidebar-gap: 16px;
+  position: sticky;
+  top: calc(var(--v-layout-top, 0px) + var(--sidebar-gap));
+  max-height: calc(100dvh - var(--v-layout-top, 0px) - var(--sidebar-gap) * 2);
+  overflow-y: auto;
+  align-self: start;
+}
+</style>
