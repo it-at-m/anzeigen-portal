@@ -18,14 +18,13 @@
             </v-row>
             <v-row justify="center">
               <v-col>
-                <h3>Sie haben nicht die Erlaubnis, den Inhalt zu sehen.</h3>
+                <h3>{{ t("noPermissionDialog.header") }}</h3>
               </v-col>
             </v-row>
             <v-row justify="center">
               <v-col>
                 <p>
-                  Wenden Sie sich an Ihren Administrator, wenn Sie Hilfe
-                  benötigen
+                  {{ t("noPermissionDialog.info") }}
                 </p>
               </v-col>
             </v-row>
@@ -33,10 +32,9 @@
               <v-col>
                 <v-btn
                   color="accent"
+                  :text="t('noPermissionDialog.reload')"
                   @click="reload"
-                >
-                  Neu Laden
-                </v-btn>
+                />
               </v-col>
             </v-row>
           </v-container>
@@ -48,8 +46,11 @@
 
 <script setup lang="ts">
 import { mdiEmoticonSadOutline } from "@mdi/js";
+import { useI18n } from "vue-i18n";
 
 import router from "@/plugins/router.ts";
+
+const { t } = useI18n();
 
 defineProps<{
   activator: boolean;

@@ -9,7 +9,12 @@
     v-else
     class="text-headline-small font-weight-bold"
   >
-    {{ Math.abs(price) }}€ {{ appendixTag }}
+    {{
+      t("adPrice.priceDisplay", {
+        price: Math.abs(price),
+        appendix: appendixTag,
+      })
+    }}
   </div>
 </template>
 

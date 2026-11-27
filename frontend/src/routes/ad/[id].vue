@@ -11,10 +11,9 @@
             <v-btn
               color="accent"
               variant="flat"
+              :text="t('common.back')"
               @click="back"
-            >
-              Zurück
-            </v-btn>
+            />
           </v-row>
         </v-container>
         <div
@@ -46,6 +45,7 @@ import type { AdTO } from "@/apis/generated/anzeigen-backend";
 
 import { useMemoize } from "@vueuse/core";
 import { computed, onMounted, ref, watch } from "vue";
+import { useI18n } from "vue-i18n";
 import { useRoute, useRouter } from "vue-router";
 
 import AdNotFound from "@/components/Ad/details/AdNotFound.vue";
@@ -67,6 +67,7 @@ const hasAdminRole = useHasAnyRole(Role.FACHADMIN);
 const route = useRoute(ROUTES_AD);
 
 const idQuery = computed(() => route.params.id);
+const { t } = useI18n();
 
 const {
   call: getAdCall,

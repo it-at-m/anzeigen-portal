@@ -19,21 +19,21 @@
         <v-btn
           id="yesnodialog-btn-no"
           variant="flat"
+          class="mr-2 mb-1"
           color="accent"
           :disabled="loading"
+          text="Nein"
           @click="no"
-        >
-          Nein
-        </v-btn>
+        />
         <v-btn
           id="yesnodialog-btn-yes"
+          class="mr-2 mb-1"
           color="accent"
           variant="outlined"
           :disabled="loading"
+          text="Ja"
           @click="yes"
-        >
-          Ja
-        </v-btn>
+        />
       </v-card-actions>
     </v-card>
   </v-dialog>

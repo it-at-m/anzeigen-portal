@@ -66,9 +66,9 @@ const selectionArray = [
   },
 ];
 
-const { modelValue = 1 } = defineProps<{
+const { modelValue = 1, disabled = false } = defineProps<{
   disabled?: boolean;
-  modelValue: number;
+  modelValue?: number;
 }>();
 
 const emit = defineEmits<{

@@ -44,7 +44,7 @@ const conditions = ref<AdConditionMapping[]>([
   },
   {
     value: AdTOConditionEnum.VERY_GOOD,
-    title: t("adConditionSelector.conditions.very_good"),
+    title: t("adConditionSelector.conditions.veryGood"),
   },
   {
     value: AdTOConditionEnum.DEFECTIVE,

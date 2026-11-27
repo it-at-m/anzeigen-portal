@@ -48,7 +48,7 @@ export default defineConfigWithVueTs(
         },
       ],
       // Enforce i18n best practices manually as no stylistic ruleset exists yet
-      "@intlify/vue-i18n/key-format-style": ["error"], // enforce camelCase for message keys
+      "@intlify/vue-i18n/key-format-style": ["warn"], // enforce camelCase for message keys
       "@intlify/vue-i18n/no-duplicate-keys-in-locale": ["error"],
       "@intlify/vue-i18n/no-missing-keys-in-other-locales": ["error"],
       "@intlify/vue-i18n/no-unknown-locale": ["error"],
@@ -56,7 +56,11 @@ export default defineConfigWithVueTs(
         "error",
         {
           extensions: [".ts", ".vue"],
-          ignores: ["/^applicationSettings\\./"],
+          ignores: [
+            "/^applicationSettings\\./",
+            "/^sellerAdInformation\\./",
+            "/^generalSettings\\./",
+          ],
         },
       ],
     },

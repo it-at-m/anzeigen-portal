@@ -4,7 +4,8 @@
     "save": "Speichern",
     "delete": "Löschen",
     "reset": "Zurücksetzen",
-    "cancel": "Abbrechen"
+    "cancel": "Abbrechen",
+    "back": "Zurück"
   },
   "app": {
     "heading": "Localshop"
@@ -38,7 +39,6 @@
       "subTitle": "Ändern Sie die Kategorie, Art oder den Suchbegriff um andere Anzeigen zu finden.",
       "text": "Klicken Sie hier um alle verfügbaren Anzeigen zu sehen."
     },
-    "loadMore": "Mehr Ergebnisse laden",
     "noMoreAds": "Keine weiteren Anzeigen vorhanden."
   },
   "adNotFound": {
@@ -71,10 +71,9 @@
   },
   "adConditionSelector": {
     "placeholder": "Zustand",
-    "ruleMsg": "Bitte wählen Sie den Zustand aus.",
     "conditions": {
       "new": "Neu",
-      "very_good": "Sehr gut",
+      "veryGood": "Sehr gut",
       "good": "Gut",
       "okay": "Okay",
       "defective": "Defekt"
@@ -82,6 +81,9 @@
   },
   "adPriceSelector": {
     "label": "Preis"
+  },
+  "adPrice": {
+    "priceDisplay": "{price}€ {appendix}"
   },
   "adFilesUpload": {
     "label": "Anhänge hochladen",
@@ -92,7 +94,6 @@
     "ruleMsg": "Ein Titelbild wurde ausgewählt"
   },
   "adDateSelector": {
-    "label": "Ablaufdatum",
     "ruleMsg": {
       "invalid": "Das Datum is nicht valide",
       "pastDate": "Das Datum darf nicht in der Vergangenheit liegen!",
@@ -101,13 +102,10 @@
   },
   "commonAdInformation": {
     "titleLabel": "Titel",
-    "descriptionLabel": "Beschreibung",
     "rentalDate": "Ausleihdauer",
     "ruleMsg": {
-      "description": "Bitte geben Sie eine Beschreibung mit maximal 1000 Zeichen ein.",
       "titleToLong": "Bitte kürzen Sie den Titel",
-      "title": "Bitte geben Sie einen Titel ein.",
-      "rentalDate": "Bitte geben Sie eine Ausleihdauer an."
+      "title": "Bitte geben Sie einen Titel ein."
     }
   },
   "optionalAdInformation": {
@@ -130,6 +128,11 @@
       "addressFields": "Bitte geben Sie ihre Adresse an."
     }
   },
+  "noPermissionDialog": {
+    "header": "Sie haben nicht die Erlaubnis, den Inhalt zu sehen.",
+    "info": "Wenden Sie sich an Ihren Administrator, wenn Sie Hilfe benötigen",
+    "reload": "Neu laden"
+  },
   "addressSelection": {
     "street": "Straße und Hausnummer",
     "postalCode": "PLZ und Ort"
@@ -139,6 +142,10 @@
   },
   "filterAdType": {
     "title": "Nach Art filtern"
+  },
+  "userFilter": {
+    "title": "Weitere Anzeigen dieses Nutzers",
+    "resetFilter": "Auswahl zurücksetzen"
   },
   "searchAd": {
     "label": "Suche"

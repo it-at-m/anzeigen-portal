@@ -74,9 +74,7 @@ const isUserSelected = computed(
 /**
  * Resets the selection of a specific user - can be the current user (/myboard) or any other.
  */
-// TODO does not work correctly
 const resetUserQuery = () => {
-  console.log("resetuserQuery", isMyBoard.value);
   if (isMyBoard.value) {
     router.push({
       name: ROUTES_BOARD,
