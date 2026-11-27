@@ -1,5 +1,6 @@
 <template>
   <v-btn
+    data-test="ad-edit-btn"
     color="accent"
     variant="flat"
     :prepend-icon="isEdit ? mdiPencil : mdiPlus"

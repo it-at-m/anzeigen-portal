@@ -1,5 +1,6 @@
 <template>
   <v-text-field
+    data-test="text-value-setting-input"
     :prepend-icon="mdiText"
     density="compact"
     hide-details="auto"

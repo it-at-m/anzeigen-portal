@@ -1,5 +1,6 @@
 <template>
   <v-switch
+    data-test="bool-value-setting-switch"
     :prepend-icon="mdiTuneVariant"
     color="accent"
     :label="computedSettingText"

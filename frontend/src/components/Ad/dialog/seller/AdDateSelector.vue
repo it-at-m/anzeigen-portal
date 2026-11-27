@@ -1,5 +1,6 @@
 <template>
   <v-text-field
+    data-test="ad-date-selector-input"
     variant="outlined"
     :model-value="displayValue"
     density="compact"

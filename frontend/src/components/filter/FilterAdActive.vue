@@ -7,10 +7,12 @@
         color="accent"
       >
         <v-radio
+          data-test="filter-ad-active-radio"
           :label="t('filterAdActive.labelActive')"
           :value="true"
         />
         <v-radio
+          data-test="filter-ad-inactive-radio"
           :label="t('filterAdActive.labelInactive')"
           :value="false"
         />

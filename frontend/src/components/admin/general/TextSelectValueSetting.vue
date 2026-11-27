@@ -1,5 +1,6 @@
 <template>
   <v-select
+    data-test="text-select-value-setting-select"
     :prepend-icon="mdiFormSelect"
     :model-value="computedSetting?.textValue"
     :label="settingName"

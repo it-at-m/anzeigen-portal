@@ -10,6 +10,7 @@
   />
   <v-text-field
     v-model="adTO.link"
+    data-test="ad-link-input"
     variant="outlined"
     density="compact"
     :prepend-icon="mdiLink"

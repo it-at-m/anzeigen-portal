@@ -1,5 +1,6 @@
 <template>
   <v-number-input
+    data-test="number-value-setting-input"
     :prepend-icon="mdiNumeric"
     variant="outlined"
     hide-details="auto"

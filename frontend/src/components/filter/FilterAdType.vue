@@ -4,6 +4,7 @@
     <template #text>
       <v-checkbox
         v-model="isSeek"
+        data-test="filter-ad-type-seek-checkbox"
         :label="t('ad.type.seek')"
         hide-details
         density="compact"
@@ -11,6 +12,7 @@
       />
       <v-checkbox
         v-model="isOffer"
+        data-test="filter-ad-type-offer-checkbox"
         :label="t('ad.type.offer')"
         hide-details
         density="compact"
@@ -18,6 +20,7 @@
       />
       <v-checkbox
         v-model="isRental"
+        data-test="filter-ad-type-rental-checkbox"
         :label="t('ad.type.rental')"
         hide-details
         density="compact"

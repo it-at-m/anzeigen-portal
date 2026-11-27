@@ -54,6 +54,7 @@
                       route.name === ROUTES_ADMIN ? mdiArrowULeftTop : mdiCog
                     "
                     variant="plain"
+                    data-test="admin-settings-icon-btn"
                     @click="
                       route.name === ROUTES_ADMIN
                         ? router.back()

@@ -3,6 +3,7 @@
     <template #title> {{ t("userFilter.title") }} </template>
     <template #text>
       <v-btn
+        data-test="user-filter-reset-btn"
         variant="tonal"
         color="accent"
         :prepend-icon="mdiWindowClose"

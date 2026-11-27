@@ -1,5 +1,6 @@
 <template>
   <v-select
+    data-test="ad-category-selector-select"
     :model-value="modelValue"
     density="compact"
     :placeholder="t('adCategorySelector.placeholder')"

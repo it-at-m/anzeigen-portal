@@ -9,6 +9,7 @@
         <v-container>
           <v-row>
             <v-btn
+              data-test="ad-details-back-btn"
               color="accent"
               variant="flat"
               :text="t('common.back')"

@@ -1,6 +1,7 @@
 <template>
   <v-checkbox
     v-model="isChecked"
+    data-test="ad-agb-accept-checkbox"
     color="accent"
     :disabled="disabled"
     :rules="[(value) => value || 'Bitte akzeptieren Sie die AGB.']"

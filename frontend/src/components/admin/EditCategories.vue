@@ -3,6 +3,7 @@
     <template #title> {{ t("editCategories.title") }} </template>
     <template #text>
       <v-btn
+        data-test="edit-categories-create-btn"
         :prepend-icon="mdiPlus"
         color="accent"
         class="ml-4"
@@ -25,6 +26,7 @@
             <template #text>
               <v-text-field
                 v-model="newCategoryName"
+                data-test="edit-categories-name-input"
                 :label="t('editCategories.categoryName')"
                 variant="outlined"
                 :rules="[notEmptyRule]"
@@ -32,12 +34,14 @@
             </template>
             <template #actions>
               <v-btn
+                data-test="edit-categories-cancel-btn"
                 :prepend-icon="mdiWindowClose"
                 variant="outlined"
                 :text="t('common.cancel')"
                 @click="createDialog = false"
               />
               <v-btn
+                data-test="edit-categories-create-confirm-btn"
                 variant="elevated"
                 color="accent"
                 :prepend-icon="mdiContentSaveOutline"

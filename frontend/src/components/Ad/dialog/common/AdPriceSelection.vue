@@ -5,6 +5,7 @@
       sm="5"
     >
       <v-number-input
+        data-test="ad-price-input"
         variant="outlined"
         density="compact"
         :label="t('adPriceSelector.label')"
@@ -29,6 +30,7 @@
     >
       <v-select
         v-model="priceOption"
+        data-test="ad-price-option-select"
         density="compact"
         :disabled="disabled"
         hide-details="auto"

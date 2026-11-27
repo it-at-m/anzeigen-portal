@@ -1,5 +1,6 @@
 <template>
   <v-file-input
+    data-test="ad-files-upload-input"
     :label="t('adFilesUpload.label')"
     :model-value="computedFiles"
     :disabled="disabled"

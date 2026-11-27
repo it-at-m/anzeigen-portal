@@ -1,6 +1,7 @@
 <template>
   <v-select
     v-model="modelValue"
+    data-test="ad-condition-selector-select"
     :items="conditions"
     item-value="value"
     item-title="title"

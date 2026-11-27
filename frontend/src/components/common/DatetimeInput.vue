@@ -4,6 +4,7 @@
       {{ label }}
     </div>
     <v-input
+      data-test="datetime-input"
       :readonly="readonly"
       :hide-details="hideDetails"
       :rules="validationRules"
@@ -17,6 +18,7 @@
         <v-col cols="6">
           <v-text-field
             v-model="day"
+            data-test="datetime-input-date"
             required
             label="Datum"
             :readonly="readonly"
@@ -34,6 +36,7 @@
         <v-col cols="6">
           <v-text-field
             v-model="time"
+            data-test="datetime-input-time"
             required
             label="Zeit"
             :readonly="readonly"
@@ -52,6 +55,7 @@
               #append-inner
             >
               <v-btn
+                data-test="datetime-input-clear-btn"
                 icon
                 :disabled="!modelValue"
                 @click="clear"

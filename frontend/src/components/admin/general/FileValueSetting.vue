@@ -1,5 +1,6 @@
 <template>
   <v-file-input
+    data-test="file-value-setting-input"
     variant="outlined"
     :model-value="computedFile"
     :label="settingName"

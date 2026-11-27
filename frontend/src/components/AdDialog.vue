@@ -62,6 +62,7 @@
         >
           <template #default>
             <v-btn
+              data-test="ad-dialog-delete-btn"
               variant="flat"
               color="error"
               :prepend-icon="mdiTrashCanOutline"
@@ -74,6 +75,7 @@
         </yes-no-dialog>
         <v-spacer />
         <v-btn
+          data-test="ad-dialog-cancel-btn"
           :prepend-icon="mdiWindowClose"
           variant="outlined"
           :text="t(`common.cancel`)"
@@ -81,6 +83,7 @@
           @click="close"
         />
         <v-btn
+          data-test="ad-dialog-save-btn"
           :disabled="!form || loading"
           variant="elevated"
           color="accent"

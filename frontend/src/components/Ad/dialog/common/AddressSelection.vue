@@ -1,5 +1,6 @@
 <template>
   <v-text-field
+    data-test="address-street-input"
     :model-value="modelValue?.street"
     variant="outlined"
     density="compact"
@@ -12,6 +13,7 @@
     @update:model-value="updatedStreet"
   />
   <v-text-field
+    data-test="address-postal-code-input"
     :model-value="modelValue?.postalCode"
     variant="outlined"
     density="compact"

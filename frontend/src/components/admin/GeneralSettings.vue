@@ -90,6 +90,7 @@
         <v-row>
           <v-col class="d-flex justify-end">
             <v-btn
+              data-test="general-settings-reset-btn"
               class="mr-2"
               variant="outlined"
               :prepend-icon="mdiUndoVariant"
@@ -101,6 +102,7 @@
             </v-btn>
             <v-btn
               id="save-btn"
+              data-test="general-settings-save-btn"
               variant="flat"
               :disabled="!settingStore.isDirty"
               :prepend-icon="mdiContentSave"

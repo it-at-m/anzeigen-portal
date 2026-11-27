@@ -18,6 +18,7 @@
   <v-text-field
     ref="refPhoneNumber"
     v-model="adTO.phone"
+    data-test="ad-phone-input"
     density="compact"
     variant="outlined"
     color="accent"
@@ -31,6 +32,7 @@
   <v-text-field
     ref="refEmail"
     v-model="adTO.email"
+    data-test="ad-email-input"
     variant="outlined"
     density="compact"
     color="accent"

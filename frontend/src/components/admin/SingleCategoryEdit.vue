@@ -13,6 +13,7 @@
         >
           <v-text-field
             v-model="name"
+            data-test="single-category-edit-name-input"
             variant="outlined"
             density="compact"
             :disabled="updateCategoryLoading"
@@ -30,6 +31,7 @@
         >
           <v-btn
             id="save-btn"
+            data-test="single-category-edit-save-btn"
             variant="flat"
             :prepend-icon="mdiContentSave"
             color="accent"
@@ -48,6 +50,7 @@
         >
           <v-btn
             v-if="isEdited"
+            data-test="single-category-edit-reset-btn"
             variant="outlined"
             :prepend-icon="mdiUndoVariant"
             color="accent-darken-1"
@@ -69,6 +72,7 @@
           >
             <template #default>
               <v-btn
+                data-test="single-category-edit-delete-btn"
                 variant="outlined"
                 color="error"
                 :disabled="category.standard"

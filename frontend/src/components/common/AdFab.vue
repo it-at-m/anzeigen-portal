@@ -2,6 +2,7 @@
   <div>
     <v-fab
       v-if="isMobile"
+      data-test="ad-fab-mobile"
       extended
       variant="flat"
       :icon="mdiPlus"
@@ -12,6 +13,7 @@
     />
     <v-fab
       v-else
+      data-test="ad-fab-desktop"
       extended
       variant="flat"
       :prepend-icon="mdiPlus"

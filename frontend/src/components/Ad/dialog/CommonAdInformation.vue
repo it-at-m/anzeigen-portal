@@ -12,14 +12,17 @@
         inline
       >
         <v-radio
+          data-test="ad-type-offer-radio"
           :label="t('ad.type.offer')"
           value="OFFER"
         />
         <v-radio
+          data-test="ad-type-seek-radio"
           :label="t('ad.type.seek')"
           value="SEEK"
         />
         <v-radio
+          data-test="ad-type-rental-radio"
           :label="t('ad.type.rental')"
           value="RENTAL"
         />
@@ -40,6 +43,7 @@
   </v-row>
   <v-text-field
     v-model="adTO.title"
+    data-test="ad-title-input"
     variant="outlined"
     density="compact"
     color="accent"

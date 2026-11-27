@@ -18,6 +18,7 @@
         <v-spacer />
         <v-btn
           id="yesnodialog-btn-no"
+          data-test="yes-no-dialog-no-btn"
           variant="flat"
           class="mr-2 mb-1"
           color="accent"
@@ -27,6 +28,7 @@
         />
         <v-btn
           id="yesnodialog-btn-yes"
+          data-test="yes-no-dialog-yes-btn"
           class="mr-2 mb-1"
           color="accent"
           variant="outlined"

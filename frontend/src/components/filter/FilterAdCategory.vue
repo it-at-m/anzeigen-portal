@@ -15,6 +15,7 @@
         >
           <v-tab
             :key="NO_CATEGORY.id"
+            data-test="filter-ad-category-no-category-tab"
             :value="NO_CATEGORY.id"
             :prepend-icon="mdiCheckAll"
             :text="NO_CATEGORY.name"
@@ -23,6 +24,7 @@
           <v-tab
             v-for="category in categoriesStore.categories"
             :key="category.id"
+            :data-test="`filter-ad-category-tab-${category.id}`"
             :value="category.id"
             :prepend-icon="mdiCardMultipleOutline"
             :text="category.name"

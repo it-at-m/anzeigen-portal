@@ -31,6 +31,7 @@
             <v-row justify="center">
               <v-col>
                 <v-btn
+                  data-test="no-permission-dialog-reload-btn"
                   color="accent"
                   :text="t('noPermissionDialog.reload')"
                   @click="reload"

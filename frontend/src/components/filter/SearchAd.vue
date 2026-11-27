@@ -2,6 +2,7 @@
   <v-text-field
     id="searchField"
     v-model="searchValue"
+    data-test="search-ad-input"
     flat
     variant="solo-inverted"
     hide-details

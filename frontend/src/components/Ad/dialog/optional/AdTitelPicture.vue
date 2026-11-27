@@ -1,5 +1,6 @@
 <template>
   <v-file-input
+    data-test="ad-title-picture-input"
     :label="t('adTitlePicture.label')"
     variant="outlined"
     density="compact"

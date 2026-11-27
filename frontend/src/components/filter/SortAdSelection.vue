@@ -4,6 +4,7 @@
     <template #text>
       <v-select
         v-model="sortingCriteria"
+        data-test="sort-ad-selection-select"
         color="accent"
         hide-details
         :items="sortingOrderSelections"
