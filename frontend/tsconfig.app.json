@@ -16,7 +16,6 @@
       "unplugin-fonts/client",
       "@intlify/unplugin-vue-i18n/messages"
     ],
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@variants/*": ["./src/variants/swb/*", "./src/variants/gbr/*"]

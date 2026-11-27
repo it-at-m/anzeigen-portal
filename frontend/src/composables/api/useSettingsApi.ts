@@ -8,7 +8,7 @@ import type { Info } from "@/apis/info-client.ts";
 import { DefaultApi } from "@/apis/generated/anzeigen-backend";
 import { getInfo } from "@/apis/info-client.ts";
 import { useApi } from "@/composables/api/useApi.ts";
-import { ApiFactory } from "@/util/apiFactory.ts";
+import { ApiFactory } from "@/utils/apiFactory.ts";
 
 export const useGetSetting = () => {
   const api = ApiFactory.getInstance(DefaultApi);

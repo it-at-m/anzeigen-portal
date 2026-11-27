@@ -8,7 +8,7 @@ import type {
 
 import { DefaultApi } from "@/apis/generated/anzeigen-backend";
 import { useApi } from "@/composables/api/useApi.ts";
-import { ApiFactory } from "@/util/apiFactory.ts";
+import { ApiFactory } from "@/utils/apiFactory.ts";
 
 export const useGetAdImage = () => {
   const api = ApiFactory.getInstance(DefaultApi);

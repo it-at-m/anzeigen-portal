@@ -1,5 +1,7 @@
 export function toFirstLetterUppercase(text: string): string {
-  return text ? text[0].toUpperCase() + text.slice(1).toLowerCase() : "";
+  return text && text[0]
+    ? text[0].toUpperCase() + text.slice(1).toLowerCase()
+    : "";
 }
 
 export function toDateString(date: Date): string {

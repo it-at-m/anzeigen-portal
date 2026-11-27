@@ -28,7 +28,7 @@ import { useSettingStore } from "@/stores/settings.ts";
 import {
   isValidOrderSelection,
   sortingOrderSelections,
-} from "@/util/sortingSelection.ts";
+} from "@/utils/sortingSelection.ts";
 
 const { t } = useI18n();
 
